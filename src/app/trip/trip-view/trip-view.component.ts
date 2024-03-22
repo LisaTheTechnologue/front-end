@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TripService } from '../trip.service';
+import { TripService } from '../../_shared/services/trip.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TripItem } from '../_models/trip-item';
 import { Trip } from '../_models/trip';
-import { UploadFileService } from '../upload-file.service';
+import { UploadFileService } from '../../_shared/services/upload-file.service';
 import { TripImage } from '../_models/trip-image';
 
 @Component({

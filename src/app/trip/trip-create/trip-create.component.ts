@@ -8,7 +8,7 @@ import {
   FormBuilder,
   FormArray,
 } from '@angular/forms';
-import { TripService } from '../trip.service';
+import { TripService } from '../../_shared/services/trip.service';
 import { Trip } from '../_models/trip';
 import { TripItem } from '../_models/trip-item';
 

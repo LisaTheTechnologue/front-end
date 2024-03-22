@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UploadFileService } from '../upload-file.service';
+import { UploadFileService } from '../../_shared/services/upload-file.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { TripImage } from '../_models/trip-image';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,7 +15,6 @@ export class TripImageComponent {
   // to do: select one image to be thumbnails
 
   id = 0;
-  title = 'front-end';
   currentFile?: File;
   progress = 0;
   message = '';

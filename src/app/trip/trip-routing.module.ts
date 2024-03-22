@@ -5,6 +5,7 @@ import { TripCreateComponent } from './trip-create/trip-create.component';
 import { TripViewComponent } from './trip-view/trip-view.component';
 import { TripEditComponent } from './trip-edit/trip-edit.component';
 import { TripImageComponent } from './trip-image/trip-image.component';
+import { TripParticipantsComponent } from './trip-participants/trip-participants.component';
 
 const routes: Routes = [
   { path: 'trips', redirectTo: 'trips/index', pathMatch: 'full'},
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'trips/create', component: TripCreateComponent },
   { path: 'trips/:tripId/edit', component: TripEditComponent },
   { path: 'trips/:tripId/edit/images', component: TripImageComponent },
+  { path: 'trips/:tripId/edit/participants', component: TripParticipantsComponent },
 ];
 
 @NgModule({

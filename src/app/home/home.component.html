@@ -1,0 +1,58 @@
+
+<app-header></app-header>
+
+<div class="hero-image">
+  <div class="hero-text">
+    <h1>Explore New Places With Your Friends</h1>
+    <p>And I'm a Photographer</p>
+    <!-- <button>Hire me</button> -->
+  </div>
+</div>
+
+<section class="my-5">
+  <h2 class="text-center">Top 5 Popular Cities</h2>
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-2 mb-5 " *ngFor="let city of popularCities">
+      <div class="card">
+        <img src="path/to/city/image.jpg" class="card-img-top" alt="City Image">
+        <div class="card-body">
+          <h5 class="card-title">{{ city.name }}</h5>
+          <p class="card-text">{{ city.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="my-5" style="background-color: #D9E8F5;">
+  <h2 class="text-center">Our Popular Tours</h2>
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-2 mb-5 " *ngFor="let tour of popularTours">
+      <div class="card">
+        <img src="path/to/tour/image.jpg" class="card-img-top" alt="Tour Image">
+        <div class="card-body">
+          <h5 class="card-title">{{ tour.name }}</h5>
+          <p class="card-text">{{ tour.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="my-5">
+  <h2 class="text-center">Feedback From Friendsd</h2>
+  <p class="text-center">Our Friends have left some reviews. Let's check it out!</p>
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-2 mb-5 " *ngFor="let tour of popularTours">
+      <div class="card">
+        <!-- <img src="path/to/tour/image.jpg" class="card-img-top" alt="Tour Image"> -->
+        <div class="card-body">
+          <h5 class="card-title">{{ tour.name }}</h5>
+          <p class="card-text">{{ tour.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

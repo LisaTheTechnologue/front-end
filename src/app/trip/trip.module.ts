@@ -6,12 +6,13 @@ import { TripCreateComponent } from './trip-create/trip-create.component';
 import { TripIndexComponent } from './trip-index/trip-index.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../MaterialModule';
 import { TripViewComponent } from './trip-view/trip-view.component';
 import { TripEditComponent } from './trip-edit/trip-edit.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TripImageComponent } from './trip-image/trip-image.component';
+import { TripParticipantsComponent } from './trip-participants/trip-participants.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { TripImageComponent } from './trip-image/trip-image.component';
     TripIndexComponent,
     TripViewComponent,
     TripEditComponent,
-    TripImageComponent
+    TripImageComponent,
+    TripParticipantsComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { TripImageComponent } from './trip-image/trip-image.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule
   ]
 })
 export class TripModule { }

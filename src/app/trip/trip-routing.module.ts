@@ -6,19 +6,39 @@ import { TripViewComponent } from './trip-view/trip-view.component';
 import { TripEditComponent } from './trip-edit/trip-edit.component';
 import { TripImageComponent } from './trip-image/trip-image.component';
 import { TripParticipantsComponent } from './trip-participants/trip-participants.component';
+import { TripComponent } from './trip.component';
 
-const routes: Routes = [
-  { path: 'trips', redirectTo: 'trips/index', pathMatch: 'full'},
-  { path: 'trips/index', component: TripIndexComponent },
-  { path: 'trips/:tripId/view', component: TripViewComponent },
-  { path: 'trips/create', component: TripCreateComponent },
-  { path: 'trips/:tripId/edit', component: TripEditComponent },
-  { path: 'trips/:tripId/edit/images', component: TripImageComponent },
-  { path: 'trips/:tripId/edit/participants', component: TripParticipantsComponent },
+export const TRIPS_ROUTES: Routes = [
+  // { path: 'trips', redirectTo: 'trips/index', pathMatch: 'full'},
+  // { path: '', component: TripIndexComponent },
+  // { path: ':tripId/view', component: TripViewComponent },
+  // { path: 'create', component: TripCreateComponent },
+  // { path: ':tripId/edit', component: TripEditComponent },
+  // { path: ':tripId/edit/images', component: TripImageComponent },
+  // { path: ':tripId/edit/participants', component: TripParticipantsComponent },
+//   {
+//     path: '',
+//     children: [
+//       // {
+//       //   path: '',
+//       //   pathMatch: 'full',
+//       //   redirectTo: 'index'
+//       // },
+//       {
+//         path: "",
+//         component: TripComponent,
+//         children:[
+//       { path: 'create', component: TripCreateComponent },
+//       { path: ':tripId/view', component: TripViewComponent },
+//       { path: 'trips/:tripId/edit', component: TripEditComponent },
+//       { path: 'trips/:tripId/edit/images', component: TripImageComponent },
+//       { path: 'trips/:tripId/edit/participants', component: TripParticipantsComponent },
+// ]
+// }]}
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(TRIPS_ROUTES)],
+  exports: [RouterModule],
 })
-export class TripRoutingModule { }
+export class TripRoutingModule {}

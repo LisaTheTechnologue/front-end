@@ -42,7 +42,9 @@ export class TripImageComponent {
       this.fileName = 'Select File';
     }
   }
-
+  onCancel() {
+    this.router.navigateByUrl('trips');
+  }
   upload(): void {
     if (this.currentFile) {
       this.uploadService.upload(this.id,this.currentFile).subscribe({

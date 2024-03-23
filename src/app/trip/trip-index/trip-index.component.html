@@ -1,7 +1,7 @@
-<div class="container">
-  <h1>Angular 16 CRUD Example - ItSolutionStuff.com</h1>
 
-  <a href="#" routerLink="/trip/create/" class="btn btn-success">Create New trip</a>
+  <div class="d-flex justify-content-center h1">Angular 16 CRUD Example - ItSolutionStuff.com</div>
+
+  <a href="#" routerLink="/trips/create" class="btn btn-success">Create New trip</a>
   <div class="input-group mb-3">
     <input
       type="text"
@@ -36,11 +36,10 @@
         <td>{{ trip.title }}</td>
         <td>{{ trip.highlights }}</td>
         <td>
-          <a href="#" [routerLink]="['/trips/', trip.id, 'view']" class="btn btn-info">View</a>
-          <a href="#" [routerLink]="['/trips/', trip.id, 'edit']" class="btn btn-primary">Edit</a>
+          <a href="#" [routerLink]="['/trips/view/', trip.id]" class="btn btn-info">View</a>
+          <a href="#" [routerLink]="['/trips/edit/', trip.id]" class="btn btn-primary">Edit</a>
           <button type="button" (click)="deleteTrip(trip.id)" class="btn btn-danger">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
-</div>

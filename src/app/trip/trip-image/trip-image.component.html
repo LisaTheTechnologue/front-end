@@ -1,7 +1,10 @@
+<div class="d-flex justify-content-center h1">Add images</div>
+
+<button mat-raised-button type="button" (click)="onCancel()" class="btn-space">Back</button>
 <div class="row">
   <div class="col-8">
     <label class="btn btn-default p-0">
-      <input type="file" (change)="selectFile($event)"
+      <input type="file" (change)="selectFile($event)" mat-raised-button
       accept="image/png, image/jpeg"/>
     </label>
   </div>

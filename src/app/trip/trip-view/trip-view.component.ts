@@ -80,8 +80,9 @@ export class TripViewComponent implements OnInit {
     //   this.tripImages[i].url =
     //     'data:image/jpeg;base64,' + this.tripImages[i].picByte; // Add "total": 2 to all objects in array
     // }
-
-
+  }
+  onCancel() {
+    this.router.navigateByUrl('trips');
   }
   getImageSrc(image: any) {
     return `data:image/jpeg;base64,${image}`; // Adjust content type based on image format

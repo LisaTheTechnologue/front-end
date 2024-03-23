@@ -75,7 +75,7 @@ export class TripEditComponent {
     this.items().clear();
   }
   onCancel() {
-    this.router.navigateByUrl('trips/index');
+    this.router.navigateByUrl('trips');
   }
   // getFormArray() {
   //   return (<UntypedFormArray>this.form.get('items')).controls;
@@ -95,15 +95,15 @@ export class TripEditComponent {
     console.log(this.form.value as Trip);
     this.tripService.update(this.id,this.form.value as Trip).subscribe((res: any) => {
       console.log('Trip created successfully!');
-      this.router.navigateByUrl('trips/index');
+      this.router.navigateByUrl('trips');
     });
   }
 
   onAddImages() {
-    this.router.navigateByUrl('trips/' + this.id + '/edit/images');
+    this.router.navigateByUrl('trips/edit/' + this.id + '/images');
   }
 
   onAddParticipants() {
-    this.router.navigateByUrl('trips/' + this.id + '/edit/participants');
+    this.router.navigateByUrl('trips/edit/' + this.id + '/participants');
   }
 }

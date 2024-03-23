@@ -60,11 +60,11 @@ onSubmit() {
   console.log(this.form.value as Trip);
   this.tripService.create(this.form.value as Trip).subscribe((res: any) => {
     console.log('Trip created successfully!');
-    this.router.navigateByUrl('trip/index');
+    this.router.navigateByUrl('trips');
   });
 }
 onCancel() {
-  this.router.navigateByUrl('trip/index');
+  this.router.navigateByUrl('trips');
 }
 getFormArray() {
   return (<UntypedFormArray>this.form.get('items')).controls;

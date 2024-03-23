@@ -1,7 +1,7 @@
-<div class="container">
-  <h1>Update Trip</h1>
 
-  <a href="#" routerLink="/trip/index" class="btn btn-primary">Back</a>
+  <div class="d-flex justify-content-center h1">Update Trip</div>
+
+  <button mat-raised-button type="button" (click)="onCancel()" class="btn-space">Back</button>
   <mat-card-actions class="actions-center">
     <button mat-raised-button color="primary" type="button" (click)="onAddImages()">
       Add Images
@@ -93,8 +93,7 @@
     <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
       Save
     </button>
-    <button mat-raised-button class="btn-space" type="button">
+    <button mat-raised-button class="btn-space" (click)="onCancel()" type="button">
       Cancel
     </button>
   </mat-card-actions>
-</div>

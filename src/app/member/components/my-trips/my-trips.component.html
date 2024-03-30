@@ -1,0 +1,43 @@
+<form [formGroup]="searchTripForm" class="search-form" (submit)="submitForm()">
+  <mat-form-field appearance="outline" class="search-input">
+    <mat-label>Enter Keyword to search</mat-label>
+    <input matInput type="text" placeholder="Enter Keyword to search" formControlName="title">
+      <button mat-button matSuffix color="primary" [disabled]="searchTripForm.invalid">
+        <mat-icon>search</mat-icon>
+      </button>
+  </mat-form-field>
+</form>
+<button mat-raised-button color="accent" class="create-button"
+        routerLink="/member/create-trip">Create</button>
+<div class="product-list">
+  <mat-card class="product-card" *ngFor="let trip of trips">
+    <div class="product-image">
+      <img [src]="trip.processedImg" alt="product-image">
+    </div>
+    <div class="product-details">
+      <h2 class="product-name">{{ trip.title }}</h2>
+      <p class="product-description">{{ trip.highlights}}</p>
+      <mat-divider></mat-divider>
+      <div class="product-info">
+        <div class="info-row">
+          <span class="info-label">Budget:</span>
+          <span class="info-value">${{trip.budget}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Number of people:</span>
+          <span class="info-value">{{trip.noOfParticipants}}</span>
+        </div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="actions">
+      <button mat-raised-button color="primary" class="update-button"
+        routerLink="'/member/faq'+ trip.id">FAQ</button>
+        <button mat-raised-button color="accent" class="update-button"
+        routerLink="/member/my-trips/{{trip.id}}">Details</button>
+        <!-- <button mat-raised-button color="warn" class="delete-button"
+        (click)="deleteProduct(product.id)">Delete</button> -->
+    </div>
+  </mat-card>
+
+</div>

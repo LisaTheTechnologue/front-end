@@ -9,7 +9,7 @@ import { User } from '../models/user.model';
   providedIn: 'root'
 })
 export class UserService {
-  private usersAPI = AppSettings.API_ENDPOINT + 'auth/';
+  private usersAPI = AppSettings.API_ENDPOINT + 'users/';
 
   constructor(private http: HttpClient) {}
 
@@ -39,5 +39,21 @@ export class UserService {
 
   findByTitle(title: any): Observable<User[]> {
     return this.http.get<User[]>(`${this.usersAPI}?title=${title}`);
+  }
+
+  getPublicContent(): Observable<any> {
+    return this.http.get(this.usersAPI + 'all', { responseType: 'text' });
+  }
+
+  getUserBoard(): Observable<any> {
+    return this.http.get(this.usersAPI + 'user', { responseType: 'text' });
+  }
+
+  // getModeratorBoard(): Observable<any> {
+  //   return this.http.get(API_URL + 'mod', { responseType: 'text' });
+  // }
+
+  getAdminBoard(): Observable<any> {
+    return this.http.get(this.usersAPI + 'admin', { responseType: 'text' });
   }
 }

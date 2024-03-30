@@ -1,0 +1,201 @@
+<div class="container">
+
+  <h2>Add Trip</h2>
+  <form [formGroup]="tripForm" (ngSubmit)="addTrip()">
+    <div class="mb-3">
+      <!-- <label for="fileInput">Example file input</label>
+      <input type="file" id="fileInput" class="form-control-file" (change)="onFileSelected($event)" hidden
+        class="btn btn-primary" mat-raised-button
+        accept="image/png, image/jpeg"> -->
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Thumbnail</label>
+          <input class="form-control" type="file" id="formFile"
+          #fileInput type="file" (change)="onFileSelected($event)"
+          accept="image/png, image/jpeg">
+        </div>
+      <!-- <button type="button" (click)="fileInput.click()" class="btn btn-primary" mat-raised-button>
+        <span>Upload</span>
+        <input #fileInput type="file" (change)="onFileSelected($event)" style="display:none;"
+          accept="image/png, image/jpeg" />
+      </button> -->
+    </div>
+    <div *ngIf="selectedFile" class="image-preview justify-content-center">
+      <div class="circle-image">
+        <img [src]="imagePreview" alt="Selected Image" class="preview-image">
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="titleFld" class="col-sm-2 col-form-label">Title</label>
+      <input matInput type="text" formControlName="title" class="form-control" id="titleFld" />
+      <div class="invalid-feedback" *ngIf="tripForm.get('title')?.hasError('required')">This input is required!</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="cityFld" class="col-sm-2 col-form-label">Select a City</label>
+      <select formControlName="cityId" name="cityId" class="form-select" id="cityFld">
+        <option *ngFor="let city of listOfCities" [value]="city.id">
+          {{city.name}}
+        </option>
+      </select>
+      <div class="invalid-feedback" *ngIf="tripForm.get('cityId')?.hasError('required')">This input is required!</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="highlightsFld">Highlights</label>
+      <textarea matInput formControlName="highlights" class="form-control" id="highlightsFld"></textarea>
+      <div class="invalid-feedback" *ngIf="tripForm.get('highlights')?.hasError('required')">This input is required!
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="levelSelect">Select a Level</label>
+      <select formControlName="tripLevel" id="levelSelect" class="form-select">
+        <option value="Master">Master</option>
+        <option value="Advanced">Advanced</option>
+        <option value="Beginner">Beginner</option>
+      </select>
+      <div class="invalid-feedback" *ngIf="tripForm.get('tripLevel')?.hasError('required')">This input is required!
+      </div>
+    </div>
+    <div class="row">
+      <div class="mb-3 col-md-6">
+        <label for="budgetFld">Budget</label>
+        <input type="number" formControlName="budget" id="budgetFld" class="form-control" />
+        <div class="invalid-feedback" *ngIf="tripForm.get('budget')?.hasError('required')">This input is required!</div>
+      </div>
+      <div class="mb-3 col-md-6">
+        <label for="nopFld">Number of Participants (between 1 and 50):</label>
+        <input type="number" formControlName="noOfParticipants" min="1" max="5" id="nopFld" class="form-control" />
+        <div class="invalid-feedback" *ngIf="tripForm.get('noOfParticipants')?.hasError('required')">This input is
+          required!</div>
+      </div>
+    </div>
+
+
+    <div class="mb-3">
+      <label for="ageFld">Age</label>
+      <div class="row">
+        <div class="col-md-3">
+          <input type="number" class="form-control" placeholder="From" formControlName="ageFrom" min="0" max="80" />
+        </div>
+        <div class="col-md-3">
+          <input type="number" class="form-control" placeholder="To" formControlName="ageTo" min="0" max="80" />
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              All Ages
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="mb-3 col-md-6">
+        <label for="fromDateFld">From date</label>
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate" formControlNamese="fromDateModel"
+            ngbDatepicker #d1="ngbDatepicker" readonly/>
+          <button class="btn btn-secondary" (click)="d1.toggle()" type="button"><mat-icon>calendar_today</mat-icon></button>
+        </div>
+        <div class="invalid-feedback" *ngIf="tripForm.get('fromDate')?.hasError('required')">This input is required!
+        </div>
+      </div>
+
+      <div class="mb-3 col-md-6">
+        <label for="toDateFld">To date</label>
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dpToDate" formControlName="toDateModel"
+            ngbDatepicker #d2="ngbDatepicker" readonly/>
+          <button class="btn btn-secondary" (click)="d2.toggle()" type="button"><mat-icon>calendar_today</mat-icon></button>
+        </div>
+        <div class="invalid-feedback" *ngIf="tripForm.get('toDate')?.hasError('required')">This input is required!
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="gridCheck1" formControlName="tripStatus">
+        <label class="form-check-label" for="gridCheck1">
+          Published?
+        </label>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <mat-toolbar class="lessons-toolbar">
+        <span>Days</span>
+        <div style="right: 0;">
+          <button mat-icon-button color="accent" (click)="addItems()">
+            <mat-icon aria-label="Add a New Lesson">add</mat-icon>
+          </button>
+        </div>
+      </mat-toolbar>
+
+      <div class="invalid-feedback" *ngIf="tripForm.get('items')?.hasError('required')">
+        At least one day is added.
+      </div>
+      <div formArrayName="items" *ngFor="let itemForm of items.controls; let i = index">
+      <div class="row" [formGroupName]="i">
+        <div class="col-3">
+          <div class="mb-3">
+            <input class="form-control" placeholder="Day" formControlName="name" type="number" />
+            <div class="invalid-feedback" *ngIf="items.controls[i].get('name')?.invalid">This input is required!
+            </div>
+          </div>
+        </div>
+        <div class="col-8">
+          <div class="mb-3">
+            <input class="form-control" placeholder="Description" formControlName="description" />
+            <div class="invalid-feedback" class="invalid-feedback"
+              *ngIf="items.controls[i].get('description')?.invalid">This input is
+              required!
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <button mat-icon-button color="warn" (click)="removeItem(i)">
+            <mat-icon aria-label="Remove Item">delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+      <!-- <table class="full-width" formArrayName="items" *ngFor="let itemForm of items.controls; let i = index">
+        <tr [formGroupName]="i">
+          <td style="width: 20%">
+            <div class="mb-3">
+              <input class="form-control" placeholder="Day" formControlName="name" type="number" />
+              <div class="invalid-feedback" *ngIf="items.controls[i].get('name')?.invalid">This input is required!
+              </div>
+            </div>
+          </td>
+          <td style="width: 80%">
+            <div class="mb-3">
+              <input class="form-control" placeholder="Description" formControlName="description" />
+              <div class="invalid-feedback" class="invalid-feedback"
+                *ngIf="items.controls[i].get('description')?.invalid">This input is
+                required!
+              </div>
+            </div>
+          </td>
+
+          <td >
+            <button mat-icon-button color="warn" (click)="removeItem(i)">
+              <mat-icon aria-label="Remove Item">delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </table> -->
+    </div>
+    <div class="mb-3">
+      <button mat-raised-button color="primary" type="submit">Create new Trip</button>
+    </div>
+  </form>
+</div>

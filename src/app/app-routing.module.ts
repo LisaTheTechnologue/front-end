@@ -2,20 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
-import { BoardAdminComponent } from './board-admin/board-admin.component';
-import { BoardUserComponent } from './board-user/board-user.component';
-import { AuthComponent } from './auth/auth.component';
-import { LayoutComponent } from './layout/layout.component';
-import { TripIndexComponent } from './trip/trip-index/trip-index.component';
-import { TripComponent } from './trip/trip.component';
-import { TripViewComponent } from './trip/trip-view/trip-view.component';
-import { TripCreateComponent } from './trip/trip-create/trip-create.component';
-import { TripEditComponent } from './trip/trip-edit/trip-edit.component';
-import { TripImageComponent } from './trip/trip-image/trip-image.component';
-import { TripParticipantsComponent } from './trip/trip-participants/trip-participants.component';
-import { TripHistoryComponent } from './board-user/trip-history/trip-history.component';
-import { YourTripsComponent } from './board-user/your-trips/your-trips.component';
-import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -40,38 +28,44 @@ const routes: Routes = [
 
   // }
 
-  {
-    path: '',
-    component: LayoutComponent,
+  // {
+    // path: '',
+    // component: LayoutComponent,
     // canActivate: [AuthGuard], // Optional guard
-    children: [
+    // children: [
       { path: '', component: HomeComponent }, // Level 1 child
       { path: 'about', component: AboutComponent },
-      { path: 'dashboard',
-        component: BoardUserComponent,
-        children: [ // Level 2 child
-          { path: 'history-trips', redirectTo: '', pathMatch: 'full'},
-          { path: '', component: TripHistoryComponent },
-          { path: 'created-list', component: YourTripsComponent },
-        ]
-      },
-      { path: 'admin', component: BoardAdminComponent },
-      { path: 'auth', component: LoginComponent },
-      {
-        path: 'trips',
-        component: TripComponent,
-        children: [ // Level 2 child
-          { path: '', component: TripIndexComponent },
-          { path: 'view/:tripId', component: TripViewComponent },
-          { path: 'create', component: TripCreateComponent },
-          { path: 'edit/:tripId', component: TripEditComponent },
-          { path: 'edit/:tripId/images', component: TripImageComponent },
-          { path: 'edit/:tripId/participants', component: TripParticipantsComponent },
-        ]
-      }
+      { path: "login", component: LoginComponent},
+      { path: "signup", component: SignupComponent},
+      { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+      { path: 'member', loadChildren: () => import('./member/member.module').then(m => m.MemberModule) }
+      // { path: 'dashboard',
+      //   component: BoardUserComponent,
+      //   children: [ // Level 2 child
+      //     { path: 'history-trips', redirectTo: '', pathMatch: 'full'},
+      //     { path: '', component: TripHistoryComponent },
+      //     { path: 'created-list', component: YourTripsComponent },
+      //   ]
+      // },
+      // // { path: 'admin', component: BoardAdminComponent },
+      // { path: 'auth', component: LoginComponent },
+      // { path: 'profile', component: ProfileComponent },
+      // { path: 'register', component: RegisterComponent },
+      // {
+      //   path: 'trips',
+      //   component: TripComponent,
+      //   children: [ // Level 2 child
+      //     { path: '', component: TripIndexComponent },
+      //     { path: 'view/:tripId', component: TripViewComponent },
+      //     { path: 'create', component: TripCreateComponent },
+      //     { path: 'edit/:tripId', component: TripEditComponent },
+      //     { path: 'edit/:tripId/images', component: TripImageComponent },
+      //     { path: 'edit/:tripId/participants', component: TripParticipantsComponent },
+      //   ]
+      // }
       // Add more child routes as needed
-    ]
-  }
+    // ]
+  // },
   // Add more top-level routes as needed
 ];
 

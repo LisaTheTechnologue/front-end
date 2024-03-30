@@ -21,15 +21,9 @@
   <div>
     <strong>Itinerary:</strong>
     <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-        </tr>
-      </thead>
       <tbody>
         <tr *ngFor="let item of items">
-          <td>{{ item.name }}</td>
+          <td><strong> Day {{ item.name }} </strong></td>
           <td>{{ item.description }}</td>
         </tr>
       </tbody>

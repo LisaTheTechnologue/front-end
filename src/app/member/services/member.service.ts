@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, first } from 'rxjs';
 import { AppSettings } from 'src/app/_shared/app-settings';
-import { Trip } from 'src/app/_shared/models/trip.model';
 import { StorageService } from 'src/app/_shared/services/storage.service';
 
 @Injectable({
@@ -25,11 +24,11 @@ export class MemberService {
     })
   }
 
-  addTripItems(record:Partial<Trip>){
-    return this.http.post<Trip>(this.AUTH_API+'trips/create', record, {
-      headers: this.createAuthorizationHeader(),
-    })
-  }
+  // addTripItems(record:Partial<Trip>){
+  //   return this.http.post<Trip>(this.AUTH_API+'trips/create', record, {
+  //     headers: this.createAuthorizationHeader(),
+  //   })
+  // }
 
   getAllTrips(): Observable<any>{
     const userId = StorageService.getUserId();

@@ -1,7 +1,7 @@
 <div class="container">
 
-  <h2>Add Trip</h2>
-  <form [formGroup]="tripForm" (ngSubmit)="addTrip()">
+  <div class="heading h3">Add Trip</div>
+  <form [formGroup]="tripForm" >
     <div class="mb-3">
       <!-- <label for="fileInput">Example file input</label>
       <input type="file" id="fileInput" class="form-control-file" (change)="onFileSelected($event)" hidden
@@ -9,7 +9,7 @@
         accept="image/png, image/jpeg"> -->
         <div class="mb-3">
           <label for="formFile" class="form-label">Thumbnail</label>
-          <input class="form-control" type="file" id="formFile"
+          <input class="form-control" type="file" id="formFile" required
           #fileInput type="file" (change)="onFileSelected($event)"
           accept="image/png, image/jpeg">
         </div>
@@ -27,13 +27,13 @@
 
     <div class="mb-3">
       <label for="titleFld" class="col-sm-2 col-form-label">Title</label>
-      <input matInput type="text" formControlName="title" class="form-control" id="titleFld" />
+      <input type="text" formControlName="title" class="form-control" id="titleFld" required/>
       <div class="invalid-feedback" *ngIf="tripForm.get('title')?.hasError('required')">This input is required!</div>
     </div>
 
     <div class="mb-3">
       <label for="cityFld" class="col-sm-2 col-form-label">Select a City</label>
-      <select formControlName="cityId" name="cityId" class="form-select" id="cityFld">
+      <select formControlName="cityId" name="cityId" class="form-select" id="cityFld" required>
         <option *ngFor="let city of listOfCities" [value]="city.id">
           {{city.name}}
         </option>
@@ -42,8 +42,15 @@
     </div>
 
     <div class="mb-3">
+      <label for="introductionFld">Introduction</label>
+      <input formControlName="introduction" class="form-control" id="introductionFld" max="100" required/>
+      <div class="invalid-feedback" *ngIf="tripForm.get('introduction')?.hasError('required')">This input is required!
+      </div>
+    </div>
+
+    <div class="mb-3">
       <label for="highlightsFld">Highlights</label>
-      <textarea matInput formControlName="highlights" class="form-control" id="highlightsFld"></textarea>
+      <textarea formControlName="highlights" class="form-control" id="highlightsFld"></textarea>
       <div class="invalid-feedback" *ngIf="tripForm.get('highlights')?.hasError('required')">This input is required!
       </div>
     </div>
@@ -59,49 +66,38 @@
       </div>
     </div>
     <div class="row">
-      <div class="mb-3 col-md-6">
+      <div class="mb-3 col-md-3">
         <label for="budgetFld">Budget</label>
         <input type="number" formControlName="budget" id="budgetFld" class="form-control" />
         <div class="invalid-feedback" *ngIf="tripForm.get('budget')?.hasError('required')">This input is required!</div>
       </div>
-      <div class="mb-3 col-md-6">
-        <label for="nopFld">Number of Participants (between 1 and 50):</label>
-        <input type="number" formControlName="noOfParticipants" min="1" max="5" id="nopFld" class="form-control" />
-        <div class="invalid-feedback" *ngIf="tripForm.get('noOfParticipants')?.hasError('required')">This input is
+      <div class="mb-3 col-md-3">
+        <label for="nopFld">Group Size</label>
+        <input type="number" formControlName="groupSize" min="1" max="20" id="nopFld" class="form-control" />
+        <div class="invalid-feedback" *ngIf="tripForm.get('groupSize')?.hasError('required')">This input is
+          required!</div>
+      </div>
+      <div class="mb-3 col-md-3">
+        <label for="fromAge">From Age:</label>
+        <input type="number" class="form-control" placeholder="From" formControlName="fromAge" id="fromAge" min="0" max="80" />
+          <div class="invalid-feedback" *ngIf="tripForm.get('fromAge')?.hasError('required')">This input is
+            required!</div>
+      </div>
+      <div class="mb-3 col-md-3">
+        <label for="toAge">To Age:</label>
+        <input type="number" class="form-control" placeholder="To" formControlName="toAge" id="toAge" min="0" max="80" />
+        <div class="invalid-feedback" *ngIf="tripForm.get('toAge')?.hasError('required')">This input is
           required!</div>
       </div>
     </div>
-
-
-    <div class="mb-3">
-      <label for="ageFld">Age</label>
-      <div class="row">
-        <div class="col-md-3">
-          <input type="number" class="form-control" placeholder="From" formControlName="ageFrom" min="0" max="80" />
-        </div>
-        <div class="col-md-3">
-          <input type="number" class="form-control" placeholder="To" formControlName="ageTo" min="0" max="80" />
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              All Ages
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-
 
 
     <div class="row">
       <div class="mb-3 col-md-6">
         <label for="fromDateFld">From date</label>
         <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate" formControlNamese="fromDateModel"
-            ngbDatepicker #d1="ngbDatepicker" readonly/>
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate" formControlName="fromDateModel"
+            ngbDatepicker #d1="ngbDatepicker" readonly (dateSelect) = "onSelectFromDate($event)" />
           <button class="btn btn-secondary" (click)="d1.toggle()" type="button"><mat-icon>calendar_today</mat-icon></button>
         </div>
         <div class="invalid-feedback" *ngIf="tripForm.get('fromDate')?.hasError('required')">This input is required!
@@ -112,7 +108,7 @@
         <label for="toDateFld">To date</label>
         <div class="input-group">
           <input class="form-control" placeholder="yyyy-mm-dd" name="dpToDate" formControlName="toDateModel"
-            ngbDatepicker #d2="ngbDatepicker" readonly/>
+            ngbDatepicker #d2="ngbDatepicker" readonly (dateSelect) = "onSelectToDate($event)"/>
           <button class="btn btn-secondary" (click)="d2.toggle()" type="button"><mat-icon>calendar_today</mat-icon></button>
         </div>
         <div class="invalid-feedback" *ngIf="tripForm.get('toDate')?.hasError('required')">This input is required!
@@ -122,7 +118,7 @@
 
     <div class="mb-3">
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="gridCheck1" formControlName="tripStatus">
+        <input class="form-check-input" type="checkbox" id="gridCheck1" formControlName="tripStatus" value="Published">
         <label class="form-check-label" for="gridCheck1">
           Published?
         </label>
@@ -131,7 +127,7 @@
 
     <div class="mb-3">
       <mat-toolbar class="lessons-toolbar">
-        <span>Days</span>
+        <span>Itinerary</span>
         <div style="right: 0;">
           <button mat-icon-button color="accent" (click)="addItems()">
             <mat-icon aria-label="Add a New Lesson">add</mat-icon>
@@ -144,16 +140,23 @@
       </div>
       <div formArrayName="items" *ngFor="let itemForm of items.controls; let i = index">
       <div class="row" [formGroupName]="i">
-        <div class="col-3">
+        <div class="col-1">
           <div class="mb-3">
-            <input class="form-control" placeholder="Day" formControlName="name" type="number" />
-            <div class="invalid-feedback" *ngIf="items.controls[i].get('name')?.invalid">This input is required!
+            <input class="form-control" placeholder="Day" formControlName="tripDay" type="number" min="1" max="5" />
+            <div class="invalid-feedback" *ngIf="items.controls[i].get('tripDay')?.invalid">This input is required!
             </div>
           </div>
         </div>
-        <div class="col-8">
+        <div class="col-4">
           <div class="mb-3">
-            <input class="form-control" placeholder="Description" formControlName="description" />
+            <input class="form-control" placeholder="Title" formControlName="title" type="text" />
+            <div class="invalid-feedback" *ngIf="items.controls[i].get('title')?.invalid">This input is required!
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="mb-3">
+            <textarea class="form-control" placeholder="Description" formControlName="description"></textarea>
             <div class="invalid-feedback" class="invalid-feedback"
               *ngIf="items.controls[i].get('description')?.invalid">This input is
               required!
@@ -195,7 +198,7 @@
       </table> -->
     </div>
     <div class="mb-3">
-      <button mat-raised-button color="primary" type="submit">Create new Trip</button>
+      <button mat-raised-button color="primary" type="submit" (click)="addTrip()">Create new Trip</button>
     </div>
   </form>
 </div>

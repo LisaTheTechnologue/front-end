@@ -23,8 +23,12 @@ export class PostTripComponent {
   selectedFile: File | null;
   imagePreview: string | ArrayBuffer | null;
   fromDateModel: NgbDateStruct;
+  fromDate:Date;
+  toDate:Date;
   toDateModel: NgbDateStruct;
   today= new Date();
+  age:string;
+  status:string;
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
@@ -41,12 +45,13 @@ export class PostTripComponent {
     this.tripForm = this.fb.group({
       cityId: [null, [Validators.required]],
       title: [null, [Validators.required]],
+      introduction: [null, [Validators.required]],
       budget: [null, [Validators.required]],
       highlights: [null, [Validators.required]],
-      noOfParticipants: [null, [Validators.required]],
-      ageFrom: [null],
-      ageTo: [null],
-      ageAll: [null],
+      groupSize: [null, [Validators.required]],
+      fromAge: [null],
+      toAge: [null],
+      allAges: [null],
       fromDateModel: [null, [Validators.required]],
       toDateModel: [null, [Validators.required]],
       tripStatus: [null, [Validators.required]],
@@ -82,7 +87,8 @@ export class PostTripComponent {
   addItems() {
     const itemForm = this.fb.group({
       // _id: [lesson._id],
-      name: [null, [Validators.required]],
+      tripDay: [null, [Validators.required]],
+      title: [null, [Validators.required]],
       description: [null, [Validators.required]],
     });
     this.items.push(itemForm);
@@ -94,30 +100,55 @@ export class PostTripComponent {
   removeItem(index: number) {
     this.items.removeAt(index);
   }
+
+  onSelectFromDate(evt:any){
+    this.fromDate = new Date(evt.year,evt.month-1,evt.day);
+    console.log(this.fromDate);
+  }
+
+  onSelectToDate(evt:any){
+    this.toDate = new Date(evt.year,evt.month-1,evt.day);
+    console.log(this.toDate);
+  }
+
+  getTripStatus(){
+    const tripStatus = this.tripForm.get('tripStatus').value;
+    if(tripStatus==null) {
+      this.status = 'Draft';
+    } else {
+      this.status = 'Published';
+    }
+  }
   addTrip(): void {
-    if (this.tripForm.valid) {
+    this.getTripStatus();
+    // if (this.tripForm.valid) {
       const formData: FormData = new FormData();
       const userId = StorageService.getUserId();
       formData.append('img', this.selectedFile);
       formData.append('cityId', this.tripForm.get('cityId').value);
       formData.append('title', this.tripForm.get('title').value);
+      formData.append('introduction', this.tripForm.get('introduction').value);
       formData.append('highlights', this.tripForm.get('highlights').value);
       formData.append('budget', this.tripForm.get('budget').value);
       formData.append(
-        'noOfParticipants',
-        this.tripForm.get('noOfParticipants').value
+        'groupSize',
+        this.tripForm.get('groupSize').value
       );
-      formData.append('fromDate', this.tripForm.get('fromDate').value);
-      formData.append('toDate', this.tripForm.get('toDate').value);
+      formData.append('fromDate', this.fromDate.toISOString());
+      formData.append('toDate', this.toDate.toISOString());
       formData.append(
-        'tripStatusString',
-        this.tripForm.get('tripStatus').value
+        'tripStatus',
+        this.status
       );
       formData.append('userId', userId);
+      formData.append('fromAge',this.tripForm.get('fromAge').value);
+      formData.append('toAge',this.tripForm.get('toAge').value);
+      formData.append('tripLevel', this.tripForm.get('tripLevel').value);
       formData.append(
         'itemsJsonString',
         JSON.stringify(this.tripForm.get('items').value)
       );
+      formData.append('published', this.tripForm.get('budget').value);
       this.memberService.addTrip(formData).subscribe((res) => {
         if (res.id != null) {
           this.snackBar.open('Product Posted Successful!', 'Close', {
@@ -131,11 +162,11 @@ export class PostTripComponent {
           });
         }
       });
-    } else {
-      for (const i in this.tripForm.controls) {
-        this.tripForm.controls[i].markAsDirty();
-        this.tripForm.controls[i].updateValueAndValidity();
-      }
-    }
+    // } else {
+    //   for (const i in this.tripForm.controls) {
+    //     this.tripForm.controls[i].markAsDirty();
+    //     this.tripForm.controls[i].updateValueAndValidity();
+    //   }
+    // }
   }
 }

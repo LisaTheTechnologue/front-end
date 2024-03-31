@@ -1,5 +1,6 @@
 export interface TripItem {
   _id: string;
-  name: string;
+  tripDay: number;
+  title: string;
   description: string;
 }

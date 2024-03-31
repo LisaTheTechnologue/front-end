@@ -9,6 +9,9 @@ import { Trip } from 'src/app/_shared/models/trip.model';
   styleUrls: ['./trip-details.component.css']
 })
 export class TripDetailsComponent {
+joinTrip() {
+throw new Error('Method not implemented.');
+}
   image: any;
   tripId: number = this.activatedRoute.snapshot.params["tripId"];
   trip!: Trip;

@@ -9,8 +9,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./trip-index.component.css'],
 })
 export class TripIndexComponent {
-  trips: Trip[] = [];
+  trips: any[]=[];
   searchText: string = '';
+  searchTripForm!:FormGroup;
   // form = this.fb.group({
   //   searchText: [''],
   // });
@@ -50,6 +51,17 @@ export class TripIndexComponent {
     // } else {
     //   this.trips = []; // Clear results if search text is empty
     // }
+  }
+  submitForm(){
+    // this.trips = [];
+    const title = this.searchTripForm.get('title')!.value;
+    this.tripService.search(this.searchText).subscribe(res => {
+      res.forEach(element => {
+        element.processedImg = 'data:image/jpeg;base64,'+element.byteImg;
+        this.trips.push(element);
+      });
+      console.log(this.trips);
+    })
   }
   deleteTrip(id: number) {
     this.tripService.delete(id).subscribe((res) => {

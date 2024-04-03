@@ -23,24 +23,27 @@ export class PostTripComponent {
   selectedFile: File | null;
   imagePreview: string | ArrayBuffer | null;
   fromDateModel: NgbDateStruct;
-  fromDate:Date;
-  toDate:Date;
+  fromDate: Date;
+  toDate: Date;
   toDateModel: NgbDateStruct;
-  today= new Date();
-  age:string;
-  status:string;
+  today = new Date();
+  age: string;
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private memberService: MemberService,
     private router: Router,
-    private config: NgbDatepickerConfig) {
-      const current = new Date();
-      config.minDate = { year: current.getFullYear(), month:
-      current.getMonth() + 1, day: current.getDate() };
-        //config.maxDate = { year: 2099, month: 12, day: 31 };
-      config.outsideDays = 'hidden';
-    }
+    private config: NgbDatepickerConfig
+  ) {
+    const current = new Date();
+    config.minDate = {
+      year: current.getFullYear(),
+      month: current.getMonth() + 1,
+      day: current.getDate(),
+    };
+    //config.maxDate = { year: 2099, month: 12, day: 31 };
+    config.outsideDays = 'hidden';
+  }
   ngOnInit(): void {
     this.tripForm = this.fb.group({
       cityId: [null, [Validators.required]],
@@ -101,67 +104,51 @@ export class PostTripComponent {
     this.items.removeAt(index);
   }
 
-  onSelectFromDate(evt:any){
-    this.fromDate = new Date(evt.year,evt.month-1,evt.day);
+  onSelectFromDate(evt: any) {
+    this.fromDate = new Date(evt.year, evt.month - 1, evt.day);
     console.log(this.fromDate);
   }
 
-  onSelectToDate(evt:any){
-    this.toDate = new Date(evt.year,evt.month-1,evt.day);
+  onSelectToDate(evt: any) {
+    this.toDate = new Date(evt.year, evt.month - 1, evt.day);
     console.log(this.toDate);
   }
 
-  getTripStatus(){
-    const tripStatus = this.tripForm.get('tripStatus').value;
-    if(tripStatus==null) {
-      this.status = 'Draft';
-    } else {
-      this.status = 'Published';
-    }
-  }
-  addTrip(): void {
-    this.getTripStatus();
+  submit(status: string): void {
     // if (this.tripForm.valid) {
-      const formData: FormData = new FormData();
-      const userId = StorageService.getUserId();
-      formData.append('img', this.selectedFile);
-      formData.append('cityId', this.tripForm.get('cityId').value);
-      formData.append('title', this.tripForm.get('title').value);
-      formData.append('introduction', this.tripForm.get('introduction').value);
-      formData.append('highlights', this.tripForm.get('highlights').value);
-      formData.append('budget', this.tripForm.get('budget').value);
-      formData.append(
-        'groupSize',
-        this.tripForm.get('groupSize').value
-      );
-      formData.append('fromDate', this.fromDate.toISOString());
-      formData.append('toDate', this.toDate.toISOString());
-      formData.append(
-        'tripStatus',
-        this.status
-      );
-      formData.append('userId', userId);
-      formData.append('fromAge',this.tripForm.get('fromAge').value);
-      formData.append('toAge',this.tripForm.get('toAge').value);
-      formData.append('tripLevel', this.tripForm.get('tripLevel').value);
-      formData.append(
-        'itemsJsonString',
-        JSON.stringify(this.tripForm.get('items').value)
-      );
-      formData.append('published', this.tripForm.get('budget').value);
-      this.memberService.addTrip(formData).subscribe((res) => {
-        if (res.id != null) {
-          this.snackBar.open('Product Posted Successful!', 'Close', {
-            duration: 5000,
-          });
-          this.router.navigateByUrl('/member/my-trips');
-        } else {
-          this.snackBar.open(res.message, 'ERROR', {
-            duration: 5000,
-            panelClass: 'error-snackbar',
-          });
-        }
-      });
+    const formData: FormData = new FormData();
+    const userId = StorageService.getUserId();
+    formData.append('img', this.selectedFile);
+    formData.append('cityId', this.tripForm.get('cityId').value);
+    formData.append('title', this.tripForm.get('title').value);
+    formData.append('introduction', this.tripForm.get('introduction').value);
+    formData.append('highlights', this.tripForm.get('highlights').value);
+    formData.append('budget', this.tripForm.get('budget').value);
+    formData.append('groupSize', this.tripForm.get('groupSize').value);
+    formData.append('fromDate', this.fromDate.toISOString());
+    formData.append('toDate', this.toDate.toISOString());
+    formData.append('tripStatus', status);
+    formData.append('userId', userId);
+    formData.append('fromAge', this.tripForm.get('fromAge').value);
+    formData.append('toAge', this.tripForm.get('toAge').value);
+    formData.append('tripLevel', this.tripForm.get('tripLevel').value);
+    formData.append(
+      'itemsJsonString',
+      JSON.stringify(this.tripForm.get('items').value)
+    );
+    this.memberService.addTrip(formData).subscribe((res) => {
+      if (res.id != null) {
+        this.snackBar.open('Product Posted Successful!', 'Close', {
+          duration: 5000,
+        });
+        this.router.navigateByUrl('/member/my-trips');
+      } else {
+        this.snackBar.open(res.message, 'ERROR', {
+          duration: 5000,
+          panelClass: 'error-snackbar',
+        });
+      }
+    });
     // } else {
     //   for (const i in this.tripForm.controls) {
     //     this.tripForm.controls[i].markAsDirty();

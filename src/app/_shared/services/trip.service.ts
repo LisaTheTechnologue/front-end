@@ -34,10 +34,10 @@ export class TripService {
       .pipe(catchError(this.errorHandler));
   }
 
-  search(title: string): Observable<Trip[]> {
+  search(title: string): Observable<any> {
     // const url = `<span class="math-inline">\{this\.tripsAPI\}/search?title\=</span>{title}`;
     // return this.httpClient.get<Trip[]>(url); //`${this.tripsAPI}/search?title=${title}`);
-    return this.httpClient.get<Trip[]>(`${this.tripsAPI}?title=${title}`);
+    return this.httpClient.get<any>(`${this.tripsAPI}?title=${title}`);
   }
 
 

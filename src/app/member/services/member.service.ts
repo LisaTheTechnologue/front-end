@@ -54,4 +54,17 @@ export class MemberService {
       'Authorization','Bearer ' + StorageService.getToken()
     )
   }
+
+  delete(id: number) {
+    return this.http
+      .delete(this.AUTH_API + id, {
+        headers: this.createAuthorizationHeader(),
+      })
+  }
+
+  search(title: string): Observable<any> {
+    // const url = `<span class="math-inline">\{this\.tripsAPI\}/search?title\=</span>{title}`;
+    // return this.httpClient.get<Trip[]>(url); //`${this.tripsAPI}/search?title=${title}`);
+    return this.http.get(`${this.AUTH_API}/title=${title}`);
+  }
 }

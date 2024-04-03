@@ -7,12 +7,14 @@ import { DasboardComponent } from './components/dasboard/dasboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../MaterialModule';
+import { TripViewComponent } from './components/trip-view/trip-view.component';
 
 
 @NgModule({
   declarations: [
     AdminComponent,
-    DasboardComponent
+    DasboardComponent,
+    TripViewComponent
   ],
   imports: [
     CommonModule,

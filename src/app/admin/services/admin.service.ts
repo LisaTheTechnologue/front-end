@@ -22,23 +22,39 @@ export class AdminService {
       headers: this.createAuthorizationHeader(),
     })
   }
-
-  addTrip (tripDto:any): Observable<any>{
-    return this.http.post(this.AUTH_API+'trip', tripDto, {
-      headers: this.createAuthorizationHeader(),
-    })
-  }
-
   getAllTrips(): Observable<any>{
     return this.http.get(this.AUTH_API+'trips', {
       headers: this.createAuthorizationHeader(),
     })
   }
-
+  getTripById(tripId:number): Observable<any>{
+    // const userId = StorageService.getUserId();
+    return this.http.get(this.AUTH_API+`trips/trip/${tripId}`, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
+  changeStatus(tripId:number,status:string): Observable<any>{
+    return this.http.post(this.AUTH_API+`trips/trip/${tripId}/${status}`, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
   getAllTripsByName(name: any): Observable<any>{
     return this.http.get(this.AUTH_API+`trips/search/${name}`, {
       headers: this.createAuthorizationHeader(),
     })
+  }
+
+  delete(id: number) {
+    return this.http
+      .delete(this.AUTH_API + id, {
+        headers: this.createAuthorizationHeader(),
+      })
+  }
+
+  search(title: string): Observable<any> {
+    // const url = `<span class="math-inline">\{this\.tripsAPI\}/search?title\=</span>{title}`;
+    // return this.httpClient.get<Trip[]>(url); //`${this.tripsAPI}/search?title=${title}`);
+    return this.http.get(`${this.AUTH_API}/title=${title}`);
   }
 
   private createAuthorizationHeader(): HttpHeaders{

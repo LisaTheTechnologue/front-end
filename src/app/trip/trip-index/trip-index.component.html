@@ -1,45 +1,59 @@
 
-  <div class="d-flex justify-content-center h1">Angular 16 CRUD Example - ItSolutionStuff.com</div>
-
-  <a href="#" routerLink="/trips/create" class="btn btn-success">Create New trip</a>
-  <div class="input-group mb-3">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Search by title"
-      [(ngModel)]="searchText"
-    />
-    <div class="input-group-append">
-      <button
-        class="btn btn-outline-secondary"
-        type="button"
-        (click)="onSearch()"
-      >
-        Search
+<form [formGroup]="searchTripForm" class="search-form" (submit)="submitForm()">
+  <mat-form-field appearance="outline" class="search-input">
+    <mat-label>Enter Keyword to search</mat-label>
+    <input matInput type="text" placeholder="Enter Keyword to search" formControlName="title">
+      <button mat-button matSuffix color="primary" [disabled]="searchTripForm.invalid">
+        <mat-icon>search</mat-icon>
       </button>
+  </mat-form-field>
+</form>
+<button mat-raised-button color="accent" class="create-button"
+        routerLink="/member/create-trip">Create</button>
+<div class="product-list my-5">
+  <div *ngFor="let trip of trips">
+    <div class="card" style="width: 19rem;">
+      <img class="card-img-top" [src]="trip.processedImg" alt="product-image">
+      <div class="card-body">
+        <aside class="mt-meta">
+          <span class="info">{{ trip.fromDate }} - {{ trip.toDate}} | {{ trip.tripLevel}} level </span>
+        </aside>
+        <div class="h5">{{ trip.title }}</div>
+        <p class="card-text">{{ trip.introduction }}</p>
+        <div class="mt-price"> VND {{ trip.budget | currency: 'VND' }}/pax | Group size: {{ trip.groupSize }} </div>
+        <div class="mt-action">
+        <a href="#" class="btn btn-success">Join Trip</a>
+        <a href="#" class="btn btn-success">Report</a>
+      </div>
+      </div>
     </div>
+    <!-- <div class="product-image">
+      <img [src]="trip.processedImg" alt="product-image">
+    </div>
+    <div class="product-details">
+      <h2 class="product-name">{{ trip.title }}</h2>
+      <mat-divider></mat-divider>
+      <div class="product-info">
+        <div class="info-row">
+          <span class="info-label">Budget:</span>
+          <span class="info-value">${{trip.budget}}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Number of people:</span>
+          <span class="info-value">{{trip.groupSize}}</span>
+        </div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="actions">
+      <button mat-raised-button color="primary" class="update-button"
+        routerLink="'/member/faq'+ trip.id">FAQ</button>
+        <button mat-raised-button color="accent" class="update-button"
+        routerLink="/member/my-trips/{{trip.id}}">Details</button>
+         <button mat-raised-button color="warn" class="delete-button"
+        (click)="deleteProduct(product.id)">Delete</button>
+    </div> -->
   </div>
-  <!-- <input type="text" formControlName="searchText" placeholder="Search by title">
-  <button (click)="onSearch()">Search</button> -->
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Highlights</th>
-        <th width="250px">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let trip of trips">
-        <td>{{ trip.id }}</td>
-        <td>{{ trip.title }}</td>
-        <td>{{ trip.highlights }}</td>
-        <td>
-          <a href="#" [routerLink]="['/trips/view/', trip.id]" class="btn btn-info">View</a>
-          <a href="#" [routerLink]="['/trips/edit/', trip.id]" class="btn btn-primary">Edit</a>
-          <button type="button" (click)="deleteTrip(trip.id)" class="btn btn-danger">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+
+</div>
+

@@ -117,15 +117,6 @@
     </div>
 
     <div class="mb-3">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="gridCheck1" formControlName="tripStatus" value="Published">
-        <label class="form-check-label" for="gridCheck1">
-          Published?
-        </label>
-      </div>
-    </div>
-
-    <div class="mb-3">
       <mat-toolbar class="lessons-toolbar">
         <span>Itinerary</span>
         <div style="right: 0;">
@@ -198,7 +189,11 @@
       </table> -->
     </div>
     <div class="mb-3">
-      <button mat-raised-button color="primary" type="submit" (click)="addTrip()">Create new Trip</button>
+      <button mat-raised-button color="primary"
+      type="submit" (click)="submit('request')">Request approve</button>
+      <button mat-raised-button color="primary"
+      type="button" (click)="submit('draft')">Draft</button>
+
     </div>
   </form>
 </div>

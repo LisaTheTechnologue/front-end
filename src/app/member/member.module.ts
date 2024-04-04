@@ -13,13 +13,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { PostReportComponent } from './components/post-report/post-report.component';
+import { JoinedTripsComponent } from './components/joined-trips/joined-trips.component';
 
 @NgModule({
   declarations: [
     MemberComponent,
     PostTripComponent,
     MyTripsComponent,
-    TripDetailsComponent
+    TripDetailsComponent,
+    JoinedTripsComponent
   ],
   imports: [
     CommonModule,

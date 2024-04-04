@@ -62,7 +62,7 @@ export class TripViewComponent implements OnInit {
       };
       this.memberService.joinTrip(tripMember).subscribe((res) => {
         if (res.id != null) {
-          this.snackBar.open('Product Posted Successful!', 'Close', {
+          this.snackBar.open('You are on board!', 'Close', {
             duration: 5000,
           });
         } else {

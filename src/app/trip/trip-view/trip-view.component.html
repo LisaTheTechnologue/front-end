@@ -1,43 +1,50 @@
-
-  <div class="d-flex justify-content-center h1">View Trip</div>
-
-  <button mat-raised-button type="button" (click)="onCancel()" class="btn-space">Back</button>
-
-  <div>
-    <strong>Title:</strong>
-    <p>{{ trip.title }}</p>
-  </div>
-
-  <div>
-    <strong>Highlights:</strong>
-    <p>{{ trip.highlights }}</p>
-  </div>
-
-  <div>
-    <strong>Status:</strong>
-    <p>{{ trip.status }}</p>
-  </div>
-
-  <div>
-    <strong>Itinerary:</strong>
-    <table class="table table-striped">
-      <tbody>
-        <tr *ngFor="let item of items">
-          <td><strong> Day {{ item.name }} </strong></td>
-          <td>{{ item.description }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <!-- <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap="wrap" *ngFor="let image of images; index as i">
-    <div class="item" [fxFlex]="((i + 1) % 3 === 0) ? '100%' : '50%'">
-      <div fxLayoutAlign="center" class="item-label">
-        <img [src]="getImageSrc(image)" alt="Image" width="100%">
-        </div></div></div> -->
-  <div fxLayout="row wrap" fxLayoutGap="10px" *ngFor="let image of images; index as i">
-      <div fxLayoutAlign="center" [fxFlex]="((i + 1) % 3 === 0) ? '100%' : '50%'">
-        <img [src]="getImageSrc(image.picByte)" alt="Image" width="70%">
+<div class="container my-5">
+<div *ngIf="trip">
+  <div class="container d-grid gap-4">
+    <div class="row heading">
+      <div class="col">
+        <p class="h3">{{ trip.title }}</p>
+        <p class="info">{{ trip.fromDate }} - {{ trip.toDate }}</p>
+        <p>{{ trip.highlights }}</p>
+      </div>
+      <div class="col-6 d-flex justify-content-center">
+        <img [src]="trip.processedImg" alt="trip-image">
       </div>
     </div>
-
-
+    <div class="row ">
+      <div class="col-3">
+        <p>Adventure Level: {{trip.tripLevel}}</p>
+      </div>
+      <div class="col-3">
+        <p>Age {{trip.fromAge}} - {{trip.toAge}} years old</p>
+      </div>
+      <div class="col-3">
+        <p>{{trip.budget}}/pax</p>
+      </div>
+      <div class="col-3">
+        <p>Number of team member: {{trip.groupSize}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <strong>Itinerary:</strong>
+      <table class="table table-striped mt-1">
+        <tbody>
+          <tr *ngFor="let item of trip.items">
+            <td>Day {{ item.tripDay }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.description }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row mb-2">
+      <button type="button" class="btn btn-success" (click)="joinTrip()">
+        <mat-icon aria-label="join">input</mat-icon> Join Trip
+      </button>
+      <button type="button" class="btn btn-danger" (click)="reportTrip()">
+        <mat-icon aria-label="join">input</mat-icon> Report Trip
+      </button>
+    </div>
+  </div>
+</div>
+</div>

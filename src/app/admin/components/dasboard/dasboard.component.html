@@ -1,6 +1,7 @@
 
 
-<a href="#" routerLink="/trips/create" class="btn btn-success">Create New trip</a>
+<div class="container my-5">
+<a href="#" routerLink="/trips/create" type="button" class="btn btn-success">Create New trip</a>
 <div class="input-group mb-3">
   <input
     type="text"
@@ -25,7 +26,6 @@
     <tr>
       <th>ID</th>
       <th>Title</th>
-      <th>Highlights</th>
       <th>Time</th>
       <th>Status</th>
       <th width="250px">Action</th>
@@ -36,12 +36,11 @@
       <td>{{ trip.id }}</td>
       <td>{{ trip.title }}</td>
       <td>{{ trip.fromDate }} - {{ trip.toDate }}</td>
-      <td>{{ trip.highlights }}</td>
-      <td>{{ trip.status }}</td>
+      <td>{{ trip.tripStatus }}</td>
       <td>
-        <a href="#" [routerLink]="['/trips/view/', trip.id]" class="btn btn-info">View</a>
-        <a href="#" [routerLink]="['/trips/edit/', trip.id]" class="btn btn-primary">Edit</a>
+        <a href="#" [routerLink]="['/admin/trip/', trip.id]" class="btn btn-info">View</a>
       </td>
     </tr>
   </tbody>
 </table>
+</div>

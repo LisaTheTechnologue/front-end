@@ -1,3 +1,4 @@
+<div class="container my-5">
 <div *ngIf="trip">
   <div class="container d-grid gap-4">
     <div class="row heading">
@@ -37,14 +38,25 @@
       </table>
     </div>
     <div class="row mb-2">
-      <div *ngIf="approved">
-        <button type="button" class="btn btn-success" (click)="changeStatus('approve')">
-          <mat-icon aria-label="join">input</mat-icon> Approve
-        </button>
-      </div>
-      <button type="button" class="btn btn-success" (click)="changeStatus('cancel')">
-        <mat-icon aria-label="join">input</mat-icon> Cancel
-      </button>
+      <form [formGroup]="form" class="search-form">
+        <div class="col-4">
+          <mat-form-field appearance="outline" class="search-input">
+            <mat-label>Reason</mat-label>
+            <input matInput type="text" placeholder="Enter Reason" formControlName="reason"></mat-form-field>
+        </div>
+        <div *ngIf="!approved" class="col-4">
+          <button type="button" class="btn btn-success" (click)="changeStatus('approve')">
+            Approve
+          </button>
+        </div>
+        <div class="col-4">
+          <button type="button" class="btn btn-danger" (click)="changeStatus('cancel')">
+            Cancel
+          </button>
+        </div>
+
+      </form>
     </div>
   </div>
+</div>
 </div>

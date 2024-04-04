@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, first } from 'rxjs/operators';
-import { Trip } from '../../trip/_models/trip';
 import { AppSettings } from '../app-settings';
 import { User } from '../models/user.model';
 @Injectable({

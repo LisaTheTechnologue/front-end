@@ -38,7 +38,8 @@ const routes: Routes = [
       { path: "login", component: LoginComponent},
       { path: "signup", component: SignupComponent},
       { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
-      { path: 'member', loadChildren: () => import('./member/member.module').then(m => m.MemberModule) }
+      { path: 'member', loadChildren: () => import('./member/member.module').then(m => m.MemberModule) },
+      { path: 'trips', loadChildren: () => import('./trip/trip.module').then(m => m.TripModule) }
       // { path: 'dashboard',
       //   component: BoardUserComponent,
       //   children: [ // Level 2 child

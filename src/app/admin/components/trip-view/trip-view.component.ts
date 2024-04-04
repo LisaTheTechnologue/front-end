@@ -3,6 +3,8 @@ import { AdminService } from '../../services/admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Trip } from 'src/app/_shared/models/trip.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TripStatusDto } from 'src/app/_shared/models/trip-status.model';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-trip-view',
@@ -14,13 +16,18 @@ export class TripViewComponent {
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   trip!: Trip;
   approved: boolean = false;
+  form!:FormGroup;
   constructor(
     private adminService: AdminService,
     private activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) {}
   ngOnInit() {
+    this.form = this.fb.group({
+      reason: [''],
+    });
     this.getTrip();
   }
   getTrip() {
@@ -37,7 +44,13 @@ export class TripViewComponent {
     });
   }
   changeStatus(status: string) {
-    this.adminService.changeStatus(this.tripId,status).subscribe((res) => {
+    const tripStatusChange: TripStatusDto = {
+      tripId: this.tripId,
+      tripStatus: status,
+      reason: this.form.get('reason')!.value
+    };
+    console.log(tripStatusChange);
+    this.adminService.changeStatus(tripStatusChange).subscribe((res) => {
       if (res.id != null) {
         this.snackBar.open('Product Posted Successful!', 'Close', {
           duration: 5000,

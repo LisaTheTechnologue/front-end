@@ -29,12 +29,12 @@ export class AdminService {
   }
   getTripById(tripId:number): Observable<any>{
     // const userId = StorageService.getUserId();
-    return this.http.get(this.AUTH_API+`trips/trip/${tripId}`, {
+    return this.http.get(this.AUTH_API+`trip/${tripId}`, {
       headers: this.createAuthorizationHeader(),
     })
   }
-  changeStatus(tripId:number,status:string): Observable<any>{
-    return this.http.post(this.AUTH_API+`trips/trip/${tripId}/${status}`, {
+  changeStatus(tripStatusDto: any): Observable<any>{
+    return this.http.post(this.AUTH_API+`update-trip`,tripStatusDto, {
       headers: this.createAuthorizationHeader(),
     })
   }

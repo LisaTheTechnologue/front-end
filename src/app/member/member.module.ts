@@ -12,6 +12,7 @@ import { TripDetailsComponent } from './components/trip-details/trip-details.com
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { PostReportComponent } from './components/post-report/post-report.component';
 
 @NgModule({
   declarations: [
@@ -26,9 +27,9 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    MatFormFieldModule,
-    MatInputModule,
+    // HttpClientModule,
+    // MatFormFieldModule,
+    // MatInputModule,
     NgbDatepickerModule
   ]
 })

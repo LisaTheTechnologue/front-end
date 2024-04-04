@@ -1,19 +1,19 @@
 
+<div class="container my-5">
 <form [formGroup]="searchTripForm" class="search-form" (submit)="submitForm()">
   <mat-form-field appearance="outline" class="search-input">
     <mat-label>Enter Keyword to search</mat-label>
-    <input matInput type="text" placeholder="Enter Keyword to search" formControlName="title">
+    <input matInput type="text" placeholder="Enter Keyword to search" formControlName="searchText">
       <button mat-button matSuffix color="primary" [disabled]="searchTripForm.invalid">
         <mat-icon>search</mat-icon>
       </button>
   </mat-form-field>
 </form>
-<button mat-raised-button color="accent" class="create-button"
-        routerLink="/member/create-trip">Create</button>
-<div class="product-list my-5">
+
+<div class="my-5">
   <div *ngFor="let trip of trips">
     <div class="card" style="width: 19rem;">
-      <img class="card-img-top" [src]="trip.processedImg" alt="product-image">
+      <img class="card-img-top" [src]="trip.processedImg" alt="trip-image">
       <div class="card-body">
         <aside class="mt-meta">
           <span class="info">{{ trip.fromDate }} - {{ trip.toDate}} | {{ trip.tripLevel}} level </span>
@@ -23,7 +23,7 @@
         <div class="mt-price"> VND {{ trip.budget | currency: 'VND' }}/pax | Group size: {{ trip.groupSize }} </div>
         <div class="mt-action">
         <a href="#" class="btn btn-success">Join Trip</a>
-        <a href="#" class="btn btn-success">Report</a>
+        <a href="#" class="btn btn-danger" [routerLink]="['/trips/report', trip.id]" >Report</a>
       </div>
       </div>
     </div>
@@ -57,3 +57,4 @@
 
 </div>
 
+</div>

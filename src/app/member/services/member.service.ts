@@ -47,7 +47,17 @@ export class MemberService {
       headers: this.createAuthorizationHeader(),
     })
   }
-
+  joinTrip(tripMember:any): Observable<any>{
+    return this.http.post(this.AUTH_API+'trips/join-trip', tripMember, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
+  reportTrip(tripId:number): Observable<any>{
+    const userId = StorageService.getUserId();
+    return this.http.post(this.AUTH_API+`trips/report/${tripId}/by/${userId}`, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
   private createAuthorizationHeader(): HttpHeaders{
     console.log(StorageService.getToken());
     return new HttpHeaders().set(

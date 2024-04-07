@@ -2,22 +2,7 @@ nav-item a{
   color:black;
 }
 .footer {
-  position: absolute;
-  width:100%;
   height: 50px;
   text-align: center;
   color: white;
-  padding-top: 10px;
-}
-button {
-  color: white;
-}
-
-button.active {
-  background-color: white;
-  color: #000;
-}
-
-.body-container {
-  min-height: 90vh;
 }

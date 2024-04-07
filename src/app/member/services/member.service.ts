@@ -47,14 +47,19 @@ export class MemberService {
       headers: this.createAuthorizationHeader(),
     })
   }
+  getAllJoinTrips(): Observable<any>{
+    const userId = StorageService.getUserId();
+    return this.http.get(this.AUTH_API+`trips/join-trip-list/${userId}`, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
   joinTrip(tripMember:any): Observable<any>{
     return this.http.post(this.AUTH_API+'trips/join-trip', tripMember, {
       headers: this.createAuthorizationHeader(),
     })
   }
-  reportTrip(tripId:number): Observable<any>{
-    const userId = StorageService.getUserId();
-    return this.http.post(this.AUTH_API+`trips/report/${tripId}/by/${userId}`, {
+  reportTrip(formData:any): Observable<any>{
+    return this.http.post(this.AUTH_API+'trips/report/', formData, {
       headers: this.createAuthorizationHeader(),
     })
   }

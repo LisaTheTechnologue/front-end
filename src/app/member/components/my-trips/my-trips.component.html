@@ -1,24 +1,13 @@
-
-
-<div class="container my-5">
-<button mat-raised-button color="success" class="create-button"
-        routerLink="/member/create-trip">Create New Trip</button>
-
 <div class="input-group mb-3">
-  <input
-    type="text"
-    class="form-control"
-    placeholder="Search by title"
-    [(ngModel)]="searchText"
-  />
-  <div class="input-group-append">
-    <button
-      class="btn btn-outline-secondary"
-      type="button"
-      (click)="onSearch()"
-    >
-      Search
+  <input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="searchText" />
+  <div class="mx-2">
+    <button mat-flat-button color="primary" (click)="onSearch()">
+      <mat-icon>search</mat-icon><span> Search</span>
     </button>
+  </div>
+  <div class="mx-2">
+    <button mat-flat-button color="success" routerLink="/member/my-trips/create">
+      <mat-icon>add</mat-icon> <span>Create New Trip</span></button>
   </div>
 </div>
 <!-- <input type="text" formControlName="searchText" placeholder="Search by title">
@@ -47,4 +36,3 @@
     </tr>
   </tbody>
 </table>
-</div>

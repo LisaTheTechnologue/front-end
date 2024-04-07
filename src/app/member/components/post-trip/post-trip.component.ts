@@ -11,7 +11,9 @@ import { Router } from '@angular/router';
 import { MemberService } from '../../services/member.service';
 import { StorageService } from 'src/app/_shared/services/storage.service';
 import { NgbDateStruct, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from 'src/app/_shared/components/error-dialog/error-dialog.component';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-post-trip',
   templateUrl: './post-trip.component.html',
@@ -32,6 +34,8 @@ export class PostTripComponent {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private memberService: MemberService,
+    private location: Location,
+    private dialog: MatDialog,
     private router: Router,
     private config: NgbDatepickerConfig
   ) {
@@ -51,6 +55,7 @@ export class PostTripComponent {
       introduction: [null, [Validators.required]],
       budget: [null, [Validators.required]],
       highlights: [null, [Validators.required]],
+      notes: [null, [Validators.required]],
       groupSize: [null, [Validators.required]],
       fromAge: [null],
       toAge: [null],
@@ -125,6 +130,7 @@ export class PostTripComponent {
     formData.append('highlights', this.tripForm.get('highlights').value);
     formData.append('budget', this.tripForm.get('budget').value);
     formData.append('groupSize', this.tripForm.get('groupSize').value);
+    formData.append('notes', this.tripForm.get('notes').value);
     formData.append('fromDate', this.fromDate.toISOString());
     formData.append('toDate', this.toDate.toISOString());
     formData.append('tripStatus', status);
@@ -136,24 +142,41 @@ export class PostTripComponent {
       'itemsJsonString',
       JSON.stringify(this.tripForm.get('items').value)
     );
-    this.memberService.addTrip(formData).subscribe((res) => {
-      if (res.id != null) {
-        this.snackBar.open('Product Posted Successful!', 'Close', {
-          duration: 5000,
-        });
-        this.router.navigateByUrl('/member/my-trips');
-      } else {
-        this.snackBar.open(res.message, 'ERROR', {
-          duration: 5000,
-          panelClass: 'error-snackbar',
-        });
-      }
-    });
+    this.memberService.addTrip(formData).subscribe(
+    //   (res) => {
+    //   if (res.id != null) {
+    //     this.snackBar.open('Product Posted Successful!', 'Close', {
+    //       duration: 5000,
+    //     });
+    //     this.router.navigateByUrl('/member/my-trips');
+    //   } else {
+    //     this.snackBar.open(res.message, 'ERROR', {
+    //       duration: 5000,
+    //       panelClass: 'error-snackbar',
+    //     });
+    //   }
+    // }
+     {next: () => this.onSuccess(),
+        error: () => this.onError()}
+  );
     // } else {
     //   for (const i in this.tripForm.controls) {
     //     this.tripForm.controls[i].markAsDirty();
     //     this.tripForm.controls[i].updateValueAndValidity();
     //   }
     // }
+  }
+  onCancel() {
+    this.location.back();
+  }
+  private onSuccess() {
+    this.snackBar.open('Course saved successfully!', '', { duration: 5000 });
+    this.onCancel();
+  }
+
+  private onError() {
+    this.dialog.open(ErrorDialogComponent, {
+      data: 'Error saving course.'
+    });
   }
 }

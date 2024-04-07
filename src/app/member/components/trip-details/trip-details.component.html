@@ -37,10 +37,25 @@
         </tbody>
       </table>
     </div>
+
+    <div class="row">
+      <strong>Members:</strong>
+      <ul>
+        <li *ngFor="let item of trip.members; let i = index">
+          {{ i + 1 }}: ${{ item.userName }}
+        </li>
+      </ul>
+    </div>
     <div class="row mb-2">
-      <button type="button" class="btn btn-success" (click)="joinTrip()">
-        <mat-icon aria-label="join">input</mat-icon> Join Trip
-      </button>
+      <div *ngIf="isJoined">
+        <button type="button" class="btn btn-success" (click)="joinTrip()">
+          <mat-icon aria-label="join">input</mat-icon> Revoke Join Trip
+        </button>
+      </div>
+      <div *ngIf="!isJoined">
+        <button type="button" class="btn btn-success" (click)="joinTrip()">
+          <mat-icon aria-label="join">input</mat-icon> Join Trip
+        </button></div>
       <button type="button" class="btn btn-danger" (click)="reportTrip()">
         <mat-icon aria-label="join">input</mat-icon> Report Trip
       </button>

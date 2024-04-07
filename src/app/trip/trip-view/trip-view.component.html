@@ -4,6 +4,7 @@
     <div class="row heading">
       <div class="col">
         <p class="h3">{{ trip.title }}</p>
+        <p class="info">Lead by: {{ trip.leaderName }}</p>
         <p class="info">{{ trip.fromDate }} - {{ trip.toDate }}</p>
         <p>{{ trip.highlights }}</p>
       </div>
@@ -37,10 +38,25 @@
         </tbody>
       </table>
     </div>
+
+    <div class="row">
+      <strong>Your company:</strong>
+      <ol class="list-group list-group-numbered">
+        <li class="list-group-item" *ngFor="let item of trip.members; let i = index">
+          {{ item.userName }}
+        </li>
+      </ol>
+    </div>
     <div class="row mb-2">
+      <div *ngIf="isJoined">
+      <button type="button" class="btn btn-success" (click)="joinTrip()">
+        <mat-icon aria-label="join">input</mat-icon> Revoke Join Trip
+      </button>
+    </div>
+    <div *ngIf="!isJoined">
       <button type="button" class="btn btn-success" (click)="joinTrip()">
         <mat-icon aria-label="join">input</mat-icon> Join Trip
-      </button>
+      </button></div>
       <button type="button" class="btn btn-danger" (click)="reportTrip()">
         <mat-icon aria-label="join">input</mat-icon> Report Trip
       </button>

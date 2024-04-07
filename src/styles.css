@@ -1,9 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import "../node_modules/bootstrap/dist/css/bootstrap.css";
 html, body { height: 100%; }
 body {
   color: #0e2517;
   background: #fdfbf1;
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif !important;
+
+}
+
+/* Custom buttons */
+body {
+  .mdc-button.mat-success,
+  .mat-mdc-stroked-button.mat-success {
+    color: #00af29;
+  }
+  .mat-mdc-unelevated-button.mat-success:hover,
+  .mat-mdc-raised-button.mat-success:hover {
+    color: #f0fff3;
+    background-color: #00af29;
+  }
+
+  .mat-mdc-unelevated-button:not(:disabled, :hover).mat-success,
+  .mat-mdc-raised-button.mat-success,
+  .mat-mdc-fab.mat-success,
+  .mat-mdc-mini-fab.mat-success {
+    color: #f0fff3;
+    background-color: #00af29;
+  }
+  .mat-mdc-icon-button.mat-success {
+    color: #00af29;
+  }
 }

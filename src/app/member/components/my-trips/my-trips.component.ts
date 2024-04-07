@@ -5,7 +5,7 @@ import { MemberService } from '../../services/member.service';
 import { Trip } from 'src/app/_shared/models/trip.model';
 
 @Component({
-  selector: 'app-dasboard',
+  selector: 'app-my-trips',
   templateUrl: './my-trips.component.html',
   styleUrls: ['./my-trips.component.css']
 })

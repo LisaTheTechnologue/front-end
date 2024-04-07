@@ -18,6 +18,7 @@ export class TripViewComponent implements OnInit {
   trip!: Trip;
   isMemberLoggedIn: boolean;
   isAdminLoggedIn: boolean;
+  isJoined: boolean;
   constructor(
     private tripService: TripService,
     private memberService: MemberService,
@@ -34,6 +35,7 @@ export class TripViewComponent implements OnInit {
   }
   getTrip() {
     // this.trip = new Trip();
+    const userId = StorageService.getUserId();
     this.tripService.getById(this.tripId).subscribe((res) => {
       console.log(res);
       this.trip = res;
@@ -42,6 +44,12 @@ export class TripViewComponent implements OnInit {
       // this.trip.budget = res.budget;
       this.trip.processedImg = 'data:image/jpeg;base64,' + res.byteImg;
       this.image = this.trip.processedImg;
+      for (var index in res.members) {
+        if(res.members[index].userId = userId){
+          this.isJoined = true;
+          break;
+        }
+      }
     });
   }
   reportTrip() {
@@ -58,7 +66,8 @@ export class TripViewComponent implements OnInit {
       const userId = StorageService.getUserId();
       const tripMember: TripMember = {
         tripId: this.tripId,
-        userId: Number(userId)
+        userId: Number(userId),
+        userName:'',
       };
       this.memberService.joinTrip(tripMember).subscribe((res) => {
         if (res.id != null) {
@@ -71,6 +80,7 @@ export class TripViewComponent implements OnInit {
             panelClass: 'error-snackbar',
           });
         }});
+        console.log('joined');
     } else {
       this.router.navigateByUrl('login');
     }

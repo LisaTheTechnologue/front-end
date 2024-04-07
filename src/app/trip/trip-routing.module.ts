@@ -5,7 +5,6 @@ import { TripViewComponent } from './trip-view/trip-view.component';
 import { TripComponent } from './trip.component';
 
 export const TRIPS_ROUTES: Routes = [
-  { path: 'trips', redirectTo: 'trips/index', pathMatch: 'full'},
   { path: '', component: TripIndexComponent },
   { path: 'view/:tripId', component: TripViewComponent },
   // { path: 'create', component: TripCreateComponent },

@@ -1,1 +1,29 @@
-<p>member works!</p>
+<div class="container my-5">
+  <div role="tabpanel">
+    <!-- List group -->
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="list-group" id="myList" role="tablist">
+          <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#joinedtrips"
+            role="tab">Your Joined Trips</a>
+          <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#mytrips" role="tab">Your
+            Created Trips</a>
+            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#report" role="tab">Your
+              Report</a>
+          <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#profile" role="tab">Your
+            Profile</a>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane active" id="joinedtrips" role="tabpanel"><app-joined-trips></app-joined-trips> </div>
+          <div class="tab-pane" id="mytrips" role="tabpanel"><app-my-trips></app-my-trips></div>
+          <div class="tab-pane" id="report" role="tabpanel"><app-member-report></app-member-report></div>
+          <div class="tab-pane" id="profile" role="tabpanel"><app-member-profile></app-member-profile></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

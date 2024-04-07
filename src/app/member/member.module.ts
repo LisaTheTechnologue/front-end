@@ -14,6 +14,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { PostReportComponent } from './components/post-report/post-report.component';
 import { JoinedTripsComponent } from './components/joined-trips/joined-trips.component';
+import { MemberProfileComponent } from './components/member-profile/member-profile.component';
+import { MemberReportComponent } from './components/member-report/member-report.component';
+import { TripEditComponent } from './components/trip-edit/trip-edit.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,11 @@ import { JoinedTripsComponent } from './components/joined-trips/joined-trips.com
     PostTripComponent,
     MyTripsComponent,
     TripDetailsComponent,
-    JoinedTripsComponent
+    JoinedTripsComponent,
+    MemberProfileComponent,
+    PostReportComponent,
+    MemberReportComponent,
+    TripEditComponent
   ],
   imports: [
     CommonModule,

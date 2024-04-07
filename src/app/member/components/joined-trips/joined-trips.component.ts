@@ -3,6 +3,8 @@ import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Trip } from 'src/app/_shared/models/trip.model';
 import { MemberService } from '../../services/member.service';
+import { AppService } from '../../../_shared/services/app.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-joined-trips',
@@ -13,9 +15,10 @@ export class JoinedTripsComponent {
   trips: any[]=[];
   // searchTripForm!:FormGroup;
   searchText: string = '';
-  constructor(private memberService: MemberService,
-    private fb:FormBuilder,
-    private snackBar: MatSnackBar){}
+  constructor(
+    private memberService: MemberService,
+    private appService: AppService,
+  private router: Router){}
 
   ngOnInit(){
     this.getAllTrips();
@@ -26,7 +29,7 @@ export class JoinedTripsComponent {
 
   getAllTrips() {
     this.trips = [];
-    this.memberService.getAllTrips().subscribe(res => {
+    this.memberService.getAllJoinTrips().subscribe(res => {
       res.forEach(element => {
         element.processedImg = 'data:image/jpeg;base64,'+element.byteImg;
         this.trips.push(element);
@@ -35,17 +38,6 @@ export class JoinedTripsComponent {
     })
   }
 
-  // submitForm(){
-  //   this.trips = [];
-  //   const title = this.searchTripForm.get('title')!.value;
-  //   this.memberService.getAllTripsByName(title).subscribe(res => {
-  //     res.forEach(element => {
-  //       element.processedImg = 'data:image/jpeg;base64,'+element.byteImg;
-  //       this.trips.push(element);
-  //     });
-  //     console.log(this.trips);
-  //   })
-  // }
   onSearch() {
     // this.text = searchInput() this.form.value.searchText;
     // if (this.searchText.trim()) {
@@ -56,4 +48,9 @@ export class JoinedTripsComponent {
           console.log(this.trips);
         });
   }
+
+  // getTripDetails(){
+    // this.appService.setIsJoined(true);
+    // this.router.navigateByUrl('/member/joined-trips/'+tripId);
+  // }
 }

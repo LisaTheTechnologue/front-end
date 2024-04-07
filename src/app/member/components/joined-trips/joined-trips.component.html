@@ -1,9 +1,4 @@
 
-
-<div class="container my-5">
-  <button mat-raised-button color="success" class="create-button"
-          routerLink="/member/create-trip">Create New Trip</button>
-
   <div class="input-group mb-3">
     <input
       type="text"
@@ -11,13 +6,9 @@
       placeholder="Search by title"
       [(ngModel)]="searchText"
     />
-    <div class="input-group-append">
-      <button
-        class="btn btn-outline-secondary"
-        type="button"
-        (click)="onSearch()"
-      >
-        Search
+    <div class="mx-2">
+      <button mat-flat-button color="primary" (click)="onSearch()">
+        <mat-icon>search</mat-icon><span> Search</span>
       </button>
     </div>
   </div>
@@ -40,9 +31,8 @@
         <td>{{ trip.fromDate }} - {{ trip.toDate }}</td>
         <td>{{ trip.tripStatus }}</td>
         <td>
-          <a href="#" [routerLink]="['/member/my-trips/view/', trip.id]" class="btn btn-info">View</a>
+          <a [routerLink]="['/member/joined-trips/', trip.id]" class="btn btn-info">View</a>
         </td>
       </tr>
     </tbody>
   </table>
-  </div>

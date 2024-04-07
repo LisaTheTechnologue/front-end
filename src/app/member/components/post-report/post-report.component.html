@@ -1,2 +1,43 @@
-<div class="container my-5"><p>post-report works!</p>
+<div class="container my-5">
+  <form [formGroup]="reportForm">
+    <div class="mb-3">
+      <label for="subjectFld" class="col-sm-2 col-form-label">Subject</label>
+      <input type="text" formControlName="subject" class="form-control" id="subjectFld" required />
+      <div class="invalid-feedback" *ngIf="reportForm.get('subject')?.hasError('required')">This input is required!</div>
+    </div>
+
+    <div class="mb-3">
+      <div class="row">
+        <div class="col-md-6">
+          <label for="tripFld" class="col-sm-2 col-form-label">Report Trip</label>
+          <input type="text" class="form-control" [(ngModel)]="tripTitle" id="tripFld" readonly disabled />
+        </div>
+        <div class="col-md-6">
+          <label for="subjectFld" class="col-sm-2 col-form-label">Trip Leader</label>
+          <input type="text" class="form-control" [(ngModel)]="leaderName" id="userIdFld" readonly disabled />
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="reasonFld">Reason</label>
+      <textarea formControlName="reason" class="form-control" id="reasonFld"></textarea>
+      <div class="invalid-feedback" *ngIf="reportForm.get('reason')?.hasError('required')">This input is required!
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Evidence image</label>
+        <input class="form-control" type="file" id="formFile" required #fileInput type="file"
+          (change)="onFileSelected($event)" accept="image/png, image/jpeg">
+      </div>
+    </div>
+    <div *ngIf="selectedFile" class="image-preview justify-content-center">
+      <div class="circle-image">
+        <img [src]="imagePreview" alt="Selected Image" class="preview-image">
+      </div>
+    </div>
+
+  </form>
 </div>

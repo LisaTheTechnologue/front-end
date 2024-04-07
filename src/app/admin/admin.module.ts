@@ -8,13 +8,21 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../MaterialModule';
 import { TripViewComponent } from './components/trip-view/trip-view.component';
+import { TripListComponent } from './components/trip-list/trip-list.component';
+import { CityListComponent } from './components/city-list/city-list.component';
+import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
+import { UserListComponent } from './components/user-list/user-list.component';
 
 
 @NgModule({
   declarations: [
     AdminComponent,
     DasboardComponent,
-    TripViewComponent
+    TripViewComponent,
+    TripListComponent,
+    CityListComponent,
+    AdminProfileComponent,
+    UserListComponent
   ],
   imports: [
     CommonModule,

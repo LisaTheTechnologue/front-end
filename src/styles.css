@@ -13,12 +13,12 @@ body {
 body {
   .mdc-button.mat-success,
   .mat-mdc-stroked-button.mat-success {
-    color: #00af29;
+    color: #61d800;
   }
   .mat-mdc-unelevated-button.mat-success:hover,
   .mat-mdc-raised-button.mat-success:hover {
     color: #f0fff3;
-    background-color: #00af29;
+    background-color: #61d800;
   }
 
   .mat-mdc-unelevated-button:not(:disabled, :hover).mat-success,
@@ -26,9 +26,9 @@ body {
   .mat-mdc-fab.mat-success,
   .mat-mdc-mini-fab.mat-success {
     color: #f0fff3;
-    background-color: #00af29;
+    background-color: #61d800;
   }
   .mat-mdc-icon-button.mat-success {
-    color: #00af29;
+    color: #61d800;
   }
 }

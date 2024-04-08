@@ -58,6 +58,11 @@ export class MemberService {
       headers: this.createAuthorizationHeader(),
     })
   }
+  revokeJoinTrip(tripMember:any): Observable<any>{
+    return this.http.post(this.AUTH_API+'trips/revoke-join-trip', tripMember, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
   reportTrip(formData:any): Observable<any>{
     return this.http.post(this.AUTH_API+'trips/report/', formData, {
       headers: this.createAuthorizationHeader(),

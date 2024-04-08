@@ -57,7 +57,19 @@ export class TripDetailsComponent {
       }
     });
   }
-  reportTrip() {
-
+  revokeJoinTrip() {
+    this.memberService.revokeJoinTrip(this.tripId).subscribe((res) => {
+      if (res.id != null) {
+        this.snackBar.open('You have registered to the trip successfully!', 'Close', {
+          duration: 5000,
+        });
+        // this.router.navigateByUrl('/member/my-trips');
+      } else {
+        this.snackBar.open(res.message, 'ERROR', {
+          duration: 5000,
+          panelClass: 'error-snackbar',
+        });
+      }
+    });
   }
 }

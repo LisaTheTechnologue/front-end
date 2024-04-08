@@ -1,65 +1,59 @@
 <div class="container my-5">
-<div *ngIf="trip">
-  <div class="container d-grid gap-4">
-    <div class="row heading">
-      <div class="col">
-        <p class="h3">{{ trip.title }}</p>
-        <p class="info">{{ trip.fromDate }} - {{ trip.toDate }}</p>
+  <div *ngIf="trip">
+    <div class="container d-grid gap-4">
+      <p class="h3">{{ trip.title }}</p>
+      <div class="row">
+        <div class="col d-flex justify-content-center">
+          <mat-card style="min-width: 400px;">
+            <mat-card-content>
+              <p><strong>Trip Time:</strong> {{ trip.fromDate }} - {{ trip.toDate }}</p>
+              <p><strong>Adventure Level:</strong> {{trip.tripLevel}}</p>
+              <p><strong>Age:</strong> {{trip.fromAge}} - {{trip.toAge}} years old</p>
+              <p>{{trip.budget}}/pax</p>
+              <p><strong>Number of Team Member:</strong> {{trip.groupSize}}</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-6 d-flex justify-content-center">
+          <img [src]="trip.processedImg" alt="trip-image">
+        </div>
+      </div>
+      <div class="row">
+        <p class="h4">Highlights:</p>
         <p>{{ trip.highlights }}</p>
+        </div>
+      <div class="row">
+        <p class="h4">Itinerary:</p>
+        <table class="table table-striped mt-2">
+          <tbody>
+            <tr *ngFor="let item of trip.items">
+              <td style="min-width: 100px;">Day {{ item.tripDay }}</td>
+              <td style="min-width: 200px;">{{ item.title }}</td>
+              <td>{{ item.description }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="col-6 d-flex justify-content-center">
-        <img [src]="trip.processedImg" alt="trip-image">
-      </div>
-    </div>
-    <div class="row ">
-      <div class="col-3">
-        <p>Adventure Level: {{trip.tripLevel}}</p>
-      </div>
-      <div class="col-3">
-        <p>Age {{trip.fromAge}} - {{trip.toAge}} years old</p>
-      </div>
-      <div class="col-3">
-        <p>{{trip.budget}}/pax</p>
-      </div>
-      <div class="col-3">
-        <p>Number of team member: {{trip.groupSize}}</p>
-      </div>
-    </div>
-    <div class="row">
-      <strong>Itinerary:</strong>
-      <table class="table table-striped mt-1">
-        <tbody>
-          <tr *ngFor="let item of trip.items">
-            <td>Day {{ item.tripDay }}</td>
-            <td>{{ item.title }}</td>
-            <td>{{ item.description }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
 
-    <div class="row">
-      <strong>Members:</strong>
-      <ul>
-        <li *ngFor="let item of trip.members; let i = index">
-          {{ i + 1 }}: ${{ item.userName }}
-        </li>
-      </ul>
-    </div>
-    <div class="row mb-2">
-      <div *ngIf="isJoined">
-        <button type="button" class="btn btn-success" (click)="joinTrip()">
-          <mat-icon aria-label="join">input</mat-icon> Revoke Join Trip
+      <div class="row">
+        <p class="h4">Members:</p>
+        <ol class="list-group list-group-numbered">
+          <li class="list-group-item" *ngFor="let item of trip.members; let i = index">
+            {{ item.userName }}
+          </li>
+        </ol>
+      </div>
+      <div>
+        <button mat-flat-button color="warn" *ngIf="isJoined" class="me-2" (click)="revokeJoinTrip()">
+          <mat-icon>clear</mat-icon> Revoke Join
+        </button>
+        <button mat-flat-button color="success" *ngIf="!isJoined"  class="me-2" (click)="joinTrip()">
+          <mat-icon>input</mat-icon> Join Trip
+        </button>
+        <button mat-stroked-button color="warn" class="me-2" [routerLink]="['/member/report/',trip.id]">
+          <mat-icon>report</mat-icon> Report Trip
         </button>
       </div>
-      <div *ngIf="!isJoined">
-        <button type="button" class="btn btn-success" (click)="joinTrip()">
-          <mat-icon aria-label="join">input</mat-icon> Join Trip
-        </button></div>
-      <button type="button" class="btn btn-danger" (click)="reportTrip()">
-        <mat-icon aria-label="join">input</mat-icon> Report Trip
-      </button>
     </div>
   </div>
-</div>
 </div>

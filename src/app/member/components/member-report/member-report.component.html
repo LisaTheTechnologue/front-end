@@ -1,1 +1,24 @@
-<p>member-report works!</p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Trip ID</th>
+      <th>Trip Title</th>
+      <th>Created Date</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let report of reports">
+      <td>{{ report.tripId }}</td>
+      <td>{{ report.tripTitle }}</td>
+      <td>{{ report.createdDate }} </td>
+      <td>{{ report.reportStatus }}</td>
+      <td>
+        <a [routerLink]="['/member/reports/', report.id]" class="btn btn-info">View Report</a>
+        <a (click)="deleteReport(report.id)" class="btn btn-danger">Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

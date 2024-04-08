@@ -59,6 +59,7 @@
     <div class="row">
       <div class="mb-3 col-md-3">
         <label for="budgetFld">Budget</label>
+        <span class="input-group-text">$</span>
         <input type="number" formControlName="budget" id="budgetFld" class="form-control" />
         <div class="invalid-feedback" *ngIf="tripForm.get('budget')?.hasError('required')">This input is required!</div>
       </div>

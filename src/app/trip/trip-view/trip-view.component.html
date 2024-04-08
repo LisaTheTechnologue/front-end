@@ -47,18 +47,18 @@
         </li>
       </ol>
     </div>
-    <div class="row mb-2">
-      <div *ngIf="isJoined">
-      <button type="button" class="btn btn-success" (click)="joinTrip()">
-        <mat-icon aria-label="join">input</mat-icon> Revoke Join Trip
+    <div>
+      <button mat-flat-button color="warn" *ngIf="isJoined" class="me-2" (click)="revokeJoinTrip()">
+        <mat-icon>clear</mat-icon> Revoke Join
       </button>
-    </div>
-    <div *ngIf="!isJoined">
-      <button type="button" class="btn btn-success" (click)="joinTrip()">
-        <mat-icon aria-label="join">input</mat-icon> Join Trip
-      </button></div>
-      <button type="button" class="btn btn-danger" (click)="reportTrip()">
-        <mat-icon aria-label="join">input</mat-icon> Report Trip
+      <button mat-flat-button color="success" *ngIf="!isJoined"  class="me-2" (click)="joinTrip()">
+        <mat-icon>input</mat-icon> Join Trip
+      </button>
+      <button mat-stroked-button color="warn" class="me-2" [routerLink]="['/member/reports/',trip.id]">
+        <mat-icon>report</mat-icon> Report Trip
+      </button>
+      <button mat-stroked-button color="success" class="me-2" [routerLink]="['/member/feedback/',trip.id]">
+        <mat-icon>feedback</mat-icon> Rate Trip
       </button>
     </div>
   </div>

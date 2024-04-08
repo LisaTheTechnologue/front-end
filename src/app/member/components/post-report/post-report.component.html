@@ -12,12 +12,12 @@
     <div class="mb-3">
       <div class="row">
         <div class="col-md-6">
-          <label for="tripFld" class="col-sm-2 col-form-label">Report Trip</label>
-          <input type="text" class="form-control" [(ngModel)]="tripTitle" id="tripFld" readonly disabled />
+          <label for="tripFld">Report Trip</label>
+          <input type="text" class="form-control" formControlName="tripTitle" id="tripFld" readonly />
         </div>
         <div class="col-md-6">
-          <label for="subjectFld" class="col-sm-2 col-form-label">Trip Leader</label>
-          <input type="text" class="form-control" [(ngModel)]="leaderName" id="userIdFld" readonly disabled />
+          <label for="subjectFld">Trip Leader</label>
+          <input type="text" class="form-control" formControlName="leaderName" id="userIdFld" readonly/>
         </div>
       </div>
     </div>
@@ -44,5 +44,9 @@
 
   </form>
 </mat-card-content>
+<mat-card-actions>
+    <button mat-icon-button color="warn" (click)="submit()">Submit
+    </button>
+</mat-card-actions>
 </mat-card>
 </div>

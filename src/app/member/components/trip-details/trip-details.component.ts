@@ -20,7 +20,8 @@ export class TripDetailsComponent {
     private memberService: MemberService,
     private activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
-    private appService: AppService
+    private appService: AppService,
+    private router: Router
   ) {}
   ngOnInit() {
     this.getTrip();
@@ -48,7 +49,7 @@ export class TripDetailsComponent {
         this.snackBar.open('You have registered to the trip successfully!', 'Close', {
           duration: 5000,
         });
-        // this.router.navigateByUrl('/member/my-trips');
+        this.router.navigateByUrl('/member/joined-trips');
       } else {
         this.snackBar.open(res.message, 'ERROR', {
           duration: 5000,
@@ -60,10 +61,10 @@ export class TripDetailsComponent {
   revokeJoinTrip() {
     this.memberService.revokeJoinTrip(this.tripId).subscribe((res) => {
       if (res.id != null) {
-        this.snackBar.open('You have registered to the trip successfully!', 'Close', {
+        this.snackBar.open('You have revoked of the trip successfully!', 'Close', {
           duration: 5000,
         });
-        // this.router.navigateByUrl('/member/my-trips');
+        this.router.navigateByUrl('/member/joined-trips');
       } else {
         this.snackBar.open(res.message, 'ERROR', {
           duration: 5000,

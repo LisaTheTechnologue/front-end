@@ -28,10 +28,10 @@ export class TripViewComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.getTrip();
-    this.router.events.subscribe(event => {
+    this.router.events.subscribe((event) => {
       this.isMemberLoggedIn = StorageService.isMemberLoggedIn();
       this.isAdminLoggedIn = StorageService.isAdminLoggedIn();
-    })
+    });
   }
   getTrip() {
     // this.trip = new Trip();
@@ -45,42 +45,59 @@ export class TripViewComponent implements OnInit {
       this.trip.processedImg = 'data:image/jpeg;base64,' + res.byteImg;
       this.image = this.trip.processedImg;
       for (var index in res.members) {
-        if(res.members[index].userId = userId){
+        if ((res.members[index].userId = userId)) {
           this.isJoined = true;
           break;
         }
       }
     });
   }
-  reportTrip() {
-    // check if log in --> member
-    // not log in --> log in page
-    if(this.isMemberLoggedIn) {
-      this.router.navigateByUrl("member/trip/report/"+this.tripId);
-    } else {
-      this.router.navigateByUrl('login');
-    }
-  }
   joinTrip() {
-    if(this.isMemberLoggedIn) {
+    if (this.isMemberLoggedIn) {
       const userId = StorageService.getUserId();
       const tripMember: TripMember = {
         tripId: this.tripId,
         userId: Number(userId),
-        userName:'',
+        userName: '',
       };
       this.memberService.joinTrip(tripMember).subscribe((res) => {
         if (res.id != null) {
           this.snackBar.open('You are on board!', 'Close', {
             duration: 5000,
           });
+          this.router.navigateByUrl('/member');
         } else {
           this.snackBar.open(res.message, 'ERROR', {
             duration: 5000,
             panelClass: 'error-snackbar',
           });
-        }});
-        console.log('joined');
+        }
+      });
+      console.log('joined');
+    } else {
+      this.router.navigateByUrl('login');
+    }
+  }
+
+  revokeJoinTrip() {
+    if (this.isMemberLoggedIn) {
+      this.memberService.revokeJoinTrip(this.tripId).subscribe((res) => {
+        if (res.id != null) {
+          this.snackBar.open(
+            'You have revoked of the trip successfully!',
+            'Close',
+            {
+              duration: 5000,
+            }
+          );
+          this.router.navigateByUrl('/member');
+        } else {
+          this.snackBar.open(res.message, 'ERROR', {
+            duration: 5000,
+            panelClass: 'error-snackbar',
+          });
+        }
+      });
     } else {
       this.router.navigateByUrl('login');
     }

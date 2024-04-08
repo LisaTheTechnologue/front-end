@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, first } from 'rxjs';
 import { AppSettings } from 'src/app/_shared/app-settings';
 import { StorageService } from 'src/app/_shared/services/storage.service';
+import { TripMember } from '../../_shared/models/trip-member.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +24,6 @@ export class MemberService {
       headers: this.createAuthorizationHeader(),
     })
   }
-
-  // addTripItems(record:Partial<Trip>){
-  //   return this.http.post<Trip>(this.AUTH_API+'trips/create', record, {
-  //     headers: this.createAuthorizationHeader(),
-  //   })
-  // }
 
   getAllTrips(): Observable<any>{
     const userId = StorageService.getUserId();
@@ -58,13 +53,37 @@ export class MemberService {
       headers: this.createAuthorizationHeader(),
     })
   }
-  revokeJoinTrip(tripMember:any): Observable<any>{
+  revokeJoinTrip(tripNo:number): Observable<any>{
+    const user = StorageService.getUserId();
+    const tripMember: TripMember = {
+      tripId: tripNo,
+      userId: +user,
+      userName: ''
+      };
     return this.http.post(this.AUTH_API+'trips/revoke-join-trip', tripMember, {
       headers: this.createAuthorizationHeader(),
     })
   }
   reportTrip(formData:any): Observable<any>{
-    return this.http.post(this.AUTH_API+'trips/report/', formData, {
+    return this.http.post(this.AUTH_API+'reports/report', formData, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
+  getAllReportsByUserId(): Observable<any>{
+    const userId = StorageService.getUserId();
+    return this.http.get(this.AUTH_API+`reports/user/${userId}`, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
+  getReportById(reportId:any): Observable<any>{
+    // const url = `<span class="math-inline">\{this\.AUTH_API\}/trips/report?userId\=</span>{reportId}`;
+    // return this.httpClient.get<Trip[]>(url); //`${this.tripsAPI}/search?title=${title}`);
+    return this.http.get(this.AUTH_API+`reports/report/${reportId}`, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
+  deleteReport(reportId:any): Observable<any>{
+    return this.http.delete(this.AUTH_API+`reports/report/${reportId}`, {
       headers: this.createAuthorizationHeader(),
     })
   }

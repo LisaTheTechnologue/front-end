@@ -8,9 +8,9 @@
     </div>
   </div>
 
-  <div class="my-5">
-    <div *ngFor="let trip of trips">
-      <mat-card class="example-card">
+  <!-- <div class="my-5"> -->
+    <div fxLayout="row wrap" fxLayoutGap="16px">  <mat-card fxFlex="30%" *ngFor="let trip of trips" class="example-card">
+
         <mat-card-header>
           <mat-card-title>{{ trip.title }}</mat-card-title>
           <mat-card-subtitle>{{ trip.fromDate }} - {{ trip.toDate}} | {{ trip.tripLevel}} level</mat-card-subtitle>
@@ -25,7 +25,6 @@
             <button mat-button [routerLink]="['/view', trip.id]">View Details</button>
         </mat-card-actions>
       </mat-card>
-    </div>
-  </div>
+  <!-- </div> -->
 
 </div>

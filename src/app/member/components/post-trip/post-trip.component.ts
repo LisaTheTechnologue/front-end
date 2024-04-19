@@ -95,7 +95,7 @@ export class PostTripComponent {
   addItems() {
     const itemForm = this.fb.group({
       // _id: [lesson._id],
-      tripDay: [null, [Validators.required]],
+      dayNo: [null, [Validators.required]],
       title: [null, [Validators.required]],
       description: [null, [Validators.required]],
     });

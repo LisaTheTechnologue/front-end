@@ -23,6 +23,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     HttpClientModule,
     MatInputModule,
     MatFormFieldModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

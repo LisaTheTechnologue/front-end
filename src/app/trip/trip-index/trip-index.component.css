@@ -56,5 +56,6 @@
     text-transform: unset;
 }
 .example-card {
-  max-width: 350px;
+  max-width: 200px;
+  margin-bottom: 16px;
 }

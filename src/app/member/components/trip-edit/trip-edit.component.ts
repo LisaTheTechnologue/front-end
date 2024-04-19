@@ -114,7 +114,7 @@ export class TripEditComponent {
 
   // get items(): FormGroup {
   //   return this.fb.group({
-  //     tripDay: ['', [Validators.required]],
+  //     dayNo: ['', [Validators.required]],
   //     title: ['', [Validators.required]],
   //     description: ['', [Validators.required]],
   //   });
@@ -151,11 +151,11 @@ export class TripEditComponent {
     };
     reader.readAsDataURL(this.selectedFile);
   }
-  private createItem(item: TripItem = { _id: '', tripDay: 0, title: '', description: '' }) {
+  private createItem(item: TripItem = { _id: '', dayNo: 0, title: '', description: '' }) {
     return this.fb.group({
       _id: [item._id],
-      tripDay: [
-        item.tripDay,
+      dayNo: [
+        item.dayNo,
         [Validators.required]
       ],
       title: [
@@ -171,7 +171,7 @@ export class TripEditComponent {
   addItems() {
     const itemForm = this.fb.group({
       // _id: [lesson._id],
-      tripDay: [null, [Validators.required]],
+      dayNo: [null, [Validators.required]],
       title: [null, [Validators.required]],
       description: [null, [Validators.required]],
     });

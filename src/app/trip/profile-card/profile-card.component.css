@@ -1,0 +1,7 @@
+.leader-card-body{
+  font-size: x-small;
+  .leader-card-fullname{
+    font-weight: bold;
+
+  }
+}

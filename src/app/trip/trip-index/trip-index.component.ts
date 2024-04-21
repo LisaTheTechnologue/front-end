@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { TripService } from '../../_shared/services/trip.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
+import { PublicService } from 'src/app/_shared/services/public.service';
 
 @Component({
   selector: 'app-trip-index',
@@ -22,10 +23,10 @@ export class TripIndexComponent {
 
   p: number = 1;
 
-  constructor(public tripService: TripService, private fb: FormBuilder) {}
+  constructor(public publicService: PublicService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.tripService.getAll().subscribe((res) => {
+    this.publicService.getAllTrips().subscribe((res) => {
       res.forEach((element) => {
         element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
         this.trips.push(element);

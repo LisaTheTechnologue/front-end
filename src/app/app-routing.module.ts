@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
+import { ProfilePublicComponent } from './profile-public/profile-public.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -37,6 +38,7 @@ const routes: Routes = [
       { path: 'about', component: AboutComponent },
       { path: "login", component: LoginComponent},
       { path: "signup", component: SignupComponent},
+      { path: "profile/:userId", component: ProfilePublicComponent},
       { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
       { path: 'member', loadChildren: () => import('./member/member.module').then(m => m.MemberModule) },
       { path: 'trips', loadChildren: () => import('./trip/trip.module').then(m => m.TripModule) }

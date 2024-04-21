@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TripService } from '../_shared/services/trip.service';
+import { PublicService } from '../_shared/services/public.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import { TripService } from '../_shared/services/trip.service';
 })
 export class HomeComponent implements OnInit {
   popularTours: any[] = [];
-  constructor(public tripService: TripService) {}
+  constructor(public publicService: PublicService) {}
   popularCities: any[] = [
     { city: 'City 1', image: 'path/to/image1.jpg' },
     { city: 'City 2', image: 'path/to/image2.jpg' },
@@ -26,7 +27,7 @@ export class HomeComponent implements OnInit {
   // ];
 
   ngOnInit(): void {
-    this.tripService.getLatestTrips().subscribe((res) => {
+    this.publicService.getLatestTrips().subscribe((res) => {
       res.forEach((element) => {
         element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
         this.popularTours.push(element);

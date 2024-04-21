@@ -35,26 +35,8 @@ export class MyTripsComponent {
     })
   }
 
-  // submitForm(){
-  //   this.trips = [];
-  //   const title = this.searchTripForm.get('title')!.value;
-  //   this.memberService.getAllTripsByName(title).subscribe(res => {
-  //     res.forEach(element => {
-  //       element.processedImg = 'data:image/jpeg;base64,'+element.byteImg;
-  //       this.trips.push(element);
-  //     });
-  //     console.log(this.trips);
-  //   })
-  // }
   onSearch() {
-    // this.text = searchInput() this.form.value.searchText;
-    // if (this.searchText.trim()) {
-      this.memberService
-        .search(this.searchText)
-        .subscribe((data: Trip[]) => {
-          this.trips = data;
-          console.log(this.trips);
-        });
+
   }
   deleteTrip(id: number) {
     this.memberService.delete(id).subscribe((res) => {

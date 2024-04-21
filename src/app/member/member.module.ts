@@ -5,18 +5,16 @@ import { MemberRoutingModule } from './member-routing.module';
 import { MemberComponent } from './member.component';
 import { PostTripComponent } from './components/post-trip/post-trip.component';
 import { MyTripsComponent } from './components/my-trips/my-trips.component';
-import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../MaterialModule';
 import { TripDetailsComponent } from './components/trip-details/trip-details.component';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { PostReportComponent } from './components/post-report/post-report.component';
 import { JoinedTripsComponent } from './components/joined-trips/joined-trips.component';
 import { MemberProfileComponent } from './components/member-profile/member-profile.component';
-import { MemberReportComponent } from './components/member-report/member-report.component';
 import { TripEditComponent } from './components/trip-edit/trip-edit.component';
+import { CommentViewComponent } from './components/comment-view/comment-view.component';
+import { CommentFormComponent } from './components/comment-form/comment-form.component';
+import { ProfileTripsViewComponent } from './components/profile-trips-view/profile-trips-view.component';
 
 @NgModule({
   declarations: [
@@ -26,9 +24,10 @@ import { TripEditComponent } from './components/trip-edit/trip-edit.component';
     TripDetailsComponent,
     JoinedTripsComponent,
     MemberProfileComponent,
-    PostReportComponent,
-    MemberReportComponent,
-    TripEditComponent
+    TripEditComponent,
+    CommentViewComponent,
+    CommentFormComponent,
+    ProfileTripsViewComponent
   ],
   imports: [
     CommonModule,
@@ -36,9 +35,6 @@ import { TripEditComponent } from './components/trip-edit/trip-edit.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    // HttpClientModule,
-    // MatFormFieldModule,
-    // MatInputModule,
     NgbDatepickerModule
   ]
 })

@@ -6,6 +6,7 @@ import { Trip } from 'src/app/_shared/models/trip.model';
 import { StorageService } from 'src/app/_shared/services/storage.service';
 import { MemberService } from '../../member/services/member.service';
 import { TripMember } from 'src/app/_shared/models/trip-member.model';
+import { PublicService } from 'src/app/_shared/services/public.service';
 
 @Component({
   selector: 'app-trip-view',
@@ -19,8 +20,9 @@ export class TripViewComponent implements OnInit {
   isMemberLoggedIn: boolean;
   isAdminLoggedIn: boolean;
   isJoined: boolean;
+  leaderId: string;
   constructor(
-    private tripService: TripService,
+    private publicService: PublicService,
     private memberService: MemberService,
     private activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
@@ -36,9 +38,9 @@ export class TripViewComponent implements OnInit {
   getTrip() {
     // this.trip = new Trip();
     const userId = StorageService.getUserId();
-    this.tripService.getById(this.tripId).subscribe((res) => {
-      console.log(res);
+    this.publicService.getById(this.tripId).subscribe((res) => {
       this.trip = res;
+      this.leaderId = res.leaderId;
       // this.trip.highlights = res.highlights;
       // this.trip.title = res.title;
       // this.trip.budget = res.budget;

@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./joined-trips.component.css']
 })
 export class JoinedTripsComponent {
+onSearch() {
+throw new Error('Method not implemented.');
+}
   trips: any[]=[];
   // searchTripForm!:FormGroup;
   searchText: string = '';
@@ -37,20 +40,4 @@ export class JoinedTripsComponent {
       console.log(this.trips);
     })
   }
-
-  onSearch() {
-    // this.text = searchInput() this.form.value.searchText;
-    // if (this.searchText.trim()) {
-      this.memberService
-        .search(this.searchText)
-        .subscribe((data: Trip[]) => {
-          this.trips = data;
-          console.log(this.trips);
-        });
-  }
-
-  // getTripDetails(){
-    // this.appService.setIsJoined(true);
-    // this.router.navigateByUrl('/member/joined-trips/'+tripId);
-  // }
 }

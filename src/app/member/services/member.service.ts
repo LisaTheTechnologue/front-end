@@ -64,29 +64,7 @@ export class MemberService {
       headers: this.createAuthorizationHeader(),
     })
   }
-  reportTrip(formData:any): Observable<any>{
-    return this.http.post(this.AUTH_API+'reports/report', formData, {
-      headers: this.createAuthorizationHeader(),
-    })
-  }
-  getAllReportsByUserId(): Observable<any>{
-    const userId = StorageService.getUserId();
-    return this.http.get(this.AUTH_API+`reports/user/${userId}`, {
-      headers: this.createAuthorizationHeader(),
-    })
-  }
-  getReportById(reportId:any): Observable<any>{
-    // const url = `<span class="math-inline">\{this\.AUTH_API\}/trips/report?userId\=</span>{reportId}`;
-    // return this.httpClient.get<Trip[]>(url); //`${this.tripsAPI}/search?title=${title}`);
-    return this.http.get(this.AUTH_API+`reports/report/${reportId}`, {
-      headers: this.createAuthorizationHeader(),
-    })
-  }
-  deleteReport(reportId:any): Observable<any>{
-    return this.http.delete(this.AUTH_API+`reports/report/${reportId}`, {
-      headers: this.createAuthorizationHeader(),
-    })
-  }
+
   private createAuthorizationHeader(): HttpHeaders{
     console.log(StorageService.getToken());
     return new HttpHeaders().set(
@@ -101,9 +79,4 @@ export class MemberService {
       })
   }
 
-  search(title: string): Observable<any> {
-    // const url = `<span class="math-inline">\{this\.tripsAPI\}/search?title\=</span>{title}`;
-    // return this.httpClient.get<Trip[]>(url); //`${this.tripsAPI}/search?title=${title}`);
-    return this.http.get(`${this.AUTH_API}/title=${title}`);
-  }
 }

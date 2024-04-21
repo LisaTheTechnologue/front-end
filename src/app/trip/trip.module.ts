@@ -3,19 +3,20 @@ import { CommonModule } from '@angular/common';
 
 import { TripRoutingModule } from './trip-routing.module';
 import { TripIndexComponent } from './trip-index/trip-index.component';
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../MaterialModule';
 import { TripViewComponent } from './trip-view/trip-view.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ProfileCardComponent } from './profile-card/profile-card.component';
+import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
   declarations: [
     TripIndexComponent,
     TripViewComponent,
+    ProfileCardComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +26,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MaterialModule,
     FlexLayoutModule,
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgbRatingModule
   ]
 })
 export class TripModule { }

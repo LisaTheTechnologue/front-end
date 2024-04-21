@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TripService } from '../services/trip.service';
+import { TripService } from '../../_shared/services/trip.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Trip } from 'src/app/_shared/models/trip.model';

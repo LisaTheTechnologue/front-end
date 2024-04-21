@@ -1,38 +1,7 @@
-.search-form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 16px;
+section {
+  display: block;
+  margin-bottom: 10px;
 
-  .search-input {
-    width: 300px;
-    margin-right: 15px;
-
-    input {
-      padding-right: 40px;
-    }
-
-    button {
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-  }
-}
-
-.empty-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 300px;
-
-  span {
-    font-size: 18px;
-    color: #616161;
-    margin-top: 10px;
-  }
 }
 .info {
   max-width: 100%;
@@ -55,7 +24,16 @@
     margin-right: -.25em;
     text-transform: unset;
 }
-.example-card {
-  max-width: 200px;
+.trip-card {
+  width: 200px;
   margin-bottom: 16px;
+
+  .card-trip-image{
+    height: 150px;
+  }
+
+  &:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)
+  }
 }
+

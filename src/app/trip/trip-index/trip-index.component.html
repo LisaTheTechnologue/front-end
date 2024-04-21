@@ -1,30 +1,67 @@
 <div class="container my-5">
-  <div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="searchText" />
-    <div class="mx-2">
-      <button mat-flat-button color="primary" (click)="onSearch()">
-        <mat-icon>search</mat-icon><span> Search</span>
-      </button>
+  <div class="row">
+    <div class="col">
+      <div class=" mx-1 p-3 bg-white border border-secondary rounded-1">
+        <section *ngIf="tripLevels.size > 0">
+          <strong>Filter by Trip Level:</strong>
+          <ul style="list-style-type: none;">
+            <li *ngFor="let tripLevel of tripLevels">
+              <input class="form-check-input me-1" type="checkbox" [ngModel]="selectedTripLevels.includes(tripLevel)"
+                (change)="onTripLevelChange(tripLevel,$event)">
+              {{ tripLevel }}
+            </li>
+          </ul>
+        </section>
+        <section>
+          <strong>Start Date:</strong>
+          <input [(ngModel)]="startDate" (change)="filterData()" id="startDate" type="date" class="form-control">
+        </section>
+        <section>
+          <strong>End Date:</strong>
+          <input [(ngModel)]="endDate" (change)="filterData()" id="endDate" type="date" class="form-control">
+        </section>
+        <section>
+          <strong>Budget:</strong>
+          <input type="number" class="form-control" [(ngModel)]="minPrice" placeholder="Minimum Price"
+            (keyup)="filterData()">
+        </section>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="searchText" />
+        <div class="mx-2">
+          <button mat-flat-button color="primary" (click)="filterData()">
+            <mat-icon>search</mat-icon><span> Search</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- <div class="my-5"> -->
+      <div fxLayout="row wrap" fxLayoutGap="16px" class="p-2" *ngIf="filteredData.length > 0">
+
+        <mat-card fxFlex="30%" *ngFor="let trip of filteredData | paginate: { itemsPerPage: 3, currentPage: p }"
+          [routerLink]="['/view', trip.id]" class="trip-card mat-elevation-z2" appMaterialElevation>
+          <img mat-card-image [src]="trip.processedImg" alt="trip-image" class="card-trip-image">
+          <mat-card-header>
+            <mat-card-title>{{ trip.title }}</mat-card-title>
+            <mat-card-subtitle>{{ trip.fromDate }} - {{ trip.toDate}} </mat-card-subtitle>
+            <mat-card-subtitle>{{ trip.tripLevel}} level</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+            <p>{{ trip.introduction }}</p>
+            <p class="mt-price"> VND {{ trip.budget | currency: 'VND' }}/pax</p>
+
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+      <div *ngIf="filteredData.length > 3" class="d-flex justify-content-center">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+      <p *ngIf="filteredData.length === 0">No data matches the filter criteria.</p>
+
     </div>
   </div>
-
-  <!-- <div class="my-5"> -->
-    <div fxLayout="row wrap" fxLayoutGap="16px">  <mat-card fxFlex="30%" *ngFor="let trip of trips" class="example-card">
-
-        <mat-card-header>
-          <mat-card-title>{{ trip.title }}</mat-card-title>
-          <mat-card-subtitle>{{ trip.fromDate }} - {{ trip.toDate}} | {{ trip.tripLevel}} level</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image [src]="trip.processedImg" alt="trip-image" class="card-trip-image">
-        <mat-card-content>
-          <p>{{ trip.introduction }}</p>
-          <p class="mt-price"> VND {{ trip.budget | currency: 'VND' }}/pax | Group size: {{ trip.groupSize }} </p>
-          <mat-divider></mat-divider>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-button [routerLink]="['/view', trip.id]">View Details</button>
-        </mat-card-actions>
-      </mat-card>
-  <!-- </div> -->
-
 </div>

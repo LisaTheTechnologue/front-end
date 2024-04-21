@@ -24,6 +24,8 @@ import { LoginComponent } from './login/login.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MaterialElevationDirective } from './_shared/directives/material-elevation.directive';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     UserCreateComponent,
     UserViewComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    MaterialElevationDirective
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatInputModule,
     MatFormFieldModule,
     NgbDatepickerModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

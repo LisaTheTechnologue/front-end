@@ -26,7 +26,7 @@
         <p>Number of team member: {{trip.groupSize}}</p>
       </div>
     </div>
-    <div class="row">
+    <div class="row" >
       <strong>Itinerary:</strong>
       <table class="table table-striped mt-1">
         <tbody>
@@ -39,7 +39,7 @@
       </table>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="trip.members.length > 0">
       <strong>Your company:</strong>
       <ol class="list-group list-group-numbered">
         <li class="list-group-item" *ngFor="let item of trip.members; let i = index">
@@ -47,6 +47,7 @@
         </li>
       </ol>
     </div>
+
     <div>
       <button mat-flat-button color="warn" *ngIf="isJoined" class="me-2" (click)="revokeJoinTrip()">
         <mat-icon>clear</mat-icon> Revoke Join

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { TripService } from '../services/trip.service';
+import { Component, Input } from '@angular/core';
+import { TripService } from '../../_shared/services/trip.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Trip } from 'src/app/_shared/models/trip.model';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-trip-index',
@@ -11,29 +11,20 @@ import { Trip } from 'src/app/_shared/models/trip.model';
 export class TripIndexComponent {
   trips: any[] = [];
   searchText: string = '';
-  searchTripForm!: FormGroup;
-  // form = this.fb.group({
-  //   searchText: [''],
-  // });
+  // searchTripForm!: FormGroup;
+  filteredData: any[] = [];
+  tripLevels: Set<string> = new Set<string>(["Easy", "Moderate","Intermediate"]);
+  selectedTripLevels: string[] = [];
+  startDate: any = "";
+  endDate: any = "";
+  priceMinValue: any;
+  priceMaxValue: any;
 
-  // searchResults: Product[] = [];
+  p: number = 1;
 
-  /*------------------------------------------
-  --------------------------------------------
-  Created constructor
-  --------------------------------------------
-  --------------------------------------------*/
   constructor(public tripService: TripService, private fb: FormBuilder) {}
 
-  /**
-   * Write code on Method
-   *
-   * @return response()
-   */
   ngOnInit(): void {
-    this.searchTripForm = this.fb.group({
-      searchText: [''],
-    });
     this.tripService.getAll().subscribe((res) => {
       res.forEach((element) => {
         element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
@@ -41,33 +32,61 @@ export class TripIndexComponent {
       });
       console.log(this.trips);
     });
+    this.filteredData = this.trips;
   }
-  // get searchInput(): String {
-  //   return this.form.get('searchText') === null ? '': this.form.get('searchText')?.value;
-  // }
-  onSearch() {
-    // this.text = searchInput() this.form.value.searchText;
-    // if (this.searchText.trim()) {
-    this.tripService.search(this.searchText).subscribe((res) => {
-      res.forEach((element) => {
-        element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
-        this.trips.push(element);
-      });
-      console.log(this.trips);
-    });
-    // } else {
-    //   this.trips = []; // Clear results if search text is empty
-    // }
-  }
-  submitForm() {
-    // this.trips = [];
-    const title = this.searchTripForm.get('title')!.value;
-    this.tripService.search(this.searchText).subscribe((res) => {
-      res.forEach((element) => {
-        element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
-        this.trips.push(element);
-      });
-      console.log(this.trips);
+
+
+filterData() {
+    this.filteredData = this.trips.filter(item => {
+      const searchTextMatch = item.title.toLowerCase().includes(this.searchText.toLowerCase());
+      let tripLevelMatch = true; // Assume all categories are initially matched
+
+      // Filter by checkboxes (if any are selected)
+      if (this.selectedTripLevels.length > 0) {
+        tripLevelMatch = this.selectedTripLevels.some(tripLevel => item.tripLevel === tripLevel);
+      }
+
+      // Filter by date range (optional)
+      const dateMatch = !this.startDate || !this.endDate ||
+                       (item.fromDate >= this.startDate && item.fromDate <= this.endDate);
+
+      // Filter by price (optional)
+      // this.minPrice = value;
+      const priceMatch = !this.minPrice || item.budget >= this.minPrice;
+
+      return searchTextMatch && tripLevelMatch && dateMatch && priceMatch;
     });
   }
+  fromDate?: Date;
+  toDate?: Date;
+
+  onFromDateChange(value: Date) {
+    this.fromDate = value;
+    this.filterData();
+  }
+
+  onToDateChange(value: Date) {
+    this.toDate = value;
+    this.filterData();
+  }
+
+  extractTripLevels() {
+    this.tripLevels.clear();
+    this.trips.forEach(item => this.tripLevels.add(item.tripLevel));
+  }
+
+  onTripLevelChange(tripLevel: string, event: Event) {
+    const isChecked = (<HTMLInputElement>event.target).checked;
+    if (isChecked) {
+      this.selectedTripLevels.push(tripLevel);
+    } else {
+      const index = this.selectedTripLevels.indexOf(tripLevel);
+      if (index > -1) {
+        this.selectedTripLevels.splice(index, 1);
+      }
+    }
+    this.filterData();
+  }
+
+  minPrice?: number;
 }

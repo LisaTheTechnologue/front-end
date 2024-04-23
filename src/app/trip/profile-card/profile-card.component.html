@@ -1,18 +1,18 @@
-<div class="card mb-3 bg-light bg-gradient p-1" style="width: 200px;">
+<div class="card mb-3 bg-light bg-gradient p-1" style="width: 200px;" [routerLink]="['/profile/',user.id]">
   <div class="row g-0">
     <div class="col-md-3">
       <img src="http://www.gravatar.com/avatar/?d=mp" class="img-fluid rounded-start" alt="avatar">
     </div>
     <div class="col">
       <div class="leader-card-body">
-        <p class="leader-card-fullname">{{ user.fname }} {{ user.lname }}</p>
+        <p class="leader-card-fullname">{{ user.fullname }} </p>
         <p><ngb-rating [(rate)]="rating" [readonly]="true" [max]="5"></ngb-rating></p>
-        <div>
-        <button type="button" class="btn btn-primary btn-small" [routerLink]="['/profile/',user.id]"
-          style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .5rem;">
-          View Profile
-        </button>
-      </div>
+        <!-- <div>
+          <button type="button" class="btn btn-primary btn-small" [routerLink]="['/profile/',user.id]"
+            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .5rem;">
+            View Profile
+          </button>
+        </div> -->
       </div>
     </div>
   </div>

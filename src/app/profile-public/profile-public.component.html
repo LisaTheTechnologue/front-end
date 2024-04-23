@@ -1,23 +1,32 @@
-<div class="" *ngIf="user">
-  <img
-    id="cover"
-    src="https://i.imgur.com/DUZtAAt.png"
-    class="img-fluid"
-    alt="cover"
-  />
-  <img
-    id="profile-picture"
-    class="img-fluid rounded-circle mx-auto img-float d-block img-md"
-    src="{{ user?.profilepicurl }}"
-    alt="noimage"
-  />
+<div *ngIf="user">
+  <img id="profile-picture" class="img-fluid rounded-circle mx-auto img-float d-block img-md" src="http://www.gravatar.com/avatar/?d=mp"/>
+    <!-- src="{{ user?.profilepicurl }}" alt="noimage" /> -->
   <h2 class="d-flex justify-content-center">
-    {{ user?.fname }} {{ user?.lname }}
+    {{ user?.fullname }}
   </h2>
 </div>
 <div class="container" *ngIf="user">
-  <div class="row">
-    <div class="gutters-sm col-md-4 mt-4">
+  <div class="row mt-4" >
+    <div class="col-md-8 gutters-sm" >
+      <div class="row " >
+        <div class="col-5 example-sidenav">
+          <mat-nav-list dense *ngIf="trips">
+            <ng-template ngFor let-trip [ngForOf]="trips">
+              <mat-list-item class="list-with-border" (click)="display(trip)" [activated]="displaySelectedTrip(trip)">
+                <span matListItemTitle>{{ trip.title }}</span>
+                <span matListItemLine>{{ trip.cityName }} | {{ trip.fromDate }} - {{ trip.toDate }}</span>
+                <span matListItemLine><ngb-rating [(rate)]="trip.rating" [readonly]="true" [max]="5"></ngb-rating></span>
+              </mat-list-item>
+            </ng-template>
+          </mat-nav-list>
+        </div>
+
+        <div class="col example-sidenav-content">
+          <!-- <app-feedback-view [feedbacks]="selectedTrip.feedbacks"></app-feedback-view> -->
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
       <div class="mb-3">
         <div class="card">
           <div class="card-body">
@@ -26,7 +35,6 @@
                 <p class="text-muted mb-1">{{ user?.dob }}</p>
                 <p class="text-muted mb-1">{{ user?.phoneno }}</p>
                 <p class="text-muted mb-1">{{ user?.email }}</p>
-                <p class="text-muted mb-1">{{ user?.active }}</p>
                 <!-- <div class="profile-buttons">
                     <app-profile-edit *ngIf="selfProfileCheck" [user]="user"></app-profile-edit>
                   </div> -->
@@ -36,8 +44,6 @@
         </div>
       </div>
     </div>
-    <div *ngFor="let t of trips">
-      <!-- <app-profile-trips-view [trip]="t"></app-profile-trips-view> -->
-    </div>
+
   </div>
 </div>

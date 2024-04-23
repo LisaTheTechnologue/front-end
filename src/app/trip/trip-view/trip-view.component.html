@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-6 p-3">
         <p class="h3">{{ trip.title }}</p>
-        <div>Lead by: <app-profile-card [leaderId]="leaderId"></app-profile-card> </div>
+        <div>Lead by: <app-profile-card [leaderId]="trip.leaderId"></app-profile-card> </div>
         <p>{{trip.introduction}}</p>
         <p>Trip is opened until {{ trip.fromDate }}</p>
       </div>
@@ -64,7 +64,7 @@
       <button mat-flat-button color="warn" *ngIf="isJoined" class="me-2" (click)="revokeJoinTrip()">
         <mat-icon>clear</mat-icon> Revoke Join
       </button>
-      <button mat-flat-button color="success" *ngIf="!isJoined" class="me-2" (click)="joinTrip()">
+      <button mat-flat-button color="success" *ngIf="!isJoined" class="me-2" [routerLink]="['/member/join-trip/',trip.id]">
         <mat-icon>input</mat-icon> Join Trip
       </button>
       <button mat-stroked-button color="warn" class="me-2" [routerLink]="['/member/reports/',trip.id]">

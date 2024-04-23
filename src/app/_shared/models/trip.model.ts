@@ -5,6 +5,7 @@ export interface Trip {
   id: number;
   title: string;
   introduction: string;
+  leaderId: number;
   leaderName: string;
   cityName:string;
   cityId:number;
@@ -21,4 +22,15 @@ export interface Trip {
   processedImg: any;
   items?: TripItem[];
   members?: TripMember[];
+  rating: number;
+  feedbacks?: Feedback[];
+}
+
+export interface Feedback {
+  id?: any;
+  createdBy: string;
+  feedback: string;
+  tripRating: number;
+  leaderRating: number;
+  createdDate: Date;
 }

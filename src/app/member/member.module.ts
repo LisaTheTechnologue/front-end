@@ -15,6 +15,7 @@ import { TripEditComponent } from './components/trip-edit/trip-edit.component';
 import { CommentViewComponent } from './components/comment-view/comment-view.component';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
 import { ProfileTripsViewComponent } from './components/profile-trips-view/profile-trips-view.component';
+import { TripPaymentComponent } from './components/trip-payment/trip-payment.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ProfileTripsViewComponent } from './components/profile-trips-view/profi
     TripEditComponent,
     CommentViewComponent,
     CommentFormComponent,
-    ProfileTripsViewComponent
+    ProfileTripsViewComponent,
+    TripPaymentComponent
   ],
   imports: [
     CommonModule,

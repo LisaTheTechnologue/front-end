@@ -9,7 +9,7 @@ import { PublicService } from 'src/app/_shared/services/public.service';
   styleUrls: ['./profile-card.component.css']
 })
 export class ProfileCardComponent {
-  @Input() leaderId: string;
+  @Input() leaderId: number;
   user!: PublicProfile;
   rating!:number;
   constructor(

@@ -19,6 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProfilePublicComponent } from './profile-public/profile-public.component';
+import { FeedbackViewComponent } from './feedback-view/feedback-view.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ProfilePublicComponent } from './profile-public/profile-public.componen
     TripComponent,
     SignupComponent,
     LoginComponent,
-    ProfilePublicComponent
+    ProfilePublicComponent,
+    FeedbackViewComponent
   ],
   imports: [
     BrowserModule,

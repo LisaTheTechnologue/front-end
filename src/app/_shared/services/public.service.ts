@@ -12,12 +12,12 @@ export class PublicService {
   private PUBLIC_ENDPOINT = AppSettings.PUBLIC_ENDPOINT;
   constructor(public http: HttpClient) {}
 
-  public getProfile(userid: any): Observable<User> /* profile */ {
-    return this.http.get<User>(this.PUBLIC_ENDPOINT + "profile?leaderId=" + userid);
+  public getProfile(userid: any): Observable<PublicProfile> /* profile */ {
+    return this.http.get<PublicProfile>(this.PUBLIC_ENDPOINT + "profile?leaderId=" + userid);
   }
 
-  public getProfileWithNullRoute(): Observable<User> /* null route */ {
-    return this.http.get<User>(this.PUBLIC_ENDPOINT);
+  public getProfileWithPaymentInfo(userid: any): Observable<User> /* null route */ {
+    return this.http.get<User>(this.PUBLIC_ENDPOINT+ "profile?leaderId=" + userid);
   }
 
   public getPublicProfile(leaderId: any): Observable<PublicProfile> /* profile */ {

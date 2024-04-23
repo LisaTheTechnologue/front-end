@@ -8,6 +8,7 @@ import { JoinedTripsComponent } from './components/joined-trips/joined-trips.com
 import { MemberProfileComponent } from './components/member-profile/member-profile.component';
 import { TripEditComponent } from './components/trip-edit/trip-edit.component';
 import { CommentViewComponent } from './components/comment-view/comment-view.component';
+import { TripPaymentComponent } from './components/trip-payment/trip-payment.component';
 
 const routes: Routes = [
   { path: '', component: MemberComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
 { path: 'my-trips/create', component: PostTripComponent },
 { path: 'joined-trips', component: JoinedTripsComponent },
 { path: 'joined-trips/:tripId', component: TripDetailsComponent },
+{ path: 'join-trip/:tripId', component: TripPaymentComponent },
 { path: 'profile', component: MemberProfileComponent },
 { path: 'chat/:tripId', component: CommentViewComponent },
 ];

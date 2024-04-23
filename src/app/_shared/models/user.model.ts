@@ -9,14 +9,18 @@ export class User {
   dob: Date;
   active?: boolean;
   rating: number;
+  accno: string;
+  accbank: string;
+  accname: string;
 }
 
 export class PublicProfile {
   id?: any;
-  fname: string;
-  lname: string;
+  fullname: string;
   email: string;
   profilepicurl: string | null;
   rating: number;
   dob: Date;
+  username?: string;
+  phoneno: string | undefined;
 }

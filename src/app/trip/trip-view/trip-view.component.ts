@@ -20,7 +20,7 @@ export class TripViewComponent implements OnInit {
   isMemberLoggedIn: boolean;
   isAdminLoggedIn: boolean;
   isJoined: boolean;
-  leaderId: string;
+  // leaderId: string;
   constructor(
     private publicService: PublicService,
     private memberService: MemberService,
@@ -40,7 +40,7 @@ export class TripViewComponent implements OnInit {
     const userId = StorageService.getUserId();
     this.publicService.getById(this.tripId).subscribe((res) => {
       this.trip = res;
-      this.leaderId = res.leaderId;
+      // this.leaderId = res.leaderId;
       // this.trip.highlights = res.highlights;
       // this.trip.title = res.title;
       // this.trip.budget = res.budget;

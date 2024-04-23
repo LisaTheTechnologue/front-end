@@ -2,6 +2,6 @@
   font-size: x-small;
   .leader-card-fullname{
     font-weight: bold;
-
+    margin-bottom: 0;
   }
 }

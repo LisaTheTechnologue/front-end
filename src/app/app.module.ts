@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +20,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProfilePublicComponent } from './profile-public/profile-public.component';
 import { FeedbackViewComponent } from './feedback-view/feedback-view.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { FilterPipe } from './_shared/pipes/filter.pipe';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import { FeedbackViewComponent } from './feedback-view/feedback-view.component';
     SignupComponent,
     LoginComponent,
     ProfilePublicComponent,
-    FeedbackViewComponent
+    FeedbackViewComponent,
+    PageNotFoundComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -48,7 +53,9 @@ import { FeedbackViewComponent } from './feedback-view/feedback-view.component';
     FlexLayoutModule,
     NgxPaginationModule
   ],
-  providers: [],
+  providers: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

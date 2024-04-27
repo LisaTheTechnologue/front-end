@@ -1,0 +1,64 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, catchError, throwError } from 'rxjs';
+import { AppSettings } from 'src/app/_shared/app-settings';
+import { StorageService } from 'src/app/_shared/services/storage.service';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class PaymentService {
+  private AUTH_API = AppSettings.MEMBER_API_ENDPOINT + 'payment/';
+  constructor(private http: HttpClient) {}
+
+  getSellerInfo(userId: number): Observable<any> {
+    return this.http.get(this.AUTH_API + 'info' + userId, {
+      headers: this.createAuthorizationHeader(),
+    }).pipe(
+      catchError((err: any) => {
+      console.log('error caught in service')
+      console.error(err);
+      return throwError(err);
+    }))
+  }
+  getListPayment(userId: number): Observable<any> {
+    return this.http.get(this.AUTH_API + 'info' + userId, {
+      headers: this.createAuthorizationHeader(),
+    }).pipe(
+      catchError((err) => {
+      console.log('error caught in service')
+      console.error(err);
+      return throwError(err);
+    }));
+  }
+  getPaymentById(paymentId: number): Observable<any> {
+    return this.http.get(this.AUTH_API + '/paymentId' + paymentId, {
+      headers: this.createAuthorizationHeader(),
+    });
+  }
+
+  confirm(paymentDto: any): Observable<any> {
+    return this.http.post(this.AUTH_API + 'confirm', paymentDto, {
+      headers: this.createAuthorizationHeader(),
+    });
+  }
+
+  fail(paymentDto: any): Observable<any> {
+    return this.http.post(this.AUTH_API + 'fail', paymentDto, {
+      headers: this.createAuthorizationHeader(),
+    });
+  }
+
+  createPayment(paymentDto: any): Observable<any> {
+    return this.http.post(this.AUTH_API + 'trip', paymentDto, {
+      headers: this.createAuthorizationHeader(),
+    });
+  }
+
+  private createAuthorizationHeader(): HttpHeaders {
+    return new HttpHeaders().set(
+      'Authorization',
+      'Bearer ' + StorageService.getToken()
+    );
+  }
+}

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TripService } from '../_shared/services/trip.service';
 import { PublicService } from '../_shared/services/public.service';
 
 @Component({
@@ -32,7 +31,6 @@ export class HomeComponent implements OnInit {
         element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
         this.popularTours.push(element);
       });
-      console.log(this.popularTours);
     });
   }
 }

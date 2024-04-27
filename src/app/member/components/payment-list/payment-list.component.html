@@ -1,0 +1,37 @@
+<div class="input-group mb-3">
+  <div class="m-1">
+    <input type="text" class="form-control"
+    placeholder="Search by title" [(ngModel)]="searchText" />
+  </div>
+  <div class="m-1">
+    <button mat-flat-button color="primary">
+      <mat-icon>search</mat-icon><span> Search</span>
+    </button>
+  </div>
+</div>
+<!-- <input type="text" formControlName="searchText" placeholder="Search by title">
+<button (click)="onSearch()">Search</button> -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Trip Title</th>
+      <th>Payer</th>
+      <th>Pay date</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let payment of payments">
+      <td>{{ payment.id }}</td>
+      <td>{{ payment.tripTitle }}</td>
+      <td>{{ payment.userFullName }}</td>
+      <td>{{ payment.createdDate }}</td>
+      <td>{{ payment.paymentStatus }}</td>
+      <td>
+        <a href="#" [routerLink]="['/member/payment/view/', payment.id]" class="btn btn-info">View</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

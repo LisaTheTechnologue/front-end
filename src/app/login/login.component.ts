@@ -22,7 +22,7 @@ export class LoginComponent {
 
   ngOnInit(): void{
     this.loginForm = this.fb.group({
-      email: [null, [Validators.required]],
+      username: [null, [Validators.required]],
       password: [null, [Validators.required]],
     })
   }
@@ -32,9 +32,9 @@ export class LoginComponent {
   }
 
   onSubmit():void {
-    const email = this.loginForm.get('email')?.value;
+    const username = this.loginForm.get('username')?.value;
     const password = this.loginForm.get('password')?.value;
-    this.authService.login(email,password).subscribe(
+    this.authService.login(username,password).subscribe(
       (res) => {
         if(StorageService.isAdminLoggedIn()){
           this.router.navigateByUrl('admin/dashboard');

@@ -30,4 +30,7 @@ export class ConfirmationDialogComponent {
   onConfirm(result: boolean): void {
     this.dialogRef.close(result);
   }
+  onDismiss() {
+    this.dialogRef.close(false); // Close dialog with cancellation
+  }
 }

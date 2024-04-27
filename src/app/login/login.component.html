@@ -4,10 +4,10 @@
     <mat-card-content>
       <form [formGroup]="loginForm">
         <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" placeholder="Email" required>
-          <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-            Please enter a valid email.</mat-error>
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" placeholder="Username" required>
+          <mat-error *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+            Please enter a valid username.</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>

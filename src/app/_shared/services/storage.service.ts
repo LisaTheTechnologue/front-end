@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-const TOKEN = 'ecom-token';
-const USER = 'ecom-user';
+const TOKEN = 'ttos-token';
+const USER = 'ttos-user';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,11 @@ export class StorageService {
   public saveUser(user): void {
     localStorage.removeItem(USER);
     localStorage.setItem(USER, JSON.stringify(user));
+  }
+
+  get isLoggedIn(): boolean {
+    let authToken = localStorage.getItem(TOKEN);
+    return (authToken !== null) ? true : false;
   }
   static getToken(): string {
     return localStorage.getItem(TOKEN);
@@ -51,6 +56,7 @@ export class StorageService {
   }
 
   static isMemberLoggedIn(): boolean {
+
     if(this.getToken == null){
       return false;
     }

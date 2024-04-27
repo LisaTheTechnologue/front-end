@@ -17,9 +17,9 @@ export class ProfileCardComponent {
   ) {}
 
   ngOnInit() {
-    this.publicService.getPublicProfile(this.leaderId ?? '').subscribe(
+    console.log(this.leaderId);
+    this.publicService.getPublicProfile(this.leaderId).subscribe(
       (profile) => {
-        console.log(profile);
         this.user = profile;
         this.rating = profile.rating;
       }

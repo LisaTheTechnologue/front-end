@@ -1,5 +1,3 @@
-import { Component, OnInit } from '@angular/core';
-import { TripService } from '../../_shared/services/trip.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Trip } from 'src/app/_shared/models/trip.model';
@@ -7,18 +5,18 @@ import { StorageService } from 'src/app/_shared/services/storage.service';
 import { MemberService } from '../../member/services/member.service';
 import { TripMember } from 'src/app/_shared/models/trip-member.model';
 import { PublicService } from 'src/app/_shared/services/public.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-trip-view',
   templateUrl: './trip-view.component.html',
   styleUrls: ['./trip-view.component.css'],
 })
-export class TripViewComponent implements OnInit {
+export class TripViewComponent{
   image: any;
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   trip!: Trip;
   isMemberLoggedIn: boolean;
-  isAdminLoggedIn: boolean;
   isJoined: boolean;
   // leaderId: string;
   constructor(
@@ -32,7 +30,6 @@ export class TripViewComponent implements OnInit {
     this.getTrip();
     this.router.events.subscribe((event) => {
       this.isMemberLoggedIn = StorageService.isMemberLoggedIn();
-      this.isAdminLoggedIn = StorageService.isAdminLoggedIn();
     });
   }
   getTrip() {
@@ -40,10 +37,6 @@ export class TripViewComponent implements OnInit {
     const userId = StorageService.getUserId();
     this.publicService.getById(this.tripId).subscribe((res) => {
       this.trip = res;
-      // this.leaderId = res.leaderId;
-      // this.trip.highlights = res.highlights;
-      // this.trip.title = res.title;
-      // this.trip.budget = res.budget;
       this.trip.processedImg = 'data:image/jpeg;base64,' + res.byteImg;
       this.image = this.trip.processedImg;
       for (var index in res.members) {

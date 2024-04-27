@@ -14,8 +14,10 @@ import { MemberProfileComponent } from './components/member-profile/member-profi
 import { TripEditComponent } from './components/trip-edit/trip-edit.component';
 import { CommentViewComponent } from './components/comment-view/comment-view.component';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
-import { ProfileTripsViewComponent } from './components/profile-trips-view/profile-trips-view.component';
 import { TripPaymentComponent } from './components/trip-payment/trip-payment.component';
+import { PaymentListComponent } from './components/payment-list/payment-list.component';
+import { PaymentViewComponent } from './components/payment-view/payment-view.component';
+import { TripCardComponent } from './components/trip-card/trip-card.component';
 
 @NgModule({
   declarations: [
@@ -28,8 +30,10 @@ import { TripPaymentComponent } from './components/trip-payment/trip-payment.com
     TripEditComponent,
     CommentViewComponent,
     CommentFormComponent,
-    ProfileTripsViewComponent,
-    TripPaymentComponent
+    TripPaymentComponent,
+    PaymentListComponent,
+    PaymentViewComponent,
+    TripCardComponent
   ],
   imports: [
     CommonModule,

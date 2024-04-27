@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Trip } from 'src/app/_shared/models/trip.model';
 import { User } from 'src/app/_shared/models/user.model';
 import { ProfileService } from 'src/app/_shared/services/profile.service';
-import { TripService } from 'src/app/_shared/services/trip.service';
 import { MemberService } from '../../services/member.service';
 
 @Component({

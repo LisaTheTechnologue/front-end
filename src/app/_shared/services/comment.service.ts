@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AppSettings } from '../app-settings';
 import { HttpClient } from '@angular/common/http';
-import { NewComment } from './new-comment';
+import { NewComment } from '../models/new-comment';
 import { Observable } from 'rxjs';
 
 @Injectable({

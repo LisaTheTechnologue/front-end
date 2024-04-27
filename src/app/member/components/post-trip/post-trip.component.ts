@@ -76,9 +76,16 @@ export class PostTripComponent {
     return new Date().toISOString().split('T')[0];
   }
   getAllCities() {
-    this.memberService.getAllCities().subscribe((res) => {
-      this.listOfCities = res;
-    });
+    this.memberService.getAllCities().subscribe(
+      (res) => {
+        this.listOfCities = res;
+      },
+      (error) => {
+        // Handle error response
+        console.error(error); // Log the error for debugging
+        this.showError(error);
+      }
+    );
   }
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
@@ -143,40 +150,27 @@ export class PostTripComponent {
       JSON.stringify(this.tripForm.get('items').value)
     );
     this.memberService.addTrip(formData).subscribe(
-    //   (res) => {
-    //   if (res.id != null) {
-    //     this.snackBar.open('Product Posted Successful!', 'Close', {
-    //       duration: 5000,
-    //     });
-    //     this.router.navigateByUrl('/member/my-trips');
-    //   } else {
-    //     this.snackBar.open(res.message, 'ERROR', {
-    //       duration: 5000,
-    //       panelClass: 'error-snackbar',
-    //     });
-    //   }
-    // }
-     {next: () => this.onSuccess(),
-        error: () => this.onError()}
-  );
-    // } else {
-    //   for (const i in this.tripForm.controls) {
-    //     this.tripForm.controls[i].markAsDirty();
-    //     this.tripForm.controls[i].updateValueAndValidity();
-    //   }
-    // }
+      (next) => {
+        this.onSuccess();
+      },
+      (error) => {
+        // Handle error response
+        console.error(error); // Log the error for debugging
+        this.showError(error);
+      }
+    );
   }
   onCancel() {
     this.location.back();
   }
   private onSuccess() {
-    this.snackBar.open('Course saved successfully!', '', { duration: 5000 });
+    this.snackBar.open('Trip saved successfully!', '', { duration: 5000 });
     this.onCancel();
   }
 
-  private onError() {
+  showError(error: any) {
     this.dialog.open(ErrorDialogComponent, {
-      data: 'Error saving course.'
+      data: error,
     });
   }
 }

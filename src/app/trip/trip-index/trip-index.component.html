@@ -41,7 +41,7 @@
       <div fxLayout="row wrap" fxLayoutGap="16px" class="p-2" *ngIf="filteredData.length > 0">
 
         <mat-card fxFlex="30%" *ngFor="let trip of filteredData | paginate: { itemsPerPage: 3, currentPage: p }"
-          [routerLink]="['/view', trip.id]" class="trip-card mat-elevation-z2" appMaterialElevation>
+          [routerLink]="['/trips/view', trip.id]" class="trip-card mat-elevation-z2">
           <img mat-card-image [src]="trip.processedImg" alt="trip-image" class="card-trip-image">
           <mat-card-header>
             <mat-card-title>{{ trip.title }}</mat-card-title>

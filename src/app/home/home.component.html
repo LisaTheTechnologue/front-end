@@ -30,7 +30,7 @@
   <h2 class="text-center text-white">Our Popular Tours</h2>
   <div class="row d-flex justify-content-center">
     <div class="col-md-2 mb-5 " *ngFor="let trip of popularTours">
-      <div class="trip-card card" [routerLink]="['/view', trip.id]">
+      <div class="trip-card card" [routerLink]="['/trips/view', trip.id]">
         <img [src]="trip.processedImg" class="card-img-top" alt="Tour Image">
         <div class="card-body">
           <div class="h5 card-title">{{ trip.title }}</div>

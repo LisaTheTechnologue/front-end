@@ -1,7 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TripService } from '../../_shared/services/trip.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { PageEvent } from '@angular/material/paginator';
 import { PublicService } from 'src/app/_shared/services/public.service';
 
 @Component({
@@ -31,7 +29,6 @@ export class TripIndexComponent {
         element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
         this.trips.push(element);
       });
-      console.log(this.trips);
     });
     this.filteredData = this.trips;
   }

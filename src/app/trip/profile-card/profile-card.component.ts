@@ -10,18 +10,18 @@ import { PublicService } from 'src/app/_shared/services/public.service';
 })
 export class ProfileCardComponent {
   @Input() leaderId: number;
-  user!: PublicProfile;
+  leader!: PublicProfile;
   rating!:number;
   constructor(
     private publicService: PublicService
   ) {}
 
   ngOnInit() {
-    console.log(this.leaderId);
+  //   console.log(this.leader);
     this.publicService.getPublicProfile(this.leaderId).subscribe(
       (profile) => {
-        this.user = profile;
-        this.rating = profile.rating;
+        this.leader = profile;
+        this.rating = this.leader.rating;
       }
     );
   }

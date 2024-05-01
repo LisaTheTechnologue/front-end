@@ -1,12 +1,10 @@
-import { TripItem } from "./trip-item.model";
-import { TripMember } from "./trip-member.model";
+import { PublicProfile } from "./user.model";
 
 export interface Trip {
   id: number;
   title: string;
   introduction: string;
   leaderId: number;
-  leaderName: string;
   cityName:string;
   cityId:number;
   highlights: string;
@@ -33,4 +31,17 @@ export interface Feedback {
   tripRating: number;
   leaderRating: number;
   createdDate: Date;
+}
+
+export interface TripItem {
+  _id: string;
+  dayNo: number;
+  title: string;
+  description: string;
+}
+
+export interface TripMember {
+  tripId: number;
+  userId: number;
+  userName: string;
 }

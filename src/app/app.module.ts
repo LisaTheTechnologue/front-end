@@ -11,7 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { TripComponent } from './trip/trip.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { MatInputModule } from '@angular/material/input';
@@ -22,6 +22,7 @@ import { ProfilePublicComponent } from './profile-public/profile-public.componen
 import { FeedbackViewComponent } from './feedback-view/feedback-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FilterPipe } from './_shared/pipes/filter.pipe';
+import { JwtInterceptor } from './_shared/exceptions/jwt.intercepter';
 
 
 @NgModule({
@@ -54,7 +55,11 @@ import { FilterPipe } from './_shared/pipes/filter.pipe';
     NgxPaginationModule
   ],
   providers: [
-
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+  }
   ],
   bootstrap: [AppComponent]
 })

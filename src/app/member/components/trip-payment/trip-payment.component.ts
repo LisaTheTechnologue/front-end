@@ -35,6 +35,7 @@ export class TripPaymentComponent {
     this.publicService.getById(this.tripId).subscribe((res) => {
       this.trip = res;
     });
+    // this.user = this.trip.leader;
     this.paymentService
       .getSellerInfo(this.trip.leaderId)
       .subscribe((user) => (this.user = user));

@@ -10,7 +10,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
-import { GlobalErrorHandlerService } from '../_shared/services/global-error-handler.service';
+import { GlobalErrorHandlerService } from '../_shared/exceptions/global-error-handler.service';
 
 
 @NgModule({
@@ -29,9 +29,6 @@ import { GlobalErrorHandlerService } from '../_shared/services/global-error-hand
     FormsModule,
     NgxPaginationModule,
     NgbRatingModule
-  ],
-  providers: [
-  { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
   ]
 })
 export class TripModule { }

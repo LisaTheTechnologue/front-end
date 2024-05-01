@@ -5,6 +5,7 @@ import { Trip } from 'src/app/_shared/models/trip.model';
 import { MemberService } from '../../services/member.service';
 import { AppService } from '../../../_shared/services/app.service';
 import { Router } from '@angular/router';
+import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
 
 @Component({
   selector: 'app-joined-trips',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./joined-trips.component.css']
 })
 export class JoinedTripsComponent {
+  error: any;
 onSearch() {
 throw new Error('Method not implemented.');
 }
@@ -32,12 +34,21 @@ throw new Error('Method not implemented.');
 
   getAllTrips() {
     this.trips = [];
-    this.memberService.getAllJoinTrips().subscribe(res => {
+    this.memberService.getAllJoinTrips().subscribe({
+      next: (res) => {
       res.forEach(element => {
         element.processedImg = 'data:image/jpeg;base64,'+element.byteImg;
         this.trips.push(element);
       });
-      console.log(this.trips);
-    })
-  }
+    },
+    error: (error) => {
+      if (error instanceof PageNotFoundException) {
+        this.router.navigate(['/page-not-found']);
+      } else {
+        // Handle other errors here
+        this.error = error.message;
+      }
+    }}
+  );
+}
 }

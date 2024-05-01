@@ -1,5 +1,5 @@
 <div class="container my-5">
-
+  <div *ngIf="error">{{ error }} </div>
   <div class="heading h3">Add Trip</div>
   <form [formGroup]="tripForm" >
     <div class="mb-3">

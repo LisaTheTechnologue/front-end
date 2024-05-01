@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, first, throwError } from 'rxjs';
 import { AppSettings } from 'src/app/_shared/app-settings';
+import { TripMember } from 'src/app/_shared/models/trip.model';
 import { StorageService } from 'src/app/_shared/services/storage.service';
-import { TripMember } from '../../_shared/models/trip-member.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,12 +29,7 @@ export class MemberService {
     const userId = StorageService.getUserId();
     return this.http.get(this.AUTH_API+`trips/user/${userId}`, {
       headers: this.createAuthorizationHeader(),
-    }).pipe(
-      catchError((err) => {
-      console.log('error caught in service')
-      console.error(err);
-      return throwError(err);
-    }))
+    });
   }
   getTripById(tripId:number): Observable<any>{
     // const userId = StorageService.getUserId();
@@ -45,23 +40,13 @@ export class MemberService {
   getAllTripsByName(name: any): Observable<any>{
     return this.http.get(this.AUTH_API+`trips/search/${name}`, {
       headers: this.createAuthorizationHeader(),
-    }).pipe(
-      catchError((err) => {
-      console.log('error caught in service')
-      console.error(err);
-      return throwError(err);
-    }))
+    });
   }
   getAllJoinTrips(): Observable<any>{
     const userId = StorageService.getUserId();
     return this.http.get(this.AUTH_API+`trips/join-trip-list/${userId}`, {
       headers: this.createAuthorizationHeader(),
-    }).pipe(
-      catchError((err) => {
-      console.log('error caught in service')
-      console.error(err);
-      return throwError(err);
-    }))
+    });
   }
   joinTrip(tripMember:any): Observable<any>{
     return this.http.post(this.AUTH_API+'trips/join-trip', tripMember, {

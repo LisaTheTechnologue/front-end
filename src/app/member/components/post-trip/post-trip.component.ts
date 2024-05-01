@@ -14,6 +14,7 @@ import { NgbDateStruct, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from 'src/app/_shared/components/error-dialog/error-dialog.component';
 import { Location } from '@angular/common';
+import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
 @Component({
   selector: 'app-post-trip',
   templateUrl: './post-trip.component.html',
@@ -30,6 +31,7 @@ export class PostTripComponent {
   toDateModel: NgbDateStruct;
   today = new Date();
   age: string;
+  error: any;
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
@@ -76,15 +78,18 @@ export class PostTripComponent {
     return new Date().toISOString().split('T')[0];
   }
   getAllCities() {
-    this.memberService.getAllCities().subscribe(
-      (res) => {
+    this.memberService.getAllCities().subscribe({
+      next: (res) => {
         this.listOfCities = res;
       },
-      (error) => {
-        // Handle error response
-        console.error(error); // Log the error for debugging
-        this.showError(error);
-      }
+      error: (error) => {
+        if (error instanceof PageNotFoundException) {
+          this.router.navigate(['/page-not-found']);
+        } else {
+          // Handle other errors here
+          this.error = error.message;
+        }
+      }}
     );
   }
   onFileSelected(event: any) {
@@ -149,15 +154,18 @@ export class PostTripComponent {
       'itemsJsonString',
       JSON.stringify(this.tripForm.get('items').value)
     );
-    this.memberService.addTrip(formData).subscribe(
-      (next) => {
+    this.memberService.addTrip(formData).subscribe({
+      next: (res) => {
         this.onSuccess();
       },
-      (error) => {
-        // Handle error response
-        console.error(error); // Log the error for debugging
-        this.showError(error);
-      }
+      error: (error) => {
+        if (error instanceof PageNotFoundException) {
+          this.router.navigate(['/page-not-found']);
+        } else {
+          // Handle other errors here
+          this.error = error.message;
+        }
+      }}
     );
   }
   onCancel() {
@@ -168,9 +176,9 @@ export class PostTripComponent {
     this.onCancel();
   }
 
-  showError(error: any) {
-    this.dialog.open(ErrorDialogComponent, {
-      data: error,
-    });
-  }
+  // showError(error: any) {
+  //   this.dialog.open(ErrorDialogComponent, {
+  //     data: error,
+  //   });
+  // }
 }

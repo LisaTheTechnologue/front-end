@@ -4,6 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { AppSettings } from '../app-settings';
 import { User, PublicProfile } from '../models/user.model';
 import { Router } from '@angular/router';
+import { PageNotFoundException } from '../exceptions/page-not-found.exception';
 
 @Injectable({
   providedIn: 'root',
@@ -47,11 +48,20 @@ export class PublicService {
   public getById(tripId: number): Observable<any> {
     // http://localhost:8080/public/trip?tripId=1
     return this.http
-      .get(this.PUBLIC_ENDPOINT + 'trip?tripId=' + tripId);
+      .get(this.PUBLIC_ENDPOINT + 'trip?tripId=' + tripId)
+      .pipe(catchError(this.handleError));
   }
 
   public getTripsByLeaderId(leaderId: any): Observable<any> {
     return this.http
       .get(this.PUBLIC_ENDPOINT + 'profile/trips?leaderId=' + leaderId);
+  }
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 404) {
+      // Redirect to page not found component
+      return throwError(() => new PageNotFoundException());
+    }
+    // Handle other errors here
+    return throwError(error);
   }
 }

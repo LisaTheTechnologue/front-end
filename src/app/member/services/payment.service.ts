@@ -14,22 +14,12 @@ export class PaymentService {
   getSellerInfo(userId: number): Observable<any> {
     return this.http.get(this.AUTH_API + 'info' + userId, {
       headers: this.createAuthorizationHeader(),
-    }).pipe(
-      catchError((err: any) => {
-      console.log('error caught in service')
-      console.error(err);
-      return throwError(err);
-    }))
+    });
   }
   getListPayment(userId: number): Observable<any> {
     return this.http.get(this.AUTH_API + 'info' + userId, {
       headers: this.createAuthorizationHeader(),
-    }).pipe(
-      catchError((err) => {
-      console.log('error caught in service')
-      console.error(err);
-      return throwError(err);
-    }));
+    });
   }
   getPaymentById(paymentId: number): Observable<any> {
     return this.http.get(this.AUTH_API + '/paymentId' + paymentId, {

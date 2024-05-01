@@ -3,21 +3,27 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MemberService } from '../../services/member.service';
 import { Trip } from 'src/app/_shared/models/trip.model';
+import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-trips',
   templateUrl: './my-trips.component.html',
-  styleUrls: ['./my-trips.component.css']
+  styleUrls: ['./my-trips.component.css'],
 })
 export class MyTripsComponent {
-  trips: any[]=[];
+  trips: any[] = [];
   // searchTripForm!:FormGroup;
   searchText: string = '';
-  constructor(private memberService: MemberService,
-    private fb:FormBuilder,
-    private snackBar: MatSnackBar){}
+  error: any;
+  constructor(
+    private memberService: MemberService,
+    private router: Router,
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
+  ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.getAllTrips();
     // this.searchTripForm = this.fb.group({
     //   title: [null, [Validators.required]]
@@ -26,18 +32,25 @@ export class MyTripsComponent {
 
   getAllTrips() {
     this.trips = [];
-    this.memberService.getAllTrips().subscribe(res => {
-      res.forEach(element => {
-        element.processedImg = 'data:image/jpeg;base64,'+element.byteImg;
-        this.trips.push(element);
-      });
-      console.log(this.trips);
-    })
+    this.memberService.getAllTrips().subscribe({
+      next: (res) => {
+        res.forEach((element) => {
+          element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
+          this.trips.push(element);
+        });
+      },
+      error: (error) => {
+        if (error instanceof PageNotFoundException) {
+          this.router.navigate(['/page-not-found']);
+        } else {
+          // Handle other errors here
+          this.error = error.message;
+        }
+      },
+    });
   }
 
-  onSearch() {
-
-  }
+  onSearch() {}
   deleteTrip(id: number) {
     this.memberService.delete(id).subscribe((res) => {
       this.trips = this.trips.filter((item) => item.id !== id);

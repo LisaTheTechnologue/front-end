@@ -1,11 +1,11 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Trip } from 'src/app/_shared/models/trip.model';
+import { Trip, TripMember } from 'src/app/_shared/models/trip.model';
 import { StorageService } from 'src/app/_shared/services/storage.service';
 import { MemberService } from '../../member/services/member.service';
-import { TripMember } from 'src/app/_shared/models/trip-member.model';
 import { PublicService } from 'src/app/_shared/services/public.service';
 import { Component } from '@angular/core';
+import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
 
 @Component({
   selector: 'app-trip-view',
@@ -18,6 +18,8 @@ export class TripViewComponent{
   trip!: Trip;
   isMemberLoggedIn: boolean;
   isJoined: boolean;
+  error: any;
+
   // leaderId: string;
   constructor(
     private publicService: PublicService,
@@ -35,7 +37,8 @@ export class TripViewComponent{
   getTrip() {
     // this.trip = new Trip();
     const userId = StorageService.getUserId();
-    this.publicService.getById(this.tripId).subscribe((res) => {
+    this.publicService.getById(this.tripId).subscribe({
+      next: (res) => {
       this.trip = res;
       this.trip.processedImg = 'data:image/jpeg;base64,' + res.byteImg;
       this.image = this.trip.processedImg;
@@ -45,7 +48,16 @@ export class TripViewComponent{
           break;
         }
       }
-    });
+    },
+    error: (error) => {
+      if (error instanceof PageNotFoundException) {
+        this.router.navigate(['/page-not-found']);
+      } else {
+        // Handle other errors here
+        this.error = error.message;
+      }
+    }
+  });
   }
   joinTrip() {
     if (this.isMemberLoggedIn) {

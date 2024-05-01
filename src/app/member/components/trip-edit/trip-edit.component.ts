@@ -14,8 +14,7 @@ import { ErrorDialogComponent } from 'src/app/_shared/components/error-dialog/er
 import { StorageService } from 'src/app/_shared/services/storage.service';
 import { MemberService } from '../../services/member.service';
 import { Location } from '@angular/common';
-import { Trip } from 'src/app/_shared/models/trip.model';
-import { TripItem } from 'src/app/_shared/models/trip-item.model';
+import { Trip, TripItem } from 'src/app/_shared/models/trip.model';
 @Component({
   selector: 'app-trip-edit',
   templateUrl: './trip-edit.component.html',

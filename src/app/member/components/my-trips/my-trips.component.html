@@ -1,41 +1,43 @@
-<div class="input-group mb-3">
-  <div class="m-1">
-    <input type="text" class="form-control"
-    placeholder="Search by title" [(ngModel)]="searchText" />
+<div *ngIf="error">{{ error }} </div>
+<div *ngIf="trips">
+  <div class="input-group mb-3">
+    <div class="m-1">
+      <input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="searchText" />
+    </div>
+    <div class="m-1">
+      <button mat-flat-button color="primary" (click)="onSearch()">
+        <mat-icon>search</mat-icon><span> Search</span>
+      </button>
+    </div>
+    <div class="m-1">
+      <button mat-flat-button color="success" routerLink="/member/my-trips/create">
+        <mat-icon>add</mat-icon> <span>Create Trip</span></button>
+    </div>
   </div>
-  <div class="m-1">
-    <button mat-flat-button color="primary" (click)="onSearch()">
-      <mat-icon>search</mat-icon><span> Search</span>
-    </button>
-  </div>
-  <div class="m-1">
-    <button mat-flat-button color="success" routerLink="/member/my-trips/create">
-      <mat-icon>add</mat-icon> <span>Create Trip</span></button>
-  </div>
-</div>
-<!-- <input type="text" formControlName="searchText" placeholder="Search by title">
+  <!-- <input type="text" formControlName="searchText" placeholder="Search by title">
 <button (click)="onSearch()">Search</button> -->
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Time</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let trip of trips">
-      <td>{{ trip.id }}</td>
-      <td>{{ trip.title }}</td>
-      <td>{{ trip.fromDate }} - {{ trip.toDate }}</td>
-      <td>{{ trip.tripStatus }}</td>
-      <td>
-        <a href="#" [routerLink]="['/member/my-trips/view/', trip.id]" class="btn btn-info">View</a>
-        <a href="#" [routerLink]="['/member/my-trips/edit/', trip.id]" class="btn btn-primary">Edit</a>
-        <button type="button" (click)="deleteTrip(trip.id)" class="btn btn-danger">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let trip of trips">
+        <td>{{ trip.id }}</td>
+        <td>{{ trip.title }}</td>
+        <td>{{ trip.fromDate }} - {{ trip.toDate }}</td>
+        <td>{{ trip.tripStatus }}</td>
+        <td>
+          <a href="#" [routerLink]="['/member/my-trips/view/', trip.id]" class="btn btn-info">View</a>
+          <a href="#" [routerLink]="['/member/my-trips/edit/', trip.id]" class="btn btn-primary">Edit</a>
+          <button type="button" (click)="deleteTrip(trip.id)" class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

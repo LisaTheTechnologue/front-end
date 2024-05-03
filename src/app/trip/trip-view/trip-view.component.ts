@@ -85,28 +85,4 @@ export class TripViewComponent{
       this.router.navigateByUrl('login');
     }
   }
-
-  revokeJoinTrip() {
-    if (this.isMemberLoggedIn) {
-      this.memberService.revokeJoinTrip(this.tripId).subscribe((res) => {
-        if (res.id != null) {
-          this.snackBar.open(
-            'You have revoked of the trip successfully!',
-            'Close',
-            {
-              duration: 5000,
-            }
-          );
-          this.router.navigateByUrl('/member');
-        } else {
-          this.snackBar.open(res.message, 'ERROR', {
-            duration: 5000,
-            panelClass: 'error-snackbar',
-          });
-        }
-      });
-    } else {
-      this.router.navigateByUrl('login');
-    }
-  }
 }

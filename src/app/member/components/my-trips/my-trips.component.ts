@@ -40,11 +40,8 @@ export class MyTripsComponent {
         });
       },
       error: (error) => {
-        if (error instanceof PageNotFoundException) {
-          this.router.navigate(['/page-not-found']);
-        } else {
-          // Handle other errors here
-          this.error = error.message;
+        if (error.status === 404) {
+          this.error = "No trips found.";
         }
       },
     });

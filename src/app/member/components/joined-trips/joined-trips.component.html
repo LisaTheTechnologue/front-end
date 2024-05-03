@@ -1,12 +1,6 @@
-<div *ngIf="error">{{ error }} </div>
-<div *ngIf="trips">
+<div *ngIf="!error">
   <div class="input-group mb-3">
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Search by title"
-      [(ngModel)]="searchText"
-    />
+    <input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="searchText" />
     <div class="mx-2">
       <button mat-flat-button color="primary" (click)="onSearch()">
         <mat-icon>search</mat-icon><span> Search</span>
@@ -37,4 +31,9 @@
       </tr>
     </tbody>
   </table>
+</div>
+<div *ngIf="error">
+  <div class="column col-12 text-center pt-10 pb-10">
+    <div class="">No trips found</div>
+  </div>
 </div>

@@ -22,7 +22,7 @@ import { ProfilePublicComponent } from './profile-public/profile-public.componen
 import { FeedbackViewComponent } from './feedback-view/feedback-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FilterPipe } from './_shared/pipes/filter.pipe';
-import { JwtInterceptor } from './_shared/exceptions/jwt.intercepter';
+import { TokenInterceptor } from './_shared/services/token.interceptor';
 
 
 @NgModule({
@@ -57,7 +57,7 @@ import { JwtInterceptor } from './_shared/exceptions/jwt.intercepter';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
+      useClass: TokenInterceptor,
       multi: true
   }
   ],

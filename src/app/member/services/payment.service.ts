@@ -8,39 +8,39 @@ import { StorageService } from 'src/app/_shared/services/storage.service';
   providedIn: 'root',
 })
 export class PaymentService {
-  private AUTH_API = AppSettings.MEMBER_API_ENDPOINT + 'payment/';
+  private PAYMENT_API = AppSettings.MEMBER_API_ENDPOINT + 'payment/';
   constructor(private http: HttpClient) {}
 
   getSellerInfo(userId: number): Observable<any> {
-    return this.http.get(this.AUTH_API + 'info' + userId, {
+    return this.http.get(this.PAYMENT_API + 'info/' + userId, {
       headers: this.createAuthorizationHeader(),
     });
   }
   getListPayment(userId: number): Observable<any> {
-    return this.http.get(this.AUTH_API + 'info' + userId, {
+    return this.http.get(this.PAYMENT_API + 'info/' + userId, {
       headers: this.createAuthorizationHeader(),
     });
   }
   getPaymentById(paymentId: number): Observable<any> {
-    return this.http.get(this.AUTH_API + '/paymentId' + paymentId, {
+    return this.http.get(this.PAYMENT_API + '/paymentId' + paymentId, {
       headers: this.createAuthorizationHeader(),
     });
   }
 
   confirm(paymentDto: any): Observable<any> {
-    return this.http.post(this.AUTH_API + 'confirm', paymentDto, {
+    return this.http.post(this.PAYMENT_API + 'confirm', paymentDto, {
       headers: this.createAuthorizationHeader(),
     });
   }
 
   fail(paymentDto: any): Observable<any> {
-    return this.http.post(this.AUTH_API + 'fail', paymentDto, {
+    return this.http.post(this.PAYMENT_API + 'fail', paymentDto, {
       headers: this.createAuthorizationHeader(),
     });
   }
 
   createPayment(paymentDto: any): Observable<any> {
-    return this.http.post(this.AUTH_API + 'trip', paymentDto, {
+    return this.http.post(this.PAYMENT_API + 'trip', paymentDto, {
       headers: this.createAuthorizationHeader(),
     });
   }

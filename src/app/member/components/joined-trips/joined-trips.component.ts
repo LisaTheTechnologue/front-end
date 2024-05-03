@@ -10,22 +10,23 @@ import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found
 @Component({
   selector: 'app-joined-trips',
   templateUrl: './joined-trips.component.html',
-  styleUrls: ['./joined-trips.component.css']
+  styleUrls: ['./joined-trips.component.css'],
 })
 export class JoinedTripsComponent {
   error: any;
-onSearch() {
-throw new Error('Method not implemented.');
-}
-  trips: any[]=[];
+  onSearch() {
+    throw new Error('Method not implemented.');
+  }
+  trips: any[] = [];
   // searchTripForm!:FormGroup;
   searchText: string = '';
   constructor(
     private memberService: MemberService,
     private appService: AppService,
-  private router: Router){}
+    private router: Router
+  ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.getAllTrips();
     // this.searchTripForm = this.fb.group({
     //   title: [null, [Validators.required]]
@@ -36,19 +37,16 @@ throw new Error('Method not implemented.');
     this.trips = [];
     this.memberService.getAllJoinTrips().subscribe({
       next: (res) => {
-      res.forEach(element => {
-        element.processedImg = 'data:image/jpeg;base64,'+element.byteImg;
-        this.trips.push(element);
-      });
-    },
-    error: (error) => {
-      if (error instanceof PageNotFoundException) {
-        this.router.navigate(['/page-not-found']);
-      } else {
-        // Handle other errors here
-        this.error = error.message;
-      }
-    }}
-  );
-}
+        res.forEach((element) => {
+          element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
+          this.trips.push(element);
+        });
+      },
+      error: (error) => {
+        if (error.status === 404) {
+          this.error = "No trips found.";
+        }
+      },
+    });
+  }
 }

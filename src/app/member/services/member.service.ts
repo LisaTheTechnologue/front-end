@@ -53,14 +53,8 @@ export class MemberService {
       headers: this.createAuthorizationHeader(),
     })
   }
-  revokeJoinTrip(tripNo:number): Observable<any>{
-    const user = StorageService.getUserId();
-    const tripMember: TripMember = {
-      tripId: tripNo,
-      userId: +user,
-      userName: ''
-      };
-    return this.http.post(this.AUTH_API+'trips/revoke-join-trip', tripMember, {
+  revokeJoinTrip(tripMember:number): Observable<any>{
+    return this.http.delete(this.AUTH_API+'trips/join-trip' + tripMember, {
       headers: this.createAuthorizationHeader(),
     })
   }

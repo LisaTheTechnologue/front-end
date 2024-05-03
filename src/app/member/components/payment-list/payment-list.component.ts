@@ -11,11 +11,10 @@ import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found
 @Component({
   selector: 'app-payment-list',
   templateUrl: './payment-list.component.html',
-  styleUrls: ['./payment-list.component.css']
+  styleUrls: ['./payment-list.component.css'],
 })
 export class PaymentListComponent {
-
-  payments: any[]=[];
+  payments: any[] = [];
   // searchTripForm!:FormGroup;
   searchText: string = '';
   error: any;
@@ -24,28 +23,26 @@ export class PaymentListComponent {
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private dialog: MatDialog,
-    private router: Router){}
+    private router: Router
+  ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     const userId = StorageService.getUserId();
     this.getListPayment(userId);
   }
 
-  getListPayment(userId:any) {
+  getListPayment(userId: any) {
     this.paymentService.getListPayment(userId).subscribe({
       next: (res) => {
         // Handle successful response
         this.payments = res;
       },
       error: (error) => {
-        if (error instanceof PageNotFoundException) {
-          this.router.navigate(['/page-not-found']);
-        } else {
-          // Handle other errors here
-          this.error = error.message;
+        if (error.status === 404) {
+          this.error = 'No data found.';
         }
-      }}
-    );
+      },
+    });
   }
 
   onCancel() {

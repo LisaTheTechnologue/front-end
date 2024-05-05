@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { MemberService } from '../../services/member.service';
+import { MemberService } from '../../../_shared/services/member.service';
 import { StorageService } from 'src/app/_shared/services/storage.service';
 import { NgbDateStruct, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog } from '@angular/material/dialog';

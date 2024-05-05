@@ -1,1 +1,29 @@
-<p>admin works!</p>
+<div class="container my-5">
+  <div role="tabpanel">
+    <!-- List group -->
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="list-group" id="myList" role="tablist">
+          <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#contacts" role="tab">
+            Messages</a>
+          <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#trips" role="tab">
+            Trips</a>
+          <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#users" role="tab">Deactive
+            Users</a>
+            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#cities" role="tab">City
+              List</a>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane active" id="contacts" role="tabpanel"><app-contact-list></app-contact-list> </div>
+          <div class="tab-pane active" id="cities" role="tabpanel"><app-city-list></app-city-list> </div>
+          <div class="tab-pane" id="trips" role="tabpanel"><app-trip-list></app-trip-list></div>
+          <div class="tab-pane" id="users" role="tabpanel"><app-user-list></app-user-list></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

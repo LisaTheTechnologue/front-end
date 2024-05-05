@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Trip } from 'src/app/_shared/models/trip.model';
 import { User } from 'src/app/_shared/models/user.model';
-import { ProfileService } from 'src/app/_shared/services/profile.service';
-import { MemberService } from '../../services/member.service';
+import { MemberService } from '../../../_shared/services/member.service';
+import { MemberUserService } from 'src/app/_shared/services/member-user.service';
 
 @Component({
   selector: 'app-member-profile',
@@ -22,7 +22,7 @@ export class MemberProfileComponent {
   selfProfileCheck = false;
 
   constructor(
-    private profileService: ProfileService,
+    private profileService: MemberUserService,
     private route: ActivatedRoute,
     private memberService: MemberService
   ) {}
@@ -34,28 +34,28 @@ export class MemberProfileComponent {
   }
 
   async getUser(): Promise<void> {
-    if (this.route.snapshot.paramMap.get('email') != null) {
-      const email = this.route.snapshot.paramMap.get('email');
-      if (email) {
-        // Set user
-        this.profileService
-          .getProfile(email)
-          .subscribe((user) => (this.user = user));
-        // Set trips
-        this.memberService
-          .getAllTrips()
-          .subscribe((trips) => (this.trips = trips));
+    // if (this.route.snapshot.paramMap.get('email') != null) {
+    //   const email = this.route.snapshot.paramMap.get('email');
+    //   if (email) {
+    //     // Set user
+    //     this.profileService
+    //       .getProfile(email)
+    //       .subscribe((user) => (this.user = user));
+    //     // Set trips
+    //     this.memberService
+    //       .getAllTrips()
+    //       .subscribe((trips) => (this.trips = trips));
 
-      }
-    } else {
-      this.profileService.getProfileWithNullRoute().subscribe((user) => {
+    //   }
+    // } else {
+      this.profileService.getProfile().subscribe((user) => {
         this.user = user;
         this.memberService
           .getAllTrips()
           .subscribe((trips) => (this.trips = trips));
         this.selfProfileCheck = true;
       });
-    }
+    // }
   }
 
 

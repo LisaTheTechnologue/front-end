@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Trip } from 'src/app/_shared/models/trip.model';
-import { MemberService } from '../../services/member.service';
+import { MemberService } from '../../../_shared/services/member.service';
 import { PublicService } from 'src/app/_shared/services/public.service';
 import { User } from 'src/app/_shared/models/user.model';
 import { ActivatedRoute } from '@angular/router';
@@ -10,7 +10,10 @@ import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorDialogComponent } from 'src/app/_shared/components/error-dialog/error-dialog.component';
 import { Location } from '@angular/common';
-import { PaymentService } from '../../services/payment.service';
+import { MemberUserService } from 'src/app/_shared/services/member-user.service';
+import { UserService } from '../../../_shared/services/user.service';
+import { MemberPaymentService } from 'src/app/_shared/services/member-payment.service';
+import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 @Component({
   selector: 'app-trip-payment',
   templateUrl: './trip-payment.component.html',
@@ -24,21 +27,25 @@ export class TripPaymentComponent {
   imagePreview: string | ArrayBuffer | null;
   constructor(
     private activatedRoute: ActivatedRoute,
-    private paymentService: PaymentService,
-    private publicService: PublicService,
+    private tripService: MemberTripService,
+    private userService: MemberUserService,
+    private paymentService: MemberPaymentService,
     private location: Location,
     private dialog: MatDialog,
     private fb: FormBuilder,
     private snackBar: MatSnackBar
   ) {}
   ngOnInit(): void {
-    this.publicService.getById(this.tripId).subscribe((res) => {
+    this.userService.getPaymentProfile(this.tripId).subscribe((res) => {
+      this.user = res;
+    });
+    this.tripService.getTripById(this.tripId).subscribe((res) => {
       this.trip = res;
     });
     // this.user = this.trip.leader;
-    this.paymentService
-      .getSellerInfo(this.trip.leaderId)
-      .subscribe((user) => (this.user = user));
+    // this.userService
+    //   .getSellerInfo(this.trip.leaderId)
+    //   .subscribe((user) => (this.user = user));
   }
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
@@ -58,7 +65,7 @@ export class TripPaymentComponent {
     formData.append('img', this.selectedFile);
     formData.append('payerId', userId);
     formData.append('tripId', tripId);
-    this.paymentService.createPayment(formData).subscribe(
+    this.paymentService.create(formData).subscribe(
       (res) => {
         this.onSuccess();
       },
@@ -72,7 +79,7 @@ export class TripPaymentComponent {
     this.location.back();
   }
   private onSuccess() {
-    this.snackBar.open('Trip saved successfully!', '', { duration: 5000 });
+    this.snackBar.open('Payment sent successfully! Please wait for the leader\'s approval', '', { duration: 5000 });
     this.onCancel();
   }
 

@@ -1,0 +1,29 @@
+<div class="m-5">
+  <div *ngIf="group">
+    <h2>Group: {{ group.id }}</h2>
+    <ul>
+      <li *ngFor="let message of group.messages">
+        <div>
+          - {{ message.content }} by {{ message.user.username }}
+        </div>
+        <img [src]="message.user.avatarImg" alt="User Avatar"> </li>
+    </ul>
+  </div>
+  <div *ngIf="error">{{ error }}</div>
+  <div class="m-5">
+      <textarea
+        class="form-control"
+        formControlName="chat.content"
+        placeholder="Write something..."
+      >
+      </textarea>
+      <div class="btn-group">
+        <!-- <button (click)="likePost(post)" class="btn btn-white btn-xs"><i class="fa fa-thumbs-up"></i> Like</button> -->
+        <button
+          class="mt-1 btn btn-outline-primary btn-xs"
+          (click)="postComment(chat)"
+        >
+          <em class="fa fa-comments"></em> Send
+        </button>
+  </div>
+</div>

@@ -1,11 +1,12 @@
 export class User {
   id?: any;
   username?: string;
-  fname: string;
-  lname: string;
+  firstname: string;
+  lastname: string;
   email: string;
   phoneno: string | undefined;
-  profilepicurl: string | null;
+  avatar: string | null;
+  avatarImg: string;
   dob: Date;
   active?: boolean;
   rating: number;
@@ -18,7 +19,8 @@ export class PublicProfile {
   id?: any;
   fullname: string;
   email: string;
-  profilepicurl: string | null;
+  avatar: string | null;
+  avatarImg: string;
   rating: number;
   dob: Date;
   username?: string;

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MemberService } from '../../services/member.service';
+import { MemberService } from '../../../_shared/services/member.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Trip } from 'src/app/_shared/models/trip.model';
 import { MatSnackBar } from '@angular/material/snack-bar';

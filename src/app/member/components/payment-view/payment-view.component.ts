@@ -4,10 +4,11 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { PaymentService } from '../../services/payment.service';
 import { Location } from '@angular/common';
 import { ErrorDialogComponent } from 'src/app/_shared/components/error-dialog/error-dialog.component';
 import { ConfirmService } from 'src/app/_shared/services/confirm.service';
+import { MemberPaymentService } from 'src/app/_shared/services/member-payment.service';
+import { MemberJoinerService } from 'src/app/_shared/services/member-joiner.service';
 @Component({
   selector: 'app-payment-view',
   templateUrl: './payment-view.component.html',
@@ -17,7 +18,8 @@ export class PaymentViewComponent {
   payment:any;
   paymentId = this.activatedRoute.snapshot.params['paymentId'];
   constructor(
-    private paymentService: PaymentService,
+    private paymentService: MemberPaymentService,
+    private joinerService: MemberJoinerService,
     private confirmationService: ConfirmService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
@@ -27,7 +29,7 @@ export class PaymentViewComponent {
   ) {}
 
   ngOnInit(): void {
-    this.paymentService.getPaymentById(this.paymentId).subscribe(
+    this.paymentService.getById(this.paymentId).subscribe(
       (res) => {
         // Handle successful response
         this.payment = res;
@@ -44,7 +46,7 @@ export class PaymentViewComponent {
       .subscribe(confirmed => {
         if (confirmed) {
           // Perform action upon confirmation
-          this.paymentService.confirm(this.paymentId).subscribe(
+          this.joinerService.approve(this.paymentId).subscribe(
             (res) => {
               // Handle successful response
               this.onSuccess('Confirmed payment');
@@ -66,7 +68,7 @@ export class PaymentViewComponent {
       .subscribe(confirmed => {
         if (confirmed) {
           // Perform action upon confirmation
-          this.paymentService.fail(this.paymentId).subscribe(
+          this.joinerService.reject(this.paymentId).subscribe(
             (res) => {
               // Handle successful response
               this.onSuccess('Payment rejected');

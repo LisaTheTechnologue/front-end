@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { PublicProfile } from 'src/app/_shared/models/user.model';
-import { ProfileService } from 'src/app/_shared/services/profile.service';
 import { PublicService } from 'src/app/_shared/services/public.service';
 
 @Component({
@@ -18,7 +17,7 @@ export class ProfileCardComponent {
 
   ngOnInit() {
   //   console.log(this.leader);
-    this.publicService.getPublicProfile(this.leaderId).subscribe(
+    this.publicService.getProfile(this.leaderId).subscribe(
       (profile) => {
         this.leader = profile;
         this.rating = this.leader.rating;

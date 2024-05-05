@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbDateStruct, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ErrorDialogComponent } from 'src/app/_shared/components/error-dialog/error-dialog.component';
 import { StorageService } from 'src/app/_shared/services/storage.service';
-import { MemberService } from '../../services/member.service';
+import { MemberService } from '../../../_shared/services/member.service';
 import { Location } from '@angular/common';
 import { Trip, TripItem } from 'src/app/_shared/models/trip.model';
 @Component({

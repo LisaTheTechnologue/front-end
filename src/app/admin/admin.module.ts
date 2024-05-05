@@ -12,6 +12,8 @@ import { TripListComponent } from './components/trip-list/trip-list.component';
 import { CityListComponent } from './components/city-list/city-list.component';
 import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
 import { UserListComponent } from './components/user-list/user-list.component';
+import { ContactListComponent } from './components/contact-list/contact-list.component';
+import { ContactViewComponent } from './components/contact-view/contact-view.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import { UserListComponent } from './components/user-list/user-list.component';
     TripListComponent,
     CityListComponent,
     AdminProfileComponent,
-    UserListComponent
+    UserListComponent,
+    ContactListComponent,
+    ContactViewComponent
   ],
   imports: [
     CommonModule,

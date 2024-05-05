@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Trip } from '../_shared/models/trip.model';
 import { PublicProfile, User } from '../_shared/models/user.model';
-import { ProfileService } from '../_shared/services/profile.service';
 import { PublicService } from '../_shared/services/public.service';
 
 @Component({

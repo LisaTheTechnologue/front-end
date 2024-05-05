@@ -18,14 +18,13 @@
         <ul class="nav navbar-nav ms-auto w-100 justify-content-end" *ngIf="!isMemberLoggedIn && !isAdminLoggedIn">
           <li class="nav-item px-5"> <a class="nav-link" routerLink="/login"><mat-icon>person</mat-icon></a> </li>
         </ul>
-
-
         <ul class="navbar-nav w-100 justify-content-center" *ngIf="isAdminLoggedIn">
-          <li class="nav-item"> <button class="nav-link" routerLink="/">Home</button> </li>
-          <li class="nav-item "><button class="nav-link" routerLink="/admin/dashboard">Dashboard</button></li>
-          <li class="nav-item"><button class="nav-link" routerLink="/admin/trips">Trips</button></li>
-          <li class="nav-item "><button class="nav-link" routerLink="/admin/cities">Cities</button></li>
-          <li class="nav-item "><button class="nav-link" routerLink="/admin/users">Users</button></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="/">Home</a> </li>
+          <li class="nav-item "><a class="nav-link" routerLink="/admin/dashboard">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/admin/trips">Trips</a></li>
+          <li class="nav-item "><a class="nav-link" routerLink="/admin/cities">Cities</a></li>
+          <li class="nav-item "><a class="nav-link" routerLink="/admin/users">Users</a></li>
+          <li class="nav-item px-3"><a class="nav-link" routerLink="/about">About</a></li>
         </ul>
         <ul class="nav navbar-nav ms-auto w-100 justify-content-end" *ngIf="isAdminLoggedIn">
           <li class="nav-item dropdown">
@@ -43,6 +42,7 @@
           <li class="nav-item "> <a class="nav-link" routerLink="/">Home</a> </li>
           <li class="nav-item "><a class="nav-link" routerLink="/trips">Trips</a></li>
           <li class="nav-item "><a class="nav-link" routerLink="/member">Dashboard</a></li>
+          <li class="nav-item px-3"><a class="nav-link" routerLink="/about">About</a></li>
           <!-- <li class="nav-item "><a class="nav-link" routerLink="/member/my-trips">Created Trips</a>
           </li>
           <li class="nav-item "><a class="nav-link" routerLink="/member/joined-trips">Joined

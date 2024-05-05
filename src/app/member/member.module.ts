@@ -12,12 +12,11 @@ import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { JoinedTripsComponent } from './components/joined-trips/joined-trips.component';
 import { MemberProfileComponent } from './components/member-profile/member-profile.component';
 import { TripEditComponent } from './components/trip-edit/trip-edit.component';
-import { CommentViewComponent } from './components/comment-view/comment-view.component';
-import { CommentFormComponent } from './components/comment-form/comment-form.component';
 import { TripPaymentComponent } from './components/trip-payment/trip-payment.component';
 import { PaymentListComponent } from './components/payment-list/payment-list.component';
 import { PaymentViewComponent } from './components/payment-view/payment-view.component';
 import { TripCardComponent } from './components/trip-card/trip-card.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -28,12 +27,11 @@ import { TripCardComponent } from './components/trip-card/trip-card.component';
     JoinedTripsComponent,
     MemberProfileComponent,
     TripEditComponent,
-    CommentViewComponent,
-    CommentFormComponent,
     TripPaymentComponent,
     PaymentListComponent,
     PaymentViewComponent,
-    TripCardComponent
+    TripCardComponent,
+    ChatComponent
   ],
   imports: [
     CommonModule,

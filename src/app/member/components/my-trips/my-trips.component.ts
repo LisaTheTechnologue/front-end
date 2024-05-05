@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MemberService } from '../../services/member.service';
+import { MemberService } from '../../../_shared/services/member.service';
 import { Trip } from 'src/app/_shared/models/trip.model';
 import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
 import { Router } from '@angular/router';

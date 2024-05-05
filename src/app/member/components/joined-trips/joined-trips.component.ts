@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Trip } from 'src/app/_shared/models/trip.model';
-import { MemberService } from '../../services/member.service';
+import { MemberService } from '../../../_shared/services/member.service';
 import { AppService } from '../../../_shared/services/app.service';
 import { Router } from '@angular/router';
 import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';

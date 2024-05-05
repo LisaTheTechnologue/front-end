@@ -8,11 +8,11 @@
   <img
     id="profile-picture"
     class="img-fluid rounded-circle mx-auto img-float d-block img-md"
-    src="{{ user?.profilepicurl }}"
+    src="{{ user?.avatar }}"
     alt="noimage"
   />
   <h2 class="d-flex justify-content-center">
-    {{ user?.fname }} {{ user?.lname }}
+    {{ user?.firstname }} {{ user?.lastname }}
   </h2>
 </div>
 <div class="container" *ngIf="user">

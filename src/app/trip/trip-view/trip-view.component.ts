@@ -2,7 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Trip, TripMember } from 'src/app/_shared/models/trip.model';
 import { StorageService } from 'src/app/_shared/services/storage.service';
-import { MemberService } from '../../member/services/member.service';
+import { MemberService } from '../../_shared/services/member.service';
 import { PublicService } from 'src/app/_shared/services/public.service';
 import { Component } from '@angular/core';
 import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
@@ -12,7 +12,7 @@ import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found
   templateUrl: './trip-view.component.html',
   styleUrls: ['./trip-view.component.css'],
 })
-export class TripViewComponent{
+export class TripViewComponent {
   image: any;
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   trip!: Trip;
@@ -37,27 +37,27 @@ export class TripViewComponent{
   getTrip() {
     // this.trip = new Trip();
     const userId = StorageService.getUserId();
-    this.publicService.getById(this.tripId).subscribe({
+    this.publicService.getByTripId(this.tripId).subscribe({
       next: (res) => {
-      this.trip = res;
-      this.trip.processedImg = 'data:image/jpeg;base64,' + res.byteImg;
-      this.image = this.trip.processedImg;
-      for (var index in res.members) {
-        if ((res.members[index].userId = userId)) {
-          this.isJoined = true;
-          break;
+        this.trip = res;
+        this.trip.processedImg = 'data:image/jpeg;base64,' + res.byteImg;
+        this.image = this.trip.processedImg;
+        // for (var index in res.members) {
+        //   if ((res.members[index].userId = userId)) {
+        //     this.isJoined = true;
+        //     break;
+        //   }
+        // }
+      },
+      error: (error) => {
+        if (error instanceof PageNotFoundException) {
+          this.router.navigate(['/page-not-found']);
+        } else {
+          // Handle other errors here
+          this.error = error.message;
         }
-      }
-    },
-    error: (error) => {
-      if (error instanceof PageNotFoundException) {
-        this.router.navigate(['/page-not-found']);
-      } else {
-        // Handle other errors here
-        this.error = error.message;
-      }
-    }
-  });
+      },
+    });
   }
   joinTrip() {
     if (this.isMemberLoggedIn) {

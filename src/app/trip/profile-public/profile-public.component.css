@@ -1,10 +1,10 @@
-#cover {
+/* #cover {
   min-width: 100%;
-}
+} */
 #profile-picture {
   width: 250px;
   height: 250px;
-  margin-top: -100px;
+  /* margin-top: -100px; */
 }
 #profile-view {
   padding: 5px !important;

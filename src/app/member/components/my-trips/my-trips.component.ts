@@ -32,7 +32,7 @@ export class MyTripsComponent {
 
   getAllTrips() {
     this.trips = [];
-    this.memberService.getAllTrips().subscribe({
+    this.memberService.getAllTripsByLeader().subscribe({
       next: (res) => {
         res.forEach((element) => {
           element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
@@ -49,9 +49,9 @@ export class MyTripsComponent {
 
   onSearch() {}
   deleteTrip(id: number) {
-    this.memberService.delete(id).subscribe((res) => {
-      this.trips = this.trips.filter((item) => item.id !== id);
-      console.log('Trip deleted successfully!');
-    });
+    // this.memberService.delete(id).subscribe((res) => {
+    //   this.trips = this.trips.filter((item) => item.id !== id);
+    //   console.log('Trip deleted successfully!');
+    // });
   }
 }

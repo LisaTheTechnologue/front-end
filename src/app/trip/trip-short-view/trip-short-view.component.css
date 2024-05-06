@@ -1,0 +1,22 @@
+.info {
+  max-width: 100%;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: -.25em;
+    padding-right: 5px;
+    color: #555;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 0.8 rem;
+}
+.mt-price {
+  font-size: 0.8 rem;
+    font-weight: 600;
+    color: #111;
+    max-width: 100%;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: -.25em;
+    text-transform: unset;
+}
+

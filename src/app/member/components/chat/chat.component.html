@@ -6,7 +6,7 @@
         <div>
           - {{ message.content }} by {{ message.user.username }}
         </div>
-        <img [src]="message.user.avatarImg" alt="User Avatar"> </li>
+        <img [src]="message.user.processedImg" alt="User Avatar"> </li>
     </ul>
   </div>
   <div *ngIf="error">{{ error }}</div>

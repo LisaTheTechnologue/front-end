@@ -1,4 +1,4 @@
-import { ErrorHandler, NgModule } from '@angular/core';
+import {  NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,8 +18,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { ProfilePublicComponent } from './profile-public/profile-public.component';
-import { FeedbackViewComponent } from './feedback-view/feedback-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FilterPipe } from './_shared/pipes/filter.pipe';
 import { TokenInterceptor } from './_shared/services/token.interceptor';
@@ -33,8 +31,6 @@ import { TokenInterceptor } from './_shared/services/token.interceptor';
     TripComponent,
     SignupComponent,
     LoginComponent,
-    ProfilePublicComponent,
-    FeedbackViewComponent,
     PageNotFoundComponent,
     FilterPipe
   ],

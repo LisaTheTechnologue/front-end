@@ -35,7 +35,7 @@ export class JoinedTripsComponent {
 
   getAllTrips() {
     this.trips = [];
-    this.memberService.getAllJoinTrips().subscribe({
+    this.memberService.getAllTripsByParticipantId().subscribe({
       next: (res) => {
         res.forEach((element) => {
           element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;

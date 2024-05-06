@@ -5,24 +5,24 @@ export class User {
   lastname: string;
   email: string;
   phoneno: string | undefined;
-  avatar: string | null;
-  avatarImg: string;
   dob: Date;
   active?: boolean;
   rating: number;
   accno: string;
   accbank: string;
   accname: string;
+  processedImg: any;
+  byteImg: any;
 }
 
 export class PublicProfile {
   id?: any;
   fullname: string;
   email: string;
-  avatar: string | null;
-  avatarImg: string;
   rating: number;
   dob: Date;
   username?: string;
   phoneno: string | undefined;
+  processedImg: any;
+  byteImg: any;
 }

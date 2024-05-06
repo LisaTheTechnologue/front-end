@@ -39,21 +39,8 @@
 
       <!-- <div class="my-5"> -->
       <div fxLayout="row wrap" fxLayoutGap="16px" class="p-2" *ngIf="filteredData.length > 0">
-
-        <mat-card fxFlex="30%" *ngFor="let trip of filteredData | paginate: { itemsPerPage: 3, currentPage: p }"
-          [routerLink]="['/trips/view', trip.id]" class="trip-card mat-elevation-z2">
-          <img mat-card-image [src]="trip.processedImg" alt="trip-image" class="card-trip-image">
-          <mat-card-header>
-            <mat-card-title>{{ trip.title }}</mat-card-title>
-            <mat-card-subtitle>{{ trip.fromDate }} - {{ trip.toDate}} </mat-card-subtitle>
-            <mat-card-subtitle>{{ trip.tripLevel}} level</mat-card-subtitle>
-          </mat-card-header>
-
-          <mat-card-content>
-            <p>{{ trip.introduction }}</p>
-            <p class="mt-price"> VND {{ trip.budget | currency: 'VND' }}/pax</p>
-
-          </mat-card-content>
+        <mat-card fxFlex="30%" [routerLink]="['/trips/view', trip.id]" class="trip-card mat-elevation-z2"  *ngFor="let trip of filteredData | paginate: { itemsPerPage: 3, currentPage: p }">
+          <app-trip-short-view [trip]="trip"></app-trip-short-view>
         </mat-card>
 
       </div>

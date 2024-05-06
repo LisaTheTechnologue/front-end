@@ -8,8 +8,8 @@ import { PublicService } from 'src/app/_shared/services/public.service';
   styleUrls: ['./profile-card.component.css']
 })
 export class ProfileCardComponent {
-  @Input() leaderId: number;
-  leader!: PublicProfile;
+  @Input() userId: number;
+  user!: PublicProfile;
   rating!:number;
   constructor(
     private publicService: PublicService
@@ -17,10 +17,14 @@ export class ProfileCardComponent {
 
   ngOnInit() {
   //   console.log(this.leader);
-    this.publicService.getProfile(this.leaderId).subscribe(
+    this.publicService.getProfile(this.userId).subscribe(
       (profile) => {
-        this.leader = profile;
-        this.rating = this.leader.rating;
+        console.log(profile);
+        this.user = profile;
+        if(profile.byteImg != undefined) {
+          this.user.processedImg = 'data:image/jpeg;base64,' + profile.byteImg;
+        }
+        this.rating = this.user.rating;
       }
     );
   }

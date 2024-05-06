@@ -29,7 +29,7 @@
       <strong>Itinerary:</strong>
       <table class="table table-striped mt-1">
         <tbody>
-          <tr *ngFor="let item of trip.items">
+          <tr *ngFor="let item of trip.tripDays">
             <td>Day {{ item.dayNo }}</td>
             <td>{{ item.title }}</td>
             <td>{{ item.description }}</td>

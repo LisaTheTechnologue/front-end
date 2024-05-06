@@ -1,18 +1,29 @@
-<h2>About Us</h2>
-<p>{{ aboutUsText }}</p>
+<div class="container my-5">
+  <div class="heading h3">About Us</div>
+  <p>{{ aboutUsText }}</p>
 
 
-<h2>Contact Us</h2>
-<form (ngSubmit)="onSubmit()">
-  <label for="name">Name:</label>
-  <input type="text" id="name" [(ngModel)]="name" name="name" required>
-  <br>
-  <label for="email">Email:</label>
-  <input type="email" id="email" [(ngModel)]="email" name="email" required>
-  <br>
-  <label for="message">Message:</label>
-  <textarea id="message" [(ngModel)]="message" name="message" required></textarea>
-  <br>
-  <button type="submit">Submit</button>
-</form>
-
+  <div class="heading h3">Contact Us</div>
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="nameFld" class="col-sm-2 col-form-label">Name:</label>
+      <input type="text" formControlName="name" class="form-control" id="nameFld" required />
+      <div class="invalid-feedback" *ngIf="contactForm.get('name')?.hasError('required')">This input is required!</div>
+    </div>
+    <div class="mb-3">
+      <label for="emailFld" class="col-sm-2 col-form-label">Email:</label>
+      <input type="text" formControlName="email" class="form-control" id="emailFld" required />
+      <div class="invalid-feedback" *ngIf="contactForm.get('email')?.hasError('required')">This input is required!</div>
+    </div>
+    <div class="mb-3">
+      <label for="messageFld" class="col-sm-2 col-form-label">Message:</label>
+      <input type="text" formControlName="message" class="form-control" id="messageFld" required />
+      <div class="invalid-feedback" *ngIf="contactForm.get('message')?.hasError('required')">This input is required!
+      </div>
+    </div>
+    <div class="mb-3">
+      <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Send</button>
+      <div *ngIf="error">{{ error }} </div>
+    </div>
+  </form>
+</div>

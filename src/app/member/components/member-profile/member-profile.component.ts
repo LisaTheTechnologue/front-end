@@ -4,6 +4,7 @@ import { Trip } from 'src/app/_shared/models/trip.model';
 import { User } from 'src/app/_shared/models/user.model';
 import { MemberService } from '../../../_shared/services/member.service';
 import { MemberUserService } from 'src/app/_shared/services/member-user.service';
+import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 
 @Component({
   selector: 'app-member-profile',
@@ -24,7 +25,7 @@ export class MemberProfileComponent {
   constructor(
     private profileService: MemberUserService,
     private route: ActivatedRoute,
-    private memberService: MemberService
+    private tripService: MemberTripService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -50,9 +51,12 @@ export class MemberProfileComponent {
     // } else {
       this.profileService.getProfile().subscribe((user) => {
         this.user = user;
-        this.memberService
-          .getAllTrips()
-          .subscribe((trips) => (this.trips = trips));
+        if(user.byteImg != undefined) {
+          this.user.processedImg = 'data:image/jpeg;base64,' + user.byteImg;
+        }
+        // this.tripService
+        //   .getAllTrips()
+        //   .subscribe((trips) => (this.trips = trips));
         this.selfProfileCheck = true;
       });
     // }

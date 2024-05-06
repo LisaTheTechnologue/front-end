@@ -3,10 +3,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { TripIndexComponent } from './trip-index/trip-index.component';
 import { TripViewComponent } from './trip-view/trip-view.component';
 import { TripComponent } from './trip.component';
+import { ProfilePublicComponent } from './profile-public/profile-public.component';
 
 export const TRIPS_ROUTES: Routes = [
   { path: '', component: TripIndexComponent },
   { path: 'view/:tripId', component: TripViewComponent },
+  { path: "profile/:userId", component: ProfilePublicComponent},
   // { path: 'create', component: TripCreateComponent },
   // { path: ':tripId/edit', component: TripEditComponent },
   // { path: ':tripId/edit/images', component: TripImageComponent },

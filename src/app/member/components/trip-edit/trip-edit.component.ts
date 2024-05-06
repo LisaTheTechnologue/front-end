@@ -14,7 +14,8 @@ import { ErrorDialogComponent } from 'src/app/_shared/components/error-dialog/er
 import { StorageService } from 'src/app/_shared/services/storage.service';
 import { MemberService } from '../../../_shared/services/member.service';
 import { Location } from '@angular/common';
-import { Trip, TripItem } from 'src/app/_shared/models/trip.model';
+import { Trip, TripDay } from 'src/app/_shared/models/trip.model';
+import { PublicService } from 'src/app/_shared/services/public.service';
 @Component({
   selector: 'app-trip-edit',
   templateUrl: './trip-edit.component.html',
@@ -41,6 +42,7 @@ export class TripEditComponent {
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
+    private publicService: PublicService,
     private memberService: MemberService,
     private location: Location,
     private dialog: MatDialog,
@@ -84,7 +86,7 @@ export class TripEditComponent {
     const userId = StorageService.getUserId();
     this.memberService.getTripById(this.tripId).subscribe((res) => {
       // create lines array first
-      for (let item = 0; item < res.items.length; item++) {
+      for (let item = 0; item < res.tripDays.length; item++) {
         const itemsFormArray = this.tripForm.controls['items'] as FormArray;
         itemsFormArray.push(this.createItem(res));
       }
@@ -124,8 +126,8 @@ export class TripEditComponent {
 
   private retrieveItems(trip: Trip) {
     const items = [];
-    if (trip?.items) {
-      trip.items.forEach(item => items.push(this.createItem(item)));
+    if (trip?.tripDays) {
+      trip.tripDays.forEach(item => items.push(this.createItem(item)));
     } else {
       items.push(this.createItem());
     }
@@ -135,7 +137,7 @@ export class TripEditComponent {
   //   return new Date().toISOString().split('T')[0];
   // }
   getAllCities() {
-    this.memberService.getAllCities().subscribe((res) => {
+    this.publicService.getAllCities().subscribe((res) => {
       this.listOfCities = res;
     });
   }
@@ -150,7 +152,7 @@ export class TripEditComponent {
     };
     reader.readAsDataURL(this.selectedFile);
   }
-  private createItem(item: TripItem = { _id: '', dayNo: 0, title: '', description: '' }) {
+  private createItem(item: TripDay = { _id: '', dayNo: 0, title: '', description: '' }) {
     return this.fb.group({
       _id: [item._id],
       dayNo: [

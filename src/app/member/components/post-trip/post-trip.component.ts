@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from 'src/app/_shared/components/error-dialog/error-dialog.component';
 import { Location } from '@angular/common';
 import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
+import { PublicService } from 'src/app/_shared/services/public.service';
 @Component({
   selector: 'app-post-trip',
   templateUrl: './post-trip.component.html',
@@ -39,6 +40,7 @@ export class PostTripComponent {
     private location: Location,
     private dialog: MatDialog,
     private router: Router,
+    private publicService: PublicService,
     private config: NgbDatepickerConfig
   ) {
     const current = new Date();
@@ -78,7 +80,7 @@ export class PostTripComponent {
     return new Date().toISOString().split('T')[0];
   }
   getAllCities() {
-    this.memberService.getAllCities().subscribe({
+    this.publicService.getAllCities().subscribe({
       next: (res) => {
         this.listOfCities = res;
       },

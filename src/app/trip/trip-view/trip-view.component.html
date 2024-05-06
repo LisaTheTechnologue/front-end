@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-6 p-3">
         <p class="h3">{{ trip.title }}</p>
-        <div>Lead by: <app-profile-card [leaderId]="trip.leaderId"></app-profile-card> </div>
+        <div>Lead by: <app-profile-card [userId]="trip.leaderId"></app-profile-card> </div>
         <p>{{trip.introduction}}</p>
         <p>Trip is opened until {{ trip.fromDate }}</p>
       </div>
@@ -33,7 +33,7 @@
       <div class="col p-3">
         <table class="table table-striped mt-1">
           <tbody>
-            <tr *ngFor="let item of trip.items">
+            <tr *ngFor="let item of trip.tripDays">
               <td>Day {{ item.dayNo }}</td>
               <td>{{ item.title }}</td>
               <td>{{ item.description }}</td>
@@ -50,12 +50,12 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="trip.members.length > 0">
+    <div class="row" *ngIf="trip.members">
       <div class="col-3 p-3"><div class="h5">Your company:</div></div>
       <div class="col p-3">
         <ol class="list-group list-group-numbered">
           <li class="list-group-item" *ngFor="let item of trip.members; let i = index">
-            {{ item.userName }}
+            <app-profile-card [userId]="item.participant.id"></app-profile-card>
           </li>
         </ol>
       </div>
@@ -65,8 +65,8 @@
       <button mat-flat-button color="success" *ngIf="!isJoined" class="me-2" [routerLink]="['/member/join-trip/',trip.id]">
         <mat-icon>input</mat-icon> Join Trip
       </button>
-      <button mat-stroked-button color="success" *ngIf="isJoined" class="me-2" [routerLink]="['/member/feedback/',trip.id]">
-        <mat-icon>feedback</mat-icon> Rate Trip
+      <button mat-stroked-button color="danger" *ngIf="isJoined" class="me-2" [routerLink]="['/member/join-trip/',trip.id]">
+        <mat-icon>input</mat-icon> Cancel Join Trip
       </button>
     </div>
   </div>

@@ -44,7 +44,7 @@ export class TripDetailsComponent {
     });
   }
   joinTrip() {
-    this.memberService.joinTrip(this.tripId).subscribe((res) => {
+    this.memberService.createJoinTrip(this.tripId).subscribe((res) => {
       if (res.id != null) {
         this.snackBar.open('You have registered to the trip successfully!', 'Close', {
           duration: 5000,
@@ -59,7 +59,7 @@ export class TripDetailsComponent {
     });
   }
   revokeJoinTrip() {
-    this.memberService.revokeJoinTrip(this.tripId).subscribe((res) => {
+    this.memberService.cancelJoinTrip(this.tripId).subscribe((res) => {
       if (res.id != null) {
         this.snackBar.open('You have revoked of the trip successfully!', 'Close', {
           duration: 5000,

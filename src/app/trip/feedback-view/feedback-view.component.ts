@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Feedback } from '../_shared/models/trip.model';
+import { Feedback } from '../../_shared/models/trip.model';
 
 @Component({
   selector: 'app-feedback-view',
@@ -7,6 +7,5 @@ import { Feedback } from '../_shared/models/trip.model';
   styleUrls: ['./feedback-view.component.css']
 })
 export class FeedbackViewComponent {
-  @Input() feedbacks:Feedback[];
-
+  @Input() feedback: Feedback
 }

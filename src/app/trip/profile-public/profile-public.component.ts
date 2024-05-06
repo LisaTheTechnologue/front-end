@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Trip } from '../_shared/models/trip.model';
-import { PublicProfile, User } from '../_shared/models/user.model';
-import { PublicService } from '../_shared/services/public.service';
+import { Feedback, Trip } from '../../_shared/models/trip.model';
+import { PublicProfile, User } from '../../_shared/models/user.model';
+import { PublicService } from '../../_shared/services/public.service';
 
 @Component({
   selector: 'app-profile-public',
@@ -20,7 +20,7 @@ export class ProfilePublicComponent {
   trips: Trip[] | undefined;
   selfProfileCheck = false;
   selectedTrip: Trip;
-
+  feedbacks: Feedback[];
   constructor(
     private publicService: PublicService,
     private route: ActivatedRoute
@@ -29,9 +29,12 @@ export class ProfilePublicComponent {
   ngOnInit() {
     this.getUser();
   }
+  getFeedbacksByTripId(tripId: number) {
+    this.publicService.getFeedbacksByTripId(tripId).subscribe((res) => (this.feedbacks = res));
+  }
 
   getUser() {
-    if (this.route.snapshot.params['member'] == null) {
+    // if (this.route.snapshot.params['member'] == null) {
       // Set user
       this.publicService
         .getProfile(this.leaderId)
@@ -40,13 +43,16 @@ export class ProfilePublicComponent {
       this.publicService
         .getTripsByLeaderId(this.leaderId)
         .subscribe((trips) => (this.trips = trips));
-    } else {
-      this.selfProfileCheck = true;
-    }
+    // } else {
+    //   this.selfProfileCheck = true;
+    // }
   }
 
   display(trip: Trip) {
     this.selectedTrip = trip;
+    this.selectedTrip.processedImg = 'data:image/jpeg;base64,' + trip.byteImg;
+        // this.selectedTrip.image = this.selectedTrip.processedImg;
+    this.getFeedbacksByTripId(this.selectedTrip.id);
   }
 
   displaySelectedTrip(trip: Trip) {

@@ -10,51 +10,47 @@ import { StorageService } from 'src/app/_shared/services/storage.service';
 })
 export class MemberService {
 
-  private AUTH_API = AppSettings.MEMBER_API_ENDPOINT;
+  private API = AppSettings.MEMBER_API_ENDPOINT;
   constructor(private http: HttpClient) { }
 
-  getAllCities(): Observable<any>{
-    return this.http.get(this.AUTH_API+'city', {
-      headers: this.createAuthorizationHeader(),
-    })
-  }
-
   addTrip (tripDto:any): Observable<any>{
-    return this.http.post(this.AUTH_API+'trips/create', tripDto, {
+    return this.http.post(this.API+'trips/create', tripDto, {
       headers: this.createAuthorizationHeader(),
     })
   }
 
-  getAllTrips(): Observable<any>{
+  getAllTripsByLeader(): Observable<any>{
     const userId = StorageService.getUserId();
-    return this.http.get(this.AUTH_API+`trips/user/${userId}`, {
+    return this.http.get(this.API+`trips/user/${userId}`, {
       headers: this.createAuthorizationHeader(),
     });
   }
   getTripById(tripId:number): Observable<any>{
     // const userId = StorageService.getUserId();
-    return this.http.get(this.AUTH_API+`trips/trip/${tripId}`, {
+    return this.http.get(this.API+`trips/trip/${tripId}`, {
       headers: this.createAuthorizationHeader(),
     })
   }
-  getAllTripsByName(name: any): Observable<any>{
-    return this.http.get(this.AUTH_API+`trips/search/${name}`, {
-      headers: this.createAuthorizationHeader(),
-    });
-  }
-  getAllJoinTrips(): Observable<any>{
+  // getAllTripsByName(name: any): Observable<any>{
+  //   return this.http.get(this.API+`trips/search/${name}`, {
+  //     headers: this.createAuthorizationHeader(),
+  //   });
+  // }
+
+  getAllTripsByParticipantId(): Observable<any>{
     const userId = StorageService.getUserId();
-    return this.http.get(this.AUTH_API+`trips/join-trip-list/${userId}`, {
+    return this.http.get(this.API+`trips/joiner/${userId}`, {
       headers: this.createAuthorizationHeader(),
     });
   }
-  joinTrip(tripMember:any): Observable<any>{
-    return this.http.post(this.AUTH_API+'trips/join-trip', tripMember, {
+
+  createJoinTrip(joiner:any): Observable<any>{
+    return this.http.post(this.API+'joiner/create/', joiner, {
       headers: this.createAuthorizationHeader(),
     })
   }
-  revokeJoinTrip(tripMember:number): Observable<any>{
-    return this.http.delete(this.AUTH_API+'trips/join-trip' + tripMember, {
+  cancelJoinTrip(joinerId:number): Observable<any>{
+    return this.http.delete(this.API+'joiner/cancel/' + joinerId, {
       headers: this.createAuthorizationHeader(),
     })
   }
@@ -65,12 +61,12 @@ export class MemberService {
     )
   }
 
-  delete(id: number) {
-    return this.http
-      .delete(this.AUTH_API + id, {
-        headers: this.createAuthorizationHeader(),
-      })
-  }
+  // delete(id: number) {
+  //   return this.http
+  //     .delete(this.AUTH_API + id, {
+  //       headers: this.createAuthorizationHeader(),
+  //     })
+  // }
 
 
 }

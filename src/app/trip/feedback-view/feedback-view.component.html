@@ -1,0 +1,5 @@
+<mat-list-item class="list-with-border">
+  <span matListItemTitle>{{ feedback.createdBy }}</span>
+  <span matListItemLine>Trip Rating: <ngb-rating [(rate)]="feedback.tripRating" [readonly]="true" [max]="5"></ngb-rating></span>
+  <span matListItemLine>Leader Rating: <ngb-rating [(rate)]="feedback.leaderRating" [readonly]="true" [max]="5"></ngb-rating></span>
+</mat-list-item>

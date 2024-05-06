@@ -11,13 +11,19 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { GlobalErrorHandlerService } from '../_shared/exceptions/global-error-handler.service';
+import { TripShortViewComponent } from './trip-short-view/trip-short-view.component';
+import { FeedbackViewComponent } from './feedback-view/feedback-view.component';
+import { ProfilePublicComponent } from './profile-public/profile-public.component';
 
 
 @NgModule({
   declarations: [
     TripIndexComponent,
     TripViewComponent,
-    ProfileCardComponent
+    ProfileCardComponent,
+    ProfilePublicComponent,
+    TripShortViewComponent,
+    FeedbackViewComponent
   ],
   imports: [
     CommonModule,

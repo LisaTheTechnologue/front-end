@@ -59,7 +59,7 @@ export class ChatComponent {
 
   private processGroupData(group: GroupChat): GroupChat {
     group.messages.forEach((message) => {
-      message.user.avatarImg = this.getAvatarUrl(message.user.avatar);
+      message.user.processedImg = this.getAvatarUrl(message.user.byteImg);
     });
     return group;
   }

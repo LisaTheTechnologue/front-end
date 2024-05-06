@@ -1,3 +1,4 @@
+import { User } from 'src/app/_shared/models/user.model';
 import { PublicProfile } from "./user.model";
 
 export interface Trip {
@@ -18,7 +19,8 @@ export interface Trip {
   budget: number;
   tripStatus: string;
   processedImg: any;
-  items?: TripItem[];
+  byteImg: any;
+  tripDays?: TripDay[];
   members?: TripMember[];
   rating: number;
   feedbacks?: Feedback[];
@@ -33,7 +35,7 @@ export interface Feedback {
   createdDate: Date;
 }
 
-export interface TripItem {
+export interface TripDay {
   _id: string;
   dayNo: number;
   title: string;
@@ -41,7 +43,5 @@ export interface TripItem {
 }
 
 export interface TripMember {
-  tripId: number;
-  userId: number;
-  userName: string;
+  participant: PublicProfile;
 }

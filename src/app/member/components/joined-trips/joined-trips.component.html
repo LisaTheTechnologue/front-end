@@ -23,7 +23,7 @@
       <tr *ngFor="let trip of trips">
         <td>{{ trip.id }}</td>
         <td>{{ trip.title }}</td>
-        <td>{{ trip.fromDate }} - {{ trip.toDate }}</td>
+        <td>{{ trip.startDate }} - {{ trip.endDate }}</td>
         <td>{{ trip.tripStatus }}</td>
         <td>
           <a [routerLink]="['/member/joined-trips/', trip.id]" class="btn btn-info">View</a>

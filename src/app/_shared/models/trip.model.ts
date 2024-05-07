@@ -4,26 +4,28 @@ import { PublicProfile } from "./user.model";
 export interface Trip {
   id: number;
   title: string;
-  introduction: string;
+  summary: string;
   leaderId: number;
   cityName:string;
   cityId:number;
   highlights: string;
   tripLevel: string;
-  fromAge: number;
-  toAge: number;
-  fromDate: string;
-  toDate: string;
+  minAge: number;
+  maxAge: number;
+  startDate: string;
+  endDate: string;
   groupSize: number;
   notes: string;
-  budget: number;
+  price: number;
   tripStatus: string;
-  processedImg: any;
-  byteImg: any;
+  // imageURL: any;
+  img: any;
+  imageURL: string;
+
   tripDays?: TripDay[];
-  members?: TripMember[];
+  // members?: TripMember[];
   rating: number;
-  feedbacks?: Feedback[];
+  // feedbacks?: Feedback[];
 }
 
 export interface Feedback {

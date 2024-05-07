@@ -26,7 +26,7 @@
             <ng-template ngFor let-trip [ngForOf]="trips">
               <mat-list-item class="list-with-border" (click)="display(trip)" [activated]="displaySelectedTrip(trip)">
                 <span matListItemTitle>{{ trip.title }}</span>
-                <span matListItemLine>{{ trip.cityName }} | {{ trip.fromDate }} - {{ trip.toDate }}</span>
+                <span matListItemLine>{{ trip.cityName }} | {{ trip.startDate }} - {{ trip.endDate }}</span>
                 <span matListItemLine><ngb-rating [(rate)]="trip.rating" [readonly]="true"
                     [max]="5"></ngb-rating></span>
               </mat-list-item>

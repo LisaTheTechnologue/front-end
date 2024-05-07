@@ -37,10 +37,10 @@ export class TripViewComponent {
       this.trip = res;
       // this.trip.highlights = res.highlights;
       // this.trip.title = res.title;
-      // this.trip.budget = res.budget;
+      // this.trip.price = res.price;
       this.approved = res.tripStatus == 'apprroved'  ? true : false;
-      this.trip.processedImg = 'data:image/jpeg;base64,' + res.byteImg;
-      this.image = this.trip.processedImg;
+      this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
+      this.image = this.trip.imageURL;
     });
   }
   changeStatus(status: string) {

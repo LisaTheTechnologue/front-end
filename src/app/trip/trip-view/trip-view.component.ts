@@ -17,6 +17,7 @@ export class TripViewComponent {
   image: any;
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   trip!: Trip;
+  members!: TripMember[];
   isMemberLoggedIn: boolean;
   isJoined: boolean = false;
   error: any;
@@ -39,9 +40,9 @@ export class TripViewComponent {
     this.publicService.getByTripId(this.tripId).subscribe({
       next: (res) => {
         this.trip = res;
-        this.trip.processedImg = 'data:image/jpeg;base64,' + res.byteImg;
+        this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
         this.trip.tripDays = res.tripDays;
-        this.image = this.trip.processedImg;
+        // this.image = this.trip.imageURL;
         // for (var index in res.members) {
         //   if ((res.members[index].userId = userId)) {
         //     this.isJoined = true;
@@ -61,10 +62,10 @@ export class TripViewComponent {
 
     this.publicService.getAllJoinerByTripId(this.tripId).subscribe({
       next: (res) => {
-        this.trip.members = res;
-        // this.trip.members.processedImg = 'data:image/jpeg;base64,' + res.byteImg;
-        // this.image = this.trip.processedImg;
-        if (this.trip.members.length > 0) {
+        this.members = res;
+        // this.trip.members.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
+        // this.image = this.trip.imageURL;
+        if (this.members.length > 0) {
           if (this.isMemberLoggedIn) {
             const userId = StorageService.getUserId();
             for (var index in res.members) {

@@ -33,9 +33,9 @@
     </div>
 
     <div class="mb-3">
-      <label for="introductionFld">Introduction</label>
-      <input formControlName="introduction" class="form-control" id="introductionFld" max="100" required/>
-      <div class="invalid-feedback" *ngIf="tripForm.get('introduction')?.hasError('required')">This input is required!
+      <label for="summaryFld">summary</label>
+      <input formControlName="summary" class="form-control" id="summaryFld" max="100" required/>
+      <div class="invalid-feedback" *ngIf="tripForm.get('summary')?.hasError('required')">This input is required!
       </div>
     </div>
 
@@ -58,10 +58,10 @@
     </div>
     <div class="row">
       <div class="mb-3 col-md-3">
-        <label for="budgetFld">Budget</label>
+        <label for="priceFld">price</label>
         <span class="input-group-text">$</span>
-        <input type="number" formControlName="budget" id="budgetFld" class="form-control" />
-        <div class="invalid-feedback" *ngIf="tripForm.get('budget')?.hasError('required')">This input is required!</div>
+        <input type="number" formControlName="price" id="priceFld" class="form-control" />
+        <div class="invalid-feedback" *ngIf="tripForm.get('price')?.hasError('required')">This input is required!</div>
       </div>
       <div class="mb-3 col-md-3">
         <label for="nopFld">Group Size</label>
@@ -70,15 +70,15 @@
           required!</div>
       </div>
       <div class="mb-3 col-md-3">
-        <label for="fromAge">From Age:</label>
-        <input type="number" class="form-control" placeholder="From" formControlName="fromAge" id="fromAge" min="0" max="80" />
-          <div class="invalid-feedback" *ngIf="tripForm.get('fromAge')?.hasError('required')">This input is
+        <label for="minAge">From Age:</label>
+        <input type="number" class="form-control" placeholder="From" formControlName="minAge" id="minAge" min="0" max="80" />
+          <div class="invalid-feedback" *ngIf="tripForm.get('minAge')?.hasError('required')">This input is
             required!</div>
       </div>
       <div class="mb-3 col-md-3">
-        <label for="toAge">To Age:</label>
-        <input type="number" class="form-control" placeholder="To" formControlName="toAge" id="toAge" min="0" max="80" />
-        <div class="invalid-feedback" *ngIf="tripForm.get('toAge')?.hasError('required')">This input is
+        <label for="maxAge">To Age:</label>
+        <input type="number" class="form-control" placeholder="To" formControlName="maxAge" id="maxAge" min="0" max="80" />
+        <div class="invalid-feedback" *ngIf="tripForm.get('maxAge')?.hasError('required')">This input is
           required!</div>
       </div>
     </div>
@@ -86,24 +86,24 @@
 
     <div class="row">
       <div class="mb-3 col-md-6">
-        <label for="fromDateFld">From date</label>
+        <label for="startDateFld">From date</label>
         <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate" formControlName="fromDateModel"
-            ngbDatepicker #d1="ngbDatepicker" readonly (dateSelect) = "onSelectFromDate($event)" />
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dpstartDate" formControlName="startDateModel"
+            ngbDatepicker #d1="ngbDatepicker" readonly (dateSelect) = "onSelectstartDate($event)" />
           <button class="btn btn-secondary" (click)="d1.toggle()" type="button"><mat-icon>calendar_today</mat-icon></button>
         </div>
-        <div class="invalid-feedback" *ngIf="tripForm.get('fromDate')?.hasError('required')">This input is required!
+        <div class="invalid-feedback" *ngIf="tripForm.get('startDate')?.hasError('required')">This input is required!
         </div>
       </div>
 
       <div class="mb-3 col-md-6">
-        <label for="toDateFld">To date</label>
+        <label for="endDateFld">To date</label>
         <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd" name="dpToDate" formControlName="toDateModel"
-            ngbDatepicker #d2="ngbDatepicker" readonly (dateSelect) = "onSelectToDate($event)"/>
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dpendDate" formControlName="endDateModel"
+            ngbDatepicker #d2="ngbDatepicker" readonly (dateSelect) = "onSelectendDate($event)"/>
           <button class="btn btn-secondary" (click)="d2.toggle()" type="button"><mat-icon>calendar_today</mat-icon></button>
         </div>
-        <div class="invalid-feedback" *ngIf="tripForm.get('toDate')?.hasError('required')">This input is required!
+        <div class="invalid-feedback" *ngIf="tripForm.get('endDate')?.hasError('required')">This input is required!
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ export class User {
   accno: string;
   accbank: string;
   accname: string;
-  processedImg: any;
+  imageURL: any;
   byteImg: any;
 }
 
@@ -23,6 +23,6 @@ export class PublicProfile {
   dob: Date;
   username?: string;
   phoneno: string | undefined;
-  processedImg: any;
+  imageURL: any;
   byteImg: any;
 }

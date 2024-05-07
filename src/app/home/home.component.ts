@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.publicService.getLatestTrips().subscribe((res) => {
       res.forEach((element) => {
-        element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
+        element.imageURL = 'data:image/jpeg;base64,' + element.byteImg;
         this.popularTours.push(element);
       });
     });

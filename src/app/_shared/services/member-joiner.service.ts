@@ -58,6 +58,13 @@ export class MemberJoinerService {
     }).pipe(catchError(this.handleError));
   }
 
+  getParticipantListByTripIdAndJoinerStatus(tripId:number): Observable<any>{
+    // const userId = StorageService.getUserId();
+    return this.http.get(this.API+`list?tripId=${tripId}`, {
+      headers: this.createAuthorizationHeader(),
+    }).pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 404) {
       // Redirect to page not found component

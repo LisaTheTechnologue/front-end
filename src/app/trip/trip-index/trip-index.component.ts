@@ -14,8 +14,8 @@ export class TripIndexComponent {
   filteredData: any[] = [];
   tripLevels: Set<string> = new Set<string>(["Easy", "Moderate","Intermediate"]);
   selectedTripLevels: string[] = [];
-  startDate: any = "";
-  endDate: any = "";
+  // startDate: any = "";
+  // endDate: any = "";
   priceMinValue: any;
   priceMaxValue: any;
 
@@ -26,7 +26,7 @@ export class TripIndexComponent {
   ngOnInit(): void {
     this.publicService.getAllTrips().subscribe((res) => {
       res.forEach((element) => {
-        element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
+        element.imageURL = 'data:image/jpeg;base64,' + element.byteImg;
         this.trips.push(element);
       });
     });
@@ -46,25 +46,25 @@ filterData() {
 
       // Filter by date range (optional)
       const dateMatch = !this.startDate || !this.endDate ||
-                       (item.fromDate >= this.startDate && item.fromDate <= this.endDate);
+                       (item.startDate >= this.startDate && item.startDate <= this.endDate);
 
       // Filter by price (optional)
       // this.minPrice = value;
-      const priceMatch = !this.minPrice || item.budget >= this.minPrice;
+      const priceMatch = !this.minPrice || item.price >= this.minPrice;
 
       return searchTextMatch && tripLevelMatch && dateMatch && priceMatch;
     });
   }
-  fromDate?: Date;
-  toDate?: Date;
+  startDate?: Date;
+  endDate?: Date;
 
-  onFromDateChange(value: Date) {
-    this.fromDate = value;
+  onstartDateChange(value: Date) {
+    this.startDate = value;
     this.filterData();
   }
 
-  onToDateChange(value: Date) {
-    this.toDate = value;
+  onendDateChange(value: Date) {
+    this.endDate = value;
     this.filterData();
   }
 

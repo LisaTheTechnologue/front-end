@@ -31,11 +31,11 @@
   <div class="row d-flex justify-content-center">
     <div class="col-md-2 mb-5 " *ngFor="let trip of popularTours">
       <div class="trip-card card" [routerLink]="['/trips/view', trip.id]">
-        <img [src]="trip.processedImg" class="card-img-top" alt="Tour Image">
+        <img [src]="trip.imageURL" class="card-img-top" alt="Tour Image">
         <div class="card-body">
           <div class="h5 card-title">{{ trip.title }}</div>
-          <p class="card-text">{{ trip.introduction }}</p>
-          <p class="text-body-secondary">{{ trip.fromDate }} - {{ trip.toDate}} </p>
+          <p class="card-text">{{ trip.summary }}</p>
+          <p class="text-body-secondary">{{ trip.startDate }} - {{ trip.endDate}} </p>
         </div>
       </div>
     </div>

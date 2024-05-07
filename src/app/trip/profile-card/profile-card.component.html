@@ -1,11 +1,11 @@
-<div class="card mb-3 bg-light bg-gradient p-1" style="width: 200px;" [routerLink]="['/trips/profile/',user.id]">
+<div class="card mb-3 bg-light bg-gradient p-1" style="width: 200px;" [routerLink]="['/trips/profile/',userId]">
   <div class="row g-0">
     <div class="col-md-3">
-      <div *ngIf="user.processedImg">
-        <img [src]="user.processedImg" class="img-fluid rounded-start"
+      <div *ngIf="user.imageURL">
+        <img [src]="user.imageURL" class="img-fluid rounded-start"
           alt="avatar">
       </div>
-      <div *ngIf="!user.processedImg">
+      <div *ngIf="!user.imageURL">
         <img src="http://www.gravatar.com/avatar/?d=mp" class="img-fluid rounded-start" alt="avatar">
       </div>
     </div>

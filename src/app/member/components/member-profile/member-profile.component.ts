@@ -52,7 +52,7 @@ export class MemberProfileComponent {
       this.profileService.getProfile().subscribe((user) => {
         this.user = user;
         if(user.byteImg != undefined) {
-          this.user.processedImg = 'data:image/jpeg;base64,' + user.byteImg;
+          this.user.imageURL = 'data:image/jpeg;base64,' + user.byteImg;
         }
         // this.tripService
         //   .getAllTrips()

@@ -35,7 +35,7 @@ export class MyTripsComponent {
     this.memberService.getAllTripsByLeader().subscribe({
       next: (res) => {
         res.forEach((element) => {
-          element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
+          element.imageURL = 'data:image/jpeg;base64,' + element.byteImg;
           this.trips.push(element);
         });
       },

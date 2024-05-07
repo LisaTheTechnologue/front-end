@@ -4,11 +4,11 @@
     <div class="row heading">
       <div class="col">
         <p class="h3">{{ trip.title }}</p>
-        <p class="info">{{ trip.fromDate }} - {{ trip.toDate }}</p>
+        <p class="info">{{ trip.startDate }} - {{ trip.endDate }}</p>
         <p>{{ trip.highlights }}</p>
       </div>
       <div class="col-6 d-flex justify-content-center">
-        <img [src]="trip.processedImg" alt="trip-image">
+        <img [src]="trip.imageURL" alt="trip-image">
       </div>
     </div>
     <div class="row ">
@@ -16,10 +16,10 @@
         <p>Adventure Level: {{trip.tripLevel}}</p>
       </div>
       <div class="col-3">
-        <p>Age {{trip.fromAge}} - {{trip.toAge}} years old</p>
+        <p>Age {{trip.minAge}} - {{trip.maxAge}} years old</p>
       </div>
       <div class="col-3">
-        <p>{{trip.budget}}/pax</p>
+        <p>{{trip.price}}/pax</p>
       </div>
       <div class="col-3">
         <p>Number of team member: {{trip.groupSize}}</p>

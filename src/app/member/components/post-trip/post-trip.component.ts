@@ -26,10 +26,10 @@ export class PostTripComponent {
   listOfCities: any = [];
   selectedFile: File | null;
   imagePreview: string | ArrayBuffer | null;
-  fromDateModel: NgbDateStruct;
-  fromDate: Date;
-  toDate: Date;
-  toDateModel: NgbDateStruct;
+  startDateModel: NgbDateStruct;
+  startDate: Date;
+  endDate: Date;
+  endDateModel: NgbDateStruct;
   today = new Date();
   age: string;
   error: any;
@@ -56,16 +56,16 @@ export class PostTripComponent {
     this.tripForm = this.fb.group({
       cityId: [null, [Validators.required]],
       title: [null, [Validators.required]],
-      introduction: [null, [Validators.required]],
-      budget: [null, [Validators.required]],
+      summary: [null, [Validators.required]],
+      price: [null, [Validators.required]],
       highlights: [null, [Validators.required]],
       notes: [null, [Validators.required]],
       groupSize: [null, [Validators.required]],
-      fromAge: [null],
-      toAge: [null],
+      minAge: [null],
+      maxAge: [null],
       allAges: [null],
-      fromDateModel: [null, [Validators.required]],
-      toDateModel: [null, [Validators.required]],
+      startDateModel: [null, [Validators.required]],
+      endDateModel: [null, [Validators.required]],
       tripStatus: [null, [Validators.required]],
       tripLevel: [null, [Validators.required]],
       items: this.fb.array([]),
@@ -123,14 +123,14 @@ export class PostTripComponent {
     this.items.removeAt(index);
   }
 
-  onSelectFromDate(evt: any) {
-    this.fromDate = new Date(evt.year, evt.month - 1, evt.day);
-    console.log(this.fromDate);
+  onSelectstartDate(evt: any) {
+    this.startDate = new Date(evt.year, evt.month - 1, evt.day);
+    console.log(this.startDate);
   }
 
-  onSelectToDate(evt: any) {
-    this.toDate = new Date(evt.year, evt.month - 1, evt.day);
-    console.log(this.toDate);
+  onSelectendDate(evt: any) {
+    this.endDate = new Date(evt.year, evt.month - 1, evt.day);
+    console.log(this.endDate);
   }
 
   submit(status: string): void {
@@ -140,17 +140,17 @@ export class PostTripComponent {
     formData.append('img', this.selectedFile);
     formData.append('cityId', this.tripForm.get('cityId').value);
     formData.append('title', this.tripForm.get('title').value);
-    formData.append('introduction', this.tripForm.get('introduction').value);
+    formData.append('summary', this.tripForm.get('summary').value);
     formData.append('highlights', this.tripForm.get('highlights').value);
-    formData.append('budget', this.tripForm.get('budget').value);
+    formData.append('price', this.tripForm.get('price').value);
     formData.append('groupSize', this.tripForm.get('groupSize').value);
     formData.append('notes', this.tripForm.get('notes').value);
-    formData.append('fromDate', this.fromDate.toISOString());
-    formData.append('toDate', this.toDate.toISOString());
+    formData.append('startDate', this.startDate.toISOString());
+    formData.append('endDate', this.endDate.toISOString());
     formData.append('tripStatus', status);
     formData.append('userId', userId);
-    formData.append('fromAge', this.tripForm.get('fromAge').value);
-    formData.append('toAge', this.tripForm.get('toAge').value);
+    formData.append('minAge', this.tripForm.get('minAge').value);
+    formData.append('maxAge', this.tripForm.get('maxAge').value);
     formData.append('tripLevel', this.tripForm.get('tripLevel').value);
     formData.append(
       'itemsJsonString',

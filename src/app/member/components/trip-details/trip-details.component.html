@@ -6,16 +6,16 @@
         <div class="col d-flex justify-content-center">
           <mat-card style="min-width: 400px;">
             <mat-card-content>
-              <p><strong>Trip Time:</strong> {{ trip.fromDate }} - {{ trip.toDate }}</p>
+              <p><strong>Trip Time:</strong> {{ trip.startDate }} - {{ trip.endDate }}</p>
               <p><strong>Adventure Level:</strong> {{trip.tripLevel}}</p>
-              <p><strong>Age:</strong> {{trip.fromAge}} - {{trip.toAge}} years old</p>
-              <p>{{trip.budget}}/pax</p>
+              <p><strong>Age:</strong> {{trip.minAge}} - {{trip.maxAge}} years old</p>
+              <p>{{trip.price}}/pax</p>
               <p><strong>Number of Team Member:</strong> {{trip.groupSize}}</p>
             </mat-card-content>
           </mat-card>
         </div>
         <div class="col-6 d-flex justify-content-center">
-          <img [src]="trip.processedImg" alt="trip-image">
+          <img [src]="trip.imageURL" alt="trip-image">
         </div>
       </div>
       <div class="row">
@@ -35,14 +35,14 @@
         </table>
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <p class="h4">Members:</p>
         <ol class="list-group list-group-numbered">
           <li class="list-group-item" *ngFor="let item of trip.members; let i = index">
             {{ item.participant.fullname }}
           </li>
         </ol>
-      </div>
+      </div> -->
       <div>
         <button mat-flat-button color="warn" *ngIf="isJoined" class="me-2" (click)="revokeJoinTrip()">
           <mat-icon>clear</mat-icon> Revoke Join

@@ -38,7 +38,7 @@ export class JoinedTripsComponent {
     this.memberService.getAllTripsByParticipantId().subscribe({
       next: (res) => {
         res.forEach((element) => {
-          element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
+          element.imageURL = 'data:image/jpeg;base64,' + element.byteImg;
           this.trips.push(element);
         });
       },

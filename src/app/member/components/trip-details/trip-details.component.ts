@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MemberService } from '../../../_shared/services/member.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Trip } from 'src/app/_shared/models/trip.model';
+import { Trip, TripMember } from 'src/app/_shared/models/trip.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppService } from 'src/app/_shared/services/app.service';
 import { StorageService } from '../../../_shared/services/storage.service';
@@ -16,6 +16,7 @@ export class TripDetailsComponent {
   image: any;
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   trip!: Trip;
+  members: TripMember[];
   constructor(
     private memberService: MemberService,
     private activatedRoute: ActivatedRoute,
@@ -33,15 +34,27 @@ export class TripDetailsComponent {
     this.memberService.getTripById(this.tripId).subscribe((res) => {
       console.log(res);
       this.trip = res;
-      this.trip.processedImg = 'data:image/jpeg;base64,' + res.byteImg;
-      this.image = this.trip.processedImg;
-      for (var index in res.members) {
-        if(res.members[index].userId = userId){
-          this.isJoined = true;
-          break;
-        }
-      }
+      // this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
+      // this.image = this.trip.imageURL;
+      // for (var index in res.members) {
+      //   if(res.members[index].userId = userId){
+      //     this.isJoined = true;
+      //     break;
+      //   }
+      // }
     });
+    // this.memberService.ge(this.tripId).subscribe((res) => {
+    //   console.log(res);
+    //   this.trip = res;
+    //   // this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
+    //   // this.image = this.trip.imageURL;
+    //   for (var index in res.members) {
+    //     if(res.members[index].userId = userId){
+    //       this.isJoined = true;
+    //       break;
+    //     }
+    //   }
+    // });
   }
   joinTrip() {
     this.memberService.createJoinTrip(this.tripId).subscribe((res) => {

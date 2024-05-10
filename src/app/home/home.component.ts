@@ -7,15 +7,17 @@ import { PublicService } from '../_shared/services/public.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  popularTours: any[] = [];
+  feedbacks: any[] = [];
+  profiles: any[] = [];
+  trips: any[] = [];
   constructor(public publicService: PublicService) {}
-  popularCities: any[] = [
-    { city: 'City 1', image: 'path/to/image1.jpg' },
-    { city: 'City 2', image: 'path/to/image2.jpg' },
-    { city: 'City 3', image: 'path/to/image3.jpg' },
-    { city: 'City 4', image: 'path/to/image4.jpg' },
-    { city: 'City 5', image: 'path/to/image5.jpg' }
-  ];
+  // popularCities: any[] = [
+  //   { city: 'City 1', image: 'path/to/image1.jpg' },
+  //   { city: 'City 2', image: 'path/to/image2.jpg' },
+  //   { city: 'City 3', image: 'path/to/image3.jpg' },
+  //   { city: 'City 4', image: 'path/to/image4.jpg' },
+  //   { city: 'City 5', image: 'path/to/image5.jpg' }
+  // ];
 
   // popularTours: any[] = [
   //   { title: 'Tour 1', description: 'Brief description', image: 'path/to/image6.jpg' },
@@ -26,10 +28,22 @@ export class HomeComponent implements OnInit {
   // ];
 
   ngOnInit(): void {
+    this.publicService.getTopUsers().subscribe((res) => {
+      res.forEach((element) => {
+        element.imageURL = 'data:image/jpeg;base64,' + element.byteImg;
+        this.profiles.push(element);
+      });
+    });
     this.publicService.getLatestTrips().subscribe((res) => {
       res.forEach((element) => {
         element.imageURL = 'data:image/jpeg;base64,' + element.byteImg;
-        this.popularTours.push(element);
+        this.trips.push(element);
+      });
+    });
+    this.publicService.getTopFeedbacks().subscribe((res) => {
+      res.forEach((element) => {
+        element.imageURL = 'data:image/jpeg;base64,' + element.byteImg;
+        this.feedbacks.push(element);
       });
     });
   }

@@ -1,6 +1,3 @@
-
-
-
 <div class="hero-image">
   <div class="hero-text">
     <h1>Explore New Places With Your Friends</h1>
@@ -11,50 +8,34 @@
 
 <div class="container body-container"></div>
 
-<section class="py-5">
+<section class="my-5">
   <h2 class="text-center">Top 5 Tour Guide Recognition board</h2>
-  <div class="row d-flex justify-content-center">
-    <div class="col-md-2 mb-5 " *ngFor="let city of popularCities">
-      <div class="card">
-        <img src="path/to/city/image.jpg" class="card-img-top" alt="City Image">
-        <div class="card-body">
-          <h5 class="card-title">{{ city.name }}</h5>
-          <p class="card-text">{{ city.description }}</p>
-        </div>
-      </div>
-    </div>
+  <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="profiles.length > 0" class="row justify-content-center">
+    <mat-card fxFlex="15%" class="trip-card mat-elevation-z2" *ngFor="let profile of profiles">
+      <app-profile-card [userId]="profile.id"></app-profile-card>
+    </mat-card>
   </div>
 </section>
 
-<section class="py-5 bg-success bg-opacity-60" >
+<section class="py-5 bg-success bg-opacity-60">
   <h2 class="text-center text-white">Our Popular Tours</h2>
-  <div class="row d-flex justify-content-center">
-    <div class="col-md-2 mb-5 " *ngFor="let trip of popularTours">
-      <div class="trip-card card" [routerLink]="['/trips/view', trip.id]">
-        <img [src]="trip.imageURL" class="card-img-top" alt="Tour Image">
-        <div class="card-body">
-          <div class="h5 card-title">{{ trip.title }}</div>
-          <p class="card-text">{{ trip.summary }}</p>
-          <p class="text-body-secondary">{{ trip.startDate }} - {{ trip.endDate}} </p>
-        </div>
-      </div>
-    </div>
+
+  <div fxLayout="row wrap" fxLayoutGap="10px" class="mx-auto" *ngIf="trips.length > 0"
+    class="row justify-content-center">
+    <mat-card fxFlex="15%" [routerLink]="['/trips/view', trip.id]" class="trip-card mat-elevation-z2"
+      *ngFor="let trip of trips" style="padding-right:0;padding-left:0;">
+      <app-trip-card [trip]="trip"></app-trip-card>
+    </mat-card>
   </div>
+
 </section>
 
-<section class="py-5">
+<section class="my-5">
   <h2 class="text-center">Feedback From Friends</h2>
   <p class="text-center">Our Friends have left some reviews. Let's check it out!</p>
-  <div class="row d-flex justify-content-center">
-    <div class="col-md-2 mb-5 " *ngFor="let tour of popularTours">
-      <div class="card">
-        <!-- <img src="path/to/tour/image.jpg" class="card-img-top" alt="Tour Image"> -->
-        <div class="card-body">
-          <h5 class="card-title">{{ tour.name }}</h5>
-          <p class="card-text">{{ tour.description }}</p>
-        </div>
-      </div>
-    </div>
+  <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="feedbacks.length > 0" class="row justify-content-center">
+    <mat-card fxFlex="15%" *ngFor="let feedback of feedbacks" style="padding-right:0;padding-left:0;">
+      <app-feedback-card [feedback]="feedback"></app-feedback-card>
+    </mat-card>
   </div>
 </section>
-

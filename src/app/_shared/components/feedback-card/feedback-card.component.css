@@ -1,0 +1,8 @@
+.custom-rating {
+  font-size: 20px; /* Adjust font size for stars */
+  line-height: 20px; /* Adjust spacing for stars */
+  width: 100px;
+}
+.feedback-card {
+  flex: 1;
+}

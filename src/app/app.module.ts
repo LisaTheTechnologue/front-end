@@ -21,6 +21,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FilterPipe } from './_shared/pipes/filter.pipe';
 import { TokenInterceptor } from './_shared/services/token.interceptor';
+import { ComponentsModule } from './_shared/components/components.module';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -33,6 +35,7 @@ import { TokenInterceptor } from './_shared/services/token.interceptor';
     LoginComponent,
     PageNotFoundComponent,
     FilterPipe
+
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,9 @@ import { TokenInterceptor } from './_shared/services/token.interceptor';
     MatFormFieldModule,
     NgbDatepickerModule,
     FlexLayoutModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    ComponentsModule,
+    RouterModule
   ],
   providers: [
     {

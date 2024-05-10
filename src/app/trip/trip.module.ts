@@ -8,22 +8,16 @@ import { MaterialModule } from '../MaterialModule';
 import { TripViewComponent } from './trip-view/trip-view.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { GlobalErrorHandlerService } from '../_shared/exceptions/global-error-handler.service';
-import { TripShortViewComponent } from './trip-short-view/trip-short-view.component';
-import { FeedbackViewComponent } from './feedback-view/feedback-view.component';
 import { ProfilePublicComponent } from './profile-public/profile-public.component';
-
+import { ComponentsModule } from '../_shared/components/components.module';
 
 @NgModule({
   declarations: [
     TripIndexComponent,
     TripViewComponent,
-    ProfileCardComponent,
-    ProfilePublicComponent,
-    TripShortViewComponent,
-    FeedbackViewComponent
+    ProfilePublicComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +28,8 @@ import { ProfilePublicComponent } from './profile-public/profile-public.componen
     FlexLayoutModule,
     FormsModule,
     NgxPaginationModule,
-    NgbRatingModule
+    NgbRatingModule,
+    ComponentsModule
   ]
 })
 export class TripModule { }

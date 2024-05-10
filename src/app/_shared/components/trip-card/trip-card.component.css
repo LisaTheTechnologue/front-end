@@ -20,3 +20,10 @@
     text-transform: unset;
 }
 
+
+.card-trip-image{
+  width: 100%;
+  padding-right:0;
+  padding-left:0;
+  /* height: 150px; */
+}

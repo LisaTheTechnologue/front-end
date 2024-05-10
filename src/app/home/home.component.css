@@ -29,7 +29,6 @@
   color: white;
 }
 
-
 .popular-cities,
 .popular-tours {
   margin: 20px 0;
@@ -43,13 +42,11 @@
 }
 
 .trip-card {
-  flex: 1 0 auto;
-  height: 350px;
+  width: 200px;
+  margin-bottom: 16px;
 
-  .card-img-top {
-    height: 150px;
-  }
   &:hover {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)
   }
 }
+

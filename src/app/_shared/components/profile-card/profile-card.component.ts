@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { PublicProfile } from 'src/app/_shared/models/user.model';
-import { PublicService } from 'src/app/_shared/services/public.service';
+import { PublicService } from '../../services/public.service';
+import { PublicProfile } from '../../models/user.model';
 
 @Component({
   selector: 'app-profile-card',

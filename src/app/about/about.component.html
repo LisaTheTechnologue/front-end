@@ -17,7 +17,7 @@
     </div>
     <div class="mb-3">
       <label for="messageFld" class="col-sm-2 col-form-label">Message:</label>
-      <input type="text" formControlName="message" class="form-control" id="messageFld" required />
+      <textarea type="text" formControlName="message" class="form-control" id="messageFld" required></textarea>
       <div class="invalid-feedback" *ngIf="contactForm.get('message')?.hasError('required')">This input is required!
       </div>
     </div>

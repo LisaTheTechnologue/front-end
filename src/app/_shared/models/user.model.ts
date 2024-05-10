@@ -11,18 +11,21 @@ export class User {
   accno: string;
   accbank: string;
   accname: string;
-  imageURL: any;
+  img: any;
+  imageURL: string;
   byteImg: any;
 }
 
 export class PublicProfile {
   id?: any;
-  fullname: string;
+  fullName: string;
   email: string;
   rating: number;
   dob: Date;
   username?: string;
   phoneno: string | undefined;
-  imageURL: any;
+  img: any;
+  imageURL: string;
   byteImg: any;
+  noOfTrips:number;
 }

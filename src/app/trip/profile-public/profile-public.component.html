@@ -1,58 +1,59 @@
 <div class="container my-5">
-<div *ngIf="user">
-  <img id="profile-picture" class="img-fluid rounded-circle mx-auto img-float d-block img-md"
-    src="http://www.gravatar.com/avatar/?d=mp" />
-  <!-- src="{{ user?.profilepicurl }}" alt="noimage" /> -->
-  <h2 class="d-flex justify-content-center">
-    {{ user?.fullname }}
-  </h2>
+  <div *ngIf="user">
+    <img id="profile-picture" class="img-fluid rounded-circle mx-auto img-float d-block img-md"
+      src="http://www.gravatar.com/avatar/?d=mp" />
+    <!-- src="{{ user?.profilepicurl }}" alt="noimage" /> -->
+    <h2 class="d-flex justify-content-center">
+      {{ user?.fullName }}
+    </h2>
 
-  <div class="row mt-4">
-    <div class="col-md-8 gutters-sm">
-      <div class="row ">
-        <div class="col-5 example-sidenav">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex flex-column align-items-left">
-                <div id="profile-view" class="mt-3">
-                  <p class="text-muted mb-1">{{ user?.dob }}</p>
-                  <p class="text-muted mb-1">{{ user?.phoneno }}</p>
-                  <p class="text-muted mb-1">{{ user?.email }}</p>
+    <div class="row mt-4">
+      <div class="col-md-8 gutters-sm">
+        <div class="row ">
+          <div class="col-5 example-sidenav">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex flex-column align-items-left">
+                  <div id="profile-view" class="mt-3">
+                    <p class="text-muted mb-1">{{ user?.dob }}</p>
+                    <p class="text-muted mb-1">{{ user?.phoneno }}</p>
+                    <p class="text-muted mb-1">{{ user?.email }}</p>
+                  </div>
                 </div>
               </div>
             </div>
+            <mat-nav-list dense *ngIf="trips">
+              <ng-template ngFor let-trip [ngForOf]="trips">
+                <mat-list-item class="list-with-border" (click)="display(trip)" [activated]="displaySelectedTrip(trip)">
+                  <span matListItemTitle>{{ trip.title }}</span>
+                  <span matListItemLine>{{ trip.cityName }} | {{ trip.startDate }} - {{ trip.endDate }}</span>
+                  <span matListItemLine><ngb-rating [(rate)]="trip.rating" [readonly]="true"
+                      [max]="5"></ngb-rating></span>
+                </mat-list-item>
+              </ng-template>
+            </mat-nav-list>
           </div>
-          <mat-nav-list dense *ngIf="trips">
-            <ng-template ngFor let-trip [ngForOf]="trips">
-              <mat-list-item class="list-with-border" (click)="display(trip)" [activated]="displaySelectedTrip(trip)">
-                <span matListItemTitle>{{ trip.title }}</span>
-                <span matListItemLine>{{ trip.cityName }} | {{ trip.startDate }} - {{ trip.endDate }}</span>
-                <span matListItemLine><ngb-rating [(rate)]="trip.rating" [readonly]="true"
-                    [max]="5"></ngb-rating></span>
-              </mat-list-item>
-            </ng-template>
-          </mat-nav-list>
-        </div>
 
-        <div class="col example-sidenav-content" *ngIf="selectedTrip">
-          <div class="row">
-            <app-trip-short-view [trip]="selectedTrip"></app-trip-short-view>
-          </div>
-          <div class="row">
-            <ng-template ngFor let-feedback [ngForOf]="feedbacks">
-              <app-feedback-view [feedback]="feedback"></app-feedback-view>
-            </ng-template>
-
+          <div class="col example-sidenav-content">
+            <div class="row ">
+              <ng-template *ngIf="selectedTrip">
+                <app-trip-card [trip]="selectedTrip" class="trip-card"></app-trip-card>
+              </ng-template>
+            </div>
+            <div class="row">
+              <ng-template ngFor let-feedback [ngForOf]="feedbacks">
+                <app-feedback-card [feedback]="feedback"></app-feedback-card>
+              </ng-template>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-4">
-      <div class="mb-3">
+      <!-- <div class="col-md-4">
+        <div class="mb-3">
 
-      </div>
-    </div>
+        </div>
+      </div> -->
 
+    </div>
   </div>
-</div>
 </div>

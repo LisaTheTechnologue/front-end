@@ -1,4 +1,4 @@
-import { ConfirmationDialogComponent } from './../../../_shared/components/confirmation-dialog/confirmation-dialog.component';
+
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,6 +9,7 @@ import { ErrorDialogComponent } from 'src/app/_shared/components/error-dialog/er
 import { ConfirmService } from 'src/app/_shared/services/confirm.service';
 import { MemberPaymentService } from 'src/app/_shared/services/member-payment.service';
 import { MemberJoinerService } from 'src/app/_shared/services/member-joiner.service';
+import { PublicService } from 'src/app/_shared/services/public.service';
 @Component({
   selector: 'app-payment-view',
   templateUrl: './payment-view.component.html',
@@ -17,8 +18,12 @@ import { MemberJoinerService } from 'src/app/_shared/services/member-joiner.serv
 export class PaymentViewComponent {
   payment:any;
   paymentId = this.activatedRoute.snapshot.params['paymentId'];
+  trip: any;
+  tripId:any;
+
   constructor(
     private paymentService: MemberPaymentService,
+    private publicService: PublicService,
     private joinerService: MemberJoinerService,
     private confirmationService: ConfirmService,
     private activatedRoute: ActivatedRoute,
@@ -29,10 +34,16 @@ export class PaymentViewComponent {
   ) {}
 
   ngOnInit(): void {
+    this.getPayment();
+    this.getTrip();
+  }
+
+  getPayment() {
     this.paymentService.getById(this.paymentId).subscribe(
       (res) => {
         // Handle successful response
         this.payment = res;
+        this.tripId = res.joiner.tripId;
       },
       (error) => {
         // Handle error response
@@ -40,7 +51,18 @@ export class PaymentViewComponent {
       }
     );
   }
-
+  getTrip(){
+    this.publicService.getByTripId(this.paymentId).subscribe(
+      (res) => {
+        // Handle successful response
+        this.trip = res;
+      },
+      (error) => {
+        // Handle error response
+        this.showError(error);
+      }
+    );
+  }
   confirm() {
     this.confirmationService.confirm('Are you sure you want to do this?')
       .subscribe(confirmed => {

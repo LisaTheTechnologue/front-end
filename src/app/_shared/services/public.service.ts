@@ -22,9 +22,12 @@ export class PublicService {
     return this.http.get(this.API + 'trips/latest')
     // .pipe(catchError(this.handleError));
   }
-
-  public getLatestFeeddbacks(): Observable<any> {
-    return this.http.get(this.API + 'feedbacks/latest')
+  public getTopUsers(): Observable<any> {
+    return this.http.get(this.API + 'profile/top')
+    // .pipe(catchError(this.handleError));
+  }
+  public getTopFeedbacks(): Observable<any> {
+    return this.http.get(this.API + 'feedbacks/top')
     // .pipe(catchError(this.handleError));
   }
 
@@ -45,7 +48,7 @@ export class PublicService {
     // .pipe(catchError(this.errorHandler));
   }
 
-  public getProfile(userid: any): Observable<PublicProfile> /* profile */ {
+  public getProfile(userid: any): Observable<any> /* profile */ {
     return this.http.get<PublicProfile>(
       this.API + 'profile?userId=' + userid
     )

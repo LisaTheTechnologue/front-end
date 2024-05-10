@@ -21,7 +21,7 @@ export interface Trip {
   // imageURL: any;
   img: any;
   imageURL: string;
-
+  byteImg: any;
   tripDays?: TripDay[];
   // members?: TripMember[];
   rating: number;
@@ -38,12 +38,14 @@ export interface Feedback {
 }
 
 export interface TripDay {
-  _id: string;
+  id: any;
   dayNo: number;
   title: string;
   description: string;
 }
 
 export interface TripMember {
-  participant: PublicProfile;
+  id: any;
+  userId: number;
+  tripId:number;
 }

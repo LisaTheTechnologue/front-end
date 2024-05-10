@@ -15,8 +15,8 @@ import { TripEditComponent } from './components/trip-edit/trip-edit.component';
 import { TripPaymentComponent } from './components/trip-payment/trip-payment.component';
 import { PaymentListComponent } from './components/payment-list/payment-list.component';
 import { PaymentViewComponent } from './components/payment-view/payment-view.component';
-import { TripCardComponent } from './components/trip-card/trip-card.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { ComponentsModule } from '../_shared/components/components.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,6 @@ import { ChatComponent } from './components/chat/chat.component';
     TripPaymentComponent,
     PaymentListComponent,
     PaymentViewComponent,
-    TripCardComponent,
     ChatComponent
   ],
   imports: [
@@ -39,7 +38,8 @@ import { ChatComponent } from './components/chat/chat.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
+    ComponentsModule
   ]
 })
 export class MemberModule { }

@@ -152,9 +152,9 @@ export class TripEditComponent {
     };
     reader.readAsDataURL(this.selectedFile);
   }
-  private createItem(item: TripDay = { _id: '', dayNo: 0, title: '', description: '' }) {
+  private createItem(item: TripDay = { id: '', dayNo: 0, title: '', description: '' }) {
     return this.fb.group({
-      _id: [item._id],
+      id: [item.id],
       dayNo: [
         item.dayNo,
         [Validators.required]

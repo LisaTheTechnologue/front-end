@@ -39,8 +39,9 @@
 
       <!-- <div class="my-5"> -->
       <div fxLayout="row wrap" fxLayoutGap="16px" class="p-2" *ngIf="filteredData.length > 0">
-        <mat-card fxFlex="30%" [routerLink]="['/trips/view', trip.id]" class="trip-card mat-elevation-z2"  *ngFor="let trip of filteredData | paginate: { itemsPerPage: 3, currentPage: p }">
-          <app-trip-short-view [trip]="trip"></app-trip-short-view>
+        <mat-card fxFlex="30%" [routerLink]="['/trips/view', trip.id]" class="trip-card"
+         *ngFor="let trip of filteredData | paginate: { itemsPerPage: 3, currentPage: p }">
+          <app-trip-card [trip]="trip"></app-trip-card>
         </mat-card>
 
       </div>

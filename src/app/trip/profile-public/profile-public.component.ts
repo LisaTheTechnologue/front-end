@@ -50,6 +50,7 @@ export class ProfilePublicComponent {
 
   display(trip: Trip) {
     this.selectedTrip = trip;
+    this.selectedTrip.imageURL = 'data:image/jpeg;base64,' + trip.byteImg;
     // this.selectedTrip.imageURL = 'data:image/jpeg;base64,' + trip.byteImg;
         // this.selectedTrip.image = this.selectedTrip.imageURL;
     this.getFeedbacksByTripId(this.selectedTrip.id);

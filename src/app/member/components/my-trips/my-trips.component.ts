@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MemberService } from '../../../_shared/services/member.service';
-import { Trip } from 'src/app/_shared/models/trip.model';
-import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
 import { Router } from '@angular/router';
+import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 
 @Component({
   selector: 'app-my-trips',
@@ -17,7 +15,7 @@ export class MyTripsComponent {
   searchText: string = '';
   error: any;
   constructor(
-    private memberService: MemberService,
+    private memberTripService: MemberTripService,
     private router: Router,
     private fb: FormBuilder,
     private snackBar: MatSnackBar
@@ -32,7 +30,7 @@ export class MyTripsComponent {
 
   getAllTrips() {
     this.trips = [];
-    this.memberService.getAllTripsByLeader().subscribe({
+    this.memberTripService.getAllTrips().subscribe({
       next: (res) => {
         res.forEach((element) => {
           element.imageURL = 'data:image/jpeg;base64,' + element.byteImg;

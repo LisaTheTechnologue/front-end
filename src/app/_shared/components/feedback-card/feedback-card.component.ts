@@ -7,4 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class FeedbackCardComponent {
   @Input() feedback: any
+  ngOnInit(): void {
+    this.feedback.imageURL = 'data:image/jpeg;base64,' + this.feedback.byteImg;
+  }
 }

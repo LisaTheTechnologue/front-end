@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Trip } from 'src/app/_shared/models/trip.model';
 import { User } from 'src/app/_shared/models/user.model';
-import { MemberService } from '../../../_shared/services/member.service';
 import { MemberUserService } from 'src/app/_shared/services/member-user.service';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 

@@ -1,0 +1,63 @@
+<div *ngIf="error">{{ error }} </div>
+<div *ngIf="trip">
+  <div class="row">
+    <div class="col-6 p-3">
+      <p class="h3">{{ trip.title }}</p>
+      <div>
+        <mat-card [routerLink]="['/profile/', trip.leaderId]" style="width:50%">
+          <app-profile-card [userId]="trip.leaderId"></app-profile-card>
+        </mat-card>
+
+      </div>
+      <p>{{trip.summary}}</p>
+      <p>Trip is opened until {{ trip.startDate }}</p>
+    </div>
+    <div class="col-6 d-flex justify-content-center">
+      <img [src]="trip.imageURL" alt="trip-image">
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col-3 p-3">
+      <div class="border bg-white p-3">
+        <p>Duration {{ trip.startDate }} - {{ trip.endDate }}</p>
+        <p>Adventure Level: {{trip.tripLevel}}</p>
+        <p>Age {{trip.minAge}} - {{trip.maxAge}} years old</p>
+        <p>{{trip.price}}/pax</p>
+        <p>Number of team member: {{trip.groupSize}}</p>
+      </div>
+    </div>
+    <div class="col p-3">
+      {{ trip.notes }}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-3 p-3">
+      <div class="h5">Itinerary:</div>
+    </div>
+    <div class="col p-3">
+      <table class="table table-striped mt-1">
+        <tbody>
+          <tr *ngFor="let item of trip.tripDays">
+            <td>Day {{ item.dayNo }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.description }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row" *ngIf="members.length > 0">
+    <div class="col-3 p-3">
+      <div class="h5">Your company:</div>
+    </div>
+    <div class="col p-3">
+      <ng-template fxLayout="row" fxWrap="wrap" ngFor let-member [ngForOf]="members">
+        <mat-card style="margin:10px" [routerLink]="['/profile/', member.userId]" >
+          <app-profile-card [userId]="member.userId"></app-profile-card>
+        </mat-card>
+      </ng-template>
+    </div>
+  </div>
+</div>

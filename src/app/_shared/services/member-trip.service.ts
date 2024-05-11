@@ -13,7 +13,7 @@ export class MemberTripService {
   private API = AppSettings.MEMBER_API_ENDPOINT + 'trips/';
   constructor(private http: HttpClient) { }
 
-  addTrip (tripDto:any): Observable<any>{
+  createTrip (tripDto:any): Observable<any>{
     return this.http.post(this.API+'create', tripDto, {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));
@@ -51,6 +51,13 @@ export class MemberTripService {
     }).pipe(catchError(this.handleError));
   }
 
+  getAllJoinTrips(): Observable<any>{
+    const userId = StorageService.getUserId();
+    return this.http.get(this.API+`joiner/${userId}`, {
+      headers: this.createAuthorizationHeader(),
+    });
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 404) {
       // Redirect to page not found component
@@ -58,18 +65,6 @@ export class MemberTripService {
     }
     // Handle other errors here
     return throwError(error);
-  }
-  // getAllTripsByName(name: any): Observable<any>{
-  //   return this.http.get(this.API+`trips/search/${name}`, {
-  //     headers: this.createAuthorizationHeader(),
-  //   });
-  // }
-
-  getAllJoinTrips(): Observable<any>{
-    const userId = StorageService.getUserId();
-    return this.http.get(this.API+`trips/join-trip-list/${userId}`, {
-      headers: this.createAuthorizationHeader(),
-    });
   }
 
   private createAuthorizationHeader(): HttpHeaders{

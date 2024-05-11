@@ -13,7 +13,7 @@ export class MemberJoinerService {
   private API = AppSettings.MEMBER_API_ENDPOINT + 'joiner/';
   constructor(private http: HttpClient) { }
 
-  create (tripDto:any): Observable<any>{
+  createJoin (tripDto:any): Observable<any>{
     return this.http.post(this.API+'create', tripDto, {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));

@@ -6,13 +6,24 @@
   </div>
 </div>
 
-<div class="container body-container"></div>
-
 <section class="my-5">
   <h2 class="text-center">Top 5 Tour Guide Recognition board</h2>
   <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="profiles.length > 0" class="row justify-content-center">
     <mat-card fxFlex="15%" class="trip-card mat-elevation-z2" *ngFor="let profile of profiles">
-      <app-profile-card [userId]="profile.id"></app-profile-card>
+
+        <div *ngIf="profile.imageURL">
+          <img mat-card-image [src]="profile.imageURL" alt="avatar" class="card-profile-image">
+        </div>
+        <div *ngIf="!profile.imageURL">
+          <img mat-card-image src="http://www.gravatar.com/avatar/?d=mp" alt="avatar" class="card-profile-image">
+        </div>
+
+        <mat-card-content>
+          <mat-card-title>{{ profile.fullName }}</mat-card-title>
+          <div ><ngb-rating [(rate)]="profile.rating" [readonly]="true" [max]="5"
+              class="custom-rating"></ngb-rating></div>
+
+        </mat-card-content>
     </mat-card>
   </div>
 </section>
@@ -34,8 +45,10 @@
   <h2 class="text-center">Feedback From Friends</h2>
   <p class="text-center">Our Friends have left some reviews. Let's check it out!</p>
   <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="feedbacks.length > 0" class="row justify-content-center">
-    <mat-card fxFlex="15%" *ngFor="let feedback of feedbacks" style="padding-right:0;padding-left:0;">
+    <mat-card fxFlex="20%" *ngFor="let feedback of feedbacks" style="padding-right:0;padding-left:0;">
       <app-feedback-card [feedback]="feedback"></app-feedback-card>
     </mat-card>
   </div>
 </section>
+
+

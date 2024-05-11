@@ -1,7 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Trip } from 'src/app/_shared/models/trip.model';
-import { MemberService } from '../../../_shared/services/member.service';
-import { PublicService } from 'src/app/_shared/services/public.service';
 import { User } from 'src/app/_shared/models/user.model';
 import { ActivatedRoute } from '@angular/router';
 import { StorageService } from 'src/app/_shared/services/storage.service';

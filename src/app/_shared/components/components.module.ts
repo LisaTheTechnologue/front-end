@@ -8,6 +8,8 @@ import { TripCardComponent } from './trip-card/trip-card.component';
 import { RouterModule } from '@angular/router';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { TripDetailsComponent } from './trip-details/trip-details.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -17,18 +19,23 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     FeedbackCardComponent,
     TripCardComponent,
     ConfirmDialogComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    TripDetailsComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     NgbRatingModule,
-    RouterModule
+    RouterModule,
+    FontAwesomeModule
   ],
   exports: [
     ProfileCardComponent,
     FeedbackCardComponent,
-    TripCardComponent
+    TripCardComponent,
+    ConfirmDialogComponent,
+    ErrorDialogComponent,
+    TripDetailsComponent
   ]
 })
 export class ComponentsModule { }

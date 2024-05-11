@@ -9,15 +9,12 @@ import { TripViewComponent } from './trip-view/trip-view.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
-import { GlobalErrorHandlerService } from '../_shared/exceptions/global-error-handler.service';
-import { ProfilePublicComponent } from './profile-public/profile-public.component';
 import { ComponentsModule } from '../_shared/components/components.module';
 
 @NgModule({
   declarations: [
     TripIndexComponent,
     TripViewComponent,
-    ProfilePublicComponent
   ],
   imports: [
     CommonModule,

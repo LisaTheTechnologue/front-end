@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Trip } from 'src/app/_shared/models/trip.model';
-import { MemberService } from '../../../_shared/services/member.service';
 import { AppService } from '../../../_shared/services/app.service';
 import { Router } from '@angular/router';
-import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
+import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 
 @Component({
   selector: 'app-joined-trips',
@@ -21,7 +17,7 @@ export class JoinedTripsComponent {
   // searchTripForm!:FormGroup;
   searchText: string = '';
   constructor(
-    private memberService: MemberService,
+    private memberTripService: MemberTripService,
     private appService: AppService,
     private router: Router
   ) {}
@@ -35,7 +31,7 @@ export class JoinedTripsComponent {
 
   getAllTrips() {
     this.trips = [];
-    this.memberService.getAllTripsByParticipantId().subscribe({
+    this.memberTripService.getAllJoinTrips().subscribe({
       next: (res) => {
         res.forEach((element) => {
           element.imageURL = 'data:image/jpeg;base64,' + element.byteImg;

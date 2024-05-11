@@ -4,7 +4,7 @@ export class User {
   firstname: string;
   lastname: string;
   email: string;
-  phoneno: string | undefined;
+  phoneNo: string | undefined;
   dob: Date;
   active?: boolean;
   rating: number;
@@ -23,7 +23,7 @@ export class PublicProfile {
   rating: number;
   dob: Date;
   username?: string;
-  phoneno: string | undefined;
+  phoneNo: string | undefined;
   img: any;
   imageURL: string;
   byteImg: any;

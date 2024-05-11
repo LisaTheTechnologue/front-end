@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { PublicProfile } from 'src/app/_shared/models/user.model';
 import { StorageService } from 'src/app/_shared/services/storage.service';
 import { MemberChatService } from 'src/app/_shared/services/member-chat.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-chat',
@@ -12,7 +13,7 @@ import { MemberChatService } from 'src/app/_shared/services/member-chat.service'
   styleUrls: ['./chat.component.css'],
 })
 export class ChatComponent {
-
+  chatForm!: FormGroup;
   @Input() tripId: number;
   group: GroupChat | null = null;
   error: string;

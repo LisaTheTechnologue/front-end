@@ -4,9 +4,9 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
-import { ProfilePublicComponent } from './trip/profile-public/profile-public.component';
 import { AuthGuard } from './_shared/auth-guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
       { path: '', component: HomeComponent }, // Level 1 child
@@ -16,6 +16,7 @@ const routes: Routes = [
       { path: 'admin', canActivate: [AuthGuard], loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
       { path: 'member', canActivate: [AuthGuard], loadChildren: () => import('./member/member.module').then(m => m.MemberModule) },
       { path: 'trips', loadChildren: () => import('./trip/trip.module').then(m => m.TripModule) },
+      { path: 'profile/:userId', component: ProfileComponent },
       { path: '**', component: PageNotFoundComponent }
 ];
 

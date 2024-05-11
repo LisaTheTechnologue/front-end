@@ -1,8 +1,4 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError, throwError } from 'rxjs';
@@ -11,22 +7,22 @@ import { PageNotFoundException } from '../exceptions/page-not-found.exception';
 import { StorageService } from './storage.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class MemberChatService {
-  private CHAT_ENDPOINT = AppSettings.MEMBER_API_ENDPOINT + 'chat/';
+export class MemberFeedbackService {
+  private API = AppSettings.MEMBER_API_ENDPOINT + 'feedback/';
   constructor(public http: HttpClient, public router: Router) {}
 
   public get(tripId: any): Observable<any> {
     return this.http
-      .get<any>(this.CHAT_ENDPOINT + tripId, {
+      .get<any>(this.API + tripId, {
         headers: this.createAuthorizationHeader(),
       })
       .pipe(catchError(this.handleError));
   }
 
-  public create(chat: any): Observable<any> {
-    return this.http.post<any>(this.CHAT_ENDPOINT, chat, {
+  public create(form: any): Observable<any> {
+    return this.http.post<any>(this.API, form, {
       headers: this.createAuthorizationHeader(),
     })
     .pipe(catchError(this.handleError));
@@ -41,10 +37,9 @@ export class MemberChatService {
     return throwError(error);
   }
 
-  private createAuthorizationHeader(): HttpHeaders {
+  private createAuthorizationHeader(): HttpHeaders{
     return new HttpHeaders().set(
-      'Authorization',
-      'Bearer ' + StorageService.getToken()
-    );
+      'Authorization','Bearer ' + StorageService.getToken()
+    )
   }
 }

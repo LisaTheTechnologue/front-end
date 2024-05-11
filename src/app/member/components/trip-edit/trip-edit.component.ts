@@ -12,10 +12,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbDateStruct, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ErrorDialogComponent } from 'src/app/_shared/components/error-dialog/error-dialog.component';
 import { StorageService } from 'src/app/_shared/services/storage.service';
-import { MemberService } from '../../../_shared/services/member.service';
 import { Location } from '@angular/common';
 import { Trip, TripDay } from 'src/app/_shared/models/trip.model';
 import { PublicService } from 'src/app/_shared/services/public.service';
+import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 @Component({
   selector: 'app-trip-edit',
   templateUrl: './trip-edit.component.html',
@@ -43,7 +43,7 @@ export class TripEditComponent {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private publicService: PublicService,
-    private memberService: MemberService,
+    private memberTripService: MemberTripService,
     private location: Location,
     private dialog: MatDialog,
     private router: Router,
@@ -84,7 +84,7 @@ export class TripEditComponent {
   getTripById() {
     // this.trip = new Trip();
     const userId = StorageService.getUserId();
-    this.memberService.getTripById(this.tripId).subscribe((res) => {
+    this.memberTripService.getTripById(this.tripId).subscribe((res) => {
       // create lines array first
       for (let item = 0; item < res.tripDays.length; item++) {
         const itemsFormArray = this.tripForm.controls['items'] as FormArray;
@@ -222,8 +222,8 @@ export class TripEditComponent {
       'itemsJsonString',
       JSON.stringify(this.tripForm.get('items').value)
     );
-    this.memberService
-      .addTrip(formData)
+    this.memberTripService
+      .updateTrip(this.tripId,formData)
       .subscribe({ next: () => this.onSuccess(), error: () => this.onError() });
   }
   onCancel() {

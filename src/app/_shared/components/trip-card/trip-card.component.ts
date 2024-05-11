@@ -8,4 +8,7 @@ import { Trip } from '../../models/trip.model';
 })
 export class TripCardComponent {
   @Input() trip: Trip;
+  ngOnInit(): void {
+    this.trip.imageURL = 'data:image/jpeg;base64,' + this.trip.byteImg;
+  }
 }

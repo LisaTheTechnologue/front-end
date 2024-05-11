@@ -1,63 +1,33 @@
 import { Component, Input } from '@angular/core';
-import { MemberService } from '../../../_shared/services/member.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Trip, TripMember } from 'src/app/_shared/models/trip.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppService } from 'src/app/_shared/services/app.service';
 import { StorageService } from '../../../_shared/services/storage.service';
+import { MemberJoinerService } from 'src/app/_shared/services/member-joiner.service';
 
 @Component({
-  selector: 'app-trip-details',
-  templateUrl: './trip-details.component.html',
-  styleUrls: ['./trip-details.component.css'],
+  selector: 'app-trip-view',
+  templateUrl: './trip-view.component.html',
+  styleUrls: ['./trip-view.component.css'],
 })
-export class TripDetailsComponent {
+export class TripViewComponent {
   isJoined: boolean;
-  image: any;
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
-  trip!: Trip;
-  members: TripMember[];
+  hideChat= false;
   constructor(
-    private memberService: MemberService,
+    private memberJoinerService: MemberJoinerService,
     private activatedRoute: ActivatedRoute,
     private snackBar: MatSnackBar,
     private appService: AppService,
     private router: Router
   ) {}
   ngOnInit() {
-    this.getTrip();
     this.appService.getIsJoined.subscribe(isJoined => this.isJoined = isJoined);
   }
-  getTrip() {
-    // this.trip = new Trip();
-    const userId = StorageService.getUserId();
-    this.memberService.getTripById(this.tripId).subscribe((res) => {
-      console.log(res);
-      this.trip = res;
-      // this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
-      // this.image = this.trip.imageURL;
-      // for (var index in res.members) {
-      //   if(res.members[index].userId = userId){
-      //     this.isJoined = true;
-      //     break;
-      //   }
-      // }
-    });
-    // this.memberService.ge(this.tripId).subscribe((res) => {
-    //   console.log(res);
-    //   this.trip = res;
-    //   // this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
-    //   // this.image = this.trip.imageURL;
-    //   for (var index in res.members) {
-    //     if(res.members[index].userId = userId){
-    //       this.isJoined = true;
-    //       break;
-    //     }
-    //   }
-    // });
-  }
+
   joinTrip() {
-    this.memberService.createJoinTrip(this.tripId).subscribe((res) => {
+    this.memberJoinerService.createJoin(this.tripId).subscribe((res) => {
       if (res.id != null) {
         this.snackBar.open('You have registered to the trip successfully!', 'Close', {
           duration: 5000,
@@ -72,7 +42,7 @@ export class TripDetailsComponent {
     });
   }
   revokeJoinTrip() {
-    this.memberService.cancelJoinTrip(this.tripId).subscribe((res) => {
+    this.memberJoinerService.cancel(this.tripId).subscribe((res) => {
       if (res.id != null) {
         this.snackBar.open('You have revoked of the trip successfully!', 'Close', {
           duration: 5000,
@@ -85,5 +55,8 @@ export class TripDetailsComponent {
         });
       }
     });
+  }
+  openChat() {
+      this.hideChat = !this.hideChat;
   }
 }

@@ -10,7 +10,7 @@ import { StorageService } from './storage.service';
   providedIn: 'root'
 })
 export class MemberPaymentService {
-  private API = AppSettings.API_ENDPOINT + 'payment/';
+  private API = AppSettings.MEMBER_API_ENDPOINT + 'payment/';
   constructor(public http: HttpClient, public router: Router) {}
 
   public getByTripId(tripId: number): Observable<any> {

@@ -8,7 +8,6 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { MemberService } from '../../../_shared/services/member.service';
 import { StorageService } from 'src/app/_shared/services/storage.service';
 import { NgbDateStruct, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,6 +15,7 @@ import { ErrorDialogComponent } from 'src/app/_shared/components/error-dialog/er
 import { Location } from '@angular/common';
 import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
 import { PublicService } from 'src/app/_shared/services/public.service';
+import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 @Component({
   selector: 'app-post-trip',
   templateUrl: './post-trip.component.html',
@@ -36,7 +36,7 @@ export class PostTripComponent {
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private memberService: MemberService,
+    private memberTripService: MemberTripService,
     private location: Location,
     private dialog: MatDialog,
     private router: Router,
@@ -156,7 +156,7 @@ export class PostTripComponent {
       'itemsJsonString',
       JSON.stringify(this.tripForm.get('items').value)
     );
-    this.memberService.addTrip(formData).subscribe({
+    this.memberTripService.createTrip(formData).subscribe({
       next: (res) => {
         this.onSuccess();
       },

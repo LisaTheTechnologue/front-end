@@ -116,7 +116,7 @@ export class PaymentViewComponent {
   }
   showError(error: any) {
     this.dialog.open(ErrorDialogComponent, {
-      data: error,
+      data: 'Something is wrong. Please retry!',
     });
   }
 }

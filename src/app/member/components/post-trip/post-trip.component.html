@@ -83,7 +83,6 @@
       </div>
     </div>
 
-
     <div class="row">
       <div class="mb-3 col-md-6">
         <label for="startDateFld">From date</label>
@@ -160,39 +159,10 @@
         </div>
       </div>
     </div>
-      <!-- <table class="full-width" formArrayName="items" *ngFor="let itemForm of items.controls; let i = index">
-        <tr [formGroupName]="i">
-          <td style="width: 20%">
-            <div class="mb-3">
-              <input class="form-control" placeholder="Day" formControlName="name" type="number" />
-              <div class="invalid-feedback" *ngIf="items.controls[i].get('name')?.invalid">This input is required!
-              </div>
-            </div>
-          </td>
-          <td style="width: 80%">
-            <div class="mb-3">
-              <input class="form-control" placeholder="Description" formControlName="description" />
-              <div class="invalid-feedback" class="invalid-feedback"
-                *ngIf="items.controls[i].get('description')?.invalid">This input is
-                required!
-              </div>
-            </div>
-          </td>
-
-          <td >
-            <button mat-icon-button color="warn" (click)="removeItem(i)">
-              <mat-icon aria-label="Remove Item">delete</mat-icon>
-            </button>
-          </td>
-        </tr>
-      </table> -->
     </div>
     <div class="mb-3">
       <button mat-raised-button color="primary"
-      type="submit" (click)="submit('request')">Request approve</button>
-      <button mat-raised-button color="primary"
-      type="button" (click)="submit('draft')">Draft</button>
-
+      type="submit" (click)="submit()">Submit</button>
     </div>
   </form>
 </div>

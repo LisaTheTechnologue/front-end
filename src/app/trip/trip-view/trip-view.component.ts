@@ -11,7 +11,6 @@ import { MemberJoinerService } from '../../_shared/services/member-joiner.servic
 })
 export class TripViewComponent {
 
-
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   isMemberLoggedIn: boolean;
   isJoined: boolean = false;
@@ -36,22 +35,40 @@ export class TripViewComponent {
         tripId: this.tripId,
         userId: Number(userId),
       };
-      this.memberJoinerService.createJoin(joiner).subscribe((res) => {
-        if (res.id != null) {
-          this.snackBar.open('You are on board!', 'Close', {
-            duration: 5000,
-          });
-          this.router.navigateByUrl('/member');
-        } else {
-          this.snackBar.open(res.message, 'ERROR', {
-            duration: 5000,
+
+      this.memberJoinerService.checkJoiner(joiner).subscribe({
+        next: (res) => {
+          this.router.navigateByUrl(`/member/payment/${this.tripId}`);
+        },
+        error: (error) => {
+          this.snackBar.open(error, 'ERROR', {
+            duration: 100000,
             panelClass: 'error-snackbar',
           });
-        }
+        },
       });
-      console.log('joined');
     } else {
       this.router.navigateByUrl('login');
     }
+  }
+  revokeJoinTrip() {
+    this.memberJoinerService.cancel(this.tripId).subscribe({
+      next: (res) => {
+        this.snackBar.open(
+          'You have revoked of the trip successfully!',
+          'Close',
+          {
+            duration: 5000,
+          }
+        );
+        this.router.navigateByUrl('/member');
+      },
+      error: (error) => {
+        this.snackBar.open(error, 'ERROR', {
+          duration: 100000,
+          panelClass: 'error-snackbar',
+        });
+      },
+    });
   }
 }

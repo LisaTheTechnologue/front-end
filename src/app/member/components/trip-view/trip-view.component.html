@@ -6,9 +6,9 @@
     <button mat-flat-button color="warn" *ngIf="isJoined" class="me-2" (click)="revokeJoinTrip()">
       <mat-icon>clear</mat-icon> Revoke Join
     </button>
-    <button mat-flat-button color="success" *ngIf="!isJoined" class="me-2" (click)="joinTrip()">
+    <!-- <button mat-flat-button color="success" *ngIf="!isJoined" class="me-2" (click)="joinTrip()">
       <mat-icon>input</mat-icon> Join Trip
-    </button>
+    </button> -->
     <button mat-stroked-button color="success" class="me-2" [routerLink]="['/member/feedback/',tripId]">
       <mat-icon>feedback</mat-icon> Rate Trip
     </button>

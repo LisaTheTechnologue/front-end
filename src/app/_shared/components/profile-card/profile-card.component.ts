@@ -19,7 +19,6 @@ export class ProfileCardComponent {
   //   console.log(this.leader);
     this.publicService.getProfile(this.userId).subscribe(
       (profile) => {
-        console.log(profile);
         this.user = profile;
         if(profile.byteImg != undefined) {
           this.user.imageURL = 'data:image/jpeg;base64,' + profile.byteImg;

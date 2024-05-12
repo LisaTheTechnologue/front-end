@@ -31,6 +31,7 @@ export class TripDetailsComponent {
   ) {}
   ngOnInit() {
     this.getTrip();
+    this.getMembers();
     this.router.events.subscribe((event) => {
       this.isMemberLoggedIn = StorageService.isMemberLoggedIn();
     });
@@ -51,7 +52,8 @@ export class TripDetailsComponent {
         }
       },
     });
-
+  }
+  getMembers(){
     this.publicService.getAllJoinerByTripId(this.tripId).subscribe({
       next: (res) => {
         this.members = res;

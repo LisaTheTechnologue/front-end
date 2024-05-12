@@ -4,6 +4,8 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { AppSettings } from '../app-settings';
 import { StorageService } from './storage.service';
 import { PageNotFoundException } from '../exceptions/page-not-found.exception';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from '../components/error-dialog/error-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ import { PageNotFoundException } from '../exceptions/page-not-found.exception';
 export class MemberJoinerService {
 
   private API = AppSettings.MEMBER_API_ENDPOINT + 'joiner/';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private dialog: MatDialog) { }
 
   createJoin (tripDto:any): Observable<any>{
     return this.http.post(this.API+'create', tripDto, {
@@ -19,12 +21,12 @@ export class MemberJoinerService {
     }).pipe(catchError(this.handleError));
   }
 
-  // getAllByTripId(): Observable<any>{
-  //   const userId = StorageService.getUserId();
-  //   return this.http.get(this.API+`list/${userId}`, {
-  //     headers: this.createAuthorizationHeader(),
-  //   });
-  // }
+  checkJoiner(tripDto:any): Observable<any>{
+    const userId = StorageService.getUserId();
+    return this.http.post(this.API+'check',tripDto, {
+      headers: this.createAuthorizationHeader(),
+    }).pipe(catchError(this.handleError));
+  }
 
   getAllByTripId(tripId:number): Observable<any>{
     // const userId = StorageService.getUserId();
@@ -71,20 +73,21 @@ export class MemberJoinerService {
       return throwError(() => new PageNotFoundException());
     }
     // Handle other errors here
+    if (error.error) {
+      // Extract error details from the response body
+      const errorMessage = error.error.message || error.error;
+      const errorCode = error.error.body.status; // Assuming your error object has these properties
+      const errorDetail = error.error.body.detail;
+      // Display the error message to the user (e.g., using a toast notification)
+      console.error('Error:', errorMessage, 'Code:', errorCode, 'Details:', errorDetail); // Log for debugging
+      // You can display the error message in a user-friendly way
+      return throwError(errorDetail);
+    } else {
+      // Handle network or other non-2xx error situations
+      console.error('An unexpected error occurred!');
+    }
     return throwError(error);
   }
-  // getAllTripsByName(name: any): Observable<any>{
-  //   return this.http.get(this.API+`trips/search/${name}`, {
-  //     headers: this.createAuthorizationHeader(),
-  //   });
-  // }
-
-  // getAllJoinTrips(): Observable<any>{
-  //   const userId = StorageService.getUserId();
-  //   return this.http.get(this.API+`trips/join-trip-list/${userId}`, {
-  //     headers: this.createAuthorizationHeader(),
-  //   });
-  // }
 
   private createAuthorizationHeader(): HttpHeaders{
     return new HttpHeaders().set(

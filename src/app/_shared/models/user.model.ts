@@ -8,9 +8,9 @@ export class User {
   dob: Date;
   active?: boolean;
   rating: number;
-  accno: string;
-  accbank: string;
-  accname: string;
+  accNo: string;
+  accBank: string;
+  accName: string;
   img: any;
   imageURL: string;
   byteImg: any;
@@ -28,4 +28,9 @@ export class PublicProfile {
   imageURL: string;
   byteImg: any;
   noOfTrips:number;
+}
+export class PaymentProfile {
+  accNo: string;
+  accBank: string;
+  accName: string;
 }

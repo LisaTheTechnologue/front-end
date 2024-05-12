@@ -35,11 +35,7 @@ export class PaymentListComponent {
         // Handle successful response
         this.payments = res;
       },
-      error: (error) => {
-        if (error.status === 404) {
-          this.error = 'No data found.';
-        }
-      },
+
     });
   }
 

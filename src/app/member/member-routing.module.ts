@@ -19,7 +19,7 @@ const routes: Routes = [
 { path: 'my-trips/create', component: PostTripComponent },
 { path: 'joined-trips', component: JoinedTripsComponent },
 { path: 'joined-trips/:tripId', component: TripViewComponent },
-{ path: 'join-trip/:tripId', component: TripPaymentComponent },
+{ path: 'payment/:tripId', component: TripPaymentComponent },
 { path: 'profile', component: MemberProfileComponent },
 { path: 'feedback/:tripId', component: FeedbackCreateComponent },
 ];

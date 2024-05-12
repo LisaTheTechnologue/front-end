@@ -224,19 +224,28 @@ export class TripEditComponent {
     );
     this.memberTripService
       .updateTrip(this.tripId,formData)
-      .subscribe({ next: () => this.onSuccess(), error: () => this.onError() });
+      .subscribe({ next: () => this.onSuccess("Updatedd Trip successfully!"), error: (error) => this.onFailed(error) });
   }
   onCancel() {
     this.location.back();
   }
-  private onSuccess() {
-    this.snackBar.open('Course saved successfully!', '', { duration: 5000 });
+  private onSuccess(message: string) {
+    this.snackBar.open(
+      message,
+      '',
+      { duration: 5000 }
+    );
     this.onCancel();
   }
-
-  private onError() {
-    this.dialog.open(ErrorDialogComponent, {
-      data: 'Error saving course.',
-    });
+  private onFailed(message: string) {
+    this.snackBar.open(
+      message,
+      'ERROR',
+      {
+        duration: 100000,
+        panelClass: 'error-snackbar',
+      }
+    );
+    this.onCancel();
   }
 }

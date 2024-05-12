@@ -16,6 +16,7 @@ import { Location } from '@angular/common';
 import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
 import { PublicService } from 'src/app/_shared/services/public.service';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
+import { ConfirmService } from 'src/app/_shared/services/confirm.service';
 @Component({
   selector: 'app-post-trip',
   templateUrl: './post-trip.component.html',
@@ -38,6 +39,7 @@ export class PostTripComponent {
     private snackBar: MatSnackBar,
     private memberTripService: MemberTripService,
     private location: Location,
+    private confirmationService: ConfirmService,
     private dialog: MatDialog,
     private router: Router,
     private publicService: PublicService,
@@ -85,14 +87,9 @@ export class PostTripComponent {
         this.listOfCities = res;
       },
       error: (error) => {
-        if (error instanceof PageNotFoundException) {
-          this.router.navigate(['/page-not-found']);
-        } else {
-          // Handle other errors here
-          this.error = error.message;
-        }
-      }}
-    );
+        this.onFailed(error);
+      },
+    });
   }
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
@@ -133,54 +130,58 @@ export class PostTripComponent {
     console.log(this.endDate);
   }
 
-  submit(status: string): void {
-    // if (this.tripForm.valid) {
-    const formData: FormData = new FormData();
-    const userId = StorageService.getUserId();
-    formData.append('img', this.selectedFile);
-    formData.append('cityId', this.tripForm.get('cityId').value);
-    formData.append('title', this.tripForm.get('title').value);
-    formData.append('summary', this.tripForm.get('summary').value);
-    formData.append('highlights', this.tripForm.get('highlights').value);
-    formData.append('price', this.tripForm.get('price').value);
-    formData.append('groupSize', this.tripForm.get('groupSize').value);
-    formData.append('notes', this.tripForm.get('notes').value);
-    formData.append('startDate', this.startDate.toISOString());
-    formData.append('endDate', this.endDate.toISOString());
-    formData.append('tripStatus', status);
-    formData.append('userId', userId);
-    formData.append('minAge', this.tripForm.get('minAge').value);
-    formData.append('maxAge', this.tripForm.get('maxAge').value);
-    formData.append('tripLevel', this.tripForm.get('tripLevel').value);
-    formData.append(
-      'itemsJsonString',
-      JSON.stringify(this.tripForm.get('items').value)
-    );
-    this.memberTripService.createTrip(formData).subscribe({
-      next: (res) => {
-        this.onSuccess();
-      },
-      error: (error) => {
-        if (error instanceof PageNotFoundException) {
-          this.router.navigate(['/page-not-found']);
+  submit(): void {
+    this.confirmationService
+      .confirm('Are you sure you want to submit this?')
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          // if (this.tripForm.valid) {
+          const formData: FormData = new FormData();
+          const userId = StorageService.getUserId();
+          formData.append('img', this.selectedFile);
+          formData.append('cityId', this.tripForm.get('cityId').value);
+          formData.append('title', this.tripForm.get('title').value);
+          formData.append('summary', this.tripForm.get('summary').value);
+          formData.append('highlights', this.tripForm.get('highlights').value);
+          formData.append('price', this.tripForm.get('price').value);
+          formData.append('groupSize', this.tripForm.get('groupSize').value);
+          formData.append('notes', this.tripForm.get('notes').value);
+          formData.append('startDate', this.startDate.toISOString());
+          formData.append('endDate', this.endDate.toISOString());
+          formData.append('tripStatus', status);
+          formData.append('userId', userId);
+          formData.append('minAge', this.tripForm.get('minAge').value);
+          formData.append('maxAge', this.tripForm.get('maxAge').value);
+          formData.append('tripLevel', this.tripForm.get('tripLevel').value);
+          formData.append(
+            'itemsJsonString',
+            JSON.stringify(this.tripForm.get('items').value)
+          );
+          this.memberTripService.createTrip(formData).subscribe({
+            next: (res) => {
+              this.onSuccess('Created Trip Successfully');
+            },
+            error: (error) => {
+              this.onFailed(error);
+            },
+          });
         } else {
-          // Handle other errors here
-          this.error = error.message;
+          // Handle cancellation
         }
-      }}
-    );
+      });
   }
   onCancel() {
     this.location.back();
   }
-  private onSuccess() {
-    this.snackBar.open('Trip saved successfully!', '', { duration: 5000 });
+  private onSuccess(message: string) {
+    this.snackBar.open(message, '', { duration: 5000 });
     this.onCancel();
   }
-
-  // showError(error: any) {
-  //   this.dialog.open(ErrorDialogComponent, {
-  //     data: error,
-  //   });
-  // }
+  private onFailed(message: string) {
+    this.snackBar.open(message, 'ERROR', {
+      duration: 100000,
+      panelClass: 'error-snackbar',
+    });
+    this.onCancel();
+  }
 }

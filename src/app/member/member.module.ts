@@ -7,7 +7,7 @@ import { PostTripComponent } from './components/post-trip/post-trip.component';
 import { MyTripsComponent } from './components/my-trips/my-trips.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../MaterialModule';
-import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { JoinedTripsComponent } from './components/joined-trips/joined-trips.component';
 import { MemberProfileComponent } from './components/member-profile/member-profile.component';
 import { TripEditComponent } from './components/trip-edit/trip-edit.component';
@@ -41,6 +41,7 @@ import { FeedbackCreateComponent } from './components/feedback-create/feedback-c
     FormsModule,
     ReactiveFormsModule,
     NgbDatepickerModule,
+    NgbRatingModule,
     ComponentsModule
   ]
 })

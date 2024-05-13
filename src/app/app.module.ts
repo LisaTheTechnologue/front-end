@@ -24,6 +24,7 @@ import { TokenInterceptor } from './_shared/services/token.interceptor';
 import { ComponentsModule } from './_shared/components/components.module';
 import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
+import { TestComponent } from './test/test.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { ProfileComponent } from './profile/profile.component';
     LoginComponent,
     PageNotFoundComponent,
     FilterPipe,
-    ProfileComponent
+    ProfileComponent,
+    TestComponent
 
   ],
   imports: [

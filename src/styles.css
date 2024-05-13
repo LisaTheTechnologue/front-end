@@ -38,3 +38,17 @@ body {
   line-height: 20px; /* Adjust spacing for stars */
   width: 100px;
 }
+
+.preview-image {
+  max-width: 60vw;
+}
+
+.item-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}

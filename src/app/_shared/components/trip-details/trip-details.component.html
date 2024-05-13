@@ -48,13 +48,14 @@
       </table>
     </div>
   </div>
+
   <div class="row" *ngIf="members?.length > 0">
     <div class="col-3 p-3">
       <div class="h5">Your buddies:</div>
     </div>
-    <div class="col p-3">
-      <ng-template fxLayout="row" fxWrap="wrap" ngFor let-member [ngForOf]="members">
-        <mat-card style="margin:10px" [routerLink]="['/profile/', member.userId]" >
+    <div class="item-container col p-3">
+      <ng-template ngFor let-member [ngForOf]="members">
+        <mat-card [routerLink]="['/profile/', member.userId]" style="width:40%; margin: 10px;">
           <app-profile-card [userId]="member.userId"></app-profile-card>
         </mat-card>
       </ng-template>
@@ -62,5 +63,21 @@
   </div>
   <div class="row" *ngIf="members?.length === 0">
     <p>Be the first one to join this trip!</p>
+  </div>
+
+  <div class="row" *ngIf="feedbacks?.length > 0">
+    <div class="col-3 p-3">
+      <div class="h5">Comments:</div>
+    </div>
+    <div class="item-container col p-3">
+      <ng-template ngFor let-feedback [ngForOf]="feedbacks">
+        <mat-card style="width:40%; margin: 10px;">
+          <app-feedback-card [feedback]="feedback"></app-feedback-card>
+          </mat-card>
+      </ng-template>
+    </div>
+  </div>
+  <div class="row" *ngIf="feedbacks?.length === 0">
+    <p>Be the first one to rate this trip!</p>
   </div>
 </div>

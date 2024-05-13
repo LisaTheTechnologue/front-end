@@ -9,3 +9,6 @@ nav-item a {
 }
 
 
+.preview-image {
+  max-width: 60vw;
+}

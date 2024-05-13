@@ -1,0 +1,55 @@
+<div class="container my-5">
+  <mat-toolbar color="primary">
+    <button mat-icon-button>Group Chat</button>
+    <mat-toolbar-row></mat-toolbar-row>
+    <mat-toolbar-row></mat-toolbar-row>
+  </mat-toolbar>
+  <mat-card>
+    <mat-card-content>
+      <div *ngIf="group">
+        <ul>
+          <li *ngFor="let message of group.messages">
+            <div>
+              - {{ message.content }} by {{ message.user.username }}
+            </div>
+            <img [src]="message.user.imageURL" alt="User Avatar">
+          </li>
+        </ul>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <mat-form-field>
+        <mat-label>Textarea</mat-label>
+        <textarea matInput></textarea>
+      </mat-form-field>
+      <button mat-button (click)="postComment(chat)">Send</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<!-- <div class="m-5">
+
+  <h2>Group Chat</h2>
+
+  <div *ngIf="group">
+    <ul>
+      <li *ngFor="let message of group.messages">
+        <div>
+          - {{ message.content }} by {{ message.user.username }}
+        </div>
+        <img [src]="message.user.imageURL" alt="User Avatar">
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="error">{{ error }}</div>
+  <div class="m-5">
+    <form [formGroup]="chatForm">
+      <textarea class="form-control" formControlName="chat.content" placeholder="Write something...">
+      </textarea>
+      <div class="btn-group">
+        <button class="mt-1 btn btn-outline-primary btn-xs" (click)="postComment(chat)">
+          Send
+        </button>
+      </div>
+    </form>
+  </div>
+</div> -->

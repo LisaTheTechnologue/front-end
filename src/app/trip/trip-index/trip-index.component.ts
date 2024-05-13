@@ -12,7 +12,11 @@ export class TripIndexComponent {
   searchText: string = '';
   // searchTripForm!: FormGroup;
   filteredData: any[] = [];
-  tripLevels: Set<string> = new Set<string>(["Easy", "Moderate","Intermediate"]);
+  tripLevels: Set<string> = new Set<string>([
+    'Easy',
+    'Moderate',
+    'Intermediate',
+  ]);
   selectedTripLevels: string[] = [];
   // startDate: any = "";
   // endDate: any = "";
@@ -33,20 +37,25 @@ export class TripIndexComponent {
     this.filteredData = this.trips;
   }
 
-
-filterData() {
-    this.filteredData = this.trips.filter(item => {
-      const searchTextMatch = item.title.toLowerCase().includes(this.searchText.toLowerCase());
+  filterData() {
+    this.filteredData = this.trips.filter((item) => {
+      const searchTextMatch = item.title
+        .toLowerCase()
+        .includes(this.searchText.toLowerCase());
       let tripLevelMatch = true; // Assume all categories are initially matched
 
       // Filter by checkboxes (if any are selected)
       if (this.selectedTripLevels.length > 0) {
-        tripLevelMatch = this.selectedTripLevels.some(tripLevel => item.tripLevel === tripLevel);
+        tripLevelMatch = this.selectedTripLevels.some(
+          (tripLevel) => item.tripLevel === tripLevel
+        );
       }
 
       // Filter by date range (optional)
-      const dateMatch = !this.startDate || !this.endDate ||
-                       (item.startDate >= this.startDate && item.startDate <= this.endDate);
+      const dateMatch =
+        !this.startDate ||
+        !this.endDate ||
+        (item.startDate >= this.startDate && item.startDate <= this.endDate);
 
       // Filter by price (optional)
       // this.minPrice = value;
@@ -70,7 +79,7 @@ filterData() {
 
   extractTripLevels() {
     this.tripLevels.clear();
-    this.trips.forEach(item => this.tripLevels.add(item.tripLevel));
+    this.trips.forEach((item) => this.tripLevels.add(item.tripLevel));
   }
 
   onTripLevelChange(tripLevel: string, event: Event) {

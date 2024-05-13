@@ -9,18 +9,20 @@ import { StorageService } from '../../services/storage.service';
 @Component({
   selector: 'app-trip-details',
   templateUrl: './trip-details.component.html',
-  styleUrls: ['./trip-details.component.css']
+  styleUrls: ['./trip-details.component.css'],
 })
 export class TripDetailsComponent {
-  @Input({required:true}) tripId: number
+  @Input({ required: true }) tripId: number;
 
   image: any;
   // tripId: number = this.activatedRoute.snapshot.params['tripId'];
 
   trip!: Trip;
   members!: TripMember[];
+  feedbacks: any[];
   isMemberLoggedIn: boolean;
-  @Output() isJoined= new EventEmitter<boolean>();
+  @Output() isJoined = new EventEmitter<boolean>();
+  @Output() isEnded = new EventEmitter<boolean>();
   error: any;
 
   // leaderId: string;
@@ -35,6 +37,7 @@ export class TripDetailsComponent {
     this.router.events.subscribe((event) => {
       this.isMemberLoggedIn = StorageService.isMemberLoggedIn();
     });
+    // this.getFeedbacks();
   }
   getTrip() {
     this.publicService.getByTripId(this.tripId).subscribe({
@@ -42,6 +45,14 @@ export class TripDetailsComponent {
         this.trip = res;
         this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
         this.trip.tripDays = res.tripDays;
+        if (this.trip.tripStatus == 'END') {
+          this.publicService
+            .getFeedbacksByTripId(this.tripId)
+            .subscribe((res) => (this.feedbacks = res));
+          this.isEnded.emit(true);
+        } else {
+          this.isEnded.emit(false);
+        }
       },
       error: (error) => {
         if (error instanceof PageNotFoundException) {
@@ -53,7 +64,7 @@ export class TripDetailsComponent {
       },
     });
   }
-  getMembers(){
+  getMembers() {
     this.publicService.getAllJoinerByTripId(this.tripId).subscribe({
       next: (res) => {
         this.members = res;
@@ -83,4 +94,14 @@ export class TripDetailsComponent {
       },
     });
   }
+  // getFeedbacks() {
+  //   if (this.trip.tripStatus == 'END') {
+  //     this.publicService
+  //       .getFeedbacksByTripId(this.tripId)
+  //       .subscribe((res) => (this.feedbacks = res));
+  //     this.isEnded.emit(true);
+  //   } else {
+  //     this.isEnded.emit(false);
+  //   }
+  // }
 }

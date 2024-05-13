@@ -1,0 +1,56 @@
+<div class="container my-5">
+  <div *ngIf="trip">
+    <p class="h3">Payment</p>
+
+    <div class="row p-3">
+      <div class="col-6 justify-content-center">
+        <p class="h5">Trip Info</p>
+        <mat-card class="m-4" style="width:50%">
+          <app-trip-card [trip]="trip"></app-trip-card>
+        </mat-card>
+
+      </div>
+      <div class="col-6 justify-content-center">
+        <p class="h5">Leader Info</p>
+        <mat-card class="m-4" style="width:50%">
+          <app-profile-card [userId]="trip.leaderId"></app-profile-card>
+        </mat-card>
+
+        <mat-card class="m-4" style="width:50%">
+          <mat-card-content>
+            <p>Bank: {{ profile.accBank }}</p>
+            <p>Account No.: {{ profile.accNo }}</p>
+            <p>Account Name: {{ profile.accName }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <div class="row p-3">
+      <p>After transfer money, please submit this below form. You should expect a response from leader via email in the next 3 days.</p>
+    </div>
+
+    <form [formGroup]="paymentForm">
+      <div class="mb-3">
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Evidence</label>
+          <input class="form-control" type="file" id="formFile" required #fileInput type="file"
+            (change)="onFileSelected($event)" accept="image/png, image/jpeg">
+        </div>
+      </div>
+      <div *ngIf="selectedFile" class="image-preview justify-content-center">
+        <div >
+          <img [src]="imagePreview" alt="Selected Image" class="preview-image">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="notesFld">Notes</label>
+        <textarea formControlName="notes" class="form-control" id="notesFld"></textarea>
+      </div>
+      <div class="mb-3">
+        <button mat-raised-button color="primary" type="submit" (click)="submit()">Submit</button>
+        <button mat-raised-button color="danger" type="button" (click)="onCancel()">Cancel</button>
+      </div>
+    </form>
+  </div>

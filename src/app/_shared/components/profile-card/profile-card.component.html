@@ -1,12 +1,13 @@
-
+<div *ngIf="user">
   <mat-card-header>
     <mat-card-title-group>
       <mat-card-title>{{ user.fullName }} </mat-card-title>
-      <mat-card-subtitle><ngb-rating [(rate)]="rating" [readonly]="true" [max]="5" class="custom-rating"></ngb-rating></mat-card-subtitle>
-      <div *ngIf="user.imageURL" >
+      <mat-card-subtitle><ngb-rating [(rate)]="rating" [readonly]="true" [max]="5"
+          class="custom-rating"></ngb-rating></mat-card-subtitle>
+      <div *ngIf="user.imageURL">
         <img mat-card-sm-image [src]="user.imageURL" alt="avatar">
       </div>
-      <div *ngIf="!user.imageURL" >
+      <div *ngIf="!user.imageURL">
         <img mat-card-sm-image src="http://www.gravatar.com/avatar/?d=mp" alt="avatar">
       </div>
     </mat-card-title-group>
@@ -14,44 +15,4 @@
   <mat-card-actions>
     <button mat-button>View Profile</button>
   </mat-card-actions>
-
-
-
-      <!-- <div *ngIf="user.imageURL">
-        <img [src]="user.imageURL" class="img-fluid rounded-start" alt="avatar">
-      </div>
-      <div *ngIf="!user.imageURL">
-        <img src="http://www.gravatar.com/avatar/?d=mp" class="img-fluid rounded-start" alt="avatar">
-      </div>
-    </div>
-    <div class="col">
-      <div class="leader-card-body">
-        <p class="leader-card-fullname">{{ user.fullName }} </p>
-        <p><ngb-rating [(rate)]="rating" [readonly]="true" [max]="5" class="custom-rating"></ngb-rating></p>
-         <div>
-          <button type="button" class="btn btn-primary btn-small" [routerLink]="['/profile/',user.id]"
-            style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .5rem;">
-            View Profile
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-  <!-- <div class="row">
-    <div *ngIf="user.imageURL">
-      <img [src]="user.imageURL" class="img-fluid rounded-start" alt="avatar">
-    </div>
-    <div *ngIf="!user.imageURL">
-      <img src="http://www.gravatar.com/avatar/?d=mp" class="img-fluid rounded-start" alt="avatar">
-    </div>
-  </div>
-
-    <div class="card-body">
-      <div class="h5 card-title">{{ user.fullName }}</div>
-      <div class="card-text"><ngb-rating [(rate)]="user.rating" [readonly]="true" [max]="5"
-          class="custom-rating"></ngb-rating></div>
-      <div class="card-text">Has Lead {{ user.noOfTrips }}</div>
-    </div> -->
-
+</div>

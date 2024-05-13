@@ -15,11 +15,11 @@ export class MemberJoinerService {
   private API = AppSettings.MEMBER_API_ENDPOINT + 'joiner/';
   constructor(private http: HttpClient, private dialog: MatDialog) { }
 
-  createJoin (tripDto:any): Observable<any>{
-    return this.http.post(this.API+'create', tripDto, {
-      headers: this.createAuthorizationHeader(),
-    }).pipe(catchError(this.handleError));
-  }
+  // createJoin (tripDto:any): Observable<any>{
+  //   return this.http.post(this.API+'create', tripDto, {
+  //     headers: this.createAuthorizationHeader(),
+  //   }).pipe(catchError(this.handleError));
+  // }
 
   checkJoiner(tripDto:any): Observable<any>{
     const userId = StorageService.getUserId();
@@ -30,32 +30,33 @@ export class MemberJoinerService {
 
   getAllByTripId(tripId:number): Observable<any>{
     // const userId = StorageService.getUserId();
-    return this.http.get(this.API+`list?tripId=${tripId}`, {
+    return this.http.get(this.API+`joiner-list?tripId=${tripId}`, {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));
   }
 
-  getAllPendingByLeaderId(leaderId:number): Observable<any>{
-    // const userId = StorageService.getUserId();
-    return this.http.get(this.API+`list?leaderId=${leaderId}`, {
+  getAllPendingByLeaderId(): Observable<any>{
+    const leaderId = StorageService.getUserId();
+    return this.http.get(this.API+`request-list?leaderId=${leaderId}`, {
       headers: this.createAuthorizationHeader(),
-    }).pipe(catchError(this.handleError));
+    })
+    // .pipe(catchError(this.handleError));
   }
 
   reject (joinerId:number): Observable<any>{
-    return this.http.put(this.API+`update/${joinerId}`, {
+    return this.http.put(this.API+`update/${joinerId}`,'reject', {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));
   }
 
   approve (joinerId:number): Observable<any>{
-    return this.http.put(this.API+`approve/${joinerId}`, {
+    return this.http.put(this.API+`update/${joinerId}`,'approve', {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));
   }
 
   cancel (joinerId:number): Observable<any>{
-    return this.http.put(this.API+`cancel/${joinerId}`, {
+    return this.http.delete(this.API+`cancel/${joinerId}`, {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));
   }

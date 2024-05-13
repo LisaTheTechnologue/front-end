@@ -10,27 +10,27 @@ import { StorageService } from './storage.service';
   providedIn: 'root'
 })
 export class MemberPaymentService {
-  private API = AppSettings.MEMBER_API_ENDPOINT + 'payment/';
+  private API = AppSettings.MEMBER_API_ENDPOINT + 'payment';
   constructor(public http: HttpClient, public router: Router) {}
 
-  public getByTripId(tripId: number): Observable<any> {
-    return this.http
-      .get<any>(this.API+'list?tripId=' + tripId, {
-        headers: this.createAuthorizationHeader(),
-      })
-      .pipe(catchError(this.handleError));
-  }
+  // public getByTripId(tripId: number): Observable<any> {
+  //   return this.http
+  //     .get<any>(this.API+'/list?tripId=' + tripId, {
+  //       headers: this.createAuthorizationHeader(),
+  //     })
+  //     .pipe(catchError(this.handleError));
+  // }
 
   public getById(paymentId: number): Observable<any> {
     return this.http
-      .get<any>(this.API + paymentId, {
+      .get<any>(this.API+'?paymentId=' + paymentId, {
         headers: this.createAuthorizationHeader(),
       })
       .pipe(catchError(this.handleError));
   }
 
   public create(payment: any): Observable<any> {
-    return this.http.post<any>(this.API, payment, {
+    return this.http.post<any>(this.API+'/', payment, {
       headers: this.createAuthorizationHeader(),
     })
     .pipe(catchError(this.handleError));

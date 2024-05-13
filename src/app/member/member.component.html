@@ -12,21 +12,25 @@
           data-bs-toggle="list" href="#mytrips" role="tab">
           Your Created Trips</a>
             <a class="list-group-item list-group-item-action"
-            data-bs-toggle="list" href="#payments" role="tab">Member Payment</a>
+            data-bs-toggle="list" href="#joins" role="tab">Join Requests</a>
           <a class="list-group-item list-group-item-action"
-          data-bs-toggle="list" href="#profile" role="tab">Your Profile</a>
+          data-bs-toggle="list" href="#profile" role="tab">Edit Profile</a>
         </div>
       </div>
       <div class="col-md-9">
         <!-- Tab panes -->
         <div class="tab-content">
-          <div class="tab-pane active" id="joinedtrips" role="tabpanel"><app-joined-trips></app-joined-trips> </div>
-          <div class="tab-pane" id="mytrips" role="tabpanel"><app-my-trips></app-my-trips></div>
-          <div class="tab-pane" id="payments" role="tabpanel"> Payment
-            <!-- <app-payment-list></app-payment-list> -->
+          <div class="tab-pane active" id="joinedtrips" role="tabpanel">
+            <app-trip-joined-list></app-trip-joined-list>
           </div>
-          <div class="tab-pane" id="profile" role="tabpanel"> Profile
-            <!-- <app-member-profile></app-member-profile> -->
+          <div class="tab-pane" id="mytrips" role="tabpanel">
+            <app-trip-created-list></app-trip-created-list>
+          </div>
+          <div class="tab-pane" id="joins" role="tabpanel">
+            <app-join-request-list></app-join-request-list>
+          </div>
+          <div class="tab-pane" id="profile" role="tabpanel">
+            <app-profile-edit></app-profile-edit>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@
     <div class="mb-3">
       <div class="mb-3">
         <label for="formFile" class="form-label">Thumbnail</label>
-        <input class="form-control" type="file" id="formFile" required #fileInput type="file"
+        <input class="form-control" type="file" id="formFile" required #fileInput type="file" formControlName="img"
           (change)="onFileSelected($event)" accept="image/png, image/jpeg">
       </div>
 
@@ -20,7 +20,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Title</mat-label>
       <input matInput type="text" formControlName="title">
-      <mat-error *ngIf="tripForm.value.title">This input is required!</mat-error>
+      <mat-error *ngIf="tripForm.get('title')?.invalid">{{ getTripErrorMessage('title') }}</mat-error>
     </mat-form-field>
 
 
@@ -31,7 +31,7 @@
           <mat-select formControlName="cityId">
             <mat-option *ngFor="let city of listOfCities" [value]="city.id">{{city.name}}</mat-option>
           </mat-select>
-          <mat-error *ngIf="tripForm.value.cityId">This input is required!</mat-error>
+          <!-- <mat-error *ngIf="tripForm.get('cityId')?.invalid">{{ getTripErrorMessage('cityId') }}</mat-error> -->
         </mat-form-field>
       </div>
       <div class="col-md-6"><mat-form-field appearance="outline">
@@ -41,7 +41,7 @@
             <mat-option value="Moderate">Moderate</mat-option>
             <mat-option value="Intermediate">Intermediate</mat-option>
           </mat-select>
-          <mat-error *ngIf="tripForm.value.tripLevel">This input is required!</mat-error>
+          <!-- <mat-error *ngIf="tripForm.get('tripLevel')?.invalid">{{ getTripErrorMessage('trip level') }}</mat-error> -->
         </mat-form-field>
       </div>
     </div>
@@ -49,13 +49,13 @@
     <mat-form-field appearance="outline">
       <mat-label>Summary</mat-label>
       <input matInput type="text" formControlName="summary">
-      <mat-error *ngIf="tripForm.value.summary">This input is required!</mat-error>
+      <mat-error *ngIf="tripForm.get('summary')?.invalid">{{ getTripErrorMessage('summary') }}</mat-error>
     </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Highlights</mat-label>
         <textarea matInput type="text" formControlName="highlights"></textarea>
-        <mat-error *ngIf="tripForm.value.highlights">This input is required!</mat-error>
+        <mat-error *ngIf="tripForm.get('highlights')?.invalid">{{ getTripErrorMessage('highlights') }}</mat-error>
       </mat-form-field>
 
     <div class="row">
@@ -65,7 +65,7 @@
           <input matInput type="number" class="example-right-align" placeholder="0" formControlName="price"
             id="priceFld" pattern="[0-9]*">
           <span matTextPrefix>$&nbsp;</span>
-          <mat-error *ngIf="tripForm.value.price">This input is required!</mat-error>
+          <mat-error *ngIf="tripForm.get('price')?.invalid">{{ getTripErrorMessage('price') }}</mat-error>
         </mat-form-field>
       </div>
       <div class="col-md-6">
@@ -73,7 +73,7 @@
           <mat-label>Group Size</mat-label>
           <input matInput type="number" class="example-right-align" placeholder="0" formControlName="groupSize"
             id="priceFld">
-          <mat-error *ngIf="tripForm.value.groupSize">This input is required!</mat-error>
+          <mat-error *ngIf="tripForm.get('groupSize')?.invalid">{{ getTripErrorMessage('groupSize') }}</mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -83,14 +83,14 @@
         <mat-form-field appearance="outline">
           <mat-label>From Age</mat-label>
           <input value="20" matInput formControlName="minAge" type="number" min="10" max="80">
-          <mat-error *ngIf="tripForm.value.minAge">This input is required!</mat-error>
+          <mat-error *ngIf="tripForm.get('minAge')?.invalid">{{ getTripErrorMessage('minAge') }}</mat-error>
         </mat-form-field>
       </div>
       <div class="col-md-3">
         <mat-form-field appearance="outline">
           <mat-label>To Age</mat-label>
           <input value="60" matInput formControlName="maxAge" type="number" min="10" max="80">
-          <mat-error *ngIf="tripForm.value.maxAge">This input is required!</mat-error>
+          <mat-error *ngIf="tripForm.get('maxAge')?.invalid">{{ getTripErrorMessage('maxAge') }}</mat-error>
         </mat-form-field>
       </div>
 
@@ -104,7 +104,7 @@
           <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-date-range-picker #picker></mat-date-range-picker>
-          <mat-error *ngIf="tripForm.value.startDate && tripForm.value.endDate">This input is required!</mat-error>
+          <!-- <mat-error *ngIf="tripForm.get('startDate')?.invalid || tripForm.get('endDate')?.invalid">{{ getTripErrorMessage('date') }}</mat-error> -->
         </mat-form-field>
       </div>
     </div>
@@ -112,7 +112,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Notes</mat-label>
         <textarea matInput type="text" formControlName="notes"></textarea>
-        <mat-error *ngIf="tripForm.value.notes">This input is required!</mat-error>
+        <mat-error *ngIf="tripForm.get('notes')?.invalid">{{ getTripErrorMessage('notes') }}</mat-error>
       </mat-form-field>
 
 
@@ -120,8 +120,8 @@
       <mat-toolbar class="iternarary-toolbar mb-3">
         <span>Itinerary</span>
         <div style="right: 0;">
-          <button mat-icon-button color="accent" (click)="addItems()">
-            <mat-icon aria-label="Add a New Lesson">add</mat-icon>
+          <button mat-icon-button color="accent" (click)="addItem()">
+            <mat-icon aria-label="Add a New Day">add</mat-icon>
           </button>
         </div>
       </mat-toolbar>
@@ -129,14 +129,14 @@
       <div class="invalid-feedback m-1" *ngIf="tripForm.get('items')?.hasError('required')">
         At least one day is added.
       </div>
-      <div formArrayName="items" *ngFor="let itemForm of items.controls; let i = index" class="m-2">
+      <div formArrayName="items" *ngFor="let itemForm of getItemFormArray(); let i = index" class="m-2">
         <div class="row mb-2" [formGroupName]="i">
           <div class="col-1">
             <mat-form-field appearance="outline">
               <mat-label>Day</mat-label>
               <input matInput formControlName="dayNo" type="number" min="1" />
-              <mat-error *ngIf="getItemFormArray()[i].get('dayNo')?.invalid">This input is required!
-                <!-- {{ getLessonErrorMessage('name', i) }} -->
+              <mat-error *ngIf="getItemFormArray()[i].get('dayNo')?.invalid">
+                {{ getDayErrorMessage('dayNo', i) }}
               </mat-error>
             </mat-form-field>
           </div>
@@ -144,8 +144,8 @@
             <mat-form-field appearance="outline">
               <mat-label>Title</mat-label>
               <input matInput formControlName="title" />
-              <mat-error *ngIf="getItemFormArray()[i].get('title')?.invalid">This input is required!
-                <!-- {{ getLessonErrorMessage('name', i) }} -->
+              <mat-error *ngIf="getItemFormArray()[i].get('title')?.invalid">
+                {{ getDayErrorMessage('title', i) }}
               </mat-error>
             </mat-form-field>
           </div>
@@ -153,8 +153,8 @@
             <mat-form-field appearance="outline">
               <mat-label>Description</mat-label>
               <textarea matInput formControlName="description"></textarea>
-              <mat-error *ngIf="getItemFormArray()[i].get('description')?.invalid">This input is required!
-                <!-- {{ getLessonErrorMessage('name', i) }} -->
+              <mat-error *ngIf="getItemFormArray()[i].get('description')?.invalid">
+                {{ getDayErrorMessage('description', i) }}
               </mat-error>
             </mat-form-field>
           </div>

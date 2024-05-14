@@ -17,6 +17,8 @@ import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found
 import { PublicService } from 'src/app/_shared/services/public.service';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 import { ConfirmService } from 'src/app/_shared/services/confirm.service';
+import { FormUtilsService } from 'src/app/_shared/services/form-utils.service';
+import { TripDay } from 'src/app/_shared/models/trip.model';
 
 @Component({
   selector: 'app-trip-create',
@@ -45,8 +47,8 @@ export class TripCreateComponent {
     private dialog: MatDialog,
     private router: Router,
     private publicService: PublicService,
-    private datePipe: DatePipe
-    // private config: NgbDatepickerConfig
+    private datePipe: DatePipe,
+    private formUtils: FormUtilsService
   ) {
     this.minDate = new Date();
     // const current = new Date();
@@ -60,6 +62,7 @@ export class TripCreateComponent {
   }
   ngOnInit(): void {
     this.tripForm = this.fb.group({
+      img: [null, [Validators.required]],
       cityId: [null, [Validators.required]],
       title: [null, [Validators.required]],
       summary: [null, [Validators.required]],
@@ -74,14 +77,14 @@ export class TripCreateComponent {
       endDate: [null, [Validators.required]],
       tripStatus: [null, [Validators.required]],
       tripLevel: [null, [Validators.required]],
-      items: this.fb.array([]),
+      items: this.fb.array([], [Validators.required]),
     });
 
     this.getAllCities();
   }
-  get items() {
-    return this.tripForm.controls['items'] as FormArray;
-  }
+  // get items() {
+  //   return this.tripForm.controls['items'] as FormArray;
+  // }
   // getToday(): string {
   //   return new Date().toISOString().split('T')[0];
   // }
@@ -106,22 +109,33 @@ export class TripCreateComponent {
     };
     reader.readAsDataURL(this.selectedFile);
   }
-
-  addItems() {
-    const itemForm = this.fb.group({
-      // _id: [lesson._id],
-      dayNo: [null, [Validators.required]],
-      title: [null, [Validators.required]],
-      description: [null, [Validators.required]],
-    });
-    this.items.push(itemForm);
+  addItem(): void {
+    const items = this.tripForm.get('items') as UntypedFormArray;
+    items.push(this.createItem());
   }
-
-  getItemFormArray() {
-    return (<UntypedFormArray>this.tripForm.get('items')).controls;
+  private createItem(lesson: TripDay = { id: '', dayNo: 0, title: '', description:'' }) {
+    return this.fb.group({
+      id: [null],
+      dayNo: [
+        null,
+        [Validators.required]
+      ],
+      title: [
+        null,
+        [Validators.required]
+      ],
+      description: [
+        null,
+        [Validators.required]
+      ]
+    });
   }
   removeItem(index: number) {
-    this.items.removeAt(index);
+    const items = this.tripForm.get('items') as UntypedFormArray;
+    items.removeAt(index);
+  }
+  getItemFormArray() {
+    return (<UntypedFormArray>this.tripForm.get('items')).controls;
   }
   ageRange = { first: "20", last: "60" };
 
@@ -129,17 +143,21 @@ export class TripCreateComponent {
     this.ageRange = { first: event.value, last: event.value };
   }
 
-  // onSelectstartDate(evt: any) {
-  //   this.startDate = new Date(evt.year, evt.month - 1, evt.day);
-  //   console.log(this.startDate);
-  // }
+  getTripErrorMessage(fieldName: string): string {
+    return this.formUtils.getFieldErrorMessage(this.tripForm, fieldName);
+  }
 
-  // onSelectendDate(evt: any) {
-  //   this.endDate = new Date(evt.year, evt.month - 1, evt.day);
-  //   console.log(this.endDate);
-  // }
+  getDayErrorMessage(fieldName: string, index: number) {
+    return this.formUtils.getFieldFormArrayErrorMessage(
+      this.tripForm,
+      'items',
+      fieldName,
+      index
+    );
+  }
 
   submit(): void {
+    // if (this.tripForm.valid) {
     this.confirmationService
       .confirm('Are you sure you want to submit this?')
       .subscribe((confirmed) => {
@@ -151,7 +169,7 @@ export class TripCreateComponent {
           const formattedEndDate = this.datePipe.transform(this.endDate, 'yyyy-MM-dd');
           const formData: FormData = new FormData();
           const userId = StorageService.getUserId();
-          formData.append('img', this.selectedFile);
+          formData.append('img', this.tripForm.get('img').value);// this.selectedFile);
           formData.append('cityId', this.tripForm.get('cityId').value);
           formData.append('title', this.tripForm.get('title').value);
           formData.append('summary', this.tripForm.get('summary').value);
@@ -166,10 +184,8 @@ export class TripCreateComponent {
           formData.append('minAge', this.tripForm.get('minAge').value);
           formData.append('maxAge', this.tripForm.get('maxAge').value);
           formData.append('tripLevel', this.tripForm.get('tripLevel').value);
-          formData.append(
-            'itemsJsonString',
-            JSON.stringify(this.tripForm.get('items').value)
-          );
+          formData.append('tripDays', this.tripForm.get('items').value);
+
           this.memberTripService.createTrip(formData).subscribe({
             next: (res) => {
               this.onSuccess('Created Trip Successfully');
@@ -182,8 +198,10 @@ export class TripCreateComponent {
           // Handle cancellation
         }
       });
+    // } else {
+    //   this.formUtils.validateAllFormFields(this.tripForm);
+    // }
   }
-
   private onSuccess(message: string) {
     this.snackBar.open(message, 'OK', { duration: 5000 });
   }

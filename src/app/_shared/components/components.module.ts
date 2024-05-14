@@ -10,6 +10,7 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { TripDetailsComponent } from './trip-details/trip-details.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormImgComponent } from './form-img/form-img.component';
 
 
 
@@ -20,7 +21,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     TripCardComponent,
     ConfirmDialogComponent,
     ErrorDialogComponent,
-    TripDetailsComponent
+    TripDetailsComponent,
+    FormImgComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     TripCardComponent,
     ConfirmDialogComponent,
     ErrorDialogComponent,
-    TripDetailsComponent
+    TripDetailsComponent,
+    FormImgComponent
   ]
 })
 export class ComponentsModule { }

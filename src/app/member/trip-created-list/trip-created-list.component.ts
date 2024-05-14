@@ -10,7 +10,7 @@ import { MemberTripService } from 'src/app/_shared/services/member-trip.service'
 @Component({
   selector: 'app-trip-created-list',
   templateUrl: './trip-created-list.component.html',
-  styleUrls: ['./trip-created-list.component.css']
+  styleUrls: ['./trip-created-list.component.css'],
 })
 export class TripCreatedListComponent {
   error: any;
@@ -22,7 +22,8 @@ export class TripCreatedListComponent {
   @ViewChild(MatPaginator) private paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private memberTripService: MemberTripService,
+  constructor(
+    private memberTripService: MemberTripService,
     private snackBar: MatSnackBar
   ) {}
 
@@ -32,11 +33,7 @@ export class TripCreatedListComponent {
         this.trips.data = res;
       },
       error: (error) => {
-        if (error.status === 404) {
-          this.error = 'No trip found.';
-        } else {
-          this.error = 'Error! Cannot load list.';
-        }
+        this.error = 'Error! Cannot load list.';
         this.onFailed(this.error);
       },
     });
@@ -56,51 +53,12 @@ export class TripCreatedListComponent {
     }
   }
   private onFailed(message: string) {
-    this.snackBar.open(
-      message,
-      'ERROR',
-      {
-        duration: 100000,
-        panelClass: 'error-snackbar',
-      }
-    );
+    this.snackBar.open(message, 'ERROR', {
+      duration: 100000,
+      panelClass: 'error-snackbar',
+    });
   }
-  // trips: any[] = [];
-  // // searchTripForm!:FormGroup;
-  // searchText: string = '';
-  // error: any;
-  // constructor(
-  //   private memberTripService: MemberTripService,
-  //   private router: Router,
-  //   private fb: FormBuilder,
-  //   private snackBar: MatSnackBar
-  // ) {}
 
-  // ngOnInit() {
-  //   this.getAllTrips();
-  //   // this.searchTripForm = this.fb.group({
-  //   //   title: [null, [Validators.required]]
-  //   // })
-  // }
-
-  // getAllTrips() {
-  //   this.trips = [];
-  //   this.memberTripService.getAllTrips().subscribe({
-  //     next: (res) => {
-  //       res.forEach((element) => {
-  //         element.imageURL = 'data:image/jpeg;base64,' + element.byteImg;
-  //         this.trips.push(element);
-  //       });
-  //     },
-  //     error: (error) => {
-  //       if (error.status === 404) {
-  //         this.error = "No trips found.";
-  //       }
-  //     },
-  //   });
-  // }
-
-  // onSearch() {}
   deleteTrip(id: number) {
     // this.memberTripService.delete(id).subscribe((res) => {
     //   this.trips = this.trips.filter((item) => item.id !== id);

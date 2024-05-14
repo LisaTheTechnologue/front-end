@@ -4,6 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { AppSettings } from '../app-settings';
 import { StorageService } from './storage.service';
 import { PageNotFoundException } from '../exceptions/page-not-found.exception';
+import { Trip } from '../models/trip.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,21 @@ export class MemberTripService {
   private API = AppSettings.MEMBER_API_ENDPOINT + 'trips/';
   constructor(private http: HttpClient) { }
 
-  createTrip (tripDto:any): Observable<any>{
-    return this.http.post(this.API+'create', tripDto, {
+  uploadImage(tripId:number, formData:any){
+    return this.http.put<any>(this.API+`upload-image/${tripId}`, formData, {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));
   }
+  createTrip(record: Partial<Trip>) {
+    return this.http.post<Trip>(this.API+'create', record, {
+      headers: this.createAuthorizationHeader(),
+    }).pipe(catchError(this.handleError));
+  }
+  // createTrip (tripDto:any): Observable<any>{
+  //   return this.http.post(this.API+'create', tripDto, {
+  //     headers: this.createAuthorizationHeader(),
+  //   }).pipe(catchError(this.handleError));
+  // }
 
   getAllTrips(): Observable<any>{
     const userId = StorageService.getUserId();
@@ -59,6 +70,7 @@ export class MemberTripService {
   }
 
   private handleError(error: HttpErrorResponse) {
+    console.log(error);
     if (error.status === 404) {
       // Redirect to page not found component
       return throwError(() => new PageNotFoundException());
@@ -67,12 +79,11 @@ export class MemberTripService {
     if (error.error) {
       // Extract error details from the response body
       const errorMessage = error.error.message || error.error;
-      const errorCode = error.error.body.status; // Assuming your error object has these properties
-      const errorDetail = error.error.body.detail;
+
       // Display the error message to the user (e.g., using a toast notification)
-      console.error('Error:', errorMessage, 'Code:', errorCode, 'Details:', errorDetail); // Log for debugging
+      console.error('Error:', errorMessage); // Log for debugging
       // You can display the error message in a user-friendly way
-      return throwError(errorDetail);
+      return throwError(errorMessage);
     } else {
       // Handle network or other non-2xx error situations
       console.error('An unexpected error occurred!');
@@ -81,8 +92,8 @@ export class MemberTripService {
   }
 
   private createAuthorizationHeader(): HttpHeaders{
-    return new HttpHeaders().set(
-      'Authorization','Bearer ' + StorageService.getToken()
-    )
+    return new HttpHeaders({
+      'Authorization':'Bearer ' + StorageService.getToken()
+    });
   }
 }

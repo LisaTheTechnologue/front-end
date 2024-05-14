@@ -1,22 +1,12 @@
 <div class="container my-5">
 
   <div class="heading h3">Add Trip</div>
-  <form [formGroup]="tripForm">
-    <div class="mb-3">
-      <div class="mb-3">
-        <label for="formFile" class="form-label">Thumbnail</label>
-        <input class="form-control" type="file" id="formFile" required #fileInput type="file" formControlName="img"
-          (change)="onFileSelected($event)" accept="image/png, image/jpeg">
-      </div>
 
-      <div *ngIf="selectedFile" class="image-preview justify-content-center">
-        <div class="circle-image">
-          <img [src]="imagePreview" alt="Selected Image" class="preview-image">
-        </div>
-      </div>
+    <div class="mb-3">
+      <app-form-img (img)="selectedImage($event)" ></app-form-img>
     </div>
 
-
+    <form [formGroup]="tripForm">
     <mat-form-field appearance="outline">
       <mat-label>Title</mat-label>
       <input matInput type="text" formControlName="title">
@@ -126,10 +116,10 @@
         </div>
       </mat-toolbar>
 
-      <div class="invalid-feedback m-1" *ngIf="tripForm.get('items')?.hasError('required')">
+      <div class="invalid-feedback m-1" *ngIf="tripForm.get('tripDays')?.hasError('required')">
         At least one day is added.
       </div>
-      <div formArrayName="items" *ngFor="let itemForm of getItemFormArray(); let i = index" class="m-2">
+      <div formArrayName="tripDays" *ngFor="let itemForm of getItemFormArray(); let i = index" class="m-2">
         <div class="row mb-2" [formGroupName]="i">
           <div class="col-1">
             <mat-form-field appearance="outline">

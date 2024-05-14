@@ -5,10 +5,19 @@
       <div *ngIf="group">
         <ul>
           <li *ngFor="let message of group.messages">
-            <div>
-              - {{ message.content }} by {{ message.user.username }}
+            <div class="message sent" *ngIf="chat.type!=='joined' && chat.isMe">
+              {{chat.message}}
+              <span class="metadata">
+                <span class="time">{{chat.createdAt | date: 'HH:mm aaa'}}</span>
+              </span>
             </div>
-            <img [src]="message.user.imageURL" alt="User Avatar">
+            <div class="message received"  *ngIf="chat.type!=='joined' && !chat.isMe">
+              <strong>{{chat.displayName}}</strong> <br>
+              {{chat.message}}
+              <span class="metadata">
+                <span class="time">{{chat.createdAt | date: 'HH:mm aaa'}}</span>
+              </span>
+            </div>
           </li>
         </ul>
       </div>
@@ -17,7 +26,11 @@
       </div>
     </mat-card-content>
     <mat-card-actions align="end">
-      <form [formGroup]="chatForm">
+      <div class="d-flex flex-row">
+        <input [(ngModel)]="chat.content" type="text" class="form-control" placeholder="Enter message" style="margin-right: 10px">
+        <button [disabled]="!chat.content || sending" (click)="postComment(chat.content)" class="btn btn-primary"> {{sending ? 'Sending' : 'Send'}}</button>
+      </div>
+      <!-- <form [formGroup]="chatForm">
         <mat-form-field>
           <mat-label>Write something...</mat-label>
           <textarea matInput formControlName="content"></textarea>
@@ -25,7 +38,7 @@
         <div class="button-container">
           <button mat-fab color="primary" (click)="postComment(chat)"><mat-icon>send</mat-icon></button>
         </div>
-      </form>
+      </form> -->
     </mat-card-actions>
   </mat-card>
 </div>

@@ -11,6 +11,7 @@ import { StorageService } from '../_shared/services/storage.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  hide = true;
   loginForm!: FormGroup;
   hidePassword = true;
   constructor( private fb: FormBuilder,

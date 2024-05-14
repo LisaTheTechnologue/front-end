@@ -1,121 +1,123 @@
 <div class="container my-5">
-  <div *ngIf="error">{{ error }} </div>
+
   <div class="heading h3">Add Trip</div>
-  <form [formGroup]="tripForm" >
+  <form [formGroup]="tripForm">
     <div class="mb-3">
-        <div class="mb-3">
-          <label for="formFile" class="form-label">Thumbnail</label>
-          <input class="form-control" type="file" id="formFile" required
-          #fileInput type="file" (change)="onFileSelected($event)"
-          accept="image/png, image/jpeg">
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Thumbnail</label>
+        <input class="form-control" type="file" id="formFile" required #fileInput type="file"
+          (change)="onFileSelected($event)" accept="image/png, image/jpeg">
+      </div>
+
+      <div *ngIf="selectedFile" class="image-preview justify-content-center">
+        <div class="circle-image">
+          <img [src]="imagePreview" alt="Selected Image" class="preview-image">
         </div>
-    </div>
-    <div *ngIf="selectedFile" class="image-preview justify-content-center">
-      <div class="circle-image">
-        <img [src]="imagePreview" alt="Selected Image" class="preview-image">
       </div>
     </div>
 
-    <div class="mb-3">
-      <label for="titleFld" class="col-sm-2 col-form-label">Title</label>
-      <input type="text" formControlName="title" class="form-control" id="titleFld" required/>
-      <div class="invalid-feedback" *ngIf="tripForm.get('title')?.hasError('required')">This input is required!</div>
-    </div>
 
-    <div class="mb-3">
-      <label for="cityFld" class="col-sm-2 col-form-label">Select a City</label>
-      <select formControlName="cityId" name="cityId" class="form-select" id="cityFld" required>
-        <option *ngFor="let city of listOfCities" [value]="city.id">
-          {{city.name}}
-        </option>
-      </select>
-      <div class="invalid-feedback" *ngIf="tripForm.get('cityId')?.hasError('required')">This input is required!</div>
-    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" formControlName="title">
+      <mat-error *ngIf="tripForm.value.title">This input is required!</mat-error>
+    </mat-form-field>
 
-    <div class="mb-3">
-      <label for="summaryFld">summary</label>
-      <input formControlName="summary" class="form-control" id="summaryFld" max="100" required/>
-      <div class="invalid-feedback" *ngIf="tripForm.get('summary')?.hasError('required')">This input is required!
-      </div>
-    </div>
 
-    <div class="mb-3">
-      <label for="highlightsFld">Highlights</label>
-      <textarea formControlName="highlights" class="form-control" id="highlightsFld"></textarea>
-      <div class="invalid-feedback" *ngIf="tripForm.get('highlights')?.hasError('required')">This input is required!
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <label for="levelSelect">Select a Level</label>
-      <select formControlName="tripLevel" id="levelSelect" class="form-select">
-        <option value="Master">Master</option>
-        <option value="Advanced">Advanced</option>
-        <option value="Beginner">Beginner</option>
-      </select>
-      <div class="invalid-feedback" *ngIf="tripForm.get('tripLevel')?.hasError('required')">This input is required!
-      </div>
-    </div>
     <div class="row">
-      <div class="mb-3 col-md-3">
-        <label for="priceFld">price</label>
-        <span class="input-group-text">$</span>
-        <input type="number" formControlName="price" id="priceFld" class="form-control" />
-        <div class="invalid-feedback" *ngIf="tripForm.get('price')?.hasError('required')">This input is required!</div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Select a City</mat-label>
+          <mat-select formControlName="cityId">
+            <mat-option *ngFor="let city of listOfCities" [value]="city.id">{{city.name}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="tripForm.value.cityId">This input is required!</mat-error>
+        </mat-form-field>
       </div>
-      <div class="mb-3 col-md-3">
-        <label for="nopFld">Group Size</label>
-        <input type="number" formControlName="groupSize" min="1" max="20" id="nopFld" class="form-control" />
-        <div class="invalid-feedback" *ngIf="tripForm.get('groupSize')?.hasError('required')">This input is
-          required!</div>
+      <div class="col-md-6"><mat-form-field appearance="outline">
+          <mat-label>Select a Level</mat-label>
+          <mat-select formControlName="tripLevel">
+            <mat-option value="Easy">Easy</mat-option>
+            <mat-option value="Moderate">Moderate</mat-option>
+            <mat-option value="Intermediate">Intermediate</mat-option>
+          </mat-select>
+          <mat-error *ngIf="tripForm.value.tripLevel">This input is required!</mat-error>
+        </mat-form-field>
       </div>
-      <div class="mb-3 col-md-3">
-        <label for="minAge">From Age:</label>
-        <input type="number" class="form-control" placeholder="From" formControlName="minAge" id="minAge" min="0" max="80" />
-          <div class="invalid-feedback" *ngIf="tripForm.get('minAge')?.hasError('required')">This input is
-            required!</div>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Summary</mat-label>
+      <input matInput type="text" formControlName="summary">
+      <mat-error *ngIf="tripForm.value.summary">This input is required!</mat-error>
+    </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Highlights</mat-label>
+        <textarea matInput type="text" formControlName="highlights"></textarea>
+        <mat-error *ngIf="tripForm.value.highlights">This input is required!</mat-error>
+      </mat-form-field>
+
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Price</mat-label>
+          <input matInput type="number" class="example-right-align" placeholder="0" formControlName="price"
+            id="priceFld" pattern="[0-9]*">
+          <span matTextPrefix>$&nbsp;</span>
+          <mat-error *ngIf="tripForm.value.price">This input is required!</mat-error>
+        </mat-form-field>
       </div>
-      <div class="mb-3 col-md-3">
-        <label for="maxAge">To Age:</label>
-        <input type="number" class="form-control" placeholder="To" formControlName="maxAge" id="maxAge" min="0" max="80" />
-        <div class="invalid-feedback" *ngIf="tripForm.get('maxAge')?.hasError('required')">This input is
-          required!</div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Group Size</mat-label>
+          <input matInput type="number" class="example-right-align" placeholder="0" formControlName="groupSize"
+            id="priceFld">
+          <mat-error *ngIf="tripForm.value.groupSize">This input is required!</mat-error>
+        </mat-form-field>
       </div>
     </div>
 
     <div class="row">
-      <div class="mb-3 col-md-6">
-        <label for="startDateFld">From date</label>
-        <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd" name="dpstartDate" formControlName="startDateModel"
-            ngbDatepicker #d1="ngbDatepicker" readonly (dateSelect) = "onSelectstartDate($event)" />
-          <button class="btn btn-secondary" (click)="d1.toggle()" type="button"><mat-icon>calendar_today</mat-icon></button>
-        </div>
-        <div class="invalid-feedback" *ngIf="tripForm.get('startDate')?.hasError('required')">This input is required!
-        </div>
+      <div class="col-md-3">
+        <mat-form-field appearance="outline">
+          <mat-label>From Age</mat-label>
+          <input value="20" matInput formControlName="minAge" type="number" min="10" max="80">
+          <mat-error *ngIf="tripForm.value.minAge">This input is required!</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3">
+        <mat-form-field appearance="outline">
+          <mat-label>To Age</mat-label>
+          <input value="60" matInput formControlName="maxAge" type="number" min="10" max="80">
+          <mat-error *ngIf="tripForm.value.maxAge">This input is required!</mat-error>
+        </mat-form-field>
       </div>
 
-      <div class="mb-3 col-md-6">
-        <label for="endDateFld">To date</label>
-        <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd" name="dpendDate" formControlName="endDateModel"
-            ngbDatepicker #d2="ngbDatepicker" readonly (dateSelect) = "onSelectendDate($event)"/>
-          <button class="btn btn-secondary" (click)="d2.toggle()" type="button"><mat-icon>calendar_today</mat-icon></button>
-        </div>
-        <div class="invalid-feedback" *ngIf="tripForm.get('endDate')?.hasError('required')">This input is required!
-        </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker" [min]="minDate" appearance="outline">
+            <input matStartDate placeholder="Start date" formControlName="startDate">
+            <input matEndDate placeholder="End date" formControlName="endDate">
+          </mat-date-range-input>
+          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+          <mat-error *ngIf="tripForm.value.startDate && tripForm.value.endDate">This input is required!</mat-error>
+        </mat-form-field>
       </div>
     </div>
 
-    <div class="mb-3">
-      <label for="notesFld">Notes</label>
-      <textarea formControlName="notes" class="form-control" id="notesFld"></textarea>
-      <div class="invalid-feedback" *ngIf="tripForm.get('notes')?.hasError('required')">This input is required!
-      </div>
-    </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Notes</mat-label>
+        <textarea matInput type="text" formControlName="notes"></textarea>
+        <mat-error *ngIf="tripForm.value.notes">This input is required!</mat-error>
+      </mat-form-field>
+
 
     <div class="mb-3">
-      <mat-toolbar class="lessons-toolbar">
+      <mat-toolbar class="iternarary-toolbar mb-3">
         <span>Itinerary</span>
         <div style="right: 0;">
           <button mat-icon-button color="accent" (click)="addItems()">
@@ -124,45 +126,49 @@
         </div>
       </mat-toolbar>
 
-      <div class="invalid-feedback" *ngIf="tripForm.get('items')?.hasError('required')">
+      <div class="invalid-feedback m-1" *ngIf="tripForm.get('items')?.hasError('required')">
         At least one day is added.
       </div>
-      <div formArrayName="items" *ngFor="let itemForm of items.controls; let i = index">
-      <div class="row" [formGroupName]="i">
-        <div class="col-1">
-          <div class="mb-3">
-            <input class="form-control" placeholder="Day" formControlName="dayNo" type="number" min="1" max="5" />
-            <div class="invalid-feedback" *ngIf="items.controls[i].get('dayNo')?.invalid">This input is required!
-            </div>
+      <div formArrayName="items" *ngFor="let itemForm of items.controls; let i = index" class="m-2">
+        <div class="row mb-2" [formGroupName]="i">
+          <div class="col-1">
+            <mat-form-field appearance="outline">
+              <mat-label>Day</mat-label>
+              <input matInput formControlName="dayNo" type="number" min="1" />
+              <mat-error *ngIf="getItemFormArray()[i].get('dayNo')?.invalid">This input is required!
+                <!-- {{ getLessonErrorMessage('name', i) }} -->
+              </mat-error>
+            </mat-form-field>
           </div>
-        </div>
-        <div class="col-4">
-          <div class="mb-3">
-            <input class="form-control" placeholder="Title" formControlName="title" type="text" />
-            <div class="invalid-feedback" *ngIf="items.controls[i].get('title')?.invalid">This input is required!
-            </div>
+          <div class="col-3">
+            <mat-form-field appearance="outline">
+              <mat-label>Title</mat-label>
+              <input matInput formControlName="title" />
+              <mat-error *ngIf="getItemFormArray()[i].get('title')?.invalid">This input is required!
+                <!-- {{ getLessonErrorMessage('name', i) }} -->
+              </mat-error>
+            </mat-form-field>
           </div>
-        </div>
-        <div class="col-6">
-          <div class="mb-3">
-            <textarea class="form-control" placeholder="Description" formControlName="description"></textarea>
-            <div class="invalid-feedback" class="invalid-feedback"
-              *ngIf="items.controls[i].get('description')?.invalid">This input is
-              required!
-            </div>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="description"></textarea>
+              <mat-error *ngIf="getItemFormArray()[i].get('description')?.invalid">This input is required!
+                <!-- {{ getLessonErrorMessage('name', i) }} -->
+              </mat-error>
+            </mat-form-field>
           </div>
-        </div>
-        <div class="col">
-          <button mat-icon-button color="warn" (click)="removeItem(i)">
-            <mat-icon aria-label="Remove Item">delete</mat-icon>
-          </button>
+          <div class="col-1">
+            <button mat-icon-button color="warn" (click)="removeItem(i)">
+              <mat-icon aria-label="Remove Item">delete</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-    </div>
-    <div class="mb-3">
-      <button mat-raised-button color="primary"
-      type="submit" (click)="submit()">Submit</button>
+
+    <div class="mb-2">
+      <button mat-raised-button color="primary" type="submit" (click)="submit()">Submit</button>
     </div>
   </form>
 </div>

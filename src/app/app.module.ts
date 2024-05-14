@@ -25,6 +25,7 @@ import { ComponentsModule } from './_shared/components/components.module';
 import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
 import { TestComponent } from './test/test.component';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { TestComponent } from './test/test.component';
     RouterModule
   ],
   providers: [
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { PublicProfile } from 'src/app/_shared/models/user.model';
 import { StorageService } from 'src/app/_shared/services/storage.service';
 import { MemberChatService } from 'src/app/_shared/services/member-chat.service';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-chat',
@@ -14,6 +14,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class ChatComponent {
   chatForm!: FormGroup;
+
   @Input() tripId: number;
   group: GroupChat | null = null;
   error: string;
@@ -24,10 +25,16 @@ export class ChatComponent {
     user: undefined,
   };
 
-  constructor(private chatService: MemberChatService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private chatService: MemberChatService,
+    private router: Router) {}
 
   ngOnInit(): void {
     this.getChat();
+    this.chatForm = this.fb.group({
+      content: ['', Validators.required],
+    });
   }
 
   getChat(){
@@ -47,7 +54,18 @@ export class ChatComponent {
       });
     }
   }
-
+  _isDisabled: boolean;
+  set isDisabled(value: boolean) {
+    this._isDisabled = value;
+    if(value) {
+     this.chatForm.controls['content'].disable();
+    } else {
+       this.chatForm.controls['content'].enable();
+     }
+   }
+  get isDisabled(){
+    return this.group.groupChatStatus==='END' ? true : false;
+  }
   postComment(chat: any) {
     this.chatService
       .create({

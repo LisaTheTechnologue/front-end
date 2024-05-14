@@ -9,6 +9,9 @@ import { PaymentViewComponent } from './payment-view/payment-view.component';
 import { TripCreateComponent } from './trip-create/trip-create.component';
 import { TripJoinedListComponent } from './trip-joined-list/trip-joined-list.component';
 import { TripCreatedListComponent } from './trip-created-list/trip-created-list.component';
+import { TripViewComponent } from './trip-view/trip-view.component';
+import { ChatComponent } from './chat/chat.component';
+
 
 const routes: Routes = [
   { path: '', component: MemberComponent },
@@ -16,11 +19,13 @@ const routes: Routes = [
 { path: 'created-trips', component: TripCreatedListComponent },
 { path: 'trips/edit/:tripId', component: TripEditComponent },
 { path: 'trips/create', component: TripCreateComponent },
+{ path: 'trips/view/:tripId', component: TripViewComponent },
 { path: 'joined-trips', component: TripJoinedListComponent },
 { path: 'payment/create/:tripId', component: TripPaymentComponent },
 { path: 'payment/view/:paymentId', component: PaymentViewComponent },
 { path: 'profile', component: MemberProfileComponent },
 { path: 'feedback/:tripId', component: FeedbackCreateComponent },
+{ path: 'chat/:tripId', component: ChatComponent },
 ];
 
 @NgModule({

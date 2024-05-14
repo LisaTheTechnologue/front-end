@@ -22,6 +22,7 @@ import { TripJoinedListComponent } from './trip-joined-list/trip-joined-list.com
 import { TripCreatedListComponent } from './trip-created-list/trip-created-list.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { TripCreateComponent } from './trip-create/trip-create.component';
+import { TripViewComponent } from './trip-view/trip-view.component';
 
 @NgModule({
   declarations: [
@@ -31,13 +32,13 @@ import { TripCreateComponent } from './trip-create/trip-create.component';
     TripPaymentComponent,
     PaymentViewComponent,
     ChatComponent,
-    // TripViewComponent,
     FeedbackCreateComponent,
     JoinRequestListComponent,
     TripJoinedListComponent,
     TripCreatedListComponent,
     ProfileEditComponent,
-    TripCreateComponent
+    TripCreateComponent,
+    TripViewComponent
   ],
   imports: [
     CommonModule,

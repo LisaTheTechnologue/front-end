@@ -21,8 +21,8 @@ export class TripDetailsComponent {
   members!: TripMember[];
   feedbacks: any[];
   isMemberLoggedIn: boolean;
-  @Output() isJoined = new EventEmitter<boolean>();
-  @Output() isEnded = new EventEmitter<boolean>();
+  // @Output() isJoined = new EventEmitter<boolean>();
+  // @Output() isEnded = new EventEmitter<boolean>();
   error: any;
 
   // leaderId: string;
@@ -49,9 +49,9 @@ export class TripDetailsComponent {
           this.publicService
             .getFeedbacksByTripId(this.tripId)
             .subscribe((res) => (this.feedbacks = res));
-          this.isEnded.emit(true);
+          // this.isEnded.emit(true);
         } else {
-          this.isEnded.emit(false);
+          // this.isEnded.emit(false);
         }
       },
       error: (error) => {
@@ -75,12 +75,12 @@ export class TripDetailsComponent {
             const userId = StorageService.getUserId();
             for (var index in res.members) {
               if ((res.members[index].userId = userId)) {
-                this.isJoined.emit(true);
+                // this.isJoined.emit(true);
                 break;
               }
             }
           } else {
-            this.isJoined.emit(false);
+            // this.isJoined.emit(false);
           }
         }
       },
@@ -94,14 +94,4 @@ export class TripDetailsComponent {
       },
     });
   }
-  // getFeedbacks() {
-  //   if (this.trip.tripStatus == 'END') {
-  //     this.publicService
-  //       .getFeedbacksByTripId(this.tripId)
-  //       .subscribe((res) => (this.feedbacks = res));
-  //     this.isEnded.emit(true);
-  //   } else {
-  //     this.isEnded.emit(false);
-  //   }
-  // }
 }

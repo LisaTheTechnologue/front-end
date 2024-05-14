@@ -11,4 +11,5 @@ export class GroupChat {
   id?: any;
   tripId: number;
   messages: Message[];
+  groupChatStatus: string;
 }

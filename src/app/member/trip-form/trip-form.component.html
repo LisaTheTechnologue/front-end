@@ -1,9 +1,9 @@
 <div class="container my-5">
 
-  <div class="heading h3">Add Trip</div>
-
+  <div class="heading h3" *ngIf="isAddMode">Add Trip</div>
+  <div class="heading h3" *ngIf="!isAddMode">Edit Trip</div>
   <div class="mb-3">
-    <app-form-img (img)="selectedImage($event)" [existingImage]="existingImage"></app-form-img>
+    <app-form-img (img)="selectedImage($event)" [isAddMode]="isAddMode" [existingImage]="existingImage"></app-form-img>
   </div>
 
   <form [formGroup]="tripForm">
@@ -41,6 +41,7 @@
       <input matInput type="text" formControlName="summary">
       <mat-error *ngIf="tripForm.get('summary')?.invalid">{{ getTripErrorMessage('summary') }}</mat-error>
     </mat-form-field>
+
 
     <div class="row">
       <div class="col-md-6">

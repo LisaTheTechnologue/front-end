@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
-import { TripViewComponent } from './components/trip-view/trip-view.component';
+import { TripViewComponent } from './trip-view/trip-view.component';
 
 const routes: Routes = [
   { path: '', component: AdminComponent },

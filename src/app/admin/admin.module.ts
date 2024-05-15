@@ -6,13 +6,14 @@ import { AdminComponent } from './admin.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../MaterialModule';
-import { TripViewComponent } from './components/trip-view/trip-view.component';
-import { TripListComponent } from './components/trip-list/trip-list.component';
-import { CityListComponent } from './components/city-list/city-list.component';
-import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
-import { UserListComponent } from './components/user-list/user-list.component';
-import { ContactListComponent } from './components/contact-list/contact-list.component';
-import { ContactViewComponent } from './components/contact-view/contact-view.component';
+import { TripViewComponent } from './trip-view/trip-view.component';
+import { TripListComponent } from './trip-list/trip-list.component';
+import { CityListComponent } from './city-list/city-list.component';
+import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { ContactListComponent } from './contact-list/contact-list.component';
+import { ContactViewComponent } from './contact-view/contact-view.component';
+import { ComponentsModule } from '../_shared/components/components.module';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { ContactViewComponent } from './components/contact-view/contact-view.com
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ComponentsModule,
   ]
 })
 export class AdminModule { }

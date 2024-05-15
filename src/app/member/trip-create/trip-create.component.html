@@ -1,12 +1,11 @@
 <div class="container my-5">
 
   <div class="heading h3">Add Trip</div>
+  <div class="mb-3">
+    <app-form-img (img)="selectedImage($event)"></app-form-img>
+  </div>
 
-    <div class="mb-3">
-      <app-form-img (img)="selectedImage($event)" ></app-form-img>
-    </div>
-
-    <form [formGroup]="tripForm">
+  <form [formGroup]="tripForm">
     <mat-form-field appearance="outline">
       <mat-label>Title</mat-label>
       <input matInput type="text" formControlName="title">
@@ -42,11 +41,6 @@
       <mat-error *ngIf="tripForm.get('summary')?.invalid">{{ getTripErrorMessage('summary') }}</mat-error>
     </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Highlights</mat-label>
-        <textarea matInput type="text" formControlName="highlights"></textarea>
-        <mat-error *ngIf="tripForm.get('highlights')?.invalid">{{ getTripErrorMessage('highlights') }}</mat-error>
-      </mat-form-field>
 
     <div class="row">
       <div class="col-md-6">
@@ -99,11 +93,11 @@
       </div>
     </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Notes</mat-label>
-        <textarea matInput type="text" formControlName="notes"></textarea>
-        <mat-error *ngIf="tripForm.get('notes')?.invalid">{{ getTripErrorMessage('notes') }}</mat-error>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Notes</mat-label>
+      <textarea matInput type="text" formControlName="notes"></textarea>
+      <mat-error *ngIf="tripForm.get('notes')?.invalid">{{ getTripErrorMessage('notes') }}</mat-error>
+    </mat-form-field>
 
 
     <div class="mb-3">

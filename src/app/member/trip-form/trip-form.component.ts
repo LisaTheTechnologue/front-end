@@ -1,29 +1,22 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormArray,
-  UntypedFormArray,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, UntypedFormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbDateStruct, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import { ErrorDialogComponent } from 'src/app/_shared/components/error-dialog/error-dialog.component';
-import { StorageService } from 'src/app/_shared/services/storage.service';
-import { DatePipe, Location } from '@angular/common';
-import { Trip, TripDay } from 'src/app/_shared/models/trip.model';
-import { PublicService } from 'src/app/_shared/services/public.service';
-import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
+import { TripDay, Trip } from 'src/app/_shared/models/trip.model';
 import { ConfirmService } from 'src/app/_shared/services/confirm.service';
 import { FormUtilsService } from 'src/app/_shared/services/form-utils.service';
+import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
+import { PublicService } from 'src/app/_shared/services/public.service';
+import { StorageService } from 'src/app/_shared/services/storage.service';
+
 @Component({
-  selector: 'app-trip-edit',
-  templateUrl: './trip-edit.component.html',
-  styleUrls: ['./trip-edit.component.css'],
+  selector: 'app-trip-form',
+  templateUrl: './trip-form.component.html',
+  styleUrls: ['./trip-form.component.css']
 })
-export class TripEditComponent {
+export class TripFormComponent {
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   tripForm!: FormGroup;
   listOfCities: any = [];
@@ -45,7 +38,7 @@ export class TripEditComponent {
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
     private publicService: PublicService,
-    private datePipe: DatePipe,
+    private router: Router,
     private formUtils: FormUtilsService
   ) {
     this.minDate = new Date();
@@ -192,6 +185,7 @@ export class TripEditComponent {
   }
   private onSuccess(message: string) {
     this.snackBar.open(message, 'OK', { duration: 5000 });
+    this.router.navigateByUrl('/member');
   }
   private onFailed(message: string) {
     this.snackBar.open(message, 'ERROR', {

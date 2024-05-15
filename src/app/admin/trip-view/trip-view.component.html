@@ -1,0 +1,23 @@
+<div class="container my-5">
+  <div>
+    <app-trip-details [tripId]="tripId"></app-trip-details>
+  </div>
+  <div class="action-button-row">
+    <!-- <button mat-stroked-button color="warn" *ngIf="isJoined && !isEnded" class="me-2" (click)="revokeJoinTrip()">
+      <mat-icon>clear</mat-icon> Revoke Join
+    </button> -->
+    <button mat-flat-button color="accent" (click)="changeStatus('approve')">
+      <mat-icon> chat</mat-icon> Approve
+    </button>
+    <button mat-flat-button color="accent" (click)="changeStatus('reject')">
+      <mat-icon> chat</mat-icon> Reject
+    </button>
+    <button mat-flat-button color="accent" (click)="changeStatus('cancel')">
+      <mat-icon> chat</mat-icon> Cancel
+    </button>
+    <!-- <button mat-stroked-button color="primary"
+      [routerLink]="['/member/feedback/',tripId]">
+      <mat-icon>feedback</mat-icon> Rate Trip
+    </button> -->
+  </div>
+</div>

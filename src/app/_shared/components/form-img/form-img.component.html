@@ -9,8 +9,10 @@
     </button>
 </div>
 
-<div *ngIf="selectedFile" class="image-preview justify-content-center">
-  <div class="circle-image">
+<div *ngIf="selectedFile" class="image-preview">
     <img [src]="imagePreview" alt="Selected Image" class="preview-image">
-  </div>
+</div>
+
+<div *ngIf="existingImage && !isAddMode" class="image-preview">
+    <img [src]="existingImage" alt="Existing Image" class="preview-image">
 </div>

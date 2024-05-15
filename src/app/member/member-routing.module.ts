@@ -11,14 +11,15 @@ import { TripJoinedListComponent } from './trip-joined-list/trip-joined-list.com
 import { TripCreatedListComponent } from './trip-created-list/trip-created-list.component';
 import { TripViewComponent } from './trip-view/trip-view.component';
 import { ChatComponent } from './chat/chat.component';
+import { TripFormComponent } from './trip-form/trip-form.component';
 
 
 const routes: Routes = [
   { path: '', component: MemberComponent },
   { path: 'dashboard', component: MemberComponent },
 { path: 'created-trips', component: TripCreatedListComponent },
-{ path: 'trips/edit/:tripId', component: TripEditComponent },
-{ path: 'trips/create', component: TripCreateComponent },
+{ path: 'trips/edit/:tripId', component: TripFormComponent },
+{ path: 'trips/create', component: TripFormComponent },
 { path: 'trips/view/:tripId', component: TripViewComponent },
 { path: 'joined-trips', component: TripJoinedListComponent },
 { path: 'payment/create/:tripId', component: TripPaymentComponent },

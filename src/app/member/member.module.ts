@@ -23,6 +23,7 @@ import { TripCreatedListComponent } from './trip-created-list/trip-created-list.
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { TripCreateComponent } from './trip-create/trip-create.component';
 import { TripViewComponent } from './trip-view/trip-view.component';
+import { TripFormComponent } from './trip-form/trip-form.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { TripViewComponent } from './trip-view/trip-view.component';
     TripCreatedListComponent,
     ProfileEditComponent,
     TripCreateComponent,
-    TripViewComponent
+    TripViewComponent,
+    TripFormComponent
   ],
   imports: [
     CommonModule,

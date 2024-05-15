@@ -44,20 +44,14 @@ export class MemberTripService {
     }).pipe(catchError(this.handleError));
   }
 
-  updateTrip (tripId:number,tripDto:any): Observable<any>{
-    return this.http.put(this.API+`update/${tripId}`, tripDto, {
+  updateTrip (tripId:number,record: Partial<Trip>): Observable<any>{
+    return this.http.put<Trip>(this.API+`trip/${tripId}`, record, {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));
   }
 
-  closeTrip (tripId:number): Observable<any>{
-    return this.http.post(this.API+`close/${tripId}`, {
-      headers: this.createAuthorizationHeader(),
-    }).pipe(catchError(this.handleError));
-  }
-
-  cancelTrip (tripId:number): Observable<any>{
-    return this.http.post(this.API+`cancel/${tripId}`, {
+  changeStatus (tripId:number,status: string): Observable<any>{
+    return this.http.put(this.API+`status/${tripId}`, status, {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));
   }

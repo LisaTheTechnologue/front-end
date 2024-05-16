@@ -6,7 +6,6 @@ import { MemberComponent } from './member.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../MaterialModule';
 import { NgbDatepickerModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
-import { MemberProfileComponent } from './member-profile/member-profile.component';
 import { TripEditComponent } from './trip-edit/trip-edit.component';
 import { TripPaymentComponent } from './trip-payment/trip-payment.component';
 import { PaymentViewComponent } from './payment-view/payment-view.component';
@@ -24,11 +23,11 @@ import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { TripCreateComponent } from './trip-create/trip-create.component';
 import { TripViewComponent } from './trip-view/trip-view.component';
 import { TripFormComponent } from './trip-form/trip-form.component';
+import { PasswordEditComponent } from './password-edit/password-edit.component';
 
 @NgModule({
   declarations: [
     MemberComponent,
-    MemberProfileComponent,
     TripEditComponent,
     TripPaymentComponent,
     PaymentViewComponent,
@@ -40,7 +39,8 @@ import { TripFormComponent } from './trip-form/trip-form.component';
     ProfileEditComponent,
     TripCreateComponent,
     TripViewComponent,
-    TripFormComponent
+    TripFormComponent,
+    PasswordEditComponent
   ],
   imports: [
     CommonModule,

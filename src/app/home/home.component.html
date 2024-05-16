@@ -44,8 +44,8 @@
 <section class="my-5">
   <h2 class="text-center">Feedback From Friends</h2>
   <p class="text-center">Our Friends have left some reviews. Let's check it out!</p>
-  <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="feedbacks.length > 0" class="row justify-content-center">
-    <mat-card fxFlex="20%" *ngFor="let feedback of feedbacks" style="padding-right:0;padding-left:0;">
+    <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="feedbacks.length > 0" class="row justify-content-center">
+    <mat-card fxFlex="15%" *ngFor="let feedback of feedbacks" style="padding-right:0;padding-left:0;">
       <app-feedback-card [feedback]="feedback"></app-feedback-card>
     </mat-card>
   </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PublicService } from '../_shared/services/public.service';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,8 @@ export class HomeComponent implements OnInit {
   feedbacks: any[] = [];
   profiles: any[] = [];
   trips: any[] = [];
+  currentSlideIndex = 0;
+
   constructor(public publicService: PublicService) {}
 
   ngOnInit(): void {
@@ -31,5 +34,19 @@ export class HomeComponent implements OnInit {
         this.feedbacks.push(element);
       });
     });
+
+  }
+
+  prevSlide() {
+    this.currentSlideIndex--;
+  }
+
+  nextSlide() {
+    this.currentSlideIndex++;
+
+    // Handle reaching the end of the carousel (optional)
+    if (this.currentSlideIndex === this.feedbacks.length) {
+      this.currentSlideIndex = 0;
+    }
   }
 }

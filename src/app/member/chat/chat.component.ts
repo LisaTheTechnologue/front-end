@@ -1,7 +1,7 @@
 import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
 import { Component, Input } from '@angular/core';
 import { GroupChat, Message } from 'src/app/_shared/models/chat.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PublicProfile } from 'src/app/_shared/models/user.model';
 import { StorageService } from 'src/app/_shared/services/storage.service';
 import { MemberChatService } from 'src/app/_shared/services/member-chat.service';
@@ -16,27 +16,25 @@ import { AppService } from 'src/app/_shared/services/app.service';
 export class ChatComponent {
   // chatForm!: FormGroup;
   sending: boolean;
-  @Input() tripId: number;
+  // @Input() tripId: number;
+  tripId: number = this.activatedRoute.snapshot.params['tripId'];
   group: GroupChat | null = null;
   error: string;
   content:string;
   // usersWithImages: { [userId: number]: PublicProfile } = {};
-  chat: any = {
-    content: '',
-    tripId: -1,
-    user: undefined,
-  };
+  // chat: any = {
+  //   content: '',
+  //   tripId: -1,
+  //   user: undefined,
+  // };
 
   constructor(
-    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute,
     private chatService: MemberChatService,
     private router: Router) {}
 
   ngOnInit(): void {
     this.getChat();
-    // this.chatForm = this.fb.group({
-    //   content: ['', Validators.required],
-    // });
   }
 
   getChat(){
@@ -61,25 +59,14 @@ export class ChatComponent {
       });
     }
   }
-  // _isDisabled: boolean;
-  // set isDisabled(value: boolean) {
-  //   this._isDisabled = value;
-  //   if(value) {
-  //    this.chatForm.controls['content'].disable();
-  //   } else {
-  //      this.chatForm.controls['content'].enable();
-  //    }
-  //  }
-  // get isDisabled(){
-  //   return this.group.groupChatStatus==='END' ? true : false;
-  // }
+
   postComment(chat: any) {
     this.sending = true;
     this.chatService
       .create({
-        content: chat.content,
-        postId: chat.postId,
-        user: StorageService.getUser()
+        content: this.content,
+        tripId: this.tripId,
+        userId: StorageService.getUserId()
       })
       .subscribe({
         next: () => {
@@ -92,17 +79,4 @@ export class ChatComponent {
        }
   });
   }
-
-  // private processGroupData(group: GroupChat): GroupChat {
-  //   group.messages.forEach((message) => {
-      // message.user.imageURL = this.getAvatarUrl(message.user.byteImg);
-  //   });
-  //   return group;
-  // }
-
-  // private getAvatarUrl(avatar: string): string {
-    // Implement logic to construct the avatar URL based on your backend setup
-    // (e.g., prepend base URL, handle different avatar storage methods)
-    // return `data:image/jpeg;base64,${avatar}`;
-  // }
 }

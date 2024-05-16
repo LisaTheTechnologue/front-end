@@ -31,6 +31,21 @@ export class MemberUserService {
     .pipe(catchError(this.handleError));
   }
 
+  uploadImage(formData:any){
+    const userId = StorageService.getUserId();
+    return this.http.put<any>(this.API+`upload-image/${userId}`, formData, {
+      headers: this.createAuthorizationHeader(),
+    }).pipe(catchError(this.handleError));
+  }
+
+  public updatePassword(passwordChange: any): Observable<any> {
+    const userId = StorageService.getUserId();
+    return this.http.post<any>(this.API+'change-password/' + userId, passwordChange, {
+      headers: this.createAuthorizationHeader(),
+    })
+    .pipe(catchError(this.handleError));
+  }
+
   public getPaymentProfileByUserId(userId: any): Observable<any> {
     return this.http
       .get<any>(this.API+'payment-profile/' + userId, {

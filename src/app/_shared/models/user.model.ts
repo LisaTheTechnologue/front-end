@@ -3,9 +3,10 @@ export class User {
   username?: string;
   firstname: string;
   lastname: string;
-  email: string;
+  emailAddress: string;
   phoneNo: string | undefined;
   dob: Date;
+  gender: string;
   active?: boolean;
   rating: number;
   accNo: string;

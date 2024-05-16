@@ -5,17 +5,17 @@
       <div *ngIf="group">
         <ul>
           <li *ngFor="let message of group.messages">
-            <div class="message sent" *ngIf="chat.type!=='joined' && chat.isMe">
-              {{chat.message}}
+            <div class="message sent" *ngIf="message.isMe">
+              {{message.content}}
               <span class="metadata">
-                <span class="time">{{chat.createdAt | date: 'HH:mm aaa'}}</span>
+                <span class="time">{{message.createdDate | date: 'HH:mm aaa'}}</span>
               </span>
             </div>
-            <div class="message received"  *ngIf="chat.type!=='joined' && !chat.isMe">
-              <strong>{{chat.displayName}}</strong> <br>
-              {{chat.message}}
+            <div class="message received"  *ngIf="!message.isMe">
+              <strong>{{message.username}}</strong> <br>
+              {{message.content}}
               <span class="metadata">
-                <span class="time">{{chat.createdAt | date: 'HH:mm aaa'}}</span>
+                <span class="time">{{message.createdDate | date: 'HH:mm aaa'}}</span>
               </span>
             </div>
           </li>
@@ -27,18 +27,9 @@
     </mat-card-content>
     <mat-card-actions align="end">
       <div class="d-flex flex-row">
-        <input [(ngModel)]="chat.content" type="text" class="form-control" placeholder="Enter message" style="margin-right: 10px">
-        <button [disabled]="!chat.content || sending" (click)="postComment(chat.content)" class="btn btn-primary"> {{sending ? 'Sending' : 'Send'}}</button>
+        <input [(ngModel)]="content" type="text" class="form-control" placeholder="Enter message" style="margin-right: 10px">
+        <button [disabled]="!content || sending" (click)="postComment(content)" class="btn btn-primary"> {{sending ? 'Sending' : 'Send'}}</button>
       </div>
-      <!-- <form [formGroup]="chatForm">
-        <mat-form-field>
-          <mat-label>Write something...</mat-label>
-          <textarea matInput formControlName="content"></textarea>
-        </mat-form-field>
-        <div class="button-container">
-          <button mat-fab color="primary" (click)="postComment(chat)"><mat-icon>send</mat-icon></button>
-        </div>
-      </form> -->
     </mat-card-actions>
   </mat-card>
 </div>

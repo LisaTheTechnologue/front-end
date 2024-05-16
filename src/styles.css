@@ -13,12 +13,12 @@ body {
 body {
   .mdc-button.mat-success,
   .mat-mdc-stroked-button.mat-success {
-    color: #61d800;
+    color: #155724;
   }
   .mat-mdc-unelevated-button.mat-success:hover,
   .mat-mdc-raised-button.mat-success:hover {
     color: #f0fff3;
-    background-color: #61d800;
+    background-color: #1b742f;
   }
 
   .mat-mdc-unelevated-button:not(:disabled, :hover).mat-success,
@@ -26,10 +26,31 @@ body {
   .mat-mdc-fab.mat-success,
   .mat-mdc-mini-fab.mat-success {
     color: #f0fff3;
-    background-color: #61d800;
+    background-color: #155724;
   }
   .mat-mdc-icon-button.mat-success {
-    color: #61d800;
+    color: #155724;
+  }
+
+  .mdc-button.mat-danger,
+  .mat-mdc-stroked-button.mat-danger {
+    color: #8b0a0a;
+  }
+  .mat-mdc-unelevated-button.mat-danger:hover,
+  .mat-mdc-raised-button.mat-danger:hover {
+    color: #f0fff3;
+    background-color: #8b0a0a;
+  }
+
+  .mat-mdc-unelevated-button:not(:disabled, :hover).mat-danger,
+  .mat-mdc-raised-button.mat-danger,
+  .mat-mdc-fab.mat-danger,
+  .mat-mdc-mini-fab.mat-danger {
+    color: #f0fff3;
+    background-color: #8b0a0a;
+  }
+  .mat-mdc-icon-button.mat-danger {
+    color: #8b0a0a;
   }
 }
 

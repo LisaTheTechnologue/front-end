@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, UntypedFormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,7 +9,7 @@ import { FormUtilsService } from 'src/app/_shared/services/form-utils.service';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 import { PublicService } from 'src/app/_shared/services/public.service';
 import { StorageService } from 'src/app/_shared/services/storage.service';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-trip-form',
   templateUrl: './trip-form.component.html',
@@ -52,14 +51,14 @@ export class TripFormComponent {
       title: [null, [Validators.required]],
       summary: [null, [Validators.required]],
       price: [null, [Validators.required]],
-      notes: [null, [Validators.required]],
+      notes: [null],
       groupSize: [null, [Validators.required]],
       minAge: [null],
       maxAge: [null],
       // allAges: [null],
       startDate: [null, [Validators.required]],
       endDate: [null, [Validators.required]],
-      tripStatus: [null, [Validators.required]],
+      // tripStatus: [null, [Validators.required]],
       tripLevel: [null, [Validators.required]],
       tripDays: this.fb.array([], [Validators.required]),
     });

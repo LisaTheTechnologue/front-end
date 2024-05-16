@@ -2,9 +2,12 @@ import { PublicProfile } from "./user.model";
 
 export class Message {
   id?: any;
-  user: PublicProfile;
+  userId: number;
+  username: string;
   tripId: number;
   content: string;
+  createdDate: string;
+  isMe: boolean;
 }
 
 export class GroupChat {

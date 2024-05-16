@@ -10,9 +10,11 @@
       [routerLink]="['/member/chat/',tripId]">
       <mat-icon> chat</mat-icon> Join Team Chat
     </button>
-    <!-- <button mat-stroked-button color="primary"
-      [routerLink]="['/member/feedback/',tripId]">
-      <mat-icon>feedback</mat-icon> Rate Trip
-    </button> -->
+    <button mat-flat-button color="danger" (click)="changeStatus('cancel')">
+      <mat-icon>cancel</mat-icon> Cancel
+    </button>
+    <button mat-flat-button color="success" (click)="changeStatus('end')">
+      <mat-icon>check</mat-icon> End
+    </button>
   </div>
 </div>

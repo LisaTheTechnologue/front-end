@@ -26,6 +26,7 @@ import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
 import { TestComponent } from './test/test.component';
 import { DatePipe } from '@angular/common';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { DatePipe } from '@angular/common';
     FlexLayoutModule,
     NgxPaginationModule,
     ComponentsModule,
-    RouterModule
+    RouterModule,
+    CarouselModule
   ],
   providers: [
     DatePipe,

@@ -89,7 +89,7 @@ export class TripEditComponent {
 
       this.tripForm.patchValue(res);
       this.existingImage = 'data:image/jpeg;base64,' + res.byteImg;
-      console.log(res);
+      // console.log(res);
       // this.trip = res;
       // this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
       // this.image = this.trip.imageURL;

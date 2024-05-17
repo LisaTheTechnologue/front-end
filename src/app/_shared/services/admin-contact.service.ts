@@ -1,34 +1,42 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, catchError, throwError } from 'rxjs';
 import { AppSettings } from '../app-settings';
-import { StorageService } from './storage.service';
 import { PageNotFoundException } from '../exceptions/page-not-found.exception';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminTripService {
+export class AdminContactService {
+  private API = AppSettings.ADMIN_API_ENDPOINT + 'contacts/';
+  constructor(public http: HttpClient, public router: Router) {}
 
-  private API = AppSettings.ADMIN_API_ENDPOINT+'trips/';
-  constructor(private http: HttpClient) { }
+  public isSolved(id: any): Observable<any> {
+    return this.http
+      .put<any>(this.API + id, 'done', {
+        headers: this.createAuthorizationHeader(),
+      })
+      .pipe(catchError(this.handleError));
+  }
 
-  getAllTrips(): Observable<any>{
-    return this.http.get(this.API, {
-      headers: this.createAuthorizationHeader(),
-    }).pipe(catchError(this.handleError));
+
+  public get(id: any): Observable<any> {
+    return this.http
+      .get<any>(this.API + id, {
+        headers: this.createAuthorizationHeader(),
+      })
+      .pipe(catchError(this.handleError));
   }
-  getTripById(tripId:number): Observable<any>{
-    // const userId = StorageService.getUserId();
-    return this.http.get(this.API+`trip/${tripId}`, {
+
+  public getAll(): Observable<any> {
+    return this.http.get<any>(this.API, {
       headers: this.createAuthorizationHeader(),
-    }).pipe(catchError(this.handleError));
+    })
+    .pipe(catchError(this.handleError));
   }
-  changeStatus(tripId:number,status: string): Observable<any>{
-    return this.http.post(this.API+`status/${tripId}`,status, {
-      headers: this.createAuthorizationHeader(),
-    }).pipe(catchError(this.handleError));
-  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 404) {
       // Redirect to page not found component
@@ -50,10 +58,11 @@ export class AdminTripService {
     }
     return throwError(error);
   }
-  private createAuthorizationHeader(): HttpHeaders{
-    console.log(StorageService.getToken());
+
+  private createAuthorizationHeader(): HttpHeaders {
     return new HttpHeaders().set(
-      'Authorization','Bearer ' + StorageService.getToken()
-    )
+      'Authorization',
+      'Bearer ' + StorageService.getToken()
+    );
   }
 }

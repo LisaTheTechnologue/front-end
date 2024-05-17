@@ -1,46 +1,65 @@
-<div class="m-3">
-  <button mat-raised-button color="primary" routerLink="/member/trips/create"><mat-icon>add</mat-icon>Create Trip</button>
-</div>
-<mat-form-field>
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-</mat-form-field>
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened>
+    <div class="list-group list-group-flush">
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/joined-trips']">Your Joined Trips
+      </a>
+      <a href="#" class="list-group-item list-group-item-action active" aria-current="true" [routerLink]="['/member/created-trips']">Your Created Trips</a>
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/joined-requests']">Join Requests</a>
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/profile']">Edit Profile</a>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="m-5">
+    <div class="m-3">
+      <button mat-raised-button color="primary" routerLink="/member/trips/create"><mat-icon>add</mat-icon>Create
+        Trip</button>
+    </div>
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+    </mat-form-field>
 
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="trips" matSort>
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="trips" matSort>
 
-      <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Trip Title </th>
-      <td mat-cell *matCellDef="let row"> {{row.title}} </td>
-    </ng-container>
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Trip Title </th>
+          <td mat-cell *matCellDef="let row"> {{row.title}} </td>
+        </ng-container>
 
-    <ng-container matColumnDef="time">
-      <th mat-header-cell *matHeaderCellDef > Time </th>
-      <td mat-cell *matCellDef="let row"> {{ row.startDate }} - {{ row.endDate }} </td>
-    </ng-container>
+        <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef> Time </th>
+          <td mat-cell *matCellDef="let row"> {{ row.startDate }} - {{ row.endDate }} </td>
+        </ng-container>
 
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef > Status </th>
-      <td mat-cell *matCellDef="let row"> {{row.tripStatus}} </td>
-    </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Status </th>
+          <td mat-cell *matCellDef="let row"> {{row.tripStatus}} </td>
+        </ng-container>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef >Actions</th>
-      <td mat-cell *matCellDef="let row">
-        <button mat-flat-button color="accent" *ngIf="row.tripStatus === 'END'" [routerLink]="['/member/feedback/', row.id]" class="me-1">Rate</button>
-          <button mat-flat-button color="primary" *ngIf="row.tripStatus != 'END'" [routerLink]="['/member/trips/edit/', row.id]" class="me-1">Edit</button>
-          <button mat-flat-button color="warn" *ngIf="row.tripStatus != 'END'" (click)="deleteTrip(row.id)" class="me-1">Delete</button>
-      </td>
-      </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-flat-button color="accent" *ngIf="row.tripStatus === 'END'"
+              [routerLink]="['/member/trips/view/', row.id]" class="me-1">View</button>
+            <button mat-flat-button color="primary" *ngIf="row.tripStatus != 'END'"
+              [routerLink]="['/member/trips/edit/', row.id]" class="me-1">Edit</button>
+            <button mat-flat-button color="warn" *ngIf="row.tripStatus != 'END'" (click)="deleteTrip(row.id)"
+              class="me-1">Delete</button>
+          </td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-    </tr>
-  </table>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons
-  aria-label="Select page of trips"></mat-paginator>
-</div>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons
+        aria-label="Select page of trips"></mat-paginator>
+    </div>
+  </div>
+  </mat-drawer-content>
+</mat-drawer-container>

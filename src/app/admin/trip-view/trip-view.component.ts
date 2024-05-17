@@ -14,21 +14,23 @@ import { AdminTripService } from 'src/app/_shared/services/admin-trip.service';
 export class TripViewComponent {
 
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
-
+  status: string;
   constructor(
-    private adminTripService: AdminTripService,
     private activatedRoute: ActivatedRoute,
-    private snackBar: MatSnackBar,
     private router: Router,
+    private snackBar: MatSnackBar,
+    private adminTripService: AdminTripService,
   ) {}
-
+  getStatus($event: string) {
+    this.status = $event;
+    }
   changeStatus(status: string) {
     this.adminTripService.changeStatus(this.tripId,status).subscribe((res) => {
       if (res.id != null) {
         this.snackBar.open('Updated Trip Status Successful!', 'Close', {
           duration: 5000,
         });
-        this.router.navigateByUrl('/admin/dashboard');
+        this.router.navigateByUrl('/admin');
       } else {
         this.snackBar.open(res.message, 'ERROR', {
           duration: 5000,

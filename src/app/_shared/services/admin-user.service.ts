@@ -2,30 +2,25 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { AppSettings } from '../app-settings';
-import { StorageService } from './storage.service';
 import { PageNotFoundException } from '../exceptions/page-not-found.exception';
+import { User } from '../models/user.model';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminTripService {
+export class AdminUserService {
 
-  private API = AppSettings.ADMIN_API_ENDPOINT+'trips/';
+  private API = AppSettings.ADMIN_API_ENDPOINT+'users/';
   constructor(private http: HttpClient) { }
 
-  getAllTrips(): Observable<any>{
-    return this.http.get(this.API, {
+  updateStatus(id: any, data: any): Observable<any> {
+    return this.http.put(this.API+`${id}`,data, {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));
   }
-  getTripById(tripId:number): Observable<any>{
-    // const userId = StorageService.getUserId();
-    return this.http.get(this.API+`trip/${tripId}`, {
-      headers: this.createAuthorizationHeader(),
-    }).pipe(catchError(this.handleError));
-  }
-  changeStatus(tripId:number,status: string): Observable<any>{
-    return this.http.post(this.API+`status/${tripId}`,status, {
+  findByUsername(username: any): Observable<User[]> {
+    return this.http.get<User[]>(this.API+`search?username=${username}`, {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));
   }
@@ -50,10 +45,11 @@ export class AdminTripService {
     }
     return throwError(error);
   }
-  private createAuthorizationHeader(): HttpHeaders{
-    console.log(StorageService.getToken());
+
+  private createAuthorizationHeader(): HttpHeaders {
     return new HttpHeaders().set(
-      'Authorization','Bearer ' + StorageService.getToken()
-    )
+      'Authorization',
+      'Bearer ' + StorageService.getToken()
+    );
   }
 }

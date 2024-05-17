@@ -1,17 +1,11 @@
-.button-container {
-  display: flex;
-  justify-content: center;
-  width: 120px;
-}
-
-.group {
+/* Messages*/
+.chats {
   height: calc(100% - 12px);
   position: relative;
   z-index: 0;
 }
 
-.group .chatbox {
-  height: calc(100% - 68px);
+.chats .chatbox {
   overflow-x: hidden;
   padding: 0 16px;
   margin-bottom: 5px;
@@ -27,8 +21,7 @@ padding: 8px;
 .joined span {
 padding: 5px
 }
-
-/* Messages*/
+/* Messages : https://codepen.io/zenorocha/pen/eZxYOK*/
 
 .message {
 color: #000;

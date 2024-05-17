@@ -2,26 +2,29 @@
   <mat-toolbar color="primary">Group Chat</mat-toolbar>
   <mat-card class="p-2">
     <mat-card-content>
-      <div *ngIf="group">
-        <ul>
-          <li *ngFor="let message of group.messages">
-            <div class="message sent" *ngIf="message.isMe">
-              {{message.content}}
-              <span class="metadata">
-                <span class="time">{{message.createdDate | date: 'HH:mm aaa'}}</span>
-              </span>
+      <div *ngIf="messages">
+        <div class="chats">
+          <div class="chatbox">
+            <div *ngFor="let message of messages">
+              <div class="message sent" *ngIf="message.isMe">
+                {{message.content}}
+                <span class="metadata">
+                  <span class="time">{{message.createdAt | date: 'y/MM/dd HH:mm aaa'}}</span>
+                </span>
+              </div>
+              <div class="message received"  *ngIf="!message.isMe">
+                <strong>{{message.username}}</strong> <br>
+                {{message.content}}
+                <span class="metadata">
+                  <span class="time">{{message.createdAt | date: 'y/MM/dd HH:mm aaa'}}</span>
+                </span>
+              </div>
+
             </div>
-            <div class="message received"  *ngIf="!message.isMe">
-              <strong>{{message.username}}</strong> <br>
-              {{message.content}}
-              <span class="metadata">
-                <span class="time">{{message.createdDate | date: 'HH:mm aaa'}}</span>
-              </span>
-            </div>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
-      <div *ngIf="!group">
+      <div *ngIf="!messages">
         Be the first one to send a message in group!
       </div>
     </mat-card-content>

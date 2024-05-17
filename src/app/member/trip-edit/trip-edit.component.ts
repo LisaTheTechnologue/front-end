@@ -83,16 +83,10 @@ export class TripEditComponent {
       // create lines array first
       for (let item = 0; item < res.tripDays.length; item++) {
         this.addItem(res);
-        // const itemsFormArray = this.tripForm.controls['items'] as UntypedFormArray;
-        // itemsFormArray.push(this.createItem(res));
       }
 
       this.tripForm.patchValue(res);
       this.existingImage = 'data:image/jpeg;base64,' + res.byteImg;
-      // console.log(res);
-      // this.trip = res;
-      // this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
-      // this.image = this.trip.imageURL;
     });
   }
   getAllCities() {

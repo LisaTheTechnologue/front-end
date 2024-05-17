@@ -73,3 +73,10 @@ body {
   font-size: 14px;
   width: 100%;
 }
+
+.mat-drawer-container {
+  position: absolute;
+  height:calc(100vh - 110px);
+  right: 0px;
+  left: 0px;
+}

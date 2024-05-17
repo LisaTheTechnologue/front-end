@@ -34,4 +34,5 @@ export class FormImgComponent {
     };
     reader.readAsDataURL(this.selectedFile);
   }
+
 }

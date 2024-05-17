@@ -1,0 +1,12 @@
+mat-drawer-container {
+  height: 100vh; /* Set container to full viewport height */
+}
+
+mat-drawer {
+  height: 100%; /* Make drawer fill container height */
+}
+
+mat-drawer-content {
+  height: 100%; /* Make main content fill container height */
+  overflow: auto; /* Enable scrolling for long content */
+}

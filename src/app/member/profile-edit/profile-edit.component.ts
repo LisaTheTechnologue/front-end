@@ -80,7 +80,7 @@ export class ProfileEditComponent implements OnInit {
                     .uploadImage(formData)
                     .subscribe({
                       next: (res) => {
-                        this.onSuccess('Updated Trip Successfully');
+                        this.onSuccess('Updated Profile Successfully');
                       },
                       error: (error) => {
                         console.log(error);
@@ -88,7 +88,7 @@ export class ProfileEditComponent implements OnInit {
                       },
                     });
                 } else {
-                  this.onSuccess('Updated Trip Successfully');
+                  this.onSuccess('Updated Profile Successfully');
                 }
               },
               error: (error) => {

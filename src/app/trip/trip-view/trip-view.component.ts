@@ -13,7 +13,7 @@ import { PublicService } from 'src/app/_shared/services/public.service';
   styleUrls: ['./trip-view.component.css'],
 })
 export class TripViewComponent implements OnInit {
-  // isJoined = false;
+  isJoined: boolean;
   // isEnded = false;
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   isMemberLoggedIn = false;
@@ -38,7 +38,9 @@ export class TripViewComponent implements OnInit {
       this.isMemberLoggedIn = StorageService.isMemberLoggedIn();
     });
   }
-
+  getIsJoined($event: boolean) {
+    this.isJoined = $event;
+    }
   joinTrip() {
     if (this.isMemberLoggedIn) {
       const userId = StorageService.getUserId();

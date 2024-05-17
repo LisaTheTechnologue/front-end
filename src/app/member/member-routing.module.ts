@@ -11,16 +11,18 @@ import { ChatComponent } from './chat/chat.component';
 import { TripFormComponent } from './trip-form/trip-form.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { PasswordEditComponent } from './password-edit/password-edit.component';
+import { JoinRequestListComponent } from './join-request-list/join-request-list.component';
 
 
 const routes: Routes = [
-  { path: '', component: MemberComponent },
-  { path: 'dashboard', component: MemberComponent },
+  { path: '', component: TripJoinedListComponent },
+  // { path: 'dashboard', component: MemberComponent },
 { path: 'created-trips', component: TripCreatedListComponent },
 { path: 'trips/edit/:tripId', component: TripFormComponent },
 { path: 'trips/create', component: TripFormComponent },
 { path: 'trips/view/:tripId', component: TripViewComponent },
 { path: 'joined-trips', component: TripJoinedListComponent },
+{ path: 'joined-requests', component: JoinRequestListComponent },
 { path: 'payment/create/:tripId', component: TripPaymentComponent },
 { path: 'payment/view/:paymentId', component: PaymentViewComponent },
 { path: 'profile', component: ProfileEditComponent },

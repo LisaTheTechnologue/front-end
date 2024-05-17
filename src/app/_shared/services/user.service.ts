@@ -35,9 +35,7 @@ export class UserService {
     return this.http.delete(this.usersAPI);
   }
 
-  findByTitle(title: any): Observable<User[]> {
-    return this.http.get<User[]>(`${this.usersAPI}?title=${title}`);
-  }
+
 
   getPublicContent(): Observable<any> {
     return this.http.get(this.usersAPI + 'all', { responseType: 'text' });

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import PasswordValidation from 'src/app/_shared/passsword-validations';
 import { MemberUserService } from 'src/app/_shared/services/member-user.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { MemberUserService } from 'src/app/_shared/services/member-user.service'
 })
 export class PasswordEditComponent implements OnInit {
   passwordForm: FormGroup;
-
+  error: any;
   constructor(
     private fb: FormBuilder,
     private memberUserService: MemberUserService,
@@ -20,21 +21,16 @@ export class PasswordEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.passwordForm = this.fb.group({
-      oldPassword: ['', Validators.required],
-      newPassword: ['', Validators.required],
-      confirmPassword: [
-        '',
-        [Validators.required, this.confirmPasswordValidator.bind(this)],
-      ],
-    });
-  }
-
-  confirmPasswordValidator(control: FormGroup): { [s: string]: boolean } {
-    if (control.value !== this.passwordForm.get('newPassword').value) {
-      return { passwordsDontMatch: true };
-    }
-    return null;
+    this.passwordForm = this.fb.group(
+      {
+        oldPassword: ['', Validators.required],
+        newPassword: ['', Validators.required],
+        confirmPassword: ['', [Validators.required]],
+      },
+      {
+        validators: [PasswordValidation.match('password', 'confirmPassword')],
+      }
+    );
   }
 
   onSubmit() {
@@ -49,7 +45,7 @@ export class PasswordEditComponent implements OnInit {
 
     this.memberUserService.updatePassword(passwordChangeData).subscribe({
       next: (res) => {
-        this.onSuccess('Updated Trip Successfully');
+        this.onSuccess('Updated Password Successfully');
       },
       error: (error) => {
         this.onFailed(error);

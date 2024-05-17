@@ -14,19 +14,13 @@ import { AppService } from 'src/app/_shared/services/app.service';
   styleUrls: ['./chat.component.css'],
 })
 export class ChatComponent {
-  // chatForm!: FormGroup;
+
   sending: boolean;
-  // @Input() tripId: number;
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
-  group: GroupChat | null = null;
+  // group: GroupChat | null = null;
   error: string;
   content:string;
-  // usersWithImages: { [userId: number]: PublicProfile } = {};
-  // chat: any = {
-  //   content: '',
-  //   tripId: -1,
-  //   user: undefined,
-  // };
+  messages: Message[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,16 +32,19 @@ export class ChatComponent {
   }
 
   getChat(){
+    this.messages=[];
     const userId = StorageService.getUserId();
     if (this.tripId != null) {
       this.chatService.get(this.tripId).subscribe({
         next: (res) => {
-          // this.processGroupData(res);
-          if (res.userId === userId) {
-            res.isMe = true;
-          }
-          this.group.messages.push(res);
-        },
+          res.forEach((element) => {
+            if (element.userId === userId) {
+              element.isMe = true;
+            }
+            this.messages.push(element);
+          });
+
+          },
         error: (error) => {
           if (error instanceof PageNotFoundException) {
             this.router.navigate(['/page-not-found']);
@@ -56,7 +53,7 @@ export class ChatComponent {
             this.error = error.message;
           }
         },
-      });
+    });
     }
   }
 
@@ -71,6 +68,7 @@ export class ChatComponent {
       .subscribe({
         next: () => {
         this.getChat();
+        this.content=undefined;
         this.sending = false;
       },
       error: () => {

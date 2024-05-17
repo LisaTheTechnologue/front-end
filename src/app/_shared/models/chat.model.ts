@@ -1,12 +1,12 @@
 import { PublicProfile } from "./user.model";
 
-export class Message {
+export interface Message {
   id?: any;
   userId: number;
   username: string;
   tripId: number;
   content: string;
-  createdDate: string;
+  createdAt: string;
   isMe: boolean;
 }
 

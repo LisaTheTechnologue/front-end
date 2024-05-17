@@ -1,6 +1,6 @@
 <div class="container my-5">
     <div>
-      <app-trip-details [tripId]="tripId" ></app-trip-details>
+      <app-trip-details [tripId]="tripId" (isJoined)="getIsJoined($event)"></app-trip-details>
     </div>
 
     <div>

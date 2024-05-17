@@ -38,9 +38,9 @@ export class LoginComponent {
     this.authService.login(username,password).subscribe(
       (res) => {
         if(StorageService.isAdminLoggedIn()){
-          this.router.navigateByUrl('admin/dashboard');
+          this.router.navigateByUrl('admin');
         } else if(StorageService.isMemberLoggedIn()){
-          this.router.navigateByUrl('member/dashboard');
+          this.router.navigateByUrl('member');
         }
       },
       (error) => {

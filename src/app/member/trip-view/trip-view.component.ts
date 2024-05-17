@@ -12,13 +12,22 @@ export class TripViewComponent {
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   isJoined: boolean;
   isEnded: boolean;
+  isLeader: boolean;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar,
     private memberTripService: MemberTripService
   ) {}
-
+  getIsEnded($event: boolean) {
+    this.isEnded = $event;
+    }
+  getIsJoined($event: boolean) {
+    this.isJoined = $event;
+    }
+  getIsLeader($event: boolean) {
+    this.isLeader = $event;
+  }
   changeStatus(status: string) {
     this.memberTripService.changeStatus(this.tripId,status).subscribe((res) => {
       if (res.id != null) {

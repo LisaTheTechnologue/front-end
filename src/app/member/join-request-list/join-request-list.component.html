@@ -1,3 +1,15 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened>
+    <div class="list-group list-group-flush">
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/joined-trips']">Your Joined Trips
+      </a>
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/created-trips']">Your Created Trips</a>
+      <a href="#" class="list-group-item list-group-item-action active" aria-current="true" [routerLink]="['/member/joined-requests']">Join Requests</a>
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/profile']">Edit Profile</a>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="m-5">
 
   <mat-form-field>
     <mat-label>Filter</mat-label>
@@ -40,4 +52,6 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons
     aria-label="Select page of trips"></mat-paginator>
   </div>
-
+</div>
+</mat-drawer-content>
+</mat-drawer-container>

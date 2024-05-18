@@ -4,26 +4,36 @@
 
 
   <div class="heading h3">Contact Us</div>
-  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="contactForm">
+    <mat-form-field>
+      <input matInput placeholder="Name" formControlName="name" required type="text">
+      <mat-error *ngIf="contactForm.get('name').hasError('required')">
+        Name is required.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Email Address" formControlName="emailAddress" required type="email">
+      <mat-error *ngIf="contactForm.get('emailAddress').hasError('required')">
+        Email Address is required.
+      </mat-error>
+      <mat-error *ngIf="contactForm.get('emailAddress').hasError('email')">
+        Invalid email format.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Subject" formControlName="subject" required type="text">
+      <mat-error *ngIf="contactForm.get('subject').hasError('required')">
+        Subject is required.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Message" formControlName="content" required type="email">
+      <mat-error *ngIf="contactForm.get('content').hasError('required')">
+        Message is required.
+      </mat-error>
+    </mat-form-field>
     <div class="mb-3">
-      <label for="nameFld" class="col-sm-2 col-form-label">Name:</label>
-      <input type="text" formControlName="name" class="form-control" id="nameFld" required />
-      <div class="invalid-feedback" *ngIf="contactForm.get('name')?.hasError('required')">This input is required!</div>
-    </div>
-    <div class="mb-3">
-      <label for="emailFld" class="col-sm-2 col-form-label">Email:</label>
-      <input type="text" formControlName="email" class="form-control" id="emailFld" required />
-      <div class="invalid-feedback" *ngIf="contactForm.get('email')?.hasError('required')">This input is required!</div>
-    </div>
-    <div class="mb-3">
-      <label for="messageFld" class="col-sm-2 col-form-label">Message:</label>
-      <textarea type="text" formControlName="message" class="form-control" id="messageFld" required></textarea>
-      <div class="invalid-feedback" *ngIf="contactForm.get('message')?.hasError('required')">This input is required!
-      </div>
-    </div>
-    <div class="mb-3">
-      <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Send</button>
-      <div *ngIf="error">{{ error }} </div>
+      <button mat-raised-button color="primary" type="submit" [disabled]="contactForm.invalid">Send</button>
     </div>
   </form>
 </div>

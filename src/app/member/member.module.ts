@@ -24,6 +24,7 @@ import { TripCreateComponent } from './trip-create/trip-create.component';
 import { TripViewComponent } from './trip-view/trip-view.component';
 import { TripFormComponent } from './trip-form/trip-form.component';
 import { PasswordEditComponent } from './password-edit/password-edit.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { PasswordEditComponent } from './password-edit/password-edit.component';
     MatInputModule,
     MatFormFieldModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NgxPaginationModule,
   ]
 })
 export class MemberModule { }

@@ -31,7 +31,8 @@ export class AboutComponent {
     this.contactForm = this.fb.group({
       name: [null, [Validators.required]],
       email: [null, [Validators.required]],
-      message: [null, [Validators.required]],
+      subject: [null, [Validators.required]],
+      content: [null, [Validators.required]],
     });
   }
   onSubmit() {
@@ -40,27 +41,28 @@ export class AboutComponent {
     const formData: FormData = new FormData();
     formData.append('name', this.contactForm.get('name').value);
     formData.append('email', this.contactForm.get('email').value);
+    formData.append('subject', this.contactForm.get('subject').value);
     formData.append('message', this.contactForm.get('message').value);
     this.publicService.submitContact(formData).subscribe({
       next: (res) => {
-        this.onSuccess();
+        this.onSuccess('Sent successfully');
       },
       error: (error) => {
         if (error instanceof PageNotFoundException) {
           this.router.navigate(['/page-not-found']);
         } else {
-          // Handle other errors here
-          this.error = error.message;
+          this.onFailed(error);
         }
       },
     });
   }
-  private onSuccess() {
-    this.snackBar.open('Sent successfully!', '', { duration: 5000 });
-    this.contactForm = this.fb.group({
-      name: [null, [Validators.required]],
-      email: [null, [Validators.required]],
-      message: [null, [Validators.required]],
+  private onSuccess(message: string) {
+    this.snackBar.open(message, 'OK', { duration: 5000 });
+  }
+  private onFailed(message: string) {
+    this.snackBar.open(message, 'ERROR', {
+      duration: 100000,
+      panelClass: 'error-snackbar',
     });
   }
 }

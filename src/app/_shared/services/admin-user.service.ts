@@ -13,7 +13,13 @@ export class AdminUserService {
 
   private API = AppSettings.ADMIN_API_ENDPOINT+'users/';
   constructor(private http: HttpClient) { }
-
+  public updatePassword(passwordChange: any): Observable<any> {
+    const userId = StorageService.getUserId();
+    return this.http.post<any>(this.API+'change-password/' + userId, passwordChange, {
+      headers: this.createAuthorizationHeader(),
+    })
+    .pipe(catchError(this.handleError));
+  }
   updateStatus(id: any, data: any): Observable<any> {
     return this.http.put(this.API+`${id}`,data, {
       headers: this.createAuthorizationHeader(),

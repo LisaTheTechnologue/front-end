@@ -14,7 +14,7 @@ export class AdminTripService {
   constructor(private http: HttpClient) { }
 
   getAllTrips(): Observable<any>{
-    return this.http.get(this.API, {
+    return this.http.get(this.API+"all", {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));
   }
@@ -25,7 +25,7 @@ export class AdminTripService {
     }).pipe(catchError(this.handleError));
   }
   changeStatus(tripId:number,status: string): Observable<any>{
-    return this.http.post(this.API+`status/${tripId}`,status, {
+    return this.http.put(this.API+`status/${tripId}`,status, {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));
   }

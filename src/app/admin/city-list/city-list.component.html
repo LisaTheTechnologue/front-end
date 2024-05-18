@@ -1,1 +1,18 @@
-<p>city-list works!</p>
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened>
+    <div class="list-group list-group-flush">
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/trips']">Trips</a>
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/users']">Users</a>
+      <a href="#" class="list-group-item list-group-item-action active" aria-current="true" [routerLink]="['/admin/cities']">Cities</a>
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/contacts']">Contacts</a>
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/change-password']">Change Password</a>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="container my-5">
+      <input type="file" (change)="onFileChanged($event)">
+      <button (click)="uploadCSV()">Upload CSV</button>
+
+      </div>
+      </mat-drawer-content>
+      </mat-drawer-container>

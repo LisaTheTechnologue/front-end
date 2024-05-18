@@ -53,9 +53,10 @@ export class TripIndexComponent {
 
       // Filter by date range (optional)
       const dateMatch =
-        !this.startDate ||
-        !this.endDate ||
-        (item.startDate >= this.startDate && item.startDate <= this.endDate);
+        (!this.startDate && !this.endDate) ||
+        (!this.endDate && item.startDate >= this.startDate) ||
+        (!this.startDate && item.endDate <= this.endDate) ||
+        (item.startDate >= this.startDate && item.endDate <= this.endDate);
 
       // Filter by price (optional)
       // this.minPrice = value;

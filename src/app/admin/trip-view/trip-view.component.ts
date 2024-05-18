@@ -25,18 +25,24 @@ export class TripViewComponent {
     this.status = $event;
     }
   changeStatus(status: string) {
-    this.adminTripService.changeStatus(this.tripId,status).subscribe((res) => {
-      if (res.id != null) {
-        this.snackBar.open('Updated Trip Status Successful!', 'Close', {
-          duration: 5000,
-        });
-        this.router.navigateByUrl('/admin');
-      } else {
-        this.snackBar.open(res.message, 'ERROR', {
-          duration: 5000,
-          panelClass: 'error-snackbar',
-        });
-      }
+    this.adminTripService.changeStatus(this.tripId,status).subscribe({
+      next: (res) => {
+        this.onSuccess('Updated Trip Status Successful!');
+      },
+      error: (error) => {
+        this.onFailed(error);
+      },
+    });
+  }
+
+  private onSuccess(message: string) {
+    this.snackBar.open(message, 'OK', { duration: 5000 });
+    this.router.navigateByUrl('/admin');
+  }
+  private onFailed(message: string) {
+    this.snackBar.open(message, 'ERROR', {
+      duration: 100000,
+      panelClass: 'error-snackbar',
     });
   }
 }

@@ -5,6 +5,7 @@
       </a>
       <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/created-trips']">Your Created Trips</a>
       <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/joined-requests']">Join Requests</a>
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/payment/list']">Payment History</a>
       <a href="#" class="list-group-item list-group-item-action active" aria-current="true" [routerLink]="['/member/profile']">Edit Profile</a>
     </div>
   </mat-drawer>
@@ -16,7 +17,7 @@
           <input matInput placeholder="Username" [attr.disabled]="true" formControlName="username">
         </mat-form-field>
         <div class="mb-3">
-          <app-form-img (img)="selectedImage($event)" [isAddMode]="isAddMode"
+          <app-form-img (selectedImage)="selectedImage($event)" [limitFileSize]="50"
             [existingImage]="existingImage"></app-form-img>
         </div>
         <mat-card class="mb-3">
@@ -25,27 +26,27 @@
           </mat-card-header>
           <mat-card-content>
             <mat-form-field>
-              <input matInput placeholder="First Name" formControlName="firstname" required>
-              <mat-error *ngIf="profileForm.get('firstname').hasError('required')">
+              <input matInput placeholder="First Name" formControlName="firstName" required>
+              <mat-error *ngIf="profileForm.get('firstName').hasError('required')">
                 First Name is required.
               </mat-error>
-              <mat-error *ngIf="profileForm.get('firstname').hasError('minlength')">
+              <mat-error *ngIf="profileForm.get('firstName').hasError('minlength')">
                 First Name must be at least 1 character.
               </mat-error>
-              <mat-error *ngIf="profileForm.get('firstname').hasError('maxlength')">
+              <mat-error *ngIf="profileForm.get('firstName').hasError('maxlength')">
                 First Name cannot be longer than 50 characters.
               </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput placeholder="Last Name" formControlName="lastname" required>
-              <mat-error *ngIf="profileForm.get('lastname').hasError('required')">
+              <input matInput placeholder="Last Name" formControlName="lastName" required>
+              <mat-error *ngIf="profileForm.get('lastName').hasError('required')">
                 Last Name is required.
               </mat-error>
-              <mat-error *ngIf="profileForm.get('lastname').hasError('minlength')">
+              <mat-error *ngIf="profileForm.get('lastName').hasError('minlength')">
                 Last Name must be at least 1 character.
               </mat-error>
-              <mat-error *ngIf="profileForm.get('lastname').hasError('maxlength')">
+              <mat-error *ngIf="profileForm.get('lastName').hasError('maxlength')">
                 Last Name cannot be longer than 50 characters.
               </mat-error>
             </mat-form-field>
@@ -57,7 +58,10 @@
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput placeholder="Phone Number" formControlName="phoneNo">
+              <input matInput placeholder="Phone Number" formControlName="phoneNo" type="number">
+              <mat-error *ngIf="profileForm.get('phoneNo').hasError('pattern')">
+                Invalid phone number.
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field>
@@ -69,11 +73,11 @@
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput placeholder="Email Address" formControlName="emailAddress" required type="email">
-              <mat-error *ngIf="profileForm.get('emailAddress').hasError('required')">
+              <input matInput placeholder="Email Address" formControlName="email" required type="email">
+              <mat-error *ngIf="profileForm.get('email').hasError('required')">
                 Email Address is required.
               </mat-error>
-              <mat-error *ngIf="profileForm.get('emailAddress').hasError('email')">
+              <mat-error *ngIf="profileForm.get('email').hasError('email')">
                 Invalid email format.
               </mat-error>
             </mat-form-field>
@@ -93,7 +97,7 @@
           </mat-card-header>
           <mat-card-content>
             <mat-form-field>
-              <input matInput placeholder="Account Number" formControlName="paymentAccNo">
+              <input matInput placeholder="Account Number" formControlName="paymentAccNo" type="number">
             </mat-form-field>
             <mat-form-field>
               <input matInput placeholder="Account Bank" formControlName="paymentAccBank">
@@ -103,7 +107,7 @@
             </mat-form-field>
           </mat-card-content>
         </mat-card>
-        <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">Save Profile</button>
+        <button mat-raised-button color="primary" type="submit" (click)="submit()" [disabled]="profileForm.invalid">Save Profile</button>
       </form>
 
     </div>

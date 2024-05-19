@@ -2,8 +2,10 @@
   <mat-card-header>
     <mat-card-title-group>
       <mat-card-title>{{ user.fullName }} </mat-card-title>
-      <mat-card-subtitle><ngb-rating [(rate)]="rating" [readonly]="true" [max]="5"
-          class="custom-rating"></ngb-rating></mat-card-subtitle>
+      <mat-card-subtitle>
+        <ngb-rating [(rate)]="rating" [readonly]="true" [max]="5"
+          class="custom-rating"></ngb-rating>
+        </mat-card-subtitle>
       <div *ngIf="user.imageURL">
         <img mat-card-sm-image [src]="user.imageURL" alt="avatar">
       </div>

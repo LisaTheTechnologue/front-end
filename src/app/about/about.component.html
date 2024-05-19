@@ -12,11 +12,11 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Email Address" formControlName="emailAddress" required type="email">
-      <mat-error *ngIf="contactForm.get('emailAddress').hasError('required')">
+      <input matInput placeholder="Email Address" formControlName="email" required type="email">
+      <mat-error *ngIf="contactForm.get('email').hasError('required')">
         Email Address is required.
       </mat-error>
-      <mat-error *ngIf="contactForm.get('emailAddress').hasError('email')">
+      <mat-error *ngIf="contactForm.get('email').hasError('email')">
         Invalid email format.
       </mat-error>
     </mat-form-field>

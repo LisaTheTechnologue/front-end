@@ -13,7 +13,7 @@ import { AdminUserService } from 'src/app/_shared/services/admin-user.service';
 export class UserListComponent {
   users = new MatTableDataSource<any>([]);
   searchText: string = '';
-  displayedColumns: string[] = ['username', 'fullname', 'email', 'status', 'actions'];
+  displayedColumns: string[] = ['username', 'fullName', 'email', 'status', 'actions'];
   constructor(
     private snackBar: MatSnackBar,
     private adminUserService: AdminUserService,
@@ -28,7 +28,7 @@ export class UserListComponent {
     this.users.sort = this.sort;
   }
   search(){
-    this.adminUserService.findByUsername(this.searchText).subscribe({
+    this.adminUserService.searchUser(this.searchText).subscribe({
       next: (res) => {
         this.users.data = res;
       },

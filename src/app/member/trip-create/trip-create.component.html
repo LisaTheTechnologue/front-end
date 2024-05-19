@@ -2,7 +2,7 @@
 
   <div class="heading h3">Add Trip</div>
   <div class="mb-3">
-    <app-form-img (img)="selectedImage($event)"></app-form-img>
+    <app-form-img (selectedImage)="selectedImage($event)"></app-form-img>
   </div>
 
   <form [formGroup]="tripForm">

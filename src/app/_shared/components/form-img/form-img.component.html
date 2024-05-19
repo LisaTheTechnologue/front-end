@@ -2,17 +2,17 @@
        (change)="onFileSelected($event)" #fileUpload>
 
 <div class="file-upload">
-   {{fileName || "No file uploaded yet."}}
     <button mat-mini-fab color="primary" class="upload-btn"
       (click)="fileUpload.click()">
         <mat-icon>attach_file</mat-icon>
     </button>
+    {{fileName || "No file uploaded yet."}}
 </div>
 
 <div *ngIf="selectedFile" class="image-preview">
     <img [src]="imagePreview" alt="Selected Image" class="preview-image">
 </div>
 
-<div *ngIf="existingImage && !isAddMode" class="image-preview">
+<div *ngIf="existingImage && !selectedFile" class="image-preview">
     <img [src]="existingImage" alt="Existing Image" class="preview-image">
 </div>

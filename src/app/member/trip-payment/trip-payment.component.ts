@@ -22,7 +22,7 @@ import { ConfirmDialogComponent } from 'src/app/_shared/components/confirm-dialo
 export class TripPaymentComponent {
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   trip!: Trip;
-  profile: PaymentProfile;
+  profile!: PaymentProfile;
   selectedFile: File | null;
   imagePreview: string | ArrayBuffer | null;
   paymentForm!: FormGroup;
@@ -39,51 +39,54 @@ export class TripPaymentComponent {
   ngOnInit(): void {
     this.getTrip();
     this.paymentForm = this.fb.group({
+      amount: [null, [Validators.required]],
       notes: [null, []],
     });
   }
   getTrip(){
-    this.publicService.getByTripId(this.tripId).subscribe((res) => {
-      this.trip = res;
-      this.trip.leaderId = res.leaderId;
-      this.getPaymentProfileByUserId(this.trip.leaderId);
-      this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
-    });
-  }
-  getPaymentProfileByUserId(leaderId: number) {
-    this.userService.getPaymentProfileByUserId(leaderId)
-    .subscribe((res) => {
-      this.profile = res;
-    });
-  }
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-    this.previewImage();
-  }
-  previewImage() {
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = reader.result;
-    };
-    reader.readAsDataURL(this.selectedFile);
-  }
-  submit() {
-
-    const formData: FormData = new FormData();
-    const userId = StorageService.getUserId();
-    const tripId = this.tripId + '';
-    formData.append('img', this.selectedFile);
-    formData.append('payerId', userId);
-    formData.append('tripId', tripId);
-    formData.append('notes', this.paymentForm.get('notes').value);
-    this.paymentService.create(formData).subscribe({
+    this.publicService.getByTripId(this.tripId).subscribe({
       next: (res) => {
-        this.onSuccess("Payment sent successfully! Please wait for the leader's approval");
+        this.trip = res;
+        this.getPaymentProfileByUserId(res.leaderId);
+        this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
       },
       error: (error) => {
         this.onFailed(error);
       },
-  });
+    });
+  }
+  getPaymentProfileByUserId(leaderId: number) {
+    this.userService.getPaymentProfileByUserId(leaderId)
+    .subscribe((res) => {      
+      this.profile = res;
+    });
+  }
+  selectedImage(event: File) {
+    this.selectedFile = event;
+    // this.imageChanged = true;
+  }
+  submit() {
+    if(this.selectedFile!=null) {
+      const formData: FormData = new FormData();
+      const userId = StorageService.getUserId();
+      const tripId = this.tripId + '';
+      formData.append('img', this.selectedFile);
+      formData.append('payerId', userId);
+      formData.append('tripId', tripId);
+      formData.append('amount', this.paymentForm.get('amount').value);
+      formData.append('notes', this.paymentForm.get('notes').value);
+      this.paymentService.create(formData).subscribe({
+        next: (res) => {
+          this.onSuccess("Payment sent successfully! Please wait for the leader's approval");
+        },
+        error: (error) => {
+          this.onFailed(error);
+        },
+      });
+    } else {
+      this.onFailed("Image is required.");
+    }
+    
   }
 
   onCancel() {
@@ -92,7 +95,7 @@ export class TripPaymentComponent {
   private onSuccess(message: string) {
     this.snackBar.open(
       message,
-      '',
+      'OK',
       { duration: 5000 }
     );
     this.onCancel();
@@ -102,10 +105,9 @@ export class TripPaymentComponent {
       message,
       'ERROR',
       {
-        duration: 100000,
+        duration: 5000,
         panelClass: 'error-snackbar',
       }
     );
-    this.onCancel();
   }
 }

@@ -22,9 +22,11 @@ export class SignupComponent {
 
   ngOnInit(): void{
     this.signupForm = this.fb.group({
-      name: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]],
+      lastName: [null, [Validators.required, Validators.minLength(1),Validators.maxLength(50)]],
+      firstName: [null, [Validators.required, Validators.minLength(1),Validators.maxLength(50)]],
+      username: [null, [Validators.required, Validators.minLength(1),Validators.maxLength(50)]],
+      email: [null, [Validators.required, Validators.email, Validators.minLength(4),Validators.maxLength(50)]],
+      password: [null, [Validators.required, Validators.minLength(8),Validators.maxLength(120)]],
       confirmPassword: [null, [Validators.required]],
     })
   }
@@ -48,13 +50,22 @@ export class SignupComponent {
 
     this.authService.register(this.signupForm.value).subscribe(
       (res) => {
-        this.snackBar.open('Sign up successful!','Close', {duration:5000});
-        this.router.navigateByUrl("/login");
+        this.onSuccess('Sign up successful!');
       },
       (error) => {
-        this.snackBar.open('Sign up failed. Please try again.', 'Close', {duration:5000, panelClass: 'error-snackbar'});
+        this.onFailed(error);
       }
     )
 
+  }
+  private onSuccess(message: string) {
+    this.snackBar.open(message, 'OK', { duration: 5000 });
+    this.router.navigateByUrl('/login');
+  }
+  private onFailed(message: string) {
+    this.snackBar.open(message, 'ERROR', {
+      duration: 100000,
+      panelClass: 'error-snackbar',
+    });
   }
 }

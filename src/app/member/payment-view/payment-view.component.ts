@@ -11,6 +11,7 @@ import { MemberPaymentService } from 'src/app/_shared/services/member-payment.se
 import { MemberJoinerService } from 'src/app/_shared/services/member-joiner.service';
 import { PublicService } from 'src/app/_shared/services/public.service';
 import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
+import { StorageService } from 'src/app/_shared/services/storage.service';
 @Component({
   selector: 'app-payment-view',
   templateUrl: './payment-view.component.html',
@@ -20,11 +21,10 @@ export class PaymentViewComponent {
   payment:any;
   paymentId = this.activatedRoute.snapshot.params['paymentId'];
   trip: any;
-
+  selfPayment: boolean = false;
   constructor(
     private paymentService: MemberPaymentService,
     private publicService: PublicService,
-    private joinerService: MemberJoinerService,
     private confirmationService: ConfirmService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
@@ -39,12 +39,16 @@ export class PaymentViewComponent {
   }
 
   getPayment() {
+    const userId = StorageService.getUserId();
     this.paymentService.getById(this.paymentId).subscribe(
       (res) => {
         // Handle successful response
         this.payment = res;
         this.payment.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
         this.getTrip(res.tripId);
+        if(this.payment.payerId==userId){
+          this.selfPayment = true;
+        }
       },
       (error) => {
         // Handle error response
@@ -64,15 +68,19 @@ export class PaymentViewComponent {
       }
     );
   }
-  confirm() {
-    this.confirmationService.confirm('Confirm this payment?')
+  changeStatus(status:string) {
+    this.confirmationService.confirm('Are you sure you want to do this?')
       .subscribe(confirmed => {
         if (confirmed) {
           // Perform action upon confirmation
-          this.joinerService.approve(this.payment.joinerId).subscribe(
+          this.paymentService.update({
+            'id':this.payment.id,
+            'tripId':this.payment.tripId,
+            'payerId': this.payment.payerId,
+            'paymentStatus': status}).subscribe(
             (res) => {
               // Handle successful response
-              this.onSuccess('Confirmed payment');
+              this.onSuccess('Payment ' + status);
               this.onCancel();
             },
             (error) => {
@@ -86,27 +94,30 @@ export class PaymentViewComponent {
       });
   }
 
-  reject() {
-    this.confirmationService.confirm('Reject this payment?')
-      .subscribe(confirmed => {
-        if (confirmed) {
-          // Perform action upon confirmation
-          this.joinerService.reject(this.payment.joinerId).subscribe(
-            (res) => {
-              // Handle successful response
-              this.onSuccess('Payment rejected');
-              this.onCancel();
-            },
-            (error) => {
-              // Handle error response
-              this.showError(error);
-            }
-          );
-        } else {
-          // Handle cancellation
-        }
-      });
-  }
+  // reject() {
+  //   this.confirmationService.confirm('Reject this payment?')
+  //     .subscribe(confirmed => {
+  //       if (confirmed) {
+  //         // Perform action upon confirmation
+  //         this.paymentService.update({
+  //           'tripId':this.payment.tripId,
+  //           'payerId': this.payment.payerId,
+  //           'paymentStatus': 'rejected'}).subscribe(
+  //           (res) => {
+  //             // Handle successful response
+  //             this.onSuccess('Payment rejected');
+  //             this.onCancel();
+  //           },
+  //           (error) => {
+  //             // Handle error response
+  //             this.showError(error);
+  //           }
+  //         );
+  //       } else {
+  //         // Handle cancellation
+  //       }
+  //     });
+  // }
 
   onCancel() {
     this.router.navigateByUrl('/member');

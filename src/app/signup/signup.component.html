@@ -4,9 +4,21 @@
     <mat-card-content>
       <form [formGroup]="signupForm">
         <mat-form-field appearance="outline">
-          <mat-label>Name</mat-label>
-          <input matInput formControlName="name" placeholder="Name" required>
-          <mat-error *ngIf="signupForm.get('name')?.invalid && signupForm.get('name')?.touched">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" placeholder="Username" required>
+          <mat-error *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched">
+            Please enter a valid username.</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName" placeholder="First Name" required>
+          <mat-error *ngIf="signupForm.get('firstName')?.invalid && signupForm.get('firstName')?.touched">
+            Please enter a valid name.</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName" placeholder="Last Name" required>
+          <mat-error *ngIf="signupForm.get('lastName')?.invalid && signupForm.get('lastName')?.touched">
             Please enter a valid name.</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">

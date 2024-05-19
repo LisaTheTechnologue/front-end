@@ -13,6 +13,9 @@ import { MemberUserService } from 'src/app/_shared/services/member-user.service'
 export class PasswordEditComponent implements OnInit {
   passwordForm: FormGroup;
   error: any;
+  hideNPassword = true;
+  hideCPassword = true;
+  hideOPassword = true;
   constructor(
     private fb: FormBuilder,
     private memberUserService: MemberUserService,
@@ -24,17 +27,18 @@ export class PasswordEditComponent implements OnInit {
     this.passwordForm = this.fb.group(
       {
         oldPassword: ['', Validators.required],
-        newPassword: ['', Validators.required],
+        newPassword: ['', [Validators.required, Validators.minLength(8),Validators.maxLength(120)]],
         confirmPassword: ['', [Validators.required]],
-      },
-      {
-        validators: [PasswordValidation.match('password', 'confirmPassword')],
       }
     );
   }
 
   onSubmit() {
-    if (this.passwordForm.invalid) {
+    const newPassword = this.passwordForm.get('newPassword')?.value;
+    const confirmPassword = this.passwordForm.get('confirmPassword')?.value;
+
+    if(newPassword !== confirmPassword){
+      this.snackBar.open('Passwords do not match.', 'Close', {duration: 5000, panelClass: 'error-snackbar'});
       return;
     }
 

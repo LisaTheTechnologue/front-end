@@ -17,14 +17,14 @@ export class FilterPipe implements PipeTransform {
 
     // return users.filter( user => {
     //     if (filterObject.filterType === 'all') {
-    //       return  user.firstname.toLowerCase().includes(filterObject.searchInput) ||
-    //       user.lastname.toLowerCase().includes(filterObject.searchInput) ||
+    //       return  user.firstName.toLowerCase().includes(filterObject.searchInput) ||
+    //       user.lastName.toLowerCase().includes(filterObject.searchInput) ||
     //       user.designation.toLowerCase().includes(filterObject.searchInput) ||
     //       user.team.toLowerCase().includes(filterObject.searchInput);
     //     }
     //     if (filterObject.filterType === 'name') {
-    //       return user.firstname.toLowerCase().includes(filterObject.searchInput) ||
-    //        user.lastname.toLowerCase().includes(filterObject.searchInput);
+    //       return user.firstName.toLowerCase().includes(filterObject.searchInput) ||
+    //        user.lastName.toLowerCase().includes(filterObject.searchInput);
     //     }
     //     if (filterObject.filterType === 'Designation') {
     //       return user.designation.toLowerCase().includes(filterObject.searchInput);

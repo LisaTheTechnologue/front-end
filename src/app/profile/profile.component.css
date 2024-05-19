@@ -1,12 +1,12 @@
 /* #cover {
   min-width: 100%;
 } */
-#profile-picture {
+.profile-picture {
   width: 250px;
   height: 250px;
   /* margin-top: -100px; */
 }
-#profile-view {
+.profile-view {
   padding: 5px !important;
 }
 .profile-buttons {
@@ -15,10 +15,6 @@
 .btn-block {
   display: block;
   min-width: 100%;
-}
-body {
-  margin-top: 20px;
-  background: #ebeef0;
 }
 
 .img-sm {
@@ -141,14 +137,18 @@ a.text-muted:focus {
 }
 
 .list-with-border {
-  border: 1px solid #f2f2f2;
+  border: 0.5px solid #fdf2cf;
+  background-color: white;
 }
 
-.selected-lesson {
-  font-style: italic;
+.mdc-list-item--activated {
   font-weight: bold !important;
-  background-color: whitesmoke;
+  background-color: #f9eabd;
 }
+.mdc-list-item--activated .mdc-list-item__primary-text{  
+  color: black;
+} 
+
 .trip-card {
   width: 200px;
   margin-bottom: 16px;

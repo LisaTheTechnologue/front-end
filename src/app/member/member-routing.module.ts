@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MemberComponent } from './member.component';
 import { TripPaymentComponent } from './trip-payment/trip-payment.component';
-import { FeedbackCreateComponent } from './feedback-create/feedback-create.component';
 import { PaymentViewComponent } from './payment-view/payment-view.component';
 import { TripJoinedListComponent } from './trip-joined-list/trip-joined-list.component';
 import { TripCreatedListComponent } from './trip-created-list/trip-created-list.component';
@@ -12,6 +11,8 @@ import { TripFormComponent } from './trip-form/trip-form.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { PasswordEditComponent } from './password-edit/password-edit.component';
 import { JoinRequestListComponent } from './join-request-list/join-request-list.component';
+import { PaymentHistoryListComponent } from './payment-history-list/payment-history-list.component';
+import { FeedbackFormComponent } from './feedback-form/feedback-form.component';
 
 
 const routes: Routes = [
@@ -23,11 +24,12 @@ const routes: Routes = [
 { path: 'trips/view/:tripId', component: TripViewComponent },
 { path: 'joined-trips', component: TripJoinedListComponent },
 { path: 'joined-requests', component: JoinRequestListComponent },
+{ path: 'payment/list', component: PaymentHistoryListComponent },
 { path: 'payment/create/:tripId', component: TripPaymentComponent },
 { path: 'payment/view/:paymentId', component: PaymentViewComponent },
 { path: 'profile', component: ProfileEditComponent },
 { path: 'password-edit', component: PasswordEditComponent },
-{ path: 'feedback/:tripId', component: FeedbackCreateComponent },
+{ path: 'feedback/:tripId', component: FeedbackFormComponent },
 { path: 'chat/:tripId', component: ChatComponent },
 ];
 

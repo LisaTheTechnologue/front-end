@@ -1,0 +1,33 @@
+<div class="container my-5">
+
+  <div class="heading h3">Feedback</div>
+  <form [formGroup]="feedbackForm" >
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Leader Rating</mat-label>
+          <input matInput formControlName="leaderRating" type="number" min="1" max="5">
+          <mat-error *ngIf="feedbackForm.get('leaderRating')?.invalid">{{ getErrorMessage('leaderRating') }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Trip Rating</mat-label>
+          <input matInput formControlName="tripRating" type="number" min="1" max="5">
+          <mat-error *ngIf="feedbackForm.get('tripRating')?.invalid">{{ getErrorMessage('tripRating') }}</mat-error>
+        </mat-form-field>    
+      </div>
+    </div>
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Feedback</mat-label>
+      <textarea matInput type="text" formControlName="feedback"></textarea>
+      <mat-error *ngIf="feedbackForm.get('feedback')?.invalid">{{ getErrorMessage('feedback') }}</mat-error>
+    </mat-form-field>
+    
+    <div class="mb-3">
+      <button mat-raised-button color="primary" type="submit" (click)="submit()" [disabled]="feedbackForm.invalid">Submit</button>
+
+    </div>
+  </form>
+</div>

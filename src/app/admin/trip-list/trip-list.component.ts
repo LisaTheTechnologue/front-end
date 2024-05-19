@@ -38,19 +38,9 @@ export class TripListComponent {
     private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-    this.adminTripService.getAllTrips().subscribe({
-      next: (res) => {
-        this.trips.data = res;
-        this.allTrips = res;
-      },
-      error: (error) => {
-        if (error.status === 404) {
-          this.error = 'No trip found.';
-        } else {
-          this.error = 'Error! Cannot load list.';
-        }
-        this.onFailed(this.error);
-      },
+    this.adminTripService.getAllTrips().subscribe((res) => {
+      this.trips.data = res;
+      this.allTrips = res;
     });
 
   }

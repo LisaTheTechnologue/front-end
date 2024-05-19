@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { AppSettings } from 'src/app/_shared/app-settings';
 
 @Component({
   selector: 'app-city-list',
@@ -19,7 +20,7 @@ export class CityListComponent {
     const formData = new FormData();
     formData.append('file', this.selectedFile);
 
-    this.http.post<any>('http://localhost:8080/upload', formData)
+    this.http.post<any>(AppSettings.ADMIN_API_ENDPOINT+'cities', formData)
       .subscribe(response => {
         console.log('Upload successful:', response);
       }, error => {

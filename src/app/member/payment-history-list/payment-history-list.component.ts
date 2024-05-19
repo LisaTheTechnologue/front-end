@@ -1,23 +1,22 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MemberJoinerService } from 'src/app/_shared/services/member-joiner.service';
 import { MemberPaymentService } from 'src/app/_shared/services/member-payment.service';
 
 @Component({
-  selector: 'app-join-request-list',
-  templateUrl: './join-request-list.component.html',
-  styleUrls: ['./join-request-list.component.css']
+  selector: 'app-payment-history-list',
+  templateUrl: './payment-history-list.component.html',
+  styleUrls: ['./payment-history-list.component.css']
 })
-export class JoinRequestListComponent implements OnInit, AfterViewInit{
+export class PaymentHistoryListComponent implements OnInit {
   error: any;
 
   public joins= new MatTableDataSource<any>([]);
   searchText: string = '';
   filteredData: any[] = [];
-  displayedColumns: string[] = ['username','title','createdDate','status','actions'];
+  displayedColumns: string[] = ['title','createdDate','status','actions'];
 
   @ViewChild(MatPaginator) private paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -28,7 +27,7 @@ export class JoinRequestListComponent implements OnInit, AfterViewInit{
   ) {}
 
   ngOnInit(): void {
-    this.memberPaymentService.getByLeaderId().subscribe((res) => {
+    this.memberPaymentService.getByPayerId().subscribe((res) => {
       this.joins.data = res;
     });
 
@@ -56,4 +55,5 @@ export class JoinRequestListComponent implements OnInit, AfterViewInit{
       }
     );
   }
+
 }

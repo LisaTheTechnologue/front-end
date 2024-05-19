@@ -59,21 +59,16 @@ export class MemberUserService {
       // Redirect to page not found component
       return throwError(() => new PageNotFoundException());
     }
+    let errorMessage = '';
     // Handle other errors here
-    if (error.error) {
-      // Extract error details from the response body
-      const errorMessage = error.error.message || error.error;
-      const errorCode = error.error.body.status; // Assuming your error object has these properties
-      const errorDetail = error.error.body.detail;
-      // Display the error message to the user (e.g., using a toast notification)
-      console.error('Error:', errorMessage, 'Code:', errorCode, 'Details:', errorDetail); // Log for debugging
-      // You can display the error message in a user-friendly way
-      return throwError(errorDetail);
+    if (error.error instanceof ErrorEvent) {
+      // Client-side or network error occurred. Handle it accordingly.
+      errorMessage = `Error: ${error.error.message}`;
     } else {
-      // Handle network or other non-2xx error situations
-      console.error('An unexpected error occurred!');
+      errorMessage = `Error: ${error.error}`;
+      
     }
-    return throwError(error);
+    return throwError(errorMessage);
   }
 
   private createAuthorizationHeader(): HttpHeaders {

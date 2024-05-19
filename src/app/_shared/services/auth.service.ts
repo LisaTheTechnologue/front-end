@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AppSettings } from '../app-settings';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
 import { StorageService } from './storage.service';
+import { PageNotFoundException } from '../exceptions/page-not-found.exception';
 
 @Injectable({
   providedIn: 'root',
@@ -36,20 +37,29 @@ export class AuthService {
           this.loggedIn.asObservable();
           return true;
         }),
-        catchError(this.errorHandler)
+        catchError(this.handleError)
       );
   }
   register(signupRequest: any): Observable<any> {
-    return this.http.post(this.AUTH_API + 'register', signupRequest);
+    return this.http.post(this.AUTH_API + 'register', signupRequest)
+    .pipe(catchError(this.handleError));
   }
 
-  errorHandler(error: any) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message;
-    } else {
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 404) {
+      // Redirect to page not found component
+      return throwError(() => new PageNotFoundException());
     }
-    return throwError(() => new Error(error));
+    let errorMessage = '';
+    // Handle other errors here
+    if (error.error instanceof ErrorEvent) {
+      // Client-side or network error occurred. Handle it accordingly.
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `Error: ${error.error}`;
+      
+    }
+    return throwError(errorMessage);
   }
+  
 }

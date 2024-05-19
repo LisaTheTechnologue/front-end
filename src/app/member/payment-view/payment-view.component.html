@@ -5,7 +5,7 @@
     <div class="row p-3">
       <div class="col-6 justify-content-center">
         <p class="h5">Trip Info</p>
-        <mat-card class="m-4" style="width:50%">
+        <mat-card class="m-4" style="width:50%" [routerLink]="['/trips/view', payment.tripId]">
           <app-trip-card [trip]="trip"></app-trip-card>
         </mat-card>
 
@@ -26,14 +26,17 @@
           <img [src]="payment.imageURL" alt="Evidence" class="preview-image">
         </div>
       </div>
-
+      <div class="mb-3">
+        <div><strong>Amount: </strong></div>
+        <p>{{ payment.amount }}</p>
+      </div>
       <div class="mb-3">
         <div><strong>Notes: </strong></div>
         <p>{{ payment.notes }}</p>
       </div>
-      <div class="mb-3">
-        <button mat-raised-button color="primary" type="button" class="me-3" (click)="confirm()">Approve</button>
-        <button mat-raised-button color="danger" type="button" class="me-3" (click)="reject()">Reject</button>
+      <div class="mb-3" *ngIf="payment.paymentStatus=='PENDING' && !selfPayment">
+        <button mat-raised-button color="primary" type="button" class="me-3" (click)="changeStatus('complete')">Complete</button>
+        <button mat-raised-button color="danger" type="button" class="me-3" (click)="changeStatus('reject')">Reject</button>
       </div>
     </div>
   </div>

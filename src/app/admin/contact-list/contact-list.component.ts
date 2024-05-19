@@ -26,14 +26,8 @@ export class ContactListComponent {
   ) {}
 
   ngOnInit(): void {
-    this.adminContactService.getAll().subscribe({
-      next: (res) => {
-        this.contacts.data = res;
-      },
-      error: (error) => {
-        this.error = 'Error! Cannot load list.';
-        this.onFailed(this.error);
-      },
+    this.adminContactService.getAll().subscribe((res) => {
+      this.contacts.data = res;
     });
   }
 

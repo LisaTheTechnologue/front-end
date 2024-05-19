@@ -10,19 +10,19 @@ import { StorageService } from './storage.service';
   providedIn: 'root'
 })
 export class MemberFeedbackService {
-  private API = AppSettings.MEMBER_API_ENDPOINT + 'feedback/';
+  private API = AppSettings.MEMBER_API_ENDPOINT + 'feedbacks/';
   constructor(public http: HttpClient, public router: Router) {}
 
   public get(tripId: any): Observable<any> {
     return this.http
-      .get<any>(this.API + tripId, {
+      .get<any>(this.API+'get/' + tripId, {
         headers: this.createAuthorizationHeader(),
       })
       .pipe(catchError(this.handleError));
   }
 
-  public create(form: any): Observable<any> {
-    return this.http.post<any>(this.API, form, {
+  public submit(form: any): Observable<any> {
+    return this.http.post<any>(this.API+'submit', form, {
       headers: this.createAuthorizationHeader(),
     })
     .pipe(catchError(this.handleError));

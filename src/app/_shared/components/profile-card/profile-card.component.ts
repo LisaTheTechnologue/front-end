@@ -20,7 +20,7 @@ export class ProfileCardComponent {
     this.publicService.getProfile(this.userId).subscribe(
       (profile) => {
         this.user = profile;
-        if(profile.byteImg != undefined || profile.byteImg != '') {
+        if(profile.byteImg != null ) {
           this.user.imageURL = 'data:image/jpeg;base64,' + profile.byteImg;
         }
         this.rating = this.user.rating;

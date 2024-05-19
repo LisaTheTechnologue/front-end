@@ -21,21 +21,22 @@ export class ProfileEditComponent implements OnInit {
   imageChanged: boolean = false;
   profile: User;
   error: any;
+
   constructor(private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private memberUserService: MemberUserService,
   private confirmationService: ConfirmService) { }
 
   ngOnInit() {
-
+    const phonePattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     this.profileForm = this.fb.group({
       username: [''], // Set to disabled as mentioned in HTML
-      firstname: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-      lastname: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       dob: [null],
-      phoneNo: [''],
+      phoneNo: ['',[Validators.pattern(phonePattern)]],
       gender: [''],
-      emailAddress: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       paymentAccNo: [''],
       paymentAccName: [''],
       paymentAccBank: [''],
@@ -44,7 +45,9 @@ export class ProfileEditComponent implements OnInit {
       next: (res) => {
         this.profile = res;
         this.profileForm.patchValue(this.profile);
-        this.existingImage = 'data:image/jpeg;base64,' + res.byteImg;
+        if(res.byteImg){
+          this.existingImage = 'data:image/jpeg;base64,' + res.byteImg;
+        }
       },
       error: (error) => {
         this.onFailed(error);
@@ -75,7 +78,7 @@ export class ProfileEditComponent implements OnInit {
                 if (this.imageChanged) {
                   const formData: FormData = new FormData();
                   formData.append('file', this.selectedFile);
-                  console.log(formData.get('file'));
+                  // console.log(formData.get('file'));
                   this.memberUserService
                     .uploadImage(formData)
                     .subscribe({
@@ -99,9 +102,7 @@ export class ProfileEditComponent implements OnInit {
           // Handle cancellation
         }
       });
-    // } else {
-    //   this.formUtils.validateAllFormFields(this.tripForm);
-    // }
+
   }
 
   private onSuccess(message: string) {

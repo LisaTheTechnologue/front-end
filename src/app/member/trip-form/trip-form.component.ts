@@ -27,7 +27,7 @@ export class TripFormComponent {
   endDate: Date;
   isAddMode: boolean;
   error: any;
-  imageChanged: boolean = false;
+  // imageChanged: boolean = false;
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
@@ -38,7 +38,7 @@ export class TripFormComponent {
     private activatedRoute: ActivatedRoute,
     private publicService: PublicService,
     private router: Router,
-    private formUtils: FormUtilsService
+    public  formUtils: FormUtilsService
   ) {
     this.minDate = new Date();
   }
@@ -55,10 +55,8 @@ export class TripFormComponent {
       groupSize: [null, [Validators.required]],
       minAge: [null],
       maxAge: [null],
-      // allAges: [null],
       startDate: [null, [Validators.required]],
       endDate: [null, [Validators.required]],
-      // tripStatus: [null, [Validators.required]],
       tripLevel: [null, [Validators.required]],
       tripDays: this.fb.array([], [Validators.required]),
     });
@@ -75,16 +73,11 @@ export class TripFormComponent {
       // create lines array first
       for (let item = 0; item < res.tripDays.length; item++) {
         this.addItem(res);
-        // const itemsFormArray = this.tripForm.controls['items'] as UntypedFormArray;
-        // itemsFormArray.push(this.createItem(res));
       }
 
       this.tripForm.patchValue(res);
       this.existingImage = 'data:image/jpeg;base64,' + res.byteImg;
-      console.log(res);
-      // this.trip = res;
-      // this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
-      // this.image = this.trip.imageURL;
+      // console.log(res);
     });
   }
   getAllCities() {
@@ -100,15 +93,9 @@ export class TripFormComponent {
 
   selectedImage(event: File) {
     this.selectedFile = event;
-    this.imageChanged = true;
+    // this.imageChanged = true;
   }
-
-  addItem(
-    item: TripDay = { id: '', dayNo: 0, title: '', description: '' }
-  ): void {
-    const tripDays = this.tripForm.get('tripDays') as UntypedFormArray;
-    tripDays.push(this.createItem(item));
-  }
+  
   private createItem(
     item: TripDay = { id: '', dayNo: 0, title: '', description: '' }
   ) {
@@ -119,6 +106,14 @@ export class TripFormComponent {
       description: [item.description, [Validators.required]],
     });
   }
+
+  addItem(
+    item: TripDay = { id: '', dayNo: 0, title: '', description: '' }
+  ): void {
+    const tripDays = this.tripForm.get('tripDays') as UntypedFormArray;
+    tripDays.push(this.createItem());
+  }
+
   removeItem(index: number) {
     const tripDays = this.tripForm.get('tripDays') as UntypedFormArray;
     tripDays.removeAt(index);
@@ -131,7 +126,7 @@ export class TripFormComponent {
     return this.formUtils.getFieldErrorMessage(this.tripForm, fieldName);
   }
 
-  getDayErrorMessage(fieldName: string, index: number) {
+  public getDayErrorMessage(fieldName: string, index: number) {
     return this.formUtils.getFieldFormArrayErrorMessage(
       this.tripForm,
       'tripDays',
@@ -140,26 +135,39 @@ export class TripFormComponent {
     );
   }
   submit(): void {
-    // if (this.tripForm.valid) {
+    if (this.tripForm.valid) {
     this.confirmationService
       .confirm('Are you sure you want to submit this?')
       .subscribe((confirmed) => {
         if (confirmed) {
-          console.log(this.tripForm.value as Trip);
-          this.memberTripService
-            .updateTrip(this.tripId, this.tripForm.value as Trip)
+          if(this.isAddMode) {
+            this.create();
+          } else {
+            this.update();
+          }
+        } else {
+          // Handle cancellation
+        }
+      });
+    } else {
+      this.formUtils.validateAllFormFields(this.tripForm);
+    }
+  }
+
+  create(){
+    this.memberTripService
+            .createTrip(this.tripForm.value as Trip)
             .subscribe({
               next: (res) => {
-                if (this.imageChanged) {
+                if (this.selectedFile != null) {
                   this.tripId = res.id;
                   const formData: FormData = new FormData();
                   formData.append('file', this.selectedFile);
-                  console.log(formData.get('file'));
                   this.memberTripService
                     .uploadImage(this.tripId, formData)
                     .subscribe({
                       next: (res) => {
-                        this.onSuccess('Updated Trip Successfully');
+                        this.onSuccess('Created Trip Successfully');
                       },
                       error: (error) => {
                         console.log(error);
@@ -167,20 +175,45 @@ export class TripFormComponent {
                       },
                     });
                 } else {
-                  this.onSuccess('Updated Trip Successfully');
+                  this.onSuccess('Created Trip Successfully');
                 }
               },
               error: (error) => {
                 this.onFailed(error);
               },
             });
-        } else {
-          // Handle cancellation
-        }
-      });
-    // } else {
-    //   this.formUtils.validateAllFormFields(this.tripForm);
-    // }
+  }
+
+  update(){
+      this.memberTripService
+              .updateTrip(this.tripId, this.tripForm.value as Trip)
+              .subscribe({
+                next: (res) => {
+                  if (this.selectedFile != null) {
+                    this.tripId = res.id;
+                    const formData: FormData = new FormData();
+                    formData.append('file', this.selectedFile);
+                    // console.log(formData.get('file'));
+                    this.memberTripService
+                      .uploadImage(this.tripId, formData)
+                      .subscribe({
+                        next: (res) => {
+                          this.onSuccess('Updated Trip Successfully');
+                        },
+                        error: (error) => {
+                          console.log(error);
+                          this.error += error;
+                        },
+                      });
+                  } else {
+                    this.onSuccess('Updated Trip Successfully');
+                  }
+                },
+                error: (error) => {
+                  this.onFailed(error);
+                },
+              });
+
   }
   private onSuccess(message: string) {
     this.snackBar.open(message, 'OK', { duration: 5000 });

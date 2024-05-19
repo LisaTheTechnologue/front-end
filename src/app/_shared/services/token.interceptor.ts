@@ -26,7 +26,6 @@ export class TokenInterceptor implements HttpInterceptor {
           : false;
 
       if (isExpired) {
-        console.log('token expired');
         StorageService.signOut();
         this.router.navigateByUrl('login');
       }

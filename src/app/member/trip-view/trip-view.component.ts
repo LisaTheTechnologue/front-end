@@ -13,6 +13,7 @@ export class TripViewComponent {
   isJoined: boolean;
   isEnded: boolean;
   isLeader: boolean;
+  isGroupChatOpened: boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -27,6 +28,11 @@ export class TripViewComponent {
     }
   getIsLeader($event: boolean) {
     this.isLeader = $event;
+  }
+  getStatus($event: string) {
+    if($event == 'APPROVED') {
+      this.isGroupChatOpened = true;
+    }
   }
   changeStatus(status: string) {
     this.memberTripService.changeStatus(this.tripId,status).subscribe((res) => {

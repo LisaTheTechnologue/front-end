@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PublicService } from '../_shared/services/public.service';
-import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-home',

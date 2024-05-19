@@ -25,8 +25,8 @@ export class AdminUserService {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));
   }
-  findByUsername(username: any): Observable<User[]> {
-    return this.http.get<User[]>(this.API+`search?username=${username}`, {
+  searchUser(searchText: any): Observable<User[]> {
+    return this.http.get<User[]>(this.API+`search?searchText=${searchText}`, {
       headers: this.createAuthorizationHeader(),
     }).pipe(catchError(this.handleError));
   }

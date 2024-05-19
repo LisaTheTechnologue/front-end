@@ -147,7 +147,7 @@ export class TripEditComponent {
       .confirm('Are you sure you want to submit this?')
       .subscribe((confirmed) => {
         if (confirmed) {
-          console.log(this.tripForm.value as Trip);
+          // console.log(this.tripForm.value as Trip);
           this.memberTripService
             .updateTrip(this.tripId, this.tripForm.value as Trip)
             .subscribe({
@@ -156,7 +156,7 @@ export class TripEditComponent {
                   this.tripId = res.id;
                   const formData: FormData = new FormData();
                   formData.append('file', this.selectedFile);
-                  console.log(formData.get('file'));
+                  // console.log(formData.get('file'));
                   this.memberTripService
                     .uploadImage(this.tripId, formData)
                     .subscribe({

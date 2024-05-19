@@ -13,40 +13,45 @@ import { StorageService } from '../_shared/services/storage.service';
 export class LoginComponent {
   hide = true;
   loginForm!: FormGroup;
-  hidePassword = true;
-  constructor( private fb: FormBuilder,
+  // hidePassword = true;
+  constructor(private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private authService: AuthService,
-    private router: Router){
+    private router: Router) {
 
-    }
+  }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.loginForm = this.fb.group({
       username: [null, [Validators.required]],
       password: [null, [Validators.required]],
     })
   }
 
-  togglePasswordVisibility(){
-    this.hidePassword = !this.hidePassword;
-  }
+  // togglePasswordVisibility() {
+  //   this.hidePassword = !this.hidePassword;
+  // }
 
-  onSubmit():void {
+  onSubmit(): void {
     const username = this.loginForm.get('username')?.value;
     const password = this.loginForm.get('password')?.value;
-    this.authService.login(username,password).subscribe(
+    this.authService.login(username, password).subscribe(
       (res) => {
-        if(StorageService.isAdminLoggedIn()){
+        if (StorageService.isAdminLoggedIn()) {
           this.router.navigateByUrl('admin');
-        } else if(StorageService.isMemberLoggedIn()){
+        } else if (StorageService.isMemberLoggedIn()) {
           this.router.navigateByUrl('member');
         }
       },
       (error) => {
-        this.snackBar.open('Bad credentials.', 'Close', {duration:5000});
+        this.onFailed(error);
       }
     )
-
+  }
+  private onFailed(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 100000,
+      panelClass: 'error-snackbar',
+    });
   }
 }

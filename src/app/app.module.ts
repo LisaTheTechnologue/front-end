@@ -1,4 +1,4 @@
-import {  NgModule } from '@angular/core';
+import {  ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,7 +26,7 @@ import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
 import { TestComponent } from './test/test.component';
 import { DatePipe } from '@angular/common';
-import { CarouselModule } from 'ngx-owl-carousel-o';
+import { GlobalErrorHandlerService } from './_shared/exceptions/global-error-handler.service';
 
 
 @NgModule({
@@ -60,9 +60,9 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     NgxPaginationModule,
     ComponentsModule,
     RouterModule,
-    CarouselModule
   ],
   providers: [
+    { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
     DatePipe,
     {
       provide: HTTP_INTERCEPTORS,

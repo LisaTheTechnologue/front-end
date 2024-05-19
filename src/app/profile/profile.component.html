@@ -1,8 +1,14 @@
 <div class="container my-5">
   <div *ngIf="error">{{ error }} </div>
   <div *ngIf="user">
-    <img id="profile-picture" class="img-fluid rounded-circle mx-auto img-float d-block img-md"
-      src="http://www.gravatar.com/avatar/?d=mp" />
+    <div *ngIf="user.imageURL">
+      <img mat-card-sm-image [src]="user.imageURL" alt="avatar" class="profile-picture img-fluid rounded-circle mx-auto img-float d-block img-md">
+    </div>
+    <div *ngIf="!user.imageURL" >
+      <img mat-card-sm-image src="http://www.gravatar.com/avatar/?d=mp" alt="avatar" class="profile-picture img-fluid rounded-circle mx-auto img-float d-block img-md">
+    </div>
+    <!-- <img id="profile-picture" class="img-fluid rounded-circle mx-auto img-float d-block img-md"
+      src="http://www.gravatar.com/avatar/?d=mp" /> -->
     <!-- src="{{ user?.profilepicurl }}" alt="noimage" /> -->
     <h2 class="d-flex justify-content-center">
       {{ user?.fullName }}
@@ -10,27 +16,32 @@
 
     <div class="row mt-4">
       <div class="col-4 example-sidenav">
-        <div class="card">
+        <div class="heading h4">User Info</div>
+        <div class="card my-3">
           <div class="card-body">
             <div class="d-flex flex-column align-items-left">
               <div id="profile-view" class="mt-3">
-                <p class="text-muted mb-1">{{ user?.dob }}</p>
-                <p class="text-muted mb-1">{{ user?.phoneNo }}</p>
-                <p class="text-muted mb-1">{{ user?.email }}</p>
+                <p class="text-muted mb-1">Gender: {{ user?.gender }}</p>
+                <p class="text-muted mb-1">DOB: {{ user?.dob }}</p>
+                <p class="text-muted mb-1">Phone number: {{ user?.phoneNo }}</p>
+                <p class="text-muted mb-1">Email: {{ user?.email }}</p>
+                <ngb-rating [(rate)]="rating" [readonly]="true" [max]="5"
+                  class="custom-rating"></ngb-rating>
               </div>
             </div>
           </div>
         </div>
 
-        <mat-nav-list dense *ngIf="trips">
+        <div *ngIf="trips" class="heading h4">List of Trips</div>
+        <mat-list dense *ngIf="trips">
           <ng-template ngFor let-trip [ngForOf]="trips">
-            <mat-list-item class="list-with-border" (click)="display(trip)" [activated]="displaySelectedTrip(trip)">
+            <mat-list-item class="list-with-border panel" (click)="display(trip)" [activated]="displaySelectedTrip(trip)">
               <span matListItemTitle>{{ trip.title }}</span>
               <span matListItemLine>{{ trip.cityName }} | {{ trip.startDate }} - {{ trip.endDate }}</span>
               <span matListItemLine><ngb-rating [(rate)]="trip.rating" [readonly]="true" [max]="5"></ngb-rating></span>
             </mat-list-item>
           </ng-template>
-        </mat-nav-list>
+        </mat-list>
       </div>
       <div class="col">
         <div *ngIf="selectedTrip">
@@ -46,5 +57,12 @@
       </div>
     </div>
   </div>
-
+  <div *ngIf="isAdminLoggedIn">
+    <button mat-flat-button color="success" (click)="changeStatus()" *ngIf="!this.user.isActive">
+      <mat-icon>check</mat-icon> Active User
+    </button>
+    <button mat-flat-button color="danger" (click)="changeStatus()" *ngIf="this.user.isActive">
+      <mat-icon>close</mat-icon> Inactive User
+    </button>
+  </div>
 </div>

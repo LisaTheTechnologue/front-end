@@ -1,17 +1,15 @@
 export class User {
   id?: any;
   username?: string;
-  firstname: string;
-  lastname: string;
-  emailAddress: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  email: string;
   phoneNo: string | undefined;
   dob: Date;
   gender: string;
-  active?: boolean;
-  rating: number;
-  accNo: string;
-  accBank: string;
-  accName: string;
+  isActive?: boolean;
+  rating: number;  
   img: any;
   imageURL: string;
   byteImg: any;
@@ -31,7 +29,7 @@ export class PublicProfile {
   noOfTrips:number;
 }
 export class PaymentProfile {
-  accNo: string;
-  accBank: string;
-  accName: string;
+  paymentAccNo: string;
+  paymentAccBank: string;
+  paymentAccName: string;
 }

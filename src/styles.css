@@ -80,3 +80,7 @@ body {
   right: 0px;
   left: 0px;
 }
+
+.input-right-align {
+  text-align: right;
+}

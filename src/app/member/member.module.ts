@@ -11,7 +11,6 @@ import { TripPaymentComponent } from './trip-payment/trip-payment.component';
 import { PaymentViewComponent } from './payment-view/payment-view.component';
 import { ChatComponent } from './chat/chat.component';
 import { ComponentsModule } from '../_shared/components/components.module';
-import { FeedbackCreateComponent } from './feedback-create/feedback-create.component';
 import { JoinRequestListComponent } from './join-request-list/join-request-list.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -25,6 +24,8 @@ import { TripViewComponent } from './trip-view/trip-view.component';
 import { TripFormComponent } from './trip-form/trip-form.component';
 import { PasswordEditComponent } from './password-edit/password-edit.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PaymentHistoryListComponent } from './payment-history-list/payment-history-list.component';
+import { FeedbackFormComponent } from './feedback-form/feedback-form.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     TripPaymentComponent,
     PaymentViewComponent,
     ChatComponent,
-    FeedbackCreateComponent,
+    FeedbackFormComponent,
     JoinRequestListComponent,
     TripJoinedListComponent,
     TripCreatedListComponent,
@@ -41,7 +42,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     TripCreateComponent,
     TripViewComponent,
     TripFormComponent,
-    PasswordEditComponent
+    PasswordEditComponent,
+    PaymentHistoryListComponent
   ],
   imports: [
     CommonModule,

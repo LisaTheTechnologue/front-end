@@ -8,7 +8,6 @@ export interface Trip {
   leaderId: number;
   cityName:string;
   cityId:number;
-  highlights: string;
   tripLevel: string;
   minAge: number;
   maxAge: number;
@@ -18,14 +17,11 @@ export interface Trip {
   notes: string;
   price: number;
   tripStatus: string;
-  // imageURL: any;
   img: any;
   imageURL: string;
   byteImg: any;
   tripDays?: TripDay[];
-  // members?: TripMember[];
   rating: number;
-  // feedbacks?: Feedback[];
 }
 
 export interface Feedback {

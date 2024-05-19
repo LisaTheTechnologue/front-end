@@ -17,43 +17,39 @@ export class MemberTripService {
   uploadImage(tripId:number, formData:any){
     return this.http.put<any>(this.API+`upload-image/${tripId}`, formData, {
       headers: this.createAuthorizationHeader(),
-    }).pipe(catchError(this.handleError));
+    })
   }
   createTrip(record: Partial<Trip>) {
+    debugger
     return this.http.post<Trip>(this.API+'create', record, {
       headers: this.createAuthorizationHeader(),
-    }).pipe(catchError(this.handleError));
+    })
   }
-  // createTrip (tripDto:any): Observable<any>{
-  //   return this.http.post(this.API+'create', tripDto, {
-  //     headers: this.createAuthorizationHeader(),
-  //   }).pipe(catchError(this.handleError));
-  // }
 
-  getAllTrips(): Observable<any>{
+  updateTrip (tripId:number,record: Partial<Trip>): Observable<any>{
+    return this.http.put<Trip>(this.API+`trip/${tripId}`, record, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
+  
+  getAllCreatedTrips(): Observable<any>{
     const userId = StorageService.getUserId();
     return this.http.get(this.API+`user/${userId}`, {
       headers: this.createAuthorizationHeader(),
-    }).pipe(catchError(this.handleError));
+    })
   }
 
   getTripById(tripId:number): Observable<any>{
     // const userId = StorageService.getUserId();
     return this.http.get(this.API+`trip/${tripId}`, {
       headers: this.createAuthorizationHeader(),
-    }).pipe(catchError(this.handleError));
-  }
-
-  updateTrip (tripId:number,record: Partial<Trip>): Observable<any>{
-    return this.http.put<Trip>(this.API+`trip/${tripId}`, record, {
-      headers: this.createAuthorizationHeader(),
-    }).pipe(catchError(this.handleError));
+    })
   }
 
   changeStatus (tripId:number,status: string): Observable<any>{
     return this.http.put(this.API+`status/${tripId}`, status, {
       headers: this.createAuthorizationHeader(),
-    }).pipe(catchError(this.handleError));
+    })
   }
 
   getAllJoinTrips(): Observable<any>{
@@ -63,27 +59,27 @@ export class MemberTripService {
     });
   }
 
-  private handleError(error: HttpErrorResponse) {
-    console.log(error);
-    if (error.status === 404) {
-      // Redirect to page not found component
-      return throwError(() => new PageNotFoundException());
-    }
-    // Handle other errors here
-    if (error.error) {
-      // Extract error details from the response body
-      const errorMessage = error.error.message || error.error;
+  // private handleError(error: HttpErrorResponse) {
+  //   // console.log(error);
+  //   if (error.status === 404) {
+  //     // Redirect to page not found component
+  //     return throwError(() => new PageNotFoundException());
+  //   }
+  //   // Handle other errors here
+  //   if (error.error) {
+  //     // Extract error details from the response body
+  //     const errorMessage = error.error.message || error.error;
 
-      // Display the error message to the user (e.g., using a toast notification)
-      console.error('Error:', errorMessage); // Log for debugging
-      // You can display the error message in a user-friendly way
-      return throwError(errorMessage);
-    } else {
-      // Handle network or other non-2xx error situations
-      console.error('An unexpected error occurred!');
-    }
-    return throwError(error);
-  }
+  //     // Display the error message to the user (e.g., using a toast notification)
+  //     console.error('Error:', errorMessage); // Log for debugging
+  //     // You can display the error message in a user-friendly way
+  //     return throwError(errorMessage);
+  //   } else {
+  //     // Handle network or other non-2xx error situations
+  //     console.error('An unexpected error occurred!');
+  //   }
+  //   return throwError(error);
+  // }
 
   private createAuthorizationHeader(): HttpHeaders{
     return new HttpHeaders({

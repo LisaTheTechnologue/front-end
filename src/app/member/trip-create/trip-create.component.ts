@@ -143,13 +143,12 @@ export class TripCreateComponent {
       .confirm('Are you sure you want to submit this?')
       .subscribe((confirmed) => {
         if (confirmed) {
-          console.log(this.tripForm.value as Trip);
+          // console.log(this.tripForm.value as Trip);
           this.memberTripService.createTrip(this.tripForm.value as Trip).subscribe({
             next: (res) => {
               this.tripId  = res.id;
               const formData: FormData = new FormData();
               formData.append('file', this.selectedFile);
-              console.log(formData.get('file'));
               this.memberTripService.uploadImage(this.tripId, formData).subscribe({
                 next: (res) => {
                   this.onSuccess('Created Trip Successfully');

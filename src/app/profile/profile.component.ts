@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Trip, Feedback } from '../_shared/models/trip.model';
-import { PublicProfile, User } from '../_shared/models/user.model';
 import { PublicService } from '../_shared/services/public.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PageNotFoundException } from '../_shared/exceptions/page-not-found.exception';
 import { StorageService } from '../_shared/services/storage.service';
 import { ConfirmService } from '../_shared/services/confirm.service';
 import { AdminUserService } from '../_shared/services/admin-user.service';
+import { User } from '../_shared/models/user.model';
 
 @Component({
   selector: 'app-profile',
@@ -48,7 +48,7 @@ export class ProfileComponent {
     // if (this.route.snapshot.params['member'] == null) {
       // Set user
       this.publicService
-        .getProfile(this.leaderId)
+        .getByUserId(this.leaderId)
         .subscribe({
           next: (res) => {
             this.user = res;

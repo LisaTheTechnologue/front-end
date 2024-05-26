@@ -47,7 +47,7 @@ export class PasswordEditComponent implements OnInit {
       newPassword: this.passwordForm.get('newPassword').value,
     };
 
-    this.memberUserService.updatePassword(passwordChangeData).subscribe({
+    this.memberUserService.changePassword(passwordChangeData).subscribe({
       next: (res) => {
         this.onSuccess('Updated Password Successfully');
       },

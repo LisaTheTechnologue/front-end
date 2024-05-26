@@ -8,7 +8,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../MaterialModule';
 import { TripViewComponent } from './trip-view/trip-view.component';
 import { TripListComponent } from './trip-list/trip-list.component';
-import { CityListComponent } from './city-list/city-list.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
@@ -21,8 +20,7 @@ import { ComponentsModule } from '../_shared/components/components.module';
     AdminComponent,
     TripViewComponent,
     TripListComponent,
-    CityListComponent,
-    AdminProfileComponent,
+       AdminProfileComponent,
     UserListComponent,
     ContactListComponent,
     ContactViewComponent

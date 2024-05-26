@@ -10,7 +10,7 @@ import { ErrorDialogComponent } from '../components/error-dialog/error-dialog.co
   providedIn: 'root',
 })
 export class GlobalErrorHandlerService implements ErrorHandler {
-  constructor(public router: Router,private zone: NgZone,public dialog: MatDialog) {}
+  constructor(public router: Router, private zone: NgZone, public dialog: MatDialog) { }
   handleError(error: any) {
     console.log(error);
     if (error.status == undefined) {
@@ -18,6 +18,7 @@ export class GlobalErrorHandlerService implements ErrorHandler {
         data: error?.message
       });
     } else {
+      let errorMessage = '';
       switch (error.status) {
         case 401: //login
           this.router.navigateByUrl('/login');
@@ -26,11 +27,18 @@ export class GlobalErrorHandlerService implements ErrorHandler {
           throwError(() => new PageNotFoundException());
           break;
         default:
-          const errorMessage = error.error;
-          throw errorMessage;
-          // throwError(errorMessage);
-          // break;
+          if (error.error && error.error.body && error.error.body.detail) {
+            errorMessage = error.error.body.detail;
+          } else if (error.message) {
+            errorMessage = error.message;
+          } else {
+            errorMessage = 'An unknown error occurred.';
+          }
+          break;
       }
+      this.zone.run(() => {
+        this.dialog.open(ErrorDialogComponent, { data: errorMessage });
+      });
     }
   }
   // handleError(error: HttpErrorResponse) {

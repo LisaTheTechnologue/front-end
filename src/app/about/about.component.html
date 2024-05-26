@@ -4,7 +4,7 @@
 
 
   <div class="heading h3">Contact Us</div>
-  <form [formGroup]="contactForm">
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <input matInput placeholder="Name" formControlName="name" required type="text">
       <mat-error *ngIf="contactForm.get('name').hasError('required')">
@@ -14,7 +14,7 @@
     <mat-form-field>
       <input matInput placeholder="Email Address" formControlName="email" required type="email">
       <mat-error *ngIf="contactForm.get('email').hasError('required')">
-        Email Address is required.
+        Email is required.
       </mat-error>
       <mat-error *ngIf="contactForm.get('email').hasError('email')">
         Invalid email format.
@@ -27,13 +27,15 @@
       </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput placeholder="Message" formControlName="content" required type="email">
-      <mat-error *ngIf="contactForm.get('content').hasError('required')">
+      <textarea matInput placeholder="Message" formControlName="message" required></textarea>
+      <mat-error *ngIf="contactForm.get('message').hasError('required')">
         Message is required.
       </mat-error>
     </mat-form-field>
     <div class="mb-3">
-      <button mat-raised-button color="primary" type="submit" [disabled]="contactForm.invalid">Send</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="contactForm.invalid || isLoading">
+        <span *ngIf="!isLoading">Send</span>
+        <span *ngIf="isLoading"><mat-spinner [diameter]="20"></mat-spinner></span></button>
     </div>
   </form>
 </div>

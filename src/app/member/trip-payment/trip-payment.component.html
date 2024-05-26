@@ -13,14 +13,34 @@
       <div class="col-6 justify-content-center">
         <p class="h5">Leader Info</p>
         <mat-card class="m-4" style="width:50%">
-          <app-profile-card [userId]="trip.leaderId"></app-profile-card>
+          <div *ngIf="user">
+            <mat-card-header>
+              <mat-card-title-group>
+                <mat-card-title>{{ user.fullName }} </mat-card-title>
+                <mat-card-subtitle>
+                  <ngb-rating [(rate)]="rating" [readonly]="true" [max]="5"
+                    class="custom-rating"></ngb-rating>
+                  </mat-card-subtitle>
+                <div *ngIf="user.imageURL">
+                  <img mat-card-sm-image [src]="user.imageURL" alt="avatar">
+                </div>
+                <div *ngIf="!user.imageURL">
+                  <img mat-card-sm-image src="http://www.gravatar.com/avatar/?d=mp" alt="avatar">
+                </div>
+              </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-actions>
+              <button mat-button>View Profile</button>
+            </mat-card-actions>
+          </div>
+          
         </mat-card>
-        <div *ngIf="profile">
+        <div *ngIf="user">
           <mat-card class="m-4" style="width:50%">
             <mat-card-content>
-              <p>Bank: {{ profile.paymentAccBank }}</p>
-              <p>Account No.: {{ profile.paymentAccNo }}</p>
-              <p>Account Name: {{ profile.paymentAccName }}</p>
+              <p>Bank: {{ user.paymentAccBank }}</p>
+              <p>Account No.: {{ user.paymentAccNo }}</p>
+              <p>Account Name: {{ user.paymentAccName }}</p>
             </mat-card-content>
           </mat-card>
         </div>
@@ -48,7 +68,9 @@
         <textarea matInput type="text" formControlName="notes"></textarea>
       </mat-form-field>
       <div class="mb-3">
-        <button mat-raised-button color="primary" type="submit" (click)="submit()" class="me-2">Submit</button>
+        <button mat-raised-button color="primary" type="submit" (click)="submit()" class="me-2" [disabled]="isLoading">
+          <span *ngIf="!isLoading">Submit</span>
+          <span *ngIf="isLoading"><mat-spinner [diameter]="20"></mat-spinner></span></button>
         <button mat-raised-button color="danger" type="button" (click)="onCancel()" class="me-2">Cancel</button>
       </div>
     </form>

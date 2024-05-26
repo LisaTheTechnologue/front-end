@@ -6,7 +6,6 @@ body {
   background: #fdfbf1;
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif !important;
-
 }
 
 /* Custom buttons */
@@ -61,7 +60,7 @@ body {
 }
 
 .preview-image {
-  max-width: 60vw;
+  max-width: 40vw;
 }
 
 .item-container {

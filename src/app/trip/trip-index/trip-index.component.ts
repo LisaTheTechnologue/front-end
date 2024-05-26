@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { PublicService } from 'src/app/_shared/services/public.service';
 
 @Component({
@@ -10,6 +11,9 @@ import { PublicService } from 'src/app/_shared/services/public.service';
 export class TripIndexComponent {
   trips: any[] = [];
   searchText: string = '';
+  cities: any[] = [];
+  maxPrice?: number;
+  selectedCityId: number;
   // searchTripForm!: FormGroup;
   filteredData: any[] = [];
   tripLevels: Set<string> = new Set<string>([
@@ -25,7 +29,9 @@ export class TripIndexComponent {
 
   p: number = 1;
 
-  constructor(public publicService: PublicService, private fb: FormBuilder) {}
+  constructor(public publicService: PublicService, 
+    private snackBar: MatSnackBar,
+    private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.publicService.getAllTrips().subscribe((res) => {
@@ -35,6 +41,18 @@ export class TripIndexComponent {
       });
     });
     this.filteredData = this.trips;
+    this.getAllCities();
+  }
+
+  getAllCities() {
+    this.publicService.getAllCities().subscribe({
+      next: (res) => {
+        this.cities = res;
+      },
+      error: (error) => {
+        this.onFailed(error);
+      },
+    });
   }
 
   filterData() {
@@ -42,6 +60,12 @@ export class TripIndexComponent {
       const searchTextMatch = item.title
         .toLowerCase()
         .includes(this.searchText.toLowerCase());
+
+      let cityMatch = true;
+      if(this.selectedCityId !== undefined) {
+        cityMatch = item.cityId == this.selectedCityId;
+      }
+          
       let tripLevelMatch = true; // Assume all categories are initially matched
 
       // Filter by checkboxes (if any are selected)
@@ -60,9 +84,11 @@ export class TripIndexComponent {
 
       // Filter by price (optional)
       // this.minPrice = value;
-      const priceMatch = !this.minPrice || item.price >= this.minPrice;
+      const priceMatch = !this.maxPrice || item.price <= this.maxPrice;
 
-      return searchTextMatch && tripLevelMatch && dateMatch && priceMatch;
+      return searchTextMatch 
+      && cityMatch 
+      && tripLevelMatch && dateMatch && priceMatch;
     });
   }
   startDate?: Date;
@@ -96,5 +122,10 @@ export class TripIndexComponent {
     this.filterData();
   }
 
-  minPrice?: number;
+  private onFailed(message: string) {
+    this.snackBar.open(message, 'ERROR', {
+      duration: 100000,
+      panelClass: 'error-snackbar',
+    });
+  }
 }

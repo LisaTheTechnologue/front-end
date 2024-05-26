@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Trip } from 'src/app/_shared/models/trip.model';
-import {  PaymentProfile, PublicProfile } from 'src/app/_shared/models/user.model';
+import { User } from 'src/app/_shared/models/user.model';
 import { ActivatedRoute } from '@angular/router';
 import { StorageService } from 'src/app/_shared/services/storage.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,10 +22,12 @@ import { ConfirmDialogComponent } from 'src/app/_shared/components/confirm-dialo
 export class TripPaymentComponent {
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   trip!: Trip;
-  profile!: PaymentProfile;
+  user!: User;
+  rating!:number;
   selectedFile: File | null;
   imagePreview: string | ArrayBuffer | null;
   paymentForm!: FormGroup;
+  isLoading = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private publicService: PublicService,
@@ -47,7 +49,7 @@ export class TripPaymentComponent {
     this.publicService.getByTripId(this.tripId).subscribe({
       next: (res) => {
         this.trip = res;
-        this.getPaymentProfileByUserId(res.leaderId);
+        this.getProfile(this.trip.leaderId);
         this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
       },
       error: (error) => {
@@ -55,10 +57,14 @@ export class TripPaymentComponent {
       },
     });
   }
-  getPaymentProfileByUserId(leaderId: number) {
-    this.userService.getPaymentProfileByUserId(leaderId)
+  getProfile(userId:number) {
+    this.publicService.getByUserId(userId)
     .subscribe((res) => {      
-      this.profile = res;
+      this.user = res;
+      if(res.byteImg != null ) {
+        this.user.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
+      }
+      this.rating = res.rating;
     });
   }
   selectedImage(event: File) {
@@ -66,6 +72,7 @@ export class TripPaymentComponent {
     // this.imageChanged = true;
   }
   submit() {
+    this.isLoading = true;
     if(this.selectedFile!=null) {
       const formData: FormData = new FormData();
       const userId = StorageService.getUserId();
@@ -77,9 +84,11 @@ export class TripPaymentComponent {
       formData.append('notes', this.paymentForm.get('notes').value);
       this.paymentService.create(formData).subscribe({
         next: (res) => {
+          this.isLoading = false;
           this.onSuccess("Payment sent successfully! Please wait for the leader's approval");
         },
         error: (error) => {
+          this.isLoading = false;
           this.onFailed(error);
         },
       });

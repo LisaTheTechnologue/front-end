@@ -16,7 +16,7 @@ export class TripDetailsComponent {
 
   image: any;
   // tripId: number = this.activatedRoute.snapshot.params['tripId'];
-  userId:any;
+  userId: any;
   trip!: Trip;
   members!: TripMember[];
   feedbacks: any[];
@@ -32,7 +32,7 @@ export class TripDetailsComponent {
     private publicService: PublicService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
   ngOnInit() {
     this.getTrip();
     this.getMembers();
@@ -47,7 +47,7 @@ export class TripDetailsComponent {
         this.trip = res;
         this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
         this.trip.tripDays = res.tripDays;
-        if(this.trip.leaderId == this.userId){
+        if (this.trip.leaderId == this.userId) {
           this.isLeader.emit(true);
         }
         this.status.emit(this.trip.tripStatus);
@@ -88,12 +88,8 @@ export class TripDetailsComponent {
         }
       },
       error: (error) => {
-        if (error instanceof PageNotFoundException) {
-          this.router.navigate(['/page-not-found']);
-        } else {
-          // Handle other errors here
-          this.error = error.message;
-        }
+
+        this.error = error.message;
       },
     });
   }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Contact } from 'src/app/_shared/models/contact.model';
 import { AdminContactService } from 'src/app/_shared/services/admin-contact.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { AdminContactService } from 'src/app/_shared/services/admin-contact.serv
 export class ContactViewComponent {
   contactId: number = this.activatedRoute.snapshot.params['contactId'];
   status: string;
-  contact: any;
+  contact!: Contact;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,

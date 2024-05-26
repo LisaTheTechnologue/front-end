@@ -4,7 +4,6 @@
       <a href="#" class="list-group-item list-group-item-action active" aria-current="true"
         [routerLink]="['/admin/trips']">Trips</a>
       <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/users']">Users</a>
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/cities']">Cities</a>
       <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/contacts']">Contacts</a>
       <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/change-password']">Change
         Password</a>
@@ -12,8 +11,7 @@
   </mat-drawer>
   <mat-drawer-content>
     <div class="container my-5">
-      <div class="heading h3">Edit Password</div>
-      <mat-card class="m-5">
+      <mat-card >
         <mat-card-content>
           <form [formGroup]="passwordForm" (ngSubmit)="onSubmit()">
             <mat-form-field appearance="outline">

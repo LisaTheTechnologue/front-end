@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
+import { PublicService } from 'src/app/_shared/services/public.service';
 
 @Component({
   selector: 'app-trip-created-list',
@@ -18,7 +19,9 @@ export class TripCreatedListComponent {
   searchText: string = '';
   startDate?: Date;
   endDate?: Date;
-  minPrice?: number;
+  cities: any[] = [];
+  maxPrice?: number;
+  selectedCityId: number;
   error: any;
   tripLevels: Set<string> = new Set<string>([
     'Easy',
@@ -36,14 +39,26 @@ export class TripCreatedListComponent {
   p: number = 1;
 
   constructor(public memberTripService: MemberTripService,
-    private snackBar: MatSnackBar) {}
+    private snackBar: MatSnackBar,
+    private publicService: PublicService) {}
 
   ngOnInit(): void {
     this.memberTripService.getAllCreatedTrips().subscribe((res) => {
       this.trips.data = res;
       this.allTrips = res;
     });
+    this.getAllCities();
+  }
 
+  getAllCities() {
+    this.publicService.getAllCities().subscribe({
+      next: (res) => {
+        this.cities = res;
+      },
+      error: (error) => {
+        this.onFailed(error);
+      },
+    });
   }
   ngAfterViewInit() {
     this.trips.paginator = this.paginator;
@@ -54,8 +69,15 @@ export class TripCreatedListComponent {
       const searchTextMatch = item.title
         .toLowerCase()
         .includes(this.searchText.toLowerCase());
-      let tripLevelMatch = true; // Assume all levels are initially matched
 
+      let cityMatch = true;
+      if(this.selectedCityId !== undefined) {
+        cityMatch = item.cityId == this.selectedCityId;
+      }
+          
+      let tripLevelMatch = true; // Assume all categories are initially matched
+
+      // Filter by checkboxes (if any are selected)
       if (this.selectedTripLevels.length > 0) {
         tripLevelMatch = this.selectedTripLevels.some(
           (tripLevel) => item.tripLevel === tripLevel
@@ -69,13 +91,15 @@ export class TripCreatedListComponent {
         (!this.startDate && item.endDate <= this.endDate) ||
         (item.startDate >= this.startDate && item.endDate <= this.endDate);
 
-      const priceMatch = !this.minPrice || item.price >= this.minPrice;
+      // Filter by price (optional)
+      // this.minPrice = value;
+      const priceMatch = !this.maxPrice || item.price <= this.maxPrice;
 
-      return searchTextMatch && tripLevelMatch && dateMatch && priceMatch;
+      return searchTextMatch 
+      && cityMatch 
+      && tripLevelMatch && dateMatch && priceMatch;
     });
   }
-
-
   onstartDateChange(value: Date) {
     this.startDate = value;
     this.filterData();

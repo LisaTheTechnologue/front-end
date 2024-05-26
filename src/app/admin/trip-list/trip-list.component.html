@@ -3,7 +3,6 @@
     <div class="list-group list-group-flush">
       <a href="#" class="list-group-item list-group-item-action active" aria-current="true" [routerLink]="['/admin/trips']">Trips</a>
       <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/users']">Users</a>
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/cities']">Cities</a>
       <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/contacts']">Contacts</a>
       <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/change-password']">Change Password</a>
     </div>
@@ -12,7 +11,7 @@
     <div class="container my-5">
       <div class="row">
         <div class="col">
-          <div class=" mx-1 p-3 bg-white border border-secondary rounded-1">
+          <div class="m-1 p-3 bg-white border border-secondary rounded-1">
             <section *ngIf="tripLevels.size > 0">
               <strong>Filter by Trip Level:</strong>
               <ul style="list-style-type: none;">
@@ -24,6 +23,12 @@
               </ul>
             </section>
             <section>
+              <strong>City:</strong>
+              <select class="form-select" id="country" [(ngModel)]="selectedCityId" (change)="filterData()" >
+                        <option *ngFor="let c of cities" [value]="c.id">{{c.name}}      </option>
+              </select> 
+            </section>
+            <section>
               <strong>Start Date:</strong>
               <input [(ngModel)]="startDate" (change)="filterData()" id="startDate" type="date" class="form-control">
             </section>
@@ -32,9 +37,9 @@
               <input [(ngModel)]="endDate" (change)="filterData()" id="endDate" type="date" class="form-control">
             </section>
             <section>
-              <strong>Minimum Price:</strong>
-              <input type="number" class="form-control" [(ngModel)]="minPrice" placeholder="Minimum Price"
-                (keyup)="filterData()">
+              <strong>Maximum Price:</strong>
+              <input type="number" class="form-control" [(ngModel)]="maxPrice" 
+                (focusout)="filterData()">
             </section>
           </div>
         </div>

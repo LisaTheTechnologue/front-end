@@ -1,5 +1,3 @@
-import { PublicProfile } from "./user.model";
-
 export interface Message {
   id?: any;
   userId: number;

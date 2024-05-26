@@ -1,4 +1,4 @@
-import {  ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +27,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { TestComponent } from './test/test.component';
 import { DatePipe } from '@angular/common';
 import { GlobalErrorHandlerService } from './_shared/exceptions/global-error-handler.service';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -40,8 +41,8 @@ import { GlobalErrorHandlerService } from './_shared/exceptions/global-error-han
     PageNotFoundComponent,
     FilterPipe,
     ProfileComponent,
-    TestComponent
-
+    TestComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +69,7 @@ import { GlobalErrorHandlerService } from './_shared/exceptions/global-error-han
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-  }
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { PublicService } from '../../services/public.service';
-import { PublicProfile } from '../../models/user.model';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-profile-card',
@@ -9,7 +9,7 @@ import { PublicProfile } from '../../models/user.model';
 })
 export class ProfileCardComponent {
   @Input() userId: number;
-  user!: PublicProfile;
+  user!: User;
   rating!:number;
   constructor(
     private publicService: PublicService
@@ -17,7 +17,7 @@ export class ProfileCardComponent {
 
   ngOnInit() {
   //   console.log(this.leader);
-    this.publicService.getProfile(this.userId).subscribe(
+    this.publicService.getByUserId(this.userId).subscribe(
       (profile) => {
         this.user = profile;
         if(profile.byteImg != null ) {

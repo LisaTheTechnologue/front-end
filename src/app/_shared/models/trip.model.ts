@@ -1,5 +1,4 @@
 import { User } from 'src/app/_shared/models/user.model';
-import { PublicProfile } from "./user.model";
 
 export interface Trip {
   id: number;

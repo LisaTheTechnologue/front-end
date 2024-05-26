@@ -2,7 +2,6 @@ import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found
 import { Component, Input } from '@angular/core';
 import { GroupChat, Message } from 'src/app/_shared/models/chat.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PublicProfile } from 'src/app/_shared/models/user.model';
 import { StorageService } from 'src/app/_shared/services/storage.service';
 import { MemberChatService } from 'src/app/_shared/services/member-chat.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

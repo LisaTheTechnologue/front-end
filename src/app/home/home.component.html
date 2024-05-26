@@ -9,7 +9,7 @@
 <section class="my-5">
   <h2 class="text-center">Top 5 Tour Guide Recognition board</h2>
   <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="profiles.length > 0" class="row justify-content-center">
-    <mat-card fxFlex="15%" class="trip-card mat-elevation-z2" *ngFor="let profile of profiles">
+    <mat-card [routerLink]="['/profile/', profile.id]" fxFlex="15%" class="trip-card mat-elevation-z2" *ngFor="let profile of profiles">
 
         <div *ngIf="profile.imageURL">
           <img mat-card-image [src]="profile.imageURL" alt="avatar" class="card-profile-image">

@@ -23,13 +23,18 @@
             Please enter a valid password.</mat-error>
         </mat-form-field>
 
-        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid"
-         (click)="onSubmit()">Login</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || isLoading"
+         (click)="onSubmit()">
+         <span *ngIf="!isLoading">Login</span>
+          <span *ngIf="isLoading"><mat-spinner [diameter]="20"></mat-spinner></span></button>
       </form>
     </mat-card-content>
 
     <mat-card-actions>
-      <button mat-button color="accent" [routerLink]="['/signup']">Don't have an account? Sign Up </button>
+      <div class="my-1">
+      <button mat-button color="accent" [routerLink]="['/register']">Don't have an account? Register now! </button>
+      <button mat-button color="danger" [routerLink]="['/forgot-password']">Forgot password? Click here! </button>
+    </div>
     </mat-card-actions>
   </mat-card>
 </div>

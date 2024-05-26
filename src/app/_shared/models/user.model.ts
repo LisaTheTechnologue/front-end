@@ -13,22 +13,7 @@ export class User {
   img: any;
   imageURL: string;
   byteImg: any;
-}
-
-export class PublicProfile {
-  id?: any;
-  fullName: string;
-  email: string;
-  rating: number;
-  dob: Date;
-  username?: string;
-  phoneNo: string | undefined;
-  img: any;
-  imageURL: string;
-  byteImg: any;
   noOfTrips:number;
-}
-export class PaymentProfile {
   paymentAccNo: string;
   paymentAccBank: string;
   paymentAccName: string;

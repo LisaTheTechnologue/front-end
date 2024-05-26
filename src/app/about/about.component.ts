@@ -4,6 +4,7 @@ import { PublicService } from '../_shared/services/public.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PageNotFoundException } from '../_shared/exceptions/page-not-found.exception';
 import { Router } from '@angular/router';
+import { Contact } from '../_shared/models/contact.model';
 
 @Component({
   selector: 'app-about',
@@ -18,46 +19,34 @@ export class AboutComponent {
   to plan your trips, explore destinations, and discover hidden gems.
 `;
   error: any;
-  name = '';
-  email = '';
-  message = '';
+  isLoading = false;
   constructor(
     private snackBar: MatSnackBar,
     private router: Router,
     private fb: FormBuilder,
     private publicService: PublicService
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.contactForm = this.fb.group({
       name: [null, [Validators.required]],
-      email: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
       subject: [null, [Validators.required]],
-      content: [null, [Validators.required]],
+      message: [null, [Validators.required]],
     });
   }
   onSubmit() {
+    this.isLoading = true;
     // Handle form submission logic (optional)
     // You can display a success message or send an email here
-    const formData: FormData = new FormData();
-    formData.append('name', this.contactForm.get('name').value);
-    formData.append('email', this.contactForm.get('email').value);
-    formData.append('subject', this.contactForm.get('subject').value);
-    formData.append('message', this.contactForm.get('message').value);
-    this.publicService.submitContact(formData).subscribe({
-      next: (res) => {
-        this.onSuccess('Sent successfully');
-      },
-      error: (error) => {
-        if (error instanceof PageNotFoundException) {
-          this.router.navigate(['/page-not-found']);
-        } else {
-          this.onFailed(error);
-        }
-      },
-    });
+    if (this.contactForm.valid) {
+      this.publicService.submitContact(this.contactForm.value as Contact).subscribe(
+        (res) => this.onSuccess('Sent successfully'));
+    }
   }
   private onSuccess(message: string) {
+    this.isLoading = false;
     this.snackBar.open(message, 'OK', { duration: 5000 });
+    this.router.navigateByUrl('/');
   }
   private onFailed(message: string) {
     this.snackBar.open(message, 'ERROR', {

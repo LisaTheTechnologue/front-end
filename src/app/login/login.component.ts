@@ -4,6 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../_shared/services/auth.service';
 import { StorageService } from '../_shared/services/storage.service';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -13,10 +15,11 @@ import { StorageService } from '../_shared/services/storage.service';
 export class LoginComponent {
   hide = true;
   loginForm!: FormGroup;
-  // hidePassword = true;
+  isLoading = false;
   constructor(private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private authService: AuthService,
+    public dialog: MatDialog,
     private router: Router) {
 
   }
@@ -28,15 +31,13 @@ export class LoginComponent {
     })
   }
 
-  // togglePasswordVisibility() {
-  //   this.hidePassword = !this.hidePassword;
-  // }
-
   onSubmit(): void {
+    this.isLoading = true;
     const username = this.loginForm.get('username')?.value;
     const password = this.loginForm.get('password')?.value;
     this.authService.login(username, password).subscribe(
       (res) => {
+        this.isLoading = false; 
         if (StorageService.isAdminLoggedIn()) {
           this.router.navigateByUrl('admin');
         } else if (StorageService.isMemberLoggedIn()) {
@@ -45,6 +46,7 @@ export class LoginComponent {
       },
       (error) => {
         this.onFailed(error);
+        this.isLoading = false; 
       }
     )
   }

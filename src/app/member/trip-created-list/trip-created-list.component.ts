@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { ConfirmService } from 'src/app/_shared/services/confirm.service';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 import { PublicService } from 'src/app/_shared/services/public.service';
 
@@ -14,6 +15,7 @@ import { PublicService } from 'src/app/_shared/services/public.service';
   styleUrls: ['./trip-created-list.component.css'],
 })
 export class TripCreatedListComponent {
+
   allTrips: any[] = [];
 
   searchText: string = '';
@@ -38,16 +40,22 @@ export class TripCreatedListComponent {
   @ViewChild(MatSort) sort: MatSort;
   p: number = 1;
 
-  constructor(public memberTripService: MemberTripService,
+  constructor(
+    public memberTripService: MemberTripService,
+    private confirmationService: ConfirmService,
     private snackBar: MatSnackBar,
-    private publicService: PublicService) {}
+    private publicService: PublicService) { }
 
   ngOnInit(): void {
+    this.getAllCreatedTrips();
+    this.getAllCities();
+  }
+
+  private getAllCreatedTrips() {
     this.memberTripService.getAllCreatedTrips().subscribe((res) => {
       this.trips.data = res;
       this.allTrips = res;
     });
-    this.getAllCities();
   }
 
   getAllCities() {
@@ -71,10 +79,10 @@ export class TripCreatedListComponent {
         .includes(this.searchText.toLowerCase());
 
       let cityMatch = true;
-      if(this.selectedCityId !== undefined) {
+      if (this.selectedCityId !== undefined) {
         cityMatch = item.cityId == this.selectedCityId;
       }
-          
+
       let tripLevelMatch = true; // Assume all categories are initially matched
 
       // Filter by checkboxes (if any are selected)
@@ -95,9 +103,9 @@ export class TripCreatedListComponent {
       // this.minPrice = value;
       const priceMatch = !this.maxPrice || item.price <= this.maxPrice;
 
-      return searchTextMatch 
-      && cityMatch 
-      && tripLevelMatch && dateMatch && priceMatch;
+      return searchTextMatch
+        && cityMatch
+        && tripLevelMatch && dateMatch && priceMatch;
     });
   }
   onstartDateChange(value: Date) {
@@ -128,6 +136,29 @@ export class TripCreatedListComponent {
     this.filterData();
   }
 
+  deleteTrip(tripId: any) {
+    this.confirmationService
+      .confirm('Are you sure you want to delete this?')
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          this.memberTripService.deleteTrip(tripId).subscribe({
+            next: (res) => {
+              this.onSuccess(res);
+              this.getAllCreatedTrips();
+            },
+            error: (error) => {
+              console.log(error);
+              this.error += error;
+            }
+          });
+        } else {
+          // Handle cancellation
+        }
+      });
+  }
+  private onSuccess(message: string) {
+    this.snackBar.open(message, 'OK', { duration: 5000 });
+  }
   private onFailed(message: string) {
     this.snackBar.open(
       message,

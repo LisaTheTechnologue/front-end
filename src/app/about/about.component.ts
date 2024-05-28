@@ -40,7 +40,13 @@ export class AboutComponent {
     // You can display a success message or send an email here
     if (this.contactForm.valid) {
       this.publicService.submitContact(this.contactForm.value as Contact).subscribe(
-        (res) => this.onSuccess('Sent successfully'));
+        (res) => {
+          this.onSuccess('Sent successfully')
+        },
+        (error) => {
+          this.onFailed(error);
+        }
+    );
     }
   }
   private onSuccess(message: string) {

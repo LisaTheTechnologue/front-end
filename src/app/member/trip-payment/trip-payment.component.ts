@@ -14,6 +14,7 @@ import { MemberPaymentService } from 'src/app/_shared/services/member-payment.se
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 import { PublicService } from 'src/app/_shared/services/public.service';
 import { ConfirmDialogComponent } from 'src/app/_shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmService } from 'src/app/_shared/services/confirm.service';
 @Component({
   selector: 'app-trip-payment',
   templateUrl: './trip-payment.component.html',
@@ -31,7 +32,7 @@ export class TripPaymentComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private publicService: PublicService,
-    private userService: MemberUserService,
+    private confirmationService: ConfirmService,
     private paymentService: MemberPaymentService,
     private location: Location,
     private dialog: MatDialog,
@@ -74,28 +75,35 @@ export class TripPaymentComponent {
   submit() {
     this.isLoading = true;
     if(this.selectedFile!=null) {
-      const formData: FormData = new FormData();
-      const userId = StorageService.getUserId();
-      const tripId = this.tripId + '';
-      formData.append('img', this.selectedFile);
-      formData.append('payerId', userId);
-      formData.append('tripId', tripId);
-      formData.append('amount', this.paymentForm.get('amount').value);
-      formData.append('notes', this.paymentForm.get('notes').value);
-      this.paymentService.create(formData).subscribe({
-        next: (res) => {
-          this.isLoading = false;
-          this.onSuccess("Payment sent successfully! Please wait for the leader's approval");
-        },
-        error: (error) => {
-          this.isLoading = false;
-          this.onFailed(error);
-        },
-      });
+      this.confirmationService
+      .confirm('Are you sure you want to submit this?')
+      .subscribe((confirmed) => {
+        if (confirmed) {
+            const formData: FormData = new FormData();
+            const userId = StorageService.getUserId();
+            const tripId = this.tripId + '';
+            formData.append('img', this.selectedFile);
+            formData.append('payerId', userId);
+            formData.append('tripId', tripId);
+            formData.append('amount', this.paymentForm.get('amount').value);
+            formData.append('notes', this.paymentForm.get('notes').value);
+            this.paymentService.create(formData).subscribe({
+              next: (res) => {
+                this.isLoading = false;
+                this.onSuccess("Payment sent successfully! Please wait for the leader's approval");
+              },
+              error: (error) => {
+                this.isLoading = false;
+                this.onFailed(error);
+              },
+            });        
+          } else {
+            // Handle cancellation
+          }}
+        );
     } else {
       this.onFailed("Image is required.");
     }
-    
   }
 
   onCancel() {

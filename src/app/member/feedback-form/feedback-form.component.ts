@@ -65,7 +65,7 @@ export class FeedbackFormComponent implements OnInit {
         this.onSuccess();
       },
       error: (error) => {
-        this.error = error.message;
+        this.onFailed( error.message);
       },
     });
   }
@@ -80,5 +80,15 @@ export class FeedbackFormComponent implements OnInit {
   private onSuccess() {
     this.snackBar.open('Feedback saved successfully!', '', { duration: 5000 });
     this.onCancel();
+  }
+  private onFailed(message: string) {
+    this.snackBar.open(
+      message,
+      'ERROR',
+      {
+        duration: 5000,
+        panelClass: 'error-snackbar',
+      }
+    );
   }
 }

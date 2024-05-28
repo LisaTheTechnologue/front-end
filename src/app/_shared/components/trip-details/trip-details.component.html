@@ -4,7 +4,7 @@
     <div class="col-6 p-3">
       <p class="h3">{{ trip.title }}</p>
       <div>
-        <mat-card [routerLink]="['/profile/', trip.leaderId]" style="width:50%">
+        <mat-card style="width:50%">
           <app-profile-card [userId]="trip.leaderId"></app-profile-card>
         </mat-card>
 

@@ -6,7 +6,6 @@ import { MemberComponent } from './member.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../MaterialModule';
 import { NgbDatepickerModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
-import { TripEditComponent } from './trip-edit/trip-edit.component';
 import { TripPaymentComponent } from './trip-payment/trip-payment.component';
 import { PaymentViewComponent } from './payment-view/payment-view.component';
 import { ChatComponent } from './chat/chat.component';
@@ -19,18 +18,17 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { TripJoinedListComponent } from './trip-joined-list/trip-joined-list.component';
 import { TripCreatedListComponent } from './trip-created-list/trip-created-list.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
-import { TripCreateComponent } from './trip-create/trip-create.component';
 import { TripViewComponent } from './trip-view/trip-view.component';
 import { TripFormComponent } from './trip-form/trip-form.component';
 import { PasswordEditComponent } from './password-edit/password-edit.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaymentHistoryListComponent } from './payment-history-list/payment-history-list.component';
 import { FeedbackFormComponent } from './feedback-form/feedback-form.component';
+import { JoinRemoveComponent } from './join-remove/join-remove.component';
 
 @NgModule({
   declarations: [
     MemberComponent,
-    TripEditComponent,
     TripPaymentComponent,
     PaymentViewComponent,
     ChatComponent,
@@ -39,11 +37,11 @@ import { FeedbackFormComponent } from './feedback-form/feedback-form.component';
     TripJoinedListComponent,
     TripCreatedListComponent,
     ProfileEditComponent,
-    TripCreateComponent,
     TripViewComponent,
     TripFormComponent,
     PasswordEditComponent,
-    PaymentHistoryListComponent
+    PaymentHistoryListComponent,
+    JoinRemoveComponent
   ],
   imports: [
     CommonModule,

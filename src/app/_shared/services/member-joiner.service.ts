@@ -65,7 +65,12 @@ export class MemberJoinerService {
     })
     // .pipe(catchError(this.handleError));
   }
-
+  remove (joinerId:any): Observable<any>{
+    return this.http.delete(this.API+`remove?joinerId=${joinerId}`, {
+      headers: this.createAuthorizationHeader(),
+    })
+    // .pipe(catchError(this.handleError));
+  }
   getParticipantListByTripIdAndJoinerStatus(tripId:number): Observable<any>{
     // const userId = StorageService.getUserId();
     return this.http.get(this.API+`list?tripId=${tripId}`, {

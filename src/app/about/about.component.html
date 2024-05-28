@@ -5,14 +5,16 @@
 
   <div class="heading h3">Contact Us</div>
   <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-    <mat-form-field>
-      <input matInput placeholder="Name" formControlName="name" required type="text">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" required type="text">
       <mat-error *ngIf="contactForm.get('name').hasError('required')">
         Name is required.
       </mat-error>
     </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Email Address" formControlName="email" required type="email">
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" required type="email">
       <mat-error *ngIf="contactForm.get('email').hasError('required')">
         Email is required.
       </mat-error>
@@ -20,14 +22,16 @@
         Invalid email format.
       </mat-error>
     </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Subject" formControlName="subject" required type="text">
+    <mat-form-field appearance="outline">
+      <mat-label>Subject</mat-label>
+      <input matInput formControlName="subject" required type="text">
       <mat-error *ngIf="contactForm.get('subject').hasError('required')">
         Subject is required.
       </mat-error>
     </mat-form-field>
-    <mat-form-field>
-      <textarea matInput placeholder="Message" formControlName="message" required></textarea>
+    <mat-form-field appearance="outline">
+      <mat-label>Message</mat-label>
+      <textarea matInput formControlName="message" required></textarea>
       <mat-error *ngIf="contactForm.get('message').hasError('required')">
         Message is required.
       </mat-error>

@@ -1,0 +1,19 @@
+<div class="container my-5">
+
+  <div class="heading h3">Remove Participant</div>
+  <div *ngIf="members" class="my-5">
+  <form (ngSubmit)="remove()" [formGroup]="removeForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Select a Member</mat-label>
+      <mat-select formControlName="member">
+        <mat-option *ngFor="let member of members" [value]="member.id">{{member.fullName}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="removeForm.get('member')?.invalid">Must select a member</mat-error>
+    </mat-form-field>
+
+    <div class="mb-2">
+      <button mat-raised-button color="primary" type="submit" [disabled]="removeForm.invalid">Remove</button>
+    </div>
+  </form>
+</div>
+</div>

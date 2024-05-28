@@ -19,8 +19,7 @@ export class MemberTripService {
       headers: this.createAuthorizationHeader(),
     })
   }
-  createTrip(record: Partial<Trip>) {
-    debugger
+  createTrip(record: Partial<Trip>) {    
     return this.http.post<Trip>(this.API+'create', record, {
       headers: this.createAuthorizationHeader(),
     })
@@ -28,6 +27,12 @@ export class MemberTripService {
 
   updateTrip (tripId:number,record: Partial<Trip>): Observable<any>{
     return this.http.put<Trip>(this.API+`trip/${tripId}`, record, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
+
+  deleteTrip (tripId:number): Observable<any>{
+    return this.http.delete<Trip>(this.API+`trip/${tripId}`, {
       headers: this.createAuthorizationHeader(),
     })
   }

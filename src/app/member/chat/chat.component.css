@@ -9,6 +9,8 @@
   overflow-x: hidden;
   padding: 0 16px;
   margin-bottom: 5px;
+  overflow-y: auto;
+  height: 60vh;
 }
 
 .joined {
@@ -89,7 +91,6 @@ border-color: transparent transparent transparent #e1ffc7;
 top: 0;
 right: -10px;
 }
-
 
 .metadata {
 display: inline-block;

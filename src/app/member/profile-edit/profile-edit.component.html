@@ -1,16 +1,21 @@
 <mat-drawer-container class="example-container">
   <mat-drawer mode="side" opened>
     <div class="list-group list-group-flush">
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/joined-trips']">Your Joined Trips
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/joined-trips']">Your Joined
+        Trips
       </a>
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/created-trips']">Your Created Trips</a>
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/joined-requests']">Join Requests</a>
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/payment/list']">Payment History</a>
-      <a href="#" class="list-group-item list-group-item-action active" aria-current="true" [routerLink]="['/member/profile']">Edit Profile</a>
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/created-trips']">Your Created
+        Trips</a>
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/joined-requests']">Join
+        Requests</a>
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/payment/list']">Payment
+        History</a>
+      <a href="#" class="list-group-item list-group-item-action active" aria-current="true"
+        [routerLink]="['/member/profile']">Edit Profile</a>
     </div>
   </mat-drawer>
   <mat-drawer-content>
-    <div class="m-5">
+    <div class="container my-5">
       <div class="heading h3">Edit Profile</div>
       <form [formGroup]="profileForm">
         <mat-form-field>
@@ -88,7 +93,8 @@
             <mat-card-title>Password</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <button mat-raised-button color="primary" [routerLink]="['/member/password-edit']">Change Password</button>
+            <button mat-raised-button color="primary" [routerLink]="['/member/password-edit']">Change
+              Password</button>
           </mat-card-content>
         </mat-card>
         <mat-card class="mb-4">
@@ -107,9 +113,11 @@
             </mat-form-field>
           </mat-card-content>
         </mat-card>
-        <button mat-raised-button color="primary" type="submit" (click)="submit()" [disabled]="profileForm.invalid">Save Profile</button>
+        <button mat-raised-button color="primary" type="submit" (click)="submit()" [disabled]="profileForm.invalid">Save
+          Profile</button>
       </form>
-
     </div>
+
   </mat-drawer-content>
+
 </mat-drawer-container>

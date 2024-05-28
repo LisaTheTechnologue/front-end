@@ -13,6 +13,7 @@ import { PasswordEditComponent } from './password-edit/password-edit.component';
 import { JoinRequestListComponent } from './join-request-list/join-request-list.component';
 import { PaymentHistoryListComponent } from './payment-history-list/payment-history-list.component';
 import { FeedbackFormComponent } from './feedback-form/feedback-form.component';
+import { JoinRemoveComponent } from './join-remove/join-remove.component';
 
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
 { path: 'trips/view/:tripId', component: TripViewComponent },
 { path: 'joined-trips', component: TripJoinedListComponent },
 { path: 'joined-requests', component: JoinRequestListComponent },
+{ path: 'joiner/remove/:tripId', component: JoinRemoveComponent },
 { path: 'payment/list', component: PaymentHistoryListComponent },
 { path: 'payment/create/:tripId', component: TripPaymentComponent },
 { path: 'payment/view/:paymentId', component: PaymentViewComponent },

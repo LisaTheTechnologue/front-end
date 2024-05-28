@@ -134,8 +134,9 @@ export class TripFormComponent {
       index
     );
   }
+
   submit(): void {
-    if (this.tripForm.valid) {
+    if (this.selectedFile != null) {
     this.confirmationService
       .confirm('Are you sure you want to submit this?')
       .subscribe((confirmed) => {
@@ -150,7 +151,8 @@ export class TripFormComponent {
         }
       });
     } else {
-      this.formUtils.validateAllFormFields(this.tripForm);
+      // this.formUtils.validateAllFormFields(this.tripForm);
+      this.onFailed("Image is required");
     }
   }
 

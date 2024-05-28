@@ -30,7 +30,7 @@
               </mat-card-title-group>
             </mat-card-header>
             <mat-card-actions>
-              <button mat-button>View Profile</button>
+              <button mat-button [routerLink]="['/profile/', user.id]">View Profile</button>
             </mat-card-actions>
           </div>
           

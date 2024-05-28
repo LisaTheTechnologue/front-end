@@ -21,5 +21,8 @@
     <button mat-flat-button color="success" (click)="changeStatus('end')" *ngIf="isLeader && !isEnded">
       <mat-icon>check</mat-icon> End
     </button>
+    <button mat-flat-button color="danger" [routerLink]="['/member/joiner/remove/',tripId]" *ngIf="isLeader && !isEnded">
+      <mat-icon>cancel</mat-icon> Remove Participant
+    </button>
   </div>
 </div>

@@ -34,12 +34,13 @@ export class ProfileComponent {
     private confirmService: ConfirmService,
     private adminService: AdminUserService,
     private snackBar: MatSnackBar
-  ) {}
-
-  ngOnInit() {
+  ) {
     this.getUser();
     this.isAdminLoggedIn = StorageService.isAdminLoggedIn();
+
   }
+
+  
   getFeedbacksByTripId(tripId: number) {
     this.publicService.getFeedbacksByTripId(tripId).subscribe((res) => (this.feedbacks = res));
   }
@@ -103,7 +104,7 @@ export class ProfileComponent {
 
   private onSuccess(message: string) {
     this.snackBar.open(message, 'OK', { duration: 5000 });
-    this.router.navigateByUrl('/member');
+    this.router.navigateByUrl('/admin');
   }
   private onFailed(message: string) {
     this.snackBar.open(message, 'ERROR', {

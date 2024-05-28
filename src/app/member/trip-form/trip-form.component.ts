@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, UntypedFormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, UntypedFormArray, FormArray, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TripDay, Trip } from 'src/app/_shared/models/trip.model';
+import { TripDay, Trip, Activity } from 'src/app/_shared/models/trip.model';
 import { ConfirmService } from 'src/app/_shared/services/confirm.service';
 import { FormUtilsService } from 'src/app/_shared/services/form-utils.service';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
@@ -27,7 +27,7 @@ export class TripFormComponent {
   endDate: Date;
   isAddMode: boolean;
   error: any;
-  // imageChanged: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
@@ -45,35 +45,86 @@ export class TripFormComponent {
   ngOnInit(): void {
     this.isAddMode = !this.tripId;
 
-    this.tripForm = this.fb.group({
-      // img: [null, [Validators.required]],
-      cityId: [null, [Validators.required]],
-      title: [null, [Validators.required]],
-      summary: [null, [Validators.required]],
-      price: [null, [Validators.required]],
-      notes: [null],
-      groupSize: [null, [Validators.required]],
-      minAge: [null],
-      maxAge: [null],
-      startDate: [null, [Validators.required]],
-      endDate: [null, [Validators.required]],
-      tripLevel: [null, [Validators.required]],
-      tripDays: this.fb.array([], [Validators.required]),
-    });
+    this.initForm();
 
     this.getAllCities();
     if (!this.isAddMode) {
       this.getTripById();
     }
   }
+
+  initForm() {
+    this.tripForm = this.fb.group({
+
+      title: new FormControl(''),
+      summary: new FormControl(''),
+      notes: new FormControl(''),
+      startDate: new FormControl(''),
+      endDate:new FormControl(''),
+      groupSize: new FormControl(''),
+      price: new FormControl(''),
+      minAge: new FormControl(''),
+      maxAge: new FormControl(''),
+      tripLevel: new FormControl(''),
+      cityId: new FormControl(''),
+      // imageURL: this.fb.array([]),
+      // youtubeURL: this.fb.array([]),
+      // tripDays: this.fb.array([])
+      tripDays: this.fb.array([])
+    });
+  }
+
+  tripDays(): FormArray {
+    return this.tripForm.get('tripDays') as FormArray;
+  }
+ 
+  newTripDay(): FormGroup {
+    return this.fb.group({
+      dayNo: 1,
+      activities: this.fb.array([])
+    });
+  }
+ 
+  addTripDay() {
+    this.tripDays().push(this.newTripDay());
+  }
+ 
+  removeTripDay(empIndex: number) {
+    this.tripDays().removeAt(empIndex);
+  }
+ 
+  activities(empIndex: number): FormArray {
+    return this.tripDays()
+      .at(empIndex)
+      .get('activities') as FormArray;
+  }
+ 
+  newActivity(): FormGroup {
+    return this.fb.group({
+      title: '',
+      description: ''
+    });
+  }
+ 
+  addActivity(empIndex: number) {
+    this.activities(empIndex).push(this.newActivity());
+  }
+ 
+  removeActivity(empIndex: number, skillIndex: number) {
+    this.activities(empIndex).removeAt(skillIndex);
+  }
+
+
+
+
   getTripById() {
     // this.trip = new Trip();
-    const userId = StorageService.getUserId();
+    // const userId = StorageService.getUserId();
     this.memberTripService.getTripById(this.tripId).subscribe((res) => {
       // create lines array first
-      for (let item = 0; item < res.tripDays.length; item++) {
-        this.addItem(res);
-      }
+      // for (let item = 0; item < res.tripDays.length; item++) {
+      //   this.addItem(res);
+      // }
 
       this.tripForm.patchValue(res);
       this.existingImage = 'data:image/jpeg;base64,' + res.byteImg;
@@ -96,31 +147,6 @@ export class TripFormComponent {
     // this.imageChanged = true;
   }
 
-  private createItem(
-    item: TripDay = { id: '', dayNo: 0, title: '', description: '' }
-  ) {
-    return this.fb.group({
-      id: [item.id],
-      dayNo: [item.dayNo, [Validators.required]],
-      title: [item.title, [Validators.required]],
-      description: [item.description, [Validators.required]],
-    });
-  }
-
-  addItem(
-    item: TripDay = { id: '', dayNo: 0, title: '', description: '' }
-  ): void {
-    const tripDays = this.tripForm.get('tripDays') as UntypedFormArray;
-    tripDays.push(this.createItem());
-  }
-
-  removeItem(index: number) {
-    const tripDays = this.tripForm.get('tripDays') as UntypedFormArray;
-    tripDays.removeAt(index);
-  }
-  getItemFormArray() {
-    return (<UntypedFormArray>this.tripForm.get('tripDays')).controls;
-  }
 
   getTripErrorMessage(fieldName: string): string {
     return this.formUtils.getFieldErrorMessage(this.tripForm, fieldName);
@@ -136,110 +162,98 @@ export class TripFormComponent {
   }
 
   submit(): void {
+    // if (this.isAddMode) {
+      this.create();
+    // } else {
+      // this.update();
+    // }
+  }
+
+  create() {
     // if (this.selectedFile != null) {
-    //   this.confirmationService
-    //     .confirm('Are you sure you want to submit this?')
-    //     .subscribe((confirmed) => {
-    //       if (confirmed) {
-            if (this.isAddMode) {
-              this.create();
-            } else {
-              this.update();
-            }
-    //       } else {
-    //         // Handle cancellation
-    //       }
-    //     });
+    console.log(this.tripForm.value);
+    // this.confirmationService
+    //   .confirm('Are you sure you want to submit this?')
+    //   .subscribe((confirmed) => {
+    //     if (confirmed) {
+    this.memberTripService
+      .createTrip(this.tripForm.value as Trip)
+      .subscribe({
+        next: (res) => {
+          // if (this.selectedFile != null) {
+          // this.tripId = res.id;
+          // const formData: FormData = new FormData();
+          // formData.append('file', this.selectedFile);
+          // this.memberTripService
+          //   .uploadImage(this.tripId, formData)
+          //   .subscribe({
+          //     next: (res) => {
+          //       this.onSuccess('Created Trip Successfully');
+          //     },
+          // error: (error) => {
+          //   console.log(error);
+          //   this.error += error;
+          // },
+          // });
+          // } else {
+          // this.onSuccess('Created Trip Successfully');
+          // }
+        },
+        error: (error) => {
+          this.onFailed(error);
+        },
+      });
+    // } else {
+    // Handle cancellation
+    // }
+    // });
     // } else {
     //   // this.formUtils.validateAllFormFields(this.tripForm);
     //   this.onFailed("Image is required");
     // }
   }
 
-  create() {
-    if (this.selectedFile != null) {
-      this.confirmationService
-        .confirm('Are you sure you want to submit this?')
-        .subscribe((confirmed) => {
-          if (confirmed) {
-            this.memberTripService
-              .createTrip(this.tripForm.value as Trip)
-              .subscribe({
-                next: (res) => {
-                  // if (this.selectedFile != null) {
-                  this.tripId = res.id;
-                  const formData: FormData = new FormData();
-                  formData.append('file', this.selectedFile);
-                  this.memberTripService
-                    .uploadImage(this.tripId, formData)
-                    .subscribe({
-                      next: (res) => {
-                        this.onSuccess('Created Trip Successfully');
-                      },
-                      // error: (error) => {
-                      //   console.log(error);
-                      //   this.error += error;
-                      // },
-                    });
-                  // } else {
-                  //   this.onSuccess('Created Trip Successfully');
-                  // }
-                },
-                // error: (error) => {
-                //   this.onFailed(error);
-                // },
-              });
-          } else {
-            // Handle cancellation
-          }
-        });
-    } else {
-      // this.formUtils.validateAllFormFields(this.tripForm);
-      this.onFailed("Image is required");
-    }
-  }
-
-  update() {
-    this.confirmationService
-      .confirm('Are you sure you want to submit this?')
-      .subscribe((confirmed) => {
-        if (confirmed) {
-          this.memberTripService
-            .updateTrip(this.tripId, this.tripForm.value as Trip)
-            .subscribe({
-              next: (res) => {
-                if (this.selectedFile != null) {
-                  this.tripId = res.id;
-                  const formData: FormData = new FormData();
-                  formData.append('file', this.selectedFile);
-                  // console.log(formData.get('file'));
-                  this.memberTripService
-                    .uploadImage(this.tripId, formData)
-                    .subscribe({
-                      next: (res) => {
-                        this.onSuccess('Updated Trip Successfully');
-                      },
-                      // error: (error) => {
-                      //   console.log(error);
-                      //   this.error += error;
-                      // },
-                    });
-                } else {
-                  this.onSuccess('Updated Trip Successfully');
-                }
-              },
-              // error: (error) => {
-              //   this.onFailed(error.error.body.detail);
-              // },
-            });
-        } else {
-          // Handle cancellation
-        }
-      });
-  }
+  // update() {
+  //   this.confirmationService
+  //     .confirm('Are you sure you want to submit this?')
+  //     .subscribe((confirmed) => {
+  //       if (confirmed) {
+  //         this.memberTripService
+  //           .updateTrip(this.tripId, this.tripForm.value as Trip)
+  //           .subscribe({
+  //             next: (res) => {
+  //               if (this.selectedFile != null) {
+  //                 this.tripId = res.id;
+  //                 const formData: FormData = new FormData();
+  //                 formData.append('file', this.selectedFile);
+  //                 // console.log(formData.get('file'));
+  //                 this.memberTripService
+  //                   .uploadImage(this.tripId, formData)
+  //                   .subscribe({
+  //                     next: (res) => {
+  //                       this.onSuccess('Updated Trip Successfully');
+  //                     },
+  //                     // error: (error) => {
+  //                     //   console.log(error);
+  //                     //   this.error += error;
+  //                     // },
+  //                   });
+  //               } else {
+  //                 this.onSuccess('Updated Trip Successfully');
+  //               }
+  //             },
+  //             // error: (error) => {
+  //             //   this.onFailed(error.error.body.detail);
+  //             // },
+  //           });
+  //       } else {
+  //         // Handle cancellation
+  //       }
+  //     });
+  // }
   private onSuccess(message: string) {
     this.snackBar.open(message, 'OK', { duration: 5000 });
-    this.router.navigateByUrl('/member');
+    // this.router.navigateByUrl('/member');
   }
   private onFailed(message: string) {
     this.snackBar.open(message, 'ERROR', {

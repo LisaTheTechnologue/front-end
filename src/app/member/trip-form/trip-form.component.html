@@ -108,49 +108,47 @@
       <mat-toolbar class="iternarary-toolbar mb-3">
         <span>Itinerary * </span>
         <div style="right: 0;">
-          <button mat-icon-button color="accent" (click)="addItem()">
+          <button mat-icon-button color="accent" (click)="addTripDay()">
             <mat-icon aria-label="Add a New Day">add</mat-icon>
           </button>
         </div>
       </mat-toolbar>
 
-      <mat-error class="form-array-error" *ngIf="formUtils.isFormArrayRequired(tripForm, 'tripDays')">
-        At least one day is added.
-      </mat-error>
-      <div formArrayName="tripDays" *ngFor="let itemForm of getItemFormArray(); let i = index" class="m-2">
-        <div class="row mb-2" [formGroupName]="i">
-          <div class="col-1">
-            <mat-form-field appearance="outline">
-              <mat-label>Day</mat-label>
-              <input matInput formControlName="dayNo" type="number" min="1" />
-              <mat-error *ngIf="tripForm.get('dayNo')?.invalid && tripForm.get('dayNo')?.touched">
-                Field is required.</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-3">
-            <mat-form-field appearance="outline">
-              <mat-label>Title</mat-label>
-              <input matInput formControlName="title" />
-              <mat-error *ngIf="tripForm.get('title')?.invalid && tripForm.get('title')?.touched">
-                Field is required.</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col">
-            <mat-form-field appearance="outline">
-              <mat-label>Description</mat-label>
-              <textarea matInput formControlName="description"></textarea>
-              <mat-error *ngIf="tripForm.get('description')?.invalid && tripForm.get('description')?.touched">
-                Field is required.</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-1">
-            <button mat-icon-button color="warn" (click)="removeItem(i)">
-              <mat-icon aria-label="Remove Item">delete</mat-icon>
+      <div formArrayName="tripDays">
+        <div *ngFor="let tripDay of tripDays().controls; let empIndex=index">
+          <div
+            [formGroupName]="empIndex"
+            style="border: 1px solid blue; padding: 10px; width: 600px; margin: 5px;"
+          >
+            {{empIndex}} DayNo :
+            <input type="text" formControlName="dayNo" />
+     
+            <button (click)="removeTripDay(empIndex)">Remove</button>
+     
+            <div formArrayName="activities">
+              <div
+                *ngFor="let acitivity of activities(empIndex).controls; let skillIndex=index"
+              >
+                <div [formGroupName]="skillIndex">
+                  {{skillIndex}} Title :
+                  <input type="text" formControlName="title" />
+                  Exp:
+                  <input type="text" formControlName="description" />
+     
+                  <button (click)="removeActivity(empIndex,skillIndex)">
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+            <button type="button" (click)="addActivity(empIndex)">
+              Add Skill
             </button>
           </div>
         </div>
       </div>
     </div>
+
 
     <div class="mb-2">
       <button mat-raised-button color="primary" type="submit" (click)="submit()" [disabled]="tripForm.invalid">Submit</button>

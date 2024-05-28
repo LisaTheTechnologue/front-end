@@ -32,9 +32,20 @@ export interface Feedback {
   createdDate: Date;
 }
 
+// export interface TripDay {
+//   id: any;
+//   dayNo: number;
+//   title: string;
+//   description: string;
+// }
 export interface TripDay {
-  id: any;
+  id?: any;
   dayNo: number;
+  activities: Activity[];
+}
+
+export interface Activity {
+  id?: any;
   title: string;
   description: string;
 }

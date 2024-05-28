@@ -43,9 +43,9 @@ export class AboutComponent {
         (res) => {
           this.onSuccess('Sent successfully')
         },
-        (error) => {
-          this.onFailed(error);
-        }
+        // (error) => {
+        //   this.onFailed(error);
+        // }
     );
     }
   }

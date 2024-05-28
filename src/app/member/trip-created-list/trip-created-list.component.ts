@@ -63,9 +63,9 @@ export class TripCreatedListComponent {
       next: (res) => {
         this.cities = res;
       },
-      error: (error) => {
-        this.onFailed(error);
-      },
+      // error: (error) => {
+      //   this.onFailed(error);
+      // },
     });
   }
   ngAfterViewInit() {
@@ -146,10 +146,10 @@ export class TripCreatedListComponent {
               this.onSuccess(res);
               this.getAllCreatedTrips();
             },
-            error: (error) => {
-              console.log(error);
-              this.error += error;
-            }
+            // error: (error) => {
+            //   console.log(error);
+            //   this.error += error;
+            // }
           });
         } else {
           // Handle cancellation

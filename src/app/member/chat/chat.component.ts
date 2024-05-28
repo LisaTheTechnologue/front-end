@@ -44,14 +44,14 @@ export class ChatComponent {
           });
 
           },
-        error: (error) => {
-          if (error instanceof PageNotFoundException) {
-            this.router.navigate(['/page-not-found']);
-          } else {
-            // Handle other errors here
-            this.error = error.message;
-          }
-        },
+        // error: (error) => {
+        //   if (error instanceof PageNotFoundException) {
+        //     this.router.navigate(['/page-not-found']);
+        //   } else {
+        //     // Handle other errors here
+        //     this.error = error.message;
+        //   }
+        // },
     });
     }
   }

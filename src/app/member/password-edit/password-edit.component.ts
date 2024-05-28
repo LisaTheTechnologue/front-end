@@ -51,9 +51,9 @@ export class PasswordEditComponent implements OnInit {
       next: (res) => {
         this.onSuccess('Updated Password Successfully');
       },
-      error: (error) => {
-        this.onFailed(error);
-      },
+      // error: (error) => {
+      //   this.onFailed(error);
+      // },
     });
   }
   private onSuccess(message: string) {

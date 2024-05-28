@@ -50,10 +50,10 @@ export class PaymentViewComponent {
           this.selfPayment = true;
         }
       },
-      (error) => {
-        // Handle error response
-        this.showError(error);
-      }
+      // (error) => {
+      //   // Handle error response
+      //   this.showError(error);
+      // }
     );
   }
   getTrip(tripId: number){
@@ -62,10 +62,10 @@ export class PaymentViewComponent {
         // Handle successful response
         this.trip = res;
       },
-      (error) => {
-        // Handle error response
-        this.showError(error);
-      }
+      // (error) => {
+      //   // Handle error response
+      //   this.showError(error);
+      // }
     );
   }
   changeStatus(status:string) {
@@ -83,10 +83,10 @@ export class PaymentViewComponent {
               this.onSuccess('Payment ' + status);
               this.onCancel();
             },
-            (error) => {
-              // Handle error response
-              this.showError(error);
-            }
+            // (error) => {
+            //   // Handle error response
+            //   this.showError(error);
+            // }
           );
         } else {
           // Handle cancellation

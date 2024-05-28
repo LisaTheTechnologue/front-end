@@ -31,7 +31,8 @@
           </mat-card-header>
           <mat-card-content>
             <mat-form-field>
-              <input matInput placeholder="First Name" formControlName="firstName" required>
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstName" required>
               <mat-error *ngIf="profileForm.get('firstName').hasError('required')">
                 First Name is required.
               </mat-error>
@@ -44,7 +45,8 @@
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput placeholder="Last Name" formControlName="lastName" required>
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="lastName" required>
               <mat-error *ngIf="profileForm.get('lastName').hasError('required')">
                 Last Name is required.
               </mat-error>
@@ -57,20 +59,23 @@
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dob">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput [matDatepicker]="picker" [max]="maxDob" formControlName="dob" readonly required>
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput placeholder="Phone Number" formControlName="phoneNo" type="number">
+              <mat-label>Phone Number</mat-label>
+              <input matInput formControlName="phoneNo" type="number">
               <mat-error *ngIf="profileForm.get('phoneNo').hasError('pattern')">
                 Invalid phone number.
               </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <mat-select placeholder="Gender" formControlName="gender">
+              <mat-label>Gender</mat-label>
+              <mat-select formControlName="gender">
                 <mat-option value="Male">Male</mat-option>
                 <mat-option value="Female">Female</mat-option>
                 <mat-option value="Other">Other</mat-option>
@@ -78,7 +83,8 @@
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput placeholder="Email Address" formControlName="email" required type="email">
+              <mat-label>Email Address</mat-label>
+              <input matInput formControlName="email" required type="email">
               <mat-error *ngIf="profileForm.get('email').hasError('required')">
                 Email Address is required.
               </mat-error>
@@ -103,13 +109,16 @@
           </mat-card-header>
           <mat-card-content>
             <mat-form-field>
-              <input matInput placeholder="Account Number" formControlName="paymentAccNo" type="number">
+              <mat-label>Account Number</mat-label>
+              <input matInput formControlName="paymentAccNo" type="number">
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Account Bank" formControlName="paymentAccBank">
+              <mat-label>Account Bank</mat-label>
+              <input matInput formControlName="paymentAccBank">
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Account Name" formControlName="paymentAccName">
+              <mat-label>Account Name</mat-label>
+              <input matInput formControlName="paymentAccName">
             </mat-form-field>
           </mat-card-content>
         </mat-card>

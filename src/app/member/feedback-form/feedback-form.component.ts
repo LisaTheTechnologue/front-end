@@ -64,9 +64,9 @@ export class FeedbackFormComponent implements OnInit {
       next: (res) => {
         this.onSuccess();
       },
-      error: (error) => {
-        this.onFailed( error.message);
-      },
+      // error: (error) => {
+      //   this.onFailed( error.message);
+      // },
     });
   }
 

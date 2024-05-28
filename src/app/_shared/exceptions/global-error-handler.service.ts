@@ -21,10 +21,12 @@ export class GlobalErrorHandlerService implements ErrorHandler {
       let errorMessage = '';
       switch (error.status) {
         case 401: //login
+          // errorMessage = 'Please login';
           this.router.navigateByUrl('/login');
           break;
         case 404: //forbidden
-          throwError(() => new PageNotFoundException());
+          // errorMessage = 'Page not found';
+          this.router.navigate(['/page-not-found']);
           break;
         default:
           if (error.error && error.error.body && error.error.body.detail) {
@@ -34,11 +36,12 @@ export class GlobalErrorHandlerService implements ErrorHandler {
           } else {
             errorMessage = 'An unknown error occurred.';
           }
+          this.zone.run(() => {
+            this.dialog.open(ErrorDialogComponent, { data: errorMessage });
+          });
           break;
       }
-      this.zone.run(() => {
-        this.dialog.open(ErrorDialogComponent, { data: errorMessage });
-      });
+      
     }
   }
   // handleError(error: HttpErrorResponse) {

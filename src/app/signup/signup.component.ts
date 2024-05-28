@@ -52,9 +52,9 @@ export class SignupComponent {
       (res) => {
         this.onSuccess('Sign up successful!');
       },
-      (error) => {
-        this.onFailed(error);
-      }
+      // (error) => {
+      //   this.onFailed(error);
+      // }
     )
 
   }

@@ -54,9 +54,9 @@ export class TripListComponent {
       next: (res) => {
         this.cities = res;
       },
-      error: (error) => {
-        this.onFailed(error);
-      },
+      // error: (error) => {
+      //   this.onFailed(error);
+      // },
     });
   }
   ngAfterViewInit() {

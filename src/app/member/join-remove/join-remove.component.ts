@@ -41,9 +41,9 @@ export class JoinRemoveComponent implements OnInit {
             next: (member) => {
               this.members.push(member);
             },
-            error: (error) => {
-              this.onFailed(error.error);
-            },
+            // error: (error) => {
+            //   this.onFailed(error.error);
+            // },
           });
         });
       },
@@ -70,9 +70,9 @@ export class JoinRemoveComponent implements OnInit {
               (response: { message: string }) => {
                 this.onSuccess(response.message);
               },
-              (error) => {
-                this.onFailed(error.error);
-              }
+              // (error) => {
+              //   this.onFailed(error.error);
+              // }
             );
         } else {
 

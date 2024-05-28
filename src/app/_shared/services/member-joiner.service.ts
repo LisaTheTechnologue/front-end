@@ -39,7 +39,9 @@ export class MemberJoinerService {
 
   getAllPendingByLeaderId(): Observable<any>{
     const leaderId = StorageService.getUserId();
-    return this.http.get(this.API+`request-list?leaderId=${leaderId}`, {
+    return this.http.get(this.API+`request-list`
+    // ?leaderId=${leaderId}`
+    , {
       headers: this.createAuthorizationHeader(),
     })
     // .pipe(catchError(this.handleError));

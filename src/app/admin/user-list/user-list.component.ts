@@ -32,9 +32,9 @@ export class UserListComponent {
       next: (res) => {
         this.users.data = res;
       },
-      error: (error) => {
-        this.onFailed(error);
-      },
+      // error: (error) => {
+      //   this.onFailed(error);
+      // },
     })
 
   }

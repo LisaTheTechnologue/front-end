@@ -15,7 +15,7 @@ export class AdminUserService {
   constructor(private http: HttpClient) { }
   public updatePassword(passwordChange: any): Observable<any> {
     const userId = StorageService.getUserId();
-    return this.http.post<any>(this.API+'change-password/' + userId, passwordChange, {
+    return this.http.post<any>(this.API+'change-password' , passwordChange, {
       headers: this.createAuthorizationHeader(),
     })
     // .pipe(catchError(this.handleError));

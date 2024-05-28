@@ -60,14 +60,14 @@ export class TripDetailsComponent {
           this.isEnded.emit(false);
         }
       },
-      error: (error) => {
-        if (error instanceof PageNotFoundException) {
-          this.router.navigate(['/page-not-found']);
-        } else {
-          // Handle other errors here
-          this.error = error.message;
-        }
-      },
+      // error: (error) => {
+      //   if (error instanceof PageNotFoundException) {
+      //     this.router.navigate(['/page-not-found']);
+      //   } else {
+      //     // Handle other errors here
+      //     this.error = error.message;
+      //   }
+      // },
     });
   }
   getMembers() {
@@ -88,7 +88,6 @@ export class TripDetailsComponent {
         }
       },
       error: (error) => {
-
         this.error = error.message;
       },
     });

@@ -56,14 +56,14 @@ export class ProfileComponent {
             this.user.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
             this.rating = res.rating;
           },
-          error: (error) => {
-            if (error instanceof PageNotFoundException) {
-              this.router.navigate(['/page-not-found']);
-            } else {
-              // Handle other errors here
-              this.error = error.message;
-            }
-          },
+          // error: (error) => {
+          //   if (error instanceof PageNotFoundException) {
+          //     this.router.navigate(['/page-not-found']);
+          //   } else {
+          //     // Handle other errors here
+          //     this.error = error.message;
+          //   }
+          // },
   });
       // Set trips
       this.publicService
@@ -91,9 +91,9 @@ export class ProfileComponent {
             next: (res) => {              
                 this.onSuccess('Update User Status Successfully');              
             },
-            error: (error) => {
-              this.onFailed(error);
-            },
+            // error: (error) => {
+            //   this.onFailed(error);
+            // },
         })
         } else {
           // Handle cancellation

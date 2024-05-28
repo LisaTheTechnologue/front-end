@@ -29,9 +29,9 @@ export class TripViewComponent {
       next: (res) => {
         this.onSuccess('Updated Trip Status Successful!');
       },
-      error: (error) => {
-        this.onFailed(error);
-      },
+      // error: (error) => {
+      //   this.onFailed(error);
+      // },
     });
   }
 

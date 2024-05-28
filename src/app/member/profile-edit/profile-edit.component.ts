@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from 'src/app/_shared/models/user.model';
@@ -21,11 +21,18 @@ export class ProfileEditComponent implements OnInit {
   imageChanged: boolean = false;
   profile: User;
   error: any;
-
+  maxDob:Date;
   constructor(private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private memberUserService: MemberUserService,
-  private confirmationService: ConfirmService) { }
+  private confirmationService: ConfirmService) { 
+    const today = new Date();
+  this.maxDob = new Date(
+    today.getFullYear() - 15,
+    today.getMonth(),
+    today.getDate()
+  );
+  }
 
   ngOnInit() {
     const phonePattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -33,7 +40,7 @@ export class ProfileEditComponent implements OnInit {
       username: [''], // Set to disabled as mentioned in HTML
       firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-      dob: [null],
+      dob: [null, [Validators.required]],
       phoneNo: ['',[Validators.pattern(phonePattern)]],
       gender: [''],
       email: ['', [Validators.required, Validators.email]],
@@ -49,11 +56,22 @@ export class ProfileEditComponent implements OnInit {
           this.existingImage = 'data:image/jpeg;base64,' + res.byteImg;
         }
       },
-      error: (error) => {
-        this.onFailed(error);
-      },
+      // error: (error) => {
+      //   this.onFailed(error);
+      // },
     })
     this.profileForm.controls['username'].disable();
+  }
+
+  minTenYearsOldValidator(control: FormControl): { [key: string]: boolean } | null {
+    if (control.value) {
+      const today = new Date();
+      const tenYearsAgo = new Date(today.getFullYear() - 10, today.getMonth(), today.getDate());
+      if (control.value < tenYearsAgo) {
+        return { minTenYearsOld: true }; // Return an error object if invalid
+      }
+    }
+    return null; // Return null if valid
   }
 
   onDateChange(event: MatDatepickerInputEvent<any>) {
@@ -85,18 +103,18 @@ export class ProfileEditComponent implements OnInit {
                       next: (res) => {
                         this.onSuccess('Updated Profile Successfully');
                       },
-                      error: (error) => {
-                        console.log(error);
-                        this.error += error;
-                      },
+                      // error: (error) => {
+                      //   console.log(error);
+                      //   this.error += error;
+                      // },
                     });
                 } else {
                   this.onSuccess('Updated Profile Successfully');
                 }
               },
-              error: (error) => {
-                this.onFailed(error);
-              },
+              // error: (error) => {
+              //   this.onFailed(error);
+              // },
             });
         } else {
           // Handle cancellation

@@ -25,7 +25,7 @@ export class MemberUserService {
 
   public updateProfile(profile: any): Observable<any> {
     const userId = StorageService.getUserId();
-    return this.http.put<any>(this.API+'profile/' + userId, profile, {
+    return this.http.put<any>(this.API+'profile/', profile, {
       headers: this.createAuthorizationHeader(),
     })
     // .pipe(catchError(this.handleError));
@@ -33,7 +33,7 @@ export class MemberUserService {
 
   uploadImage(formData:any){
     const userId = StorageService.getUserId();
-    return this.http.put<any>(this.API+`upload-image/${userId}`, formData, {
+    return this.http.put<any>(this.API+`upload-image`, formData, {
       headers: this.createAuthorizationHeader(),
     })
     // .pipe(catchError(this.handleError));
@@ -41,7 +41,7 @@ export class MemberUserService {
 
   public changePassword(passwordChange: any): Observable<any> {
     const userId = StorageService.getUserId();
-    return this.http.post<any>(this.API+'change-password/' + userId, passwordChange, {
+    return this.http.post<any>(this.API+'change-password', passwordChange, {
       headers: this.createAuthorizationHeader(),
     })
     // .pipe(catchError(this.handleError));

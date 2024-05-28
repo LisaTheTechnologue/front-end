@@ -53,12 +53,12 @@ export class TripViewComponent implements OnInit {
         next: (res) => {
           this.router.navigateByUrl(`/member/payment/create/${this.tripId}`);
         },
-        error: (error) => {
-          this.snackBar.open(error, 'ERROR', {
-            duration: 100000,
-            panelClass: 'error-snackbar',
-          });
-        },
+        // error: (error) => {
+        //   this.snackBar.open(error, 'ERROR', {
+        //     duration: 100000,
+        //     panelClass: 'error-snackbar',
+        //   });
+        // },
       });
     } else {
       this.router.navigateByUrl('login');

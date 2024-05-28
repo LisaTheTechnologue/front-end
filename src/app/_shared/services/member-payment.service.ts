@@ -16,7 +16,9 @@ export class MemberPaymentService {
   public getByLeaderId(): Observable<any> {
     const userId = StorageService.getUserId();
     return this.http
-      .get<any>(this.API+'/request-list?leaderId=' + userId, {
+      .get<any>(this.API+'/request-list'
+      // ?leaderId=' + userId
+      , {
         headers: this.createAuthorizationHeader(),
       });
   }
@@ -24,7 +26,9 @@ export class MemberPaymentService {
   public getByPayerId(): Observable<any> {
     const userId = StorageService.getUserId();
     return this.http
-      .get<any>(this.API+'/history-list?payerId=' + userId, {
+      .get<any>(this.API+'/history-list'
+      // ?payerId=' + userId
+      , {
         headers: this.createAuthorizationHeader(),
       });
   }

@@ -53,9 +53,9 @@ export class TripPaymentComponent {
         this.getProfile(this.trip.leaderId);
         this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
       },
-      error: (error) => {
-        this.onFailed(error);
-      },
+      // error: (error) => {
+      //   this.onFailed(error);
+      // },
     });
   }
   getProfile(userId:number) {
@@ -94,7 +94,7 @@ export class TripPaymentComponent {
               },
               error: (error) => {
                 this.isLoading = false;
-                this.onFailed(error);
+                this.onFailed(error.message);
               },
             });        
           } else {

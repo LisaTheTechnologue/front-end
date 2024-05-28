@@ -38,8 +38,8 @@ export class MemberTripService {
   }
   
   getAllCreatedTrips(): Observable<any>{
-    const userId = StorageService.getUserId();
-    return this.http.get(this.API+`user/${userId}`, {
+    // const userId = StorageService.getUserId();
+    return this.http.get(this.API+`leader`, {
       headers: this.createAuthorizationHeader(),
     })
   }
@@ -58,8 +58,8 @@ export class MemberTripService {
   }
 
   getAllJoinTrips(): Observable<any>{
-    const userId = StorageService.getUserId();
-    return this.http.get(this.API+`joiner/${userId}`, {
+    // const userId = StorageService.getUserId();
+    return this.http.get(this.API+`joiner`, {
       headers: this.createAuthorizationHeader(),
     });
   }

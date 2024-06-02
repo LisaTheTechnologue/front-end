@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { User } from 'src/app/_shared/models/user.model';
+import { Bank, User } from 'src/app/_shared/models/user.model';
 import { ConfirmService } from 'src/app/_shared/services/confirm.service';
 import { MemberUserService } from 'src/app/_shared/services/member-user.service';
 
@@ -22,6 +22,9 @@ export class ProfileEditComponent implements OnInit {
   profile: User;
   error: any;
   maxDob:Date;
+  banks: Bank[] = [];
+  selectedBank: Bank | null = null;
+
   constructor(private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private memberUserService: MemberUserService,
@@ -35,6 +38,8 @@ export class ProfileEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.memberUserService.getBanks()
+      .subscribe(banks => this.banks = banks);
     const phonePattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     this.profileForm = this.fb.group({
       username: [''], // Set to disabled as mentioned in HTML

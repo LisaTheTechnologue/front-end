@@ -109,13 +109,18 @@
           </mat-card-header>
           <mat-card-content>
             <mat-form-field>
+              <mat-label>Account Bank</mat-label>
+              <mat-select formControlName="paymentAccBank">
+                <mat-option *ngFor="let bank of banks" [value]="bank.shortName">
+                  {{ bank.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
               <mat-label>Account Number</mat-label>
               <input matInput formControlName="paymentAccNo" type="number">
             </mat-form-field>
-            <mat-form-field>
-              <mat-label>Account Bank</mat-label>
-              <input matInput formControlName="paymentAccBank">
-            </mat-form-field>
+            
             <mat-form-field>
               <mat-label>Account Name</mat-label>
               <input matInput formControlName="paymentAccName">

@@ -19,9 +19,7 @@ class PermissionsService {
     state: RouterStateSnapshot
   ): Observable<boolean> | boolean {
     if (this.storageService.isLoggedIn !== true) {
-      // Redirect to login if not logged in
-      window.alert("Please login to proceed!");
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
       return false;
     } else return true;
   }

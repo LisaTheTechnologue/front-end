@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/MaterialModule';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
-import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarousel, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { FeedbackCardComponent } from './feedback-card/feedback-card.component';
 import { TripCardComponent } from './trip-card/trip-card.component';
 import { RouterModule } from '@angular/router';
@@ -11,8 +11,11 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { TripDetailsComponent } from './trip-details/trip-details.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormImgComponent } from './form-img/form-img.component';
-
-
+import { FormImagesComponent } from './form-images/form-images.component';
+import { ImageSliderComponent } from './image-slider/image-slider.component';
+import { NgImageSliderModule } from 'ng-image-slider';
+import { ImageLightboxComponent } from './image-lightbox/image-lightbox.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -22,14 +25,20 @@ import { FormImgComponent } from './form-img/form-img.component';
     ConfirmDialogComponent,
     ErrorDialogComponent,
     TripDetailsComponent,
-    FormImgComponent
+    FormImgComponent,
+    FormImagesComponent,
+    ImageSliderComponent,
+    ImageLightboxComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     NgbRatingModule,
+    NgbCarousel,
     RouterModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgImageSliderModule,
+    PipesModule
   ],
   exports: [
     ProfileCardComponent,
@@ -38,7 +47,10 @@ import { FormImgComponent } from './form-img/form-img.component';
     ConfirmDialogComponent,
     ErrorDialogComponent,
     TripDetailsComponent,
-    FormImgComponent
+    FormImgComponent,
+    FormImagesComponent,
+    ImageSliderComponent,
+    ImageLightboxComponent
   ]
 })
 export class ComponentsModule { }

@@ -1,0 +1,11 @@
+<div class="image-slider">
+  <button mat-icon-button (click)="prevSlide()"><mat-icon>keyboard_arrow_left</mat-icon></button>
+  <img [src]="slides[currentSlideIndex]" class="image">  
+  <button mat-icon-button (click)="nextSlide()"><mat-icon>keyboard_arrow_right</mat-icon></button>
+</div>
+<div class="dots">
+  <span *ngFor="let slide of slides; let i = index" class="dot"
+        (click)="selectSlide(i)"
+        [ngClass]="{ 'active': i === currentSlideIndex }">
+  </span>
+</div>

@@ -1,3 +1,33 @@
 .form-array-error {
     text-align: left;
   }
+
+  .file-input {
+    display: none;
+  }
+  
+  .mat-mdc-card{
+    background-color: none;
+  }
+
+.trip-day-box {
+  border-radius:5px;
+  border-style: solid solid none;
+  border-width: thin;
+  padding: 10px; 
+  margin: 10px;
+}
+
+.image-list{
+  width: 70%;
+  margin: 10px;
+}
+
+.existed-image-list {
+  display: flex;
+  flex-wrap: wrap; /* Allow images to wrap to next line */
+  gap: 10px; /* Add spacing between images */
+  .existed-image {
+    width: 15vw; 
+  }
+}

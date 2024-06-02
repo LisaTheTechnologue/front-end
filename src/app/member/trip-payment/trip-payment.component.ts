@@ -24,6 +24,8 @@ export class TripPaymentComponent {
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   trip!: Trip;
   user!: User;
+  qrUrl: string;
+  qrCodeData: Blob | null = null;
   rating!:number;
   selectedFile: File | null;
   imagePreview: string | ArrayBuffer | null;
@@ -34,6 +36,7 @@ export class TripPaymentComponent {
     private publicService: PublicService,
     private confirmationService: ConfirmService,
     private paymentService: MemberPaymentService,
+    private userService: MemberUserService,
     private location: Location,
     private dialog: MatDialog,
     private fb: FormBuilder,
@@ -65,9 +68,12 @@ export class TripPaymentComponent {
       if(res.byteImg != null ) {
         this.user.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
       }
+      this.qrUrl = "https://img.vietqr.io/image/"+this.user.paymentAccBank + "-" + 
+                        this.user.paymentAccName + "-compact2.jpg?amount=" + this.trip.price + "&addInfo=test";
       this.rating = res.rating;
     });
   }
+
   selectedImage(event: File) {
     this.selectedFile = event;
     // this.imageChanged = true;

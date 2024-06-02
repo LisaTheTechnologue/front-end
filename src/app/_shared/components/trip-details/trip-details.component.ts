@@ -25,14 +25,14 @@ export class TripDetailsComponent {
   @Output() isJoined = new EventEmitter<boolean>();
   @Output() isEnded = new EventEmitter<boolean>();
   @Output() isLeader = new EventEmitter<boolean>();
+  @Output() returnedTrip = new EventEmitter<Trip>();
   error: any;
-
-  // leaderId: string;
-  constructor(
-    private publicService: PublicService,
+  constructor(private publicService: PublicService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) { }
+    ) {
+    
+  }
   ngOnInit() {
     this.getTrip();
     this.getMembers();
@@ -46,11 +46,14 @@ export class TripDetailsComponent {
       next: (res) => {
         this.trip = res;
         this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
+        this.trip.byteImgs = res.images.map(img => `data:image/jpeg;base64,${img.imageByte}`);
+        // this.trip.byteImgs = res.images;
         this.trip.tripDays = res.tripDays;
         if (this.trip.leaderId == this.userId) {
           this.isLeader.emit(true);
         }
         this.status.emit(this.trip.tripStatus);
+        this.returnedTrip.emit(this.trip);
         if (this.trip.tripStatus == 'END') {
           this.publicService
             .getFeedbacksByTripId(this.tripId)
@@ -92,4 +95,5 @@ export class TripDetailsComponent {
       },
     });
   }
+
 }

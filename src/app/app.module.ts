@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbDatepickerModule, NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbModule, NgbRatingModule, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { TripModule } from './trip/trip.module';
 import { MaterialModule } from './MaterialModule';
 import { HomeComponent } from './home/home.component';
@@ -19,7 +19,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { FilterPipe } from './_shared/pipes/filter.pipe';
 import { TokenInterceptor } from './_shared/services/token.interceptor';
 import { ComponentsModule } from './_shared/components/components.module';
 import { RouterModule } from '@angular/router';
@@ -28,6 +27,8 @@ import { TestComponent } from './test/test.component';
 import { DatePipe } from '@angular/common';
 import { GlobalErrorHandlerService } from './_shared/exceptions/global-error-handler.service';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { LightboxModule } from 'ngx-lightbox';
+import { NgImageSliderModule } from 'ng-image-slider';
 
 
 @NgModule({
@@ -39,7 +40,6 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     SignupComponent,
     LoginComponent,
     PageNotFoundComponent,
-    FilterPipe,
     ProfileComponent,
     TestComponent,
     ForgotPasswordComponent
@@ -61,6 +61,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     NgxPaginationModule,
     ComponentsModule,
     RouterModule,
+    LightboxModule,
+    NgImageSliderModule
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandlerService },

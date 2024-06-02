@@ -1,8 +1,6 @@
-<div class="container my-5">
-  <div>
-    <app-trip-details [tripId]="tripId" (isEnded)="getIsEnded($event)" (status)="getStatus($event)"
+    <app-trip-details [tripId]="tripId" (isEnded)="getIsEnded($event)" (status)="getStatus($event)" (returnedTrip)="getTrip($event)"
     (isLeader)="getIsLeader($event)" (isJoined)="getIsJoined($event)"></app-trip-details>
-  </div>
+    <div class="container my-5">
   <div class="action-button-row">
     <!-- <button mat-stroked-button color="warn" *ngIf="isJoined && !isEnded" class="me-2" (click)="revokeJoinTrip()">
       <mat-icon>clear</mat-icon> Revoke Join
@@ -23,6 +21,9 @@
     </button>
     <button mat-flat-button color="danger" [routerLink]="['/member/joiner/remove/',tripId]" *ngIf="isLeader && !isEnded">
       <mat-icon>cancel</mat-icon> Remove Participant
+    </button>
+    <button mat-flat-button color="success" (click)="copyData()" *ngIf="isLeader">
+      <mat-icon>check</mat-icon> Copy Data
     </button>
   </div>
 </div>

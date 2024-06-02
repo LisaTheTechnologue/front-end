@@ -1,0 +1,10 @@
+<div class="image-container">
+  <div *ngFor="let image of slides; let i = index">
+    <img (click)="openImageModal(i)" [src]="image" alt="Image {{ i + 1 }}" class="image-thumbnail">
+  </div>
+</div>
+
+<div class="modal" *ngIf="isOpen">
+  <img [src]="slides[selectedImageIndex]" alt="Image">
+  <button (click)="closeImageModal()" class="close-button"><mat-icon>close</mat-icon></button>
+</div>

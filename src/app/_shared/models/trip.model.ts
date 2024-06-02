@@ -18,9 +18,15 @@ export interface Trip {
   tripStatus: string;
   img: any;
   imageURL: string;
+  imageURLs: string[];
+  imageNames: string[];
+  byteImgs: any[];
   byteImg: any;
   tripDays?: TripDay[];
   rating: number;
+  cancelOneWeek: string;
+  cancelOneMonth: string;
+  cancelOneDay: string;
 }
 
 export interface Feedback {

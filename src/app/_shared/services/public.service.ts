@@ -63,6 +63,10 @@ export class PublicService {
     return this.http.post<any>(this.API+'contact', contactForm);
   }
 
+  public createTrip(record: FormData): Observable<any> {
+    return this.http.post<any>(this.API + 'trip-create', record)
+  }
+
   sendTemporaryPassword(email: string) {
     return this.http.post(this.API+'forgot-password', email);
   }

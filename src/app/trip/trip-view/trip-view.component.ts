@@ -6,6 +6,7 @@ import { MemberJoinerService } from '../../_shared/services/member-joiner.servic
 import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
 import { Trip, TripMember } from 'src/app/_shared/models/trip.model';
 import { PublicService } from 'src/app/_shared/services/public.service';
+import { SharedDataService } from 'src/app/_shared/services/shared-data.service';
 
 @Component({
   selector: 'app-trip-view',
@@ -29,6 +30,7 @@ export class TripViewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private memberJoinerService: MemberJoinerService,
     private snackBar: MatSnackBar,
+    private sharedData: SharedDataService,
     private router: Router
   ) {}
   ngOnInit(): void {
@@ -42,27 +44,28 @@ export class TripViewComponent implements OnInit {
     this.isJoined = $event;
     }
   joinTrip() {
-    if (this.isMemberLoggedIn) {
-      const userId = StorageService.getUserId();
-      const joiner = {
-        tripId: this.tripId,
-        userId: Number(userId),
-      };
+    // if (this.isMemberLoggedIn) {
+    //   const userId = StorageService.getUserId();
+    //   const joiner = {
+    //     tripId: this.tripId,
+    //     userId: Number(userId),
+    //   };
 
-      this.memberJoinerService.checkJoiner(joiner).subscribe({
-        next: (res) => {
+      // this.memberJoinerService.checkJoiner(joiner).subscribe({
+        // next: (res) => {
           this.router.navigateByUrl(`/member/payment/create/${this.tripId}`);
-        },
+        // },
         // error: (error) => {
         //   this.snackBar.open(error, 'ERROR', {
         //     duration: 100000,
         //     panelClass: 'error-snackbar',
         //   });
         // },
-      });
-    } else {
-      this.router.navigateByUrl('login');
-    }
+    //   });
+    // } else {
+    //   this.sharedData.setData(this.tripId);
+    //   this.router.navigateByUrl('login');
+    // }
   }
   // revokeJoinTrip() {
   //   this.memberJoinerService.cancel(this.tripId).subscribe({

@@ -1,8 +1,8 @@
-<div class="container my-5">
-  <div>
-    <app-trip-details [tripId]="tripId" (isJoined)="getIsJoined($event)"></app-trip-details>
-  </div>
 
+
+    <app-trip-details [tripId]="tripId" (isJoined)="getIsJoined($event)"></app-trip-details>
+
+  <div class="container my-5">
   <div>
     <button mat-flat-button color="success" (click)="joinTrip()">
       <mat-icon>input</mat-icon> Join Trip

@@ -18,3 +18,7 @@ export class User {
   paymentAccBank: string;
   paymentAccName: string;
 }
+export interface Bank {
+  name: string;
+  shortName: string;
+}

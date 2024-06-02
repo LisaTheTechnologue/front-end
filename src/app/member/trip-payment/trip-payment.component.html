@@ -38,6 +38,9 @@
         <div *ngIf="user">
           <mat-card class="m-4" style="width:50%">
             <mat-card-content>
+              <div *ngIf="qrUrl">
+                <img [src]="qrUrl" alt="Payment QR Code" style="width: 100%;" />
+              </div>
               <p>Bank: {{ user.paymentAccBank }}</p>
               <p>Account No.: {{ user.paymentAccNo }}</p>
               <p>Account Name: {{ user.paymentAccName }}</p>

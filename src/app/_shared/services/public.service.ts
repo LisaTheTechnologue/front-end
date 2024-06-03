@@ -39,6 +39,10 @@ export class PublicService {
     return this.http.get(this.API + 'trip/details?tripId=' + tripId);
     // .pipe(catchError(this.errorHandler));
   }
+  public getComments(tripId: any): Observable<any> {
+    return this.http.get<any>(this.API+`comments?tripId=${tripId}`)
+    // .pipe(catchError(this.handleError));
+  }
   public getFeedbacksByTripId(tripId: number): Observable<any> {
     return this.http.get(this.API + 'feedbacks?tripId=' + tripId)
     // .pipe(catchError(this.handleError));

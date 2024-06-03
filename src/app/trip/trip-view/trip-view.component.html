@@ -1,11 +1,49 @@
+<app-trip-details [tripId]="tripId" (status)="getStatus($event)" (returnedTrip)="getTrip($event)"
+  (isLeader)="getIsLeader($event)" (isJoined)="getIsJoined($event)"></app-trip-details>
 
-
-    <app-trip-details [tripId]="tripId" (isJoined)="getIsJoined($event)"></app-trip-details>
-
-  <div class="container my-5">
-  <div>
-    <button mat-flat-button color="success" (click)="joinTrip()">
-      <mat-icon>input</mat-icon> Join Trip
+<div class="container my-5">
+  <div class="action-button-row">
+    <button mat-flat-button color="success" *ngIf="!isJoined && status=='APPROVED'" class="me-2" (click)="joinTrip()">
+          <mat-icon>check</mat-icon> Join Trip
+        </button>
+    <button mat-flat-button color="accent" [routerLink]="['/member/chat/',tripId]"
+      *ngIf="(isJoined || isLeader) && status!='END' && isGroupChatOpened">
+      <mat-icon> chat</mat-icon> Join Team Chat
     </button>
+    <div *ngIf="isMemberLoggedIn">
+      <button mat-flat-button color="accent" [routerLink]="['/member/feedback/',tripId]"
+        *ngIf="isJoined && !isLeader && status=='END'">
+        <mat-icon> chat</mat-icon> Feedback
+      </button>
+      <button mat-flat-button color="danger" (click)="changeStatus('cancel')" *ngIf="isLeader && status!='END'">
+        <mat-icon>cancel</mat-icon> Cancel
+      </button>
+      <button mat-flat-button color="success" (click)="changeStatus('end')" *ngIf="isLeader && status!='END'">
+        <mat-icon>check</mat-icon> End
+      </button>
+      <button mat-flat-button color="danger" [routerLink]="['/member/joiner/remove/',tripId]"
+        *ngIf="isLeader && status!='END'">
+          <mat-icon>cancel</mat-icon> Remove Participant
+        </button>
+        <button mat-flat-button color=" success" (click)="copyData()" *ngIf="isLeader">
+        <mat-icon>check</mat-icon> Copy Data
+      </button>
+    </div>
+    <div *ngIf="isAdminLoggedIn">
+      <button mat-flat-button color="success" (click)="changeStatus('end')" *ngIf="status=='APPROVED'" class="me-2">
+        <mat-icon>check</mat-icon> End
+      </button>
+      <button mat-flat-button color="danger" (click)="changeStatus('cancel')" *ngIf="status=='APPROVED'" class="me-2">
+        <mat-icon>cancel</mat-icon> Cancel
+      </button>
+      <button mat-flat-button color="success" (click)="changeStatus('approve')" *ngIf="status=='OPEN'" class="me-2">
+        <mat-icon>check</mat-icon> Approve
+      </button>
+      <button mat-flat-button color="danger" (click)="changeStatus('reject')" *ngIf="status=='OPEN'" class="me-2">
+        <mat-icon>cancel</mat-icon> Reject
+      </button>
+    </div>
   </div>
-</div>
+
+  <app-comment [tripId]="tripId"></app-comment>
+  </div>

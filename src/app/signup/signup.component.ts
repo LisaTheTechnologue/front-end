@@ -44,7 +44,7 @@ export class SignupComponent {
     const confirmPassword = this.signupForm.get('confirmPassword')?.value;
 
     if(password !== confirmPassword){
-      this.snackBar.open('Passwords do not match.', 'Close', {duration: 5000, panelClass: 'error-snackbar'});
+      this.onFailed('Passwords do not match.');
       return;
     }
 

@@ -16,6 +16,8 @@ import { ImageSliderComponent } from './image-slider/image-slider.component';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { ImageLightboxComponent } from './image-lightbox/image-lightbox.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { CommentComponent } from './comment/comment.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { PipesModule } from '../pipes/pipes.module';
     FormImgComponent,
     FormImagesComponent,
     ImageSliderComponent,
-    ImageLightboxComponent
+    ImageLightboxComponent,
+    CommentComponent
   ],
   imports: [
     CommonModule,
@@ -38,6 +41,8 @@ import { PipesModule } from '../pipes/pipes.module';
     RouterModule,
     FontAwesomeModule,
     NgImageSliderModule,
+    FormsModule,
+    ReactiveFormsModule,
     PipesModule
   ],
   exports: [
@@ -50,7 +55,8 @@ import { PipesModule } from '../pipes/pipes.module';
     FormImgComponent,
     FormImagesComponent,
     ImageSliderComponent,
-    ImageLightboxComponent
+    ImageLightboxComponent,
+    CommentComponent
   ]
 })
 export class ComponentsModule { }

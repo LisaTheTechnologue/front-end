@@ -45,7 +45,11 @@ export class MemberPaymentService {
       headers: this.createAuthorizationHeader(),
     })
   }
-
+  public createMember(member: any): Observable<any> {
+    return this.http.post<any>(this.API+'/create-member', member, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
   public update(payment: any): Observable<any> {
     return this.http.put<any>(this.API+'/update', payment, {
       headers: this.createAuthorizationHeader(),

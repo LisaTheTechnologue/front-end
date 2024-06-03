@@ -1,7 +1,14 @@
 <div *ngIf="user">
   <mat-card-header>
     <mat-card-title-group>
-      <mat-card-title>{{ user.fullName }} </mat-card-title>
+      <mat-card-title>{{ user.fullName }} 
+        <span *ngIf="user.userStatus === 'VIP'">
+          <span class="badge bg-warning text-dark">{{ user.userStatus }}</span>
+        </span>
+        <span *ngIf="user.userStatus === 'PARTIALLY_BAN'">
+          <span class="badge bg-danger">Danger</span>
+        </span>  
+      </mat-card-title>
       <mat-card-subtitle>
         <ngb-rating [(rate)]="rating" [readonly]="true" [max]="5"
           class="custom-rating"></ngb-rating>

@@ -8,6 +8,7 @@ import { StorageService } from '../_shared/services/storage.service';
 import { ConfirmService } from '../_shared/services/confirm.service';
 import { AdminUserService } from '../_shared/services/admin-user.service';
 import { User } from '../_shared/models/user.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -27,19 +28,24 @@ export class ProfileComponent {
   feedbacks: Feedback[];
   error: any;
   isAdminLoggedIn: boolean = false;
+  userForm!: FormGroup;
   constructor(
     private publicService: PublicService,
     private route: ActivatedRoute,
     private router: Router,
     private confirmService: ConfirmService,
-    private adminService: AdminUserService,
+    private adminService: AdminUserService,    
+    private fb: FormBuilder,
     private snackBar: MatSnackBar
   ) {
     this.getUser();
     this.isAdminLoggedIn = StorageService.isAdminLoggedIn();
-
+    this.userForm = this.fb.group({
+      id:[null, []],
+      status: [null, [Validators.required]],
+      userId:[null, []]
+    });
   }
-
   
   getFeedbacksByTripId(tripId: number) {
     this.publicService.getFeedbacksByTripId(tripId).subscribe((res) => (this.feedbacks = res));
@@ -82,12 +88,12 @@ export class ProfileComponent {
   }
 
   changeStatus(): void {
-    
+    this.userForm.setValue({ userId: this.user.id })
     this.confirmService
       .confirm('Are you sure you want to submit this?')
       .subscribe((confirmed) => {
         if (confirmed) {
-          this.adminService.updateStatus(this.leaderId, !this.user.isActive).subscribe({
+          this.adminService.updateStatus(this.leaderId, this.userForm).subscribe({
             next: (res) => {              
                 this.onSuccess('Update User Status Successfully');              
             },

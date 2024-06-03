@@ -84,7 +84,7 @@
                   <button mat-flat-button color="primary" *ngIf="row.tripStatus!='END'"
                     [routerLink]="['/member/trips/edit/', row.id]" class="me-1">Edit</button>
                   <button mat-flat-button color="accent"
-                    [routerLink]="['/member/trips/view/', row.id]" class="me-1">View</button>
+                    [routerLink]="['/trips/view/', row.id]" class="me-1">View</button>
                   <button mat-flat-button color="danger" *ngIf="row.tripStatus=='OPEN'"
                     (click)="deleteTrip(row.id)" class="me-1">Delete</button>
                 </td>

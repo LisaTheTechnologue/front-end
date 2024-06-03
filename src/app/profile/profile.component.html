@@ -59,11 +59,17 @@
     </div>
   </div>
   <div *ngIf="isAdminLoggedIn && user">
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="VIP">Vip</mat-option>
+        <mat-option value="NORMAL">Normal</mat-option>
+        <mat-option value="PARTIALLY_BAN">Partially Ban</mat-option>
+        <mat-option value="BANNED">Banned</mat-option>
+      </mat-select>
+    </mat-form-field>
     <button mat-flat-button color="success" (click)="changeStatus()" *ngIf="!user.isActive">
-      <mat-icon>check</mat-icon> Active User
-    </button>
-    <button mat-flat-button color="danger" (click)="changeStatus()" *ngIf="user.isActive">
-      <mat-icon>close</mat-icon> Inactive User
+Change Status
     </button>
   </div>
 </div>

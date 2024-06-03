@@ -7,6 +7,7 @@ import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found
 import { Trip, TripMember } from 'src/app/_shared/models/trip.model';
 import { PublicService } from 'src/app/_shared/services/public.service';
 import { SharedDataService } from 'src/app/_shared/services/shared-data.service';
+import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 
 @Component({
   selector: 'app-trip-view',
@@ -15,15 +16,15 @@ import { SharedDataService } from 'src/app/_shared/services/shared-data.service'
 })
 export class TripViewComponent implements OnInit {
   isJoined: boolean;
-  // isEnded = false;
+  isEnded: boolean;
+  isLeader: boolean;
+  isGroupChatOpened: boolean = false;
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
-  isMemberLoggedIn = false;
-  // image: any;
-  // trip!: Trip;
-  // members!: TripMember[];
-  // feedbacks: any[];
+  isMemberLoggedIn: boolean = StorageService.isMemberLoggedIn();
+  isAdminLoggedIn: boolean = StorageService.isAdminLoggedIn();
+  status: string;
   error: any;
-
+  trip: Trip;
   // leaderId: string;
   constructor(
     private publicService: PublicService,
@@ -31,60 +32,65 @@ export class TripViewComponent implements OnInit {
     private memberJoinerService: MemberJoinerService,
     private snackBar: MatSnackBar,
     private sharedData: SharedDataService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private memberTripService: MemberTripService
+  ) { }
   ngOnInit(): void {
-    // this.getTrip();
-    // this.getMembers();
-    this.router.events.subscribe((event) => {
+    this.router.events.subscribe(event => {
       this.isMemberLoggedIn = StorageService.isMemberLoggedIn();
-    });
+      this.isAdminLoggedIn = StorageService.isAdminLoggedIn();
+    })
   }
+  // getIsEnded($event: boolean) {
+  //   this.isEnded = $event;
+  //   }
   getIsJoined($event: boolean) {
     this.isJoined = $event;
-    }
-  joinTrip() {
-    // if (this.isMemberLoggedIn) {
-    //   const userId = StorageService.getUserId();
-    //   const joiner = {
-    //     tripId: this.tripId,
-    //     userId: Number(userId),
-    //   };
-
-      // this.memberJoinerService.checkJoiner(joiner).subscribe({
-        // next: (res) => {
-          this.router.navigateByUrl(`/member/payment/create/${this.tripId}`);
-        // },
-        // error: (error) => {
-        //   this.snackBar.open(error, 'ERROR', {
-        //     duration: 100000,
-        //     panelClass: 'error-snackbar',
-        //   });
-        // },
-    //   });
-    // } else {
-    //   this.sharedData.setData(this.tripId);
-    //   this.router.navigateByUrl('login');
-    // }
+    console.log(this.isJoined);
   }
-  // revokeJoinTrip() {
-  //   this.memberJoinerService.cancel(this.tripId).subscribe({
-  //     next: (res) => {
-  //       this.snackBar.open(
-  //         'You have revoked of the trip successfully!',
-  //         'Close',
-  //         {
-  //           duration: 5000,
-  //         }
-  //       );
-  //       this.router.navigateByUrl('/member');
-  //     },
-  //     error: (error) => {
-  //       this.snackBar.open(error, 'ERROR', {
-  //         duration: 100000,
-  //         panelClass: 'error-snackbar',
-  //       });
-  //     },
-  //   });
-  // }
+  getIsLeader($event: boolean) {
+    this.isLeader = $event;
+  }
+  getStatus($event: string) {
+    if ($event == 'APPROVED') {
+      this.isGroupChatOpened = true;
+    }
+    this.status = $event;
+  }
+  getTrip($event: Trip) {
+    this.trip = $event;
+  }
+  joinTrip() {
+    this.router.navigateByUrl(`/member/payment/create/${this.tripId}`);
+  }
+  changeStatus(status: string) {
+    this.memberTripService.changeStatus(this.tripId, status).subscribe((res) => {
+      if (res.id != null) {
+        this.snackBar.open('Updated Trip Status Successful!', 'Close', {
+          duration: 5000,
+        });
+        this.router.navigateByUrl('/member');
+      } else {
+        this.snackBar.open(res.message, 'ERROR', {
+          duration: 5000,
+          panelClass: 'error-snackbar',
+        });
+      }
+    });
+  }
+
+  copyData() {
+    this.sharedData.setData(this.trip);
+    this.router.navigateByUrl('/member/trips/create');
+  }
+  private onSuccess(message: string) {
+    this.snackBar.open(message, 'OK', { duration: 5000 });
+    this.router.navigateByUrl('/admin');
+  }
+  private onFailed(message: string) {
+    this.snackBar.open(message, 'ERROR', {
+      duration: 100000,
+      panelClass: 'error-snackbar',
+    });
+  }
 }

@@ -30,16 +30,14 @@ export class TripDetailsComponent {
   constructor(private publicService: PublicService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-    ) {
-    
-  }
+  ) { }
   ngOnInit() {
-    this.getTrip();
-    this.getMembers();
     this.router.events.subscribe((event) => {
       this.isMemberLoggedIn = StorageService.isMemberLoggedIn();
     });
     this.userId = StorageService.getUserId();
+    this.getTrip();
+    // this.getMembers();
   }
   getTrip() {
     this.publicService.getByTripId(this.tripId).subscribe({
@@ -62,6 +60,20 @@ export class TripDetailsComponent {
         } else {
           this.isEnded.emit(false);
         }
+        if (res.joiners.length > 0) {
+          if (this.isMemberLoggedIn) {
+            for (var index in res) {
+              if ((res.joiners[index].userId === this.userId)) {
+                this.isJoined.emit(true);
+                break;
+              }
+            }
+          } else {
+            this.isJoined.emit(false);
+          }
+        } else {
+          this.isJoined.emit(false);
+        }
       },
       // error: (error) => {
       //   if (error instanceof PageNotFoundException) {
@@ -73,27 +85,27 @@ export class TripDetailsComponent {
       // },
     });
   }
-  getMembers() {
-    this.publicService.getAllJoinerByTripId(this.tripId).subscribe({
-      next: (res) => {
-        this.members = res;
-        if (this.members.length > 0) {
-          if (this.isMemberLoggedIn) {
-            for (var index in res) {
-              if ((res[index].userId === this.userId)) {
-                this.isJoined.emit(true);
-                break;
-              }
-            }
-          } else {
-            this.isJoined.emit(false);
-          }
-        }
-      },
-      error: (error) => {
-        this.error = error.message;
-      },
-    });
-  }
+  // getMembers() {
+  //   this.publicService.getAllJoinerByTripId(this.tripId).subscribe({
+  //     next: (res) => {
+  //       this.members = res;
+  //       if (this.members.length > 0) {
+  //         if (this.isMemberLoggedIn) {
+  //           for (var index in res) {
+  //             if ((res[index].userId === this.userId)) {
+  //               this.isJoined.emit(true);
+  //               break;
+  //             }
+  //           }
+  //         } else {
+  //           this.isJoined.emit(false);
+  //         }
+  //       }
+  //     },
+  //     error: (error) => {
+  //       this.error = error.message;
+  //     },
+  //   });
+  // }
 
 }

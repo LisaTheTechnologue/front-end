@@ -22,7 +22,7 @@
           <input matInput placeholder="Username" [attr.disabled]="true" formControlName="username">
         </mat-form-field>
         <div class="mb-3">
-          <app-form-img (selectedImage)="selectedImage($event)" [limitFileSize]="50"
+          <app-form-img (selectedImage)="onSelectedImage($event)" [limitFileSize]="50"
             [existingImage]="existingImage"></app-form-img>
         </div>
         <mat-card class="mb-3">

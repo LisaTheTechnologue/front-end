@@ -14,7 +14,7 @@ import { MemberUserService } from 'src/app/_shared/services/member-user.service'
 export class ProfileEditComponent implements OnInit {
   profileForm: FormGroup;
   hide = true;
-  selectedFile: File | null;
+  selectedImage: File | null;
   imagePreview: string | ArrayBuffer | null;
   existingImage: string | null = null;
   isAddMode: boolean;
@@ -83,8 +83,8 @@ export class ProfileEditComponent implements OnInit {
     this.profileForm.get('dob').setValue(event.value);
   }
 
-  selectedImage(event: File) {
-    this.selectedFile = event;
+  onSelectedImage(event: File) {
+    this.selectedImage = event;
     this.imageChanged = true;
   }
 
@@ -94,13 +94,28 @@ export class ProfileEditComponent implements OnInit {
       .confirm('Are you sure you want to submit this?')
       .subscribe((confirmed) => {
         if (confirmed) {
+          const formData = new FormData();
+          formData.append('username', this.profileForm.get('username').value);
+          formData.append('firstName', this.profileForm.get('firstName').value);
+          formData.append('lastName', this.profileForm.get('lastName').value);
+          formData.append('dob', this.profileForm.get('dob').value);
+          formData.append('phoneNo', this.profileForm.get('phoneNo').value);
+          formData.append('gender', this.profileForm.get('gender').value);
+          formData.append('email', this.profileForm.get('email').value); 
+          formData.append('paymentAccNo', this.profileForm.get('paymentAccNo').value);
+          formData.append('paymentAccName', this.profileForm.get('paymentAccName').value);
+          formData.append('paymentAccBank', this.profileForm.get('paymentAccBank').value);
+          if (this.selectedImage) {
+            formData.append('image', this.selectedImage);
+          } 
+
           this.memberUserService
             .updateProfile(this.profileForm.value as User)
             .subscribe({
               next: (res) => {
                 if (this.imageChanged) {
                   const formData: FormData = new FormData();
-                  formData.append('file', this.selectedFile);
+                  formData.append('file', this.selectedImage);
                   // console.log(formData.get('file'));
                   this.memberUserService
                     .uploadImage(formData)

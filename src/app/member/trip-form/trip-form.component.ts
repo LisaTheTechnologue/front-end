@@ -141,7 +141,7 @@ export class TripFormComponent {
   getTripById() {
     // this.trip = new Trip();
     // const userId = StorageService.getUserId();
-    this.memberTripService.getTripById(this.tripId).subscribe((res) => {
+    this.publicService.getByTripId(this.tripId).subscribe((res) => {
       // create lines array first
       this.populateForm(res);
       // console.log(res);
@@ -294,9 +294,9 @@ export class TripFormComponent {
     this.existedImagesAnyArray.forEach(image => {
       formData.append('existedImages', image.id); 
     });   
-    formData.forEach((value, key) => {
-      console.log(`Key: ${key}, Value: ${value}`);
-    });
+    // formData.forEach((value, key) => {
+    //   console.log(`Key: ${key}, Value: ${value}`);
+    // });
     return formData;
   }
 

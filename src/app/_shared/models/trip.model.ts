@@ -27,6 +27,7 @@ export interface Trip {
   cancelOneWeek: string;
   cancelOneMonth: string;
   cancelOneDay: string;
+  vacantNumber:number;
 }
 
 export interface Feedback {

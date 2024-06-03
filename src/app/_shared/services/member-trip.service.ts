@@ -44,12 +44,12 @@ export class MemberTripService {
     })
   }
 
-  getTripById(tripId: number): Observable<any> {
-    // const userId = StorageService.getUserId();
-    return this.http.get(this.API + `trip/${tripId}`, {
-      headers: this.createAuthorizationHeader(),
-    })
-  }
+  // getTripById(tripId: number): Observable<any> {
+  //   // const userId = StorageService.getUserId();
+  //   return this.http.get(this.API + `trip/${tripId}`, {
+  //     headers: this.createAuthorizationHeader(),
+  //   })
+  // }
 
   changeStatus(tripId: number, status: string): Observable<any> {
     return this.http.put(this.API + `status/${tripId}`, status, {

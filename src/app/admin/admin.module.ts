@@ -6,7 +6,6 @@ import { AdminComponent } from './admin.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../MaterialModule';
-import { TripViewComponent } from './trip-view/trip-view.component';
 import { TripListComponent } from './trip-list/trip-list.component';
 import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 import { UserListComponent } from './user-list/user-list.component';
@@ -18,7 +17,6 @@ import { ComponentsModule } from '../_shared/components/components.module';
 @NgModule({
   declarations: [
     AdminComponent,
-    TripViewComponent,
     TripListComponent,
        AdminProfileComponent,
     UserListComponent,

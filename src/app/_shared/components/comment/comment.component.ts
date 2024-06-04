@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { PublicService } from '../../services/public.service';
 import { MemberCommentService } from '../../services/member-comment.service';
 import { AdminCommentService } from '../../services/admin-comment.service';
+import { ConfirmService } from '../../services/confirm.service';
 
 @Component({
   selector: 'app-comment',
@@ -14,7 +15,9 @@ import { AdminCommentService } from '../../services/admin-comment.service';
 export class CommentComponent implements OnInit {
 
   @Input() tripId:any;
-  isLoggedIn: boolean;
+  isMemberLoggedIn: boolean = StorageService.isMemberLoggedIn();
+  isAdminLoggedIn: boolean = StorageService.isAdminLoggedIn();
+  isLoggedIn: boolean = false;
   commentForm: FormGroup;
   comments: any;
   userId: any;
@@ -23,17 +26,17 @@ export class CommentComponent implements OnInit {
     private publicService: PublicService,
     private memberCommentService: MemberCommentService,
     private adminCommentService: AdminCommentService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private confirmationService: ConfirmService
   ) {
     this.userId = StorageService.getUserId();
     this.isAdmin = StorageService.isAdminLoggedIn();
-    this.isLoggedIn = StorageService.isMemberLoggedIn() || StorageService.isAdminLoggedIn();
+    this.isLoggedIn = this.isMemberLoggedIn || this.isAdminLoggedIn;
   }
 
   ngOnInit() {
     this.initForm();
-    this.getComments();
-  
+    this.getComments();  
   }
 
   private initForm() {
@@ -55,24 +58,29 @@ export class CommentComponent implements OnInit {
     );
   }
   isResolved(item: any) {
-    if(!this.isAdmin){
-    this.memberCommentService.update(item).subscribe(
-      (res) => {
-        this.getComments(); 
-        this.initForm();
-      },
-    )
-  } else {
-    this.adminCommentService.update(item).subscribe(
-      (res) => {
-        this.getComments(); 
-        this.initForm();
-      },
-      // (error) => {
-      //   this.onFailed(error);
-      // }
-    )
-  }
+    this.confirmationService
+      .confirm('Bạn chắc chắn chứ?')
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          if(!this.isAdmin){
+          this.memberCommentService.update(item).subscribe(
+            (res) => {
+              this.getComments(); 
+              this.initForm();
+            },
+          )
+        } else {
+          this.adminCommentService.update(item).subscribe(
+            (res) => {
+              this.getComments(); 
+              this.initForm();
+            },
+            // (error) => {
+            //   this.onFailed(error);
+            // }
+          )
+        }
+      }});
   }
   onSubmit() {
     if(!this.isLoggedIn) {

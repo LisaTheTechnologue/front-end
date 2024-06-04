@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
 import { SharedDataService } from 'src/app/_shared/services/shared-data.service';
 import { UploadedImage } from 'src/app/_shared/models/image.model';
 import { UploadImageService } from 'src/app/_shared/services/upload-image.service';
+import { TripLevel } from 'src/app/_shared/models/enum.model';
 @Component({
   selector: 'app-trip-form',
   templateUrl: './trip-form.component.html',
@@ -22,7 +23,7 @@ export class TripFormComponent {
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   tripForm!: FormGroup;
   listOfCities: any = [];
-  
+  tripLevels = TripLevel;
   limitFileSize: number;
   MAX_FILE_SIZE = 1024;
   // thumbnails

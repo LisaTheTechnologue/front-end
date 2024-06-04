@@ -1,16 +1,6 @@
 <mat-drawer-container class="example-container">
   <mat-drawer mode="side" opened>
-    <div class="list-group list-group-flush">
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/joined-trips']">Your Joined
-        Trips
-      </a>
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/created-trips']">Your Created
-        Trips</a>
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/joined-requests']">Join Requests</a>
-      <a href="#" class="list-group-item list-group-item-action active" aria-current="true"
-        [routerLink]="['/member/payment/list']">Payment History</a>
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/profile']">Edit Profile</a>
-    </div>
+    <app-member-navigation [activeRoute]="activeRoute"></app-member-navigation>
   </mat-drawer>
   <mat-drawer-content>
     <div class="container my-5">

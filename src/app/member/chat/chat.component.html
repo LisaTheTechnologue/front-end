@@ -9,14 +9,14 @@
               <div class="message sent" *ngIf="message.isMe">
                 {{message.content}}
                 <span class="metadata">
-                  <span class="time">{{message.createdAt | date: 'y/MM/dd HH:mm aaa'}}</span>
+                  <span class="time">{{message.createdAt | date: 'dd/MM/yyyy HH:mm aaa'}}</span>
                 </span>
               </div>
               <div class="message received"  *ngIf="!message.isMe">
                 <strong>{{message.username}}</strong> <br>
                 {{message.content}}
                 <span class="metadata">
-                  <span class="time">{{message.createdAt | date: 'y/MM/dd HH:mm aaa'}}</span>
+                  <span class="time">{{message.createdAt | date: 'dd/MM/yyyy HH:mm aaa'}}</span>
                 </span>
               </div>
 

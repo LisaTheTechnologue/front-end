@@ -13,7 +13,7 @@ import { MemberPaymentService } from 'src/app/_shared/services/member-payment.se
 })
 export class JoinRequestListComponent implements OnInit, AfterViewInit{
   error: any;
-
+  activeRoute = 'joined-requests';
   public joins= new MatTableDataSource<any>([]);
   searchText: string = '';
   filteredData: any[] = [];

@@ -12,25 +12,27 @@ import { UserListComponent } from './user-list/user-list.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactViewComponent } from './contact-view/contact-view.component';
 import { ComponentsModule } from '../_shared/components/components.module';
+import { PipesModule } from "../_shared/pipes/pipes.module";
 
 
 @NgModule({
-  declarations: [
-    AdminComponent,
-    TripListComponent,
-       AdminProfileComponent,
-    UserListComponent,
-    ContactListComponent,
-    ContactViewComponent
-  ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    ComponentsModule,
-  ]
+    declarations: [
+        AdminComponent,
+        TripListComponent,
+        AdminProfileComponent,
+        UserListComponent,
+        ContactListComponent,
+        ContactViewComponent
+    ],
+    imports: [
+        CommonModule,
+        AdminRoutingModule,
+        MaterialModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        ComponentsModule,
+        PipesModule
+    ]
 })
 export class AdminModule { }

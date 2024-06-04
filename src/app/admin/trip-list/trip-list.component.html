@@ -12,19 +12,20 @@
       <div class="row">
         <div class="col">
           <div class="m-1 p-3 bg-white border border-secondary rounded-1">
-            <section *ngIf="tripLevels.size > 0">
+            <section >
               <strong>Filter by Trip Level:</strong>
               <ul style="list-style-type: none;">
-                <li *ngFor="let tripLevel of tripLevels">
-                  <input class="form-check-input me-1" type="checkbox" [ngModel]="selectedTripLevels.includes(tripLevel)"
-                    (change)="onTripLevelChange(tripLevel,$event)">
-                  {{ tripLevel }}
+                <li *ngFor="let tripLevel of tripLevels | keyvalue">
+                  <input class="form-check-input me-1" type="checkbox" [ngModel]="selectedTripLevels.includes(tripLevel.key)"
+                    (change)="onTripLevelChange(tripLevel.key,$event)">
+                  {{ tripLevel.value }}
                 </li>
               </ul>
             </section>
             <section>
               <strong>City:</strong>
               <select class="form-select" id="country" [(ngModel)]="selectedCityId" (change)="filterData()" >
+                <option [value]="999">Tất cả</option>
                         <option *ngFor="let c of cities" [value]="c.id">{{c.name}}      </option>
               </select> 
             </section>
@@ -67,7 +68,7 @@
 
                 <ng-container matColumnDef="status">
                   <th mat-header-cell *matHeaderCellDef > Status </th>
-                  <td mat-cell *matCellDef="let row"> {{row.tripStatus}} </td>
+                  <td mat-cell *matCellDef="let row"> {{row.tripStatus | tripStatus}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="actions">

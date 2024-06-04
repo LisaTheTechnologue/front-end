@@ -28,7 +28,10 @@ import { DatePipe } from '@angular/common';
 import { GlobalErrorHandlerService } from './_shared/exceptions/global-error-handler.service';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LightboxModule } from 'ngx-lightbox';
-import { NgImageSliderModule } from 'ng-image-slider';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { MatDialogRef } from '@angular/material/dialog';
+import { PipesModule } from './_shared/pipes/pipes.module';
+import { ChangeStatusDialogComponent } from './profile/change-status-dialog/change-status-dialog.component';
 
 
 @NgModule({
@@ -42,7 +45,8 @@ import { NgImageSliderModule } from 'ng-image-slider';
     PageNotFoundComponent,
     ProfileComponent,
     TestComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ChangeStatusDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -61,17 +65,24 @@ import { NgImageSliderModule } from 'ng-image-slider';
     NgxPaginationModule,
     ComponentsModule,
     RouterModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
     LightboxModule,
-    NgImageSliderModule
+    PipesModule
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
     DatePipe,
+    provideNgxMask(),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }
+    },
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
   ],
   bootstrap: [AppComponent]
 })

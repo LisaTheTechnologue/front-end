@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { ImageSliderComponent } from './image-slider.component';
+import { RejectDialogComponent } from './reject-dialog.component';
 
-describe('ImageSliderComponent', () => {
-  let component: ImageSliderComponent;
-  let fixture: ComponentFixture<ImageSliderComponent>;
+describe('RejectDialogComponent', () => {
+  let component: RejectDialogComponent;
+  let fixture: ComponentFixture<RejectDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImageSliderComponent ]
+      declarations: [ RejectDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ImageSliderComponent);
+    fixture = TestBed.createComponent(RejectDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,4 +1,5 @@
 import { User } from 'src/app/_shared/models/user.model';
+import { TripLevel, TripStatus } from './enum.model';
 
 export interface Trip {
   id: number;
@@ -7,15 +8,15 @@ export interface Trip {
   leaderId: number;
   cityName:string;
   cityId:number;
-  tripLevel: string;
+  tripLevel: TripLevel;
   minAge: number;
   maxAge: number;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date;
   groupSize: number;
   notes: string;
   price: number;
-  tripStatus: string;
+  tripStatus: TripStatus;
   img: any;
   imageURL: string;
   imageURLs: string[];
@@ -23,6 +24,7 @@ export interface Trip {
   byteImgs: any[];
   byteImg: any;
   tripDays?: TripDay[];
+  joiners:TripMember[];
   rating: number;
   cancelOneWeek: string;
   cancelOneMonth: string;

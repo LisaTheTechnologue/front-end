@@ -16,9 +16,8 @@ export class MemberUserService {
   constructor(public http: HttpClient, public router: Router) {}
 
   public getProfile(): Observable<any> {
-    const userId = StorageService.getUserId();
     return this.http
-      .get<any>(this.API+'profile/' + userId, {
+      .get<any>(this.API+'profile', {
         headers: this.createAuthorizationHeader(),
       })
       // .pipe(catchError(this.handleError));

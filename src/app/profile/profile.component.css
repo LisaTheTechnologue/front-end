@@ -150,7 +150,7 @@ a.text-muted:focus {
 } 
 
 .trip-card {
-  width: 200px;
+  width: 60%;
   margin-bottom: 16px;
 
   &:hover {

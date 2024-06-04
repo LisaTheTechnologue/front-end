@@ -12,7 +12,7 @@ import { MemberPaymentService } from 'src/app/_shared/services/member-payment.se
 })
 export class PaymentHistoryListComponent implements OnInit {
   error: any;
-
+  activeRoute = 'payment-list';
   public joins= new MatTableDataSource<any>([]);
   searchText: string = '';
   filteredData: any[] = [];

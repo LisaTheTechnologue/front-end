@@ -8,6 +8,7 @@ import { Trip, TripMember } from 'src/app/_shared/models/trip.model';
 import { PublicService } from 'src/app/_shared/services/public.service';
 import { SharedDataService } from 'src/app/_shared/services/shared-data.service';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
+import { TripStatus } from 'src/app/_shared/models/enum.model';
 
 @Component({
   selector: 'app-trip-view',
@@ -15,19 +16,22 @@ import { MemberTripService } from 'src/app/_shared/services/member-trip.service'
   styleUrls: ['./trip-view.component.css'],
 })
 export class TripViewComponent implements OnInit {
-  isJoined: boolean;
-  isEnded: boolean;
-  isLeader: boolean;
+  allTripStatuses: typeof  TripStatus = TripStatus;
+  isJoined: boolean = false;
+  isLeader: boolean = false;
   isGroupChatOpened: boolean = false;
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   isMemberLoggedIn: boolean = StorageService.isMemberLoggedIn();
   isAdminLoggedIn: boolean = StorageService.isAdminLoggedIn();
   status: string;
-  error: any;
-  trip: Trip;
-  // leaderId: string;
-  constructor(
-    private publicService: PublicService,
+  error: any; 
+  image: any;
+  // tripId: number = this.activatedRoute.snapshot.params['tripId'];
+  userId: any;
+  trip!: Trip;
+  members!: TripMember[];
+  feedbacks: any[];
+  constructor(private publicService: PublicService,
     private activatedRoute: ActivatedRoute,
     private memberJoinerService: MemberJoinerService,
     private snackBar: MatSnackBar,
@@ -35,31 +39,73 @@ export class TripViewComponent implements OnInit {
     private router: Router,
     private memberTripService: MemberTripService
   ) { }
-  ngOnInit(): void {
+  ngOnInit() {
     this.router.events.subscribe(event => {
       this.isMemberLoggedIn = StorageService.isMemberLoggedIn();
       this.isAdminLoggedIn = StorageService.isAdminLoggedIn();
-    })
+    });
+    this.userId = StorageService.getUserId();
+    this.getTrip();
+    // this.getMembers();
+  }
+  
+  getTrip() {
+    this.publicService.getByTripId(this.tripId).subscribe({
+      next: (res) => {
+        this.trip = res;
+        this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
+        this.trip.byteImgs = res.images.map(img => `data:image/jpeg;base64,${img.imageByte}`);
+        // this.trip.byteImgs = res.images;
+        this.trip.tripDays = res.tripDays;
+        if (this.trip.leaderId == this.userId) {
+          this.isLeader = true;
+        }
+        // this.status.emit(this.trip.tripStatus);
+        // this.returnedTrip.emit(this.trip);
+        if (this.trip.tripStatus === TripStatus.END) {
+          this.publicService
+            .getFeedbacksByTripId(this.tripId)
+            .subscribe((res) => (this.feedbacks = res));
+          // this.isEnded.emit(true);
+        } else {
+          // this.isEnded.emit(false);
+        }
+        if (res.joiners.length > 0) {
+          this.members = res.joiners;
+          if (this.isMemberLoggedIn) {
+            for (var index in this.members) {
+              if (this.members[index].userId === this.userId) {
+                this.isJoined = true;
+                break;
+              }
+            }
+          } else {
+            // this.isJoined.emit(false);
+          }
+        } else {
+          // this.isJoined.emit(false);
+        }
+      },
+    });
   }
   // getIsEnded($event: boolean) {
   //   this.isEnded = $event;
   //   }
-  getIsJoined($event: boolean) {
-    this.isJoined = $event;
-    console.log(this.isJoined);
-  }
-  getIsLeader($event: boolean) {
-    this.isLeader = $event;
-  }
-  getStatus($event: string) {
-    if ($event == 'APPROVED') {
-      this.isGroupChatOpened = true;
-    }
-    this.status = $event;
-  }
-  getTrip($event: Trip) {
-    this.trip = $event;
-  }
+  // getIsJoined($event: boolean) {
+  //   this.isJoined = $event;
+  // }
+  // getIsLeader($event: boolean) {
+  //   this.isLeader = $event;
+  // }
+  // getStatus($event: string) {
+  //   if ($event == 'APPROVED') {
+  //     this.isGroupChatOpened = true;
+  //   }
+  //   this.status = $event;
+  // }
+  // getTrip($event: Trip) {
+  //   this.trip = $event;
+  // }
   joinTrip() {
     this.router.navigateByUrl(`/member/payment/create/${this.tripId}`);
   }

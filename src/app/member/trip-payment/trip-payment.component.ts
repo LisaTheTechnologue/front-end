@@ -53,6 +53,12 @@ export class TripPaymentComponent {
       notes: [null, []],
     });
   }
+  formatNumber(event: Event) {
+    const data = (event.target as HTMLInputElement).value;
+    const parts = data.split('.');
+    const formattedPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return formattedPart + (parts.length > 1 ? '.' + parts[1] : '');
+  }
   getTrip(){
     this.publicService.getByTripId(this.tripId).subscribe({
       next: (res) => {
@@ -72,8 +78,9 @@ export class TripPaymentComponent {
       if(res.byteImg != null ) {
         this.user.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
       }
-      this.qrUrl = "https://img.vietqr.io/image/"+this.user.paymentAccBank + "-" + 
-                        this.user.paymentAccName + "-compact2.jpg?amount=" + this.trip.price + "&addInfo=test";
+      this.qrUrl = "https://img.vietqr.io/image/"+this.user.paymentAccBankShortName + "-" + 
+                        this.user.paymentAccName + "-compact2.jpg" //?amount=" + this.trip.price + "&addInfo=test";
+                        + "?addInfo='Chuyển khoản cho chuyến đi'"
       this.rating = res.rating;
     });
   }
@@ -122,34 +129,34 @@ export class TripPaymentComponent {
       .subscribe((confirmed) => {
         if (confirmed) {
             const formData: FormData = new FormData();
-            const userId = StorageService.getUserId();
-            const tripId = this.tripId + '';
             formData.append('img', this.selectedFile);
-            formData.append('payerId', userId);
-            formData.append('tripId', tripId);
+            formData.append('tripId', this.tripId+'');
             formData.append('amount', this.paymentForm.get('amount').value);
             formData.append('notes', this.paymentForm.get('notes').value);
             const members = this.paymentForm.get('members').value;
-            formData.append('tripDaysJson', JSON.stringify(members));
+            formData.append('membersJson', JSON.stringify(members));
             this.paymentService.create(formData).subscribe({
               next: (res) => {
-                this.paymentForm.setValue({id:res.id});
-                this.paymentService.createMember(this.paymentForm)
-                .subscribe({
-                  next: (res) => {
+                // const formData: FormData = new FormData();
+                // formData.append('img', this.selectedFile);
+                // formData.append('id',res.id);
+                // this.paymentForm.setValue({
+                //   id:res.id,
+                  
+                // });
+                // this.paymentService.createMember(this.paymentForm)
+                // .subscribe({
+                //   next: (res) => {
                     this.isLoading = false;
                     this.onSuccess("Payment sent successfully! Please wait for the leader's approval");
-                  },
-                  error: (error) => {
-                    this.isLoading = false;
-                    this.onFailed(error.message);
-                  },
-                })
+                //   },
+                //   error: (error) => {
+                //     this.isLoading = false;
+                //     this.onFailed(error.message);
+                //   },
+                // })
               },
-              error: (error) => {
-                this.isLoading = false;
-                this.onFailed(error.message);
-              },
+              
             });        
           } else {
             // Handle cancellation

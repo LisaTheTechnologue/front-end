@@ -5,13 +5,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Bank, User } from 'src/app/_shared/models/user.model';
 import { ConfirmService } from 'src/app/_shared/services/confirm.service';
 import { MemberUserService } from 'src/app/_shared/services/member-user.service';
-
+interface Gender {
+  label: string,
+  value: string;
+}
 @Component({
   selector: 'app-profile-edit',
   templateUrl: './profile-edit.component.html',
   styleUrls: ['./profile-edit.component.css']
 })
 export class ProfileEditComponent implements OnInit {
+  activeRoute = 'profile';
   profileForm: FormGroup;
   hide = true;
   selectedImage: File | null;
@@ -24,7 +28,11 @@ export class ProfileEditComponent implements OnInit {
   maxDob:Date;
   banks: Bank[] = [];
   selectedBank: Bank | null = null;
-
+  genders: Gender[] = [
+    { label:"Nữ", value: 'FEMALE' },
+    { label:"Nam", value: 'MALE' },
+    { label:"Khác", value: 'OTHER' },
+  ];
   constructor(private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private memberUserService: MemberUserService,
@@ -57,6 +65,14 @@ export class ProfileEditComponent implements OnInit {
       next: (res) => {
         this.profile = res;
         this.profileForm.patchValue(this.profile);
+        const selectedGender = this.genders.find(gender => gender.value === res.gender);
+        if (selectedGender) {
+          this.profileForm.controls['gender'].setValue(selectedGender);
+        }
+        const selectedBank = this.banks.find(bank => bank.shortName === res.paymentAccBankShortName);
+        if (selectedBank) {
+          this.profileForm.controls['paymentAccBank'].setValue(selectedBank);
+        }
         if(res.byteImg){
           this.existingImage = 'data:image/jpeg;base64,' + res.byteImg;
         }
@@ -87,7 +103,11 @@ export class ProfileEditComponent implements OnInit {
     this.selectedImage = event;
     this.imageChanged = true;
   }
-
+  bankShortName: any;
+  setSelectedBank(bank: Bank) {
+    // Use the bank object here, access both name and shortName
+    this.bankShortName = bank.shortName;
+  }
   submit(): void {
     // if (this.tripForm.valid) {
     this.confirmationService
@@ -95,7 +115,7 @@ export class ProfileEditComponent implements OnInit {
       .subscribe((confirmed) => {
         if (confirmed) {
           const formData = new FormData();
-          formData.append('username', this.profileForm.get('username').value);
+          // formData.append('username', this.profileForm.get('username').value);
           formData.append('firstName', this.profileForm.get('firstName').value);
           formData.append('lastName', this.profileForm.get('lastName').value);
           formData.append('dob', this.profileForm.get('dob').value);
@@ -105,6 +125,7 @@ export class ProfileEditComponent implements OnInit {
           formData.append('paymentAccNo', this.profileForm.get('paymentAccNo').value);
           formData.append('paymentAccName', this.profileForm.get('paymentAccName').value);
           formData.append('paymentAccBank', this.profileForm.get('paymentAccBank').value);
+          formData.append('paymentAccBankShortName', this.bankShortName);
           if (this.selectedImage) {
             formData.append('image', this.selectedImage);
           } 

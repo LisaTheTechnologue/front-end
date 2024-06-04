@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -5,6 +6,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { TripLevel } from 'src/app/_shared/models/enum.model';
+import { Trip } from 'src/app/_shared/models/trip.model';
 import { ConfirmService } from 'src/app/_shared/services/confirm.service';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 import { PublicService } from 'src/app/_shared/services/public.service';
@@ -15,8 +18,8 @@ import { PublicService } from 'src/app/_shared/services/public.service';
   styleUrls: ['./trip-created-list.component.css'],
 })
 export class TripCreatedListComponent {
-
-  allTrips: any[] = [];
+  activeRoute = 'created-trips';
+  allTrips: Trip[] = [];
 
   searchText: string = '';
   startDate?: Date;
@@ -25,15 +28,16 @@ export class TripCreatedListComponent {
   maxPrice?: number;
   selectedCityId: number;
   error: any;
-  tripLevels: Set<string> = new Set<string>([
-    'Easy',
-    'Moderate',
-    'Intermediate',
-  ]);
+  tripLevels = TripLevel;
+  //  Set<string> = new Set<string>([
+  //   'Easy',
+  //   'Moderate',
+  //   'Intermediate',
+  // ]);
   selectedTripLevels: string[] = [];
   priceMinValue: any;
   priceMaxValue: any;
-  trips = new MatTableDataSource<any>([]);
+  trips = new MatTableDataSource<Trip>([]);
   displayedColumns: string[] = ['title', 'time', 'status', 'actions'];
 
   @ViewChild(MatPaginator) private paginator: MatPaginator;
@@ -41,6 +45,7 @@ export class TripCreatedListComponent {
   p: number = 1;
 
   constructor(
+    private datePipe: DatePipe,
     public memberTripService: MemberTripService,
     private confirmationService: ConfirmService,
     private snackBar: MatSnackBar,
@@ -79,7 +84,7 @@ export class TripCreatedListComponent {
         .includes(this.searchText.toLowerCase());
 
       let cityMatch = true;
-      if (this.selectedCityId !== undefined) {
+      if(this.selectedCityId !== undefined && this.selectedCityId != 999) {
         cityMatch = item.cityId == this.selectedCityId;
       }
 
@@ -118,10 +123,10 @@ export class TripCreatedListComponent {
     this.filterData();
   }
 
-  extractTripLevels() {
-    this.tripLevels.clear();
-    this.allTrips.forEach((item) => this.tripLevels.add(item.tripLevel));
-  }
+  // extractTripLevels() {
+  //   this.tripLevels.clear();
+  //   this.allTrips.forEach((item) => this.tripLevels.add(item.tripLevel));
+  // }
 
   onTripLevelChange(tripLevel: string, event: Event) {
     const isChecked = (<HTMLInputElement>event.target).checked;

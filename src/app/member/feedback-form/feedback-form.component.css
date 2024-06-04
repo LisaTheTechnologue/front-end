@@ -1,3 +1,8 @@
 div {    
     white-space: pre-wrap;
   }
+
+  .feedback-benefits {
+    text-align: left;
+    padding: 20px;
+  }

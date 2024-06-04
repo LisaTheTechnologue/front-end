@@ -20,8 +20,8 @@ export class AdminUserService {
     })
     // .pipe(catchError(this.handleError));
   }
-  updateStatus(id: any, data: any): Observable<any> {
-    return this.http.put(this.API+`${id}`,data, {
+  updateStatus(userId: any, status: any): Observable<any> {
+    return this.http.get(this.API+'?userId='+userId+'&&?status='+status, {
       headers: this.createAuthorizationHeader(),
     })
     // .pipe(catchError(this.handleError));

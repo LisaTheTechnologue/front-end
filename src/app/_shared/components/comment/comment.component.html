@@ -1,5 +1,5 @@
 
-  <div class="h4">Comments</div>
+  <div class="h4">Bình luận</div>
   <mat-card>
     <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="m-3">
       <mat-checkbox formControlName="reportFlag"></mat-checkbox>
@@ -8,11 +8,11 @@
         <div class="col-md-11">
           <mat-form-field appearance="outline">
             <textarea matInput type="text" formControlName="message"></textarea>
-            <mat-error *ngIf="commentForm.get('message')?.invalid">Cannot send empty message</mat-error>
+            <mat-error *ngIf="commentForm.get('message')?.invalid">Không thể gửi tin nhắn trống</mat-error>
           </mat-form-field>
         </div>
         <div class="col-md-1">
-          <button mat-flat-button color="success" type="submit">Send</button>
+          <button mat-flat-button color="success" type="submit" [disabled]="!isLoggedIn">Gửi</button>
         </div>
       </div>
     </form>
@@ -24,10 +24,10 @@
             <div class="card-body d-flex align-items-center">
               <img [src]="'data:image/jpeg;base64,'+item.imageByte" class="rounded-circle m-3 " alt="User Avatar" width="40" height="40">
               <div class="flex-grow-1 ms-2">
-                <h5 class="card-title" [routerLink]="['/profile/', item.userId]" >{{ item.username }} | {{ item.createdDate }}</h5>
-                <button *ngIf="item.userId == userId || isAdmin" mat-button type="button" (click)="isResolved(item)">Resolved</button>
-                <p class="card-text m-2 lh-base">{{ item.message }}</p>                
-              </div>
+                <h5 class="card-title" [routerLink]="['/profile/', item.userId]" >{{ item.username }} | {{ item.createdDate }}</h5>                
+                <p class="card-text m-2 lh-base">{{ item.message }}</p>
+                <div class="text-end"><button *ngIf="(item.userId == userId || isAdmin) && item.reportFlag" mat-raised-button type="button" (click)="isResolved(item)">Đã xử lý</button>                
+              </div></div>
             </div>
           </div>
         </div>

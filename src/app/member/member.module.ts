@@ -24,6 +24,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PaymentHistoryListComponent } from './payment-history-list/payment-history-list.component';
 import { FeedbackFormComponent } from './feedback-form/feedback-form.component';
 import { JoinRemoveComponent } from './join-remove/join-remove.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { RejectDialogComponent } from './reject-dialog/reject-dialog.component';
+import { PipesModule } from '../_shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,8 @@ import { JoinRemoveComponent } from './join-remove/join-remove.component';
     TripFormComponent,
     PasswordEditComponent,
     PaymentHistoryListComponent,
-    JoinRemoveComponent
+    JoinRemoveComponent,
+    RejectDialogComponent
   ],
   imports: [
     CommonModule,
@@ -58,6 +62,8 @@ import { JoinRemoveComponent } from './join-remove/join-remove.component';
     MatSortModule,
     MatPaginatorModule,
     NgxPaginationModule,
+    MatDialogModule,
+    PipesModule
   ]
 })
 export class MemberModule { }

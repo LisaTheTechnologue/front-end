@@ -8,16 +8,13 @@ import { TripCardComponent } from './trip-card/trip-card.component';
 import { RouterModule } from '@angular/router';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-import { TripDetailsComponent } from './trip-details/trip-details.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormImgComponent } from './form-img/form-img.component';
-import { FormImagesComponent } from './form-images/form-images.component';
-import { ImageSliderComponent } from './image-slider/image-slider.component';
-import { NgImageSliderModule } from 'ng-image-slider';
 import { ImageLightboxComponent } from './image-lightbox/image-lightbox.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { CommentComponent } from './comment/comment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MemberNavigationComponent } from './member-navigation/member-navigation.component';
 
 @NgModule({
   declarations: [
@@ -26,12 +23,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TripCardComponent,
     ConfirmDialogComponent,
     ErrorDialogComponent,
-    TripDetailsComponent,
     FormImgComponent,
-    FormImagesComponent,
-    ImageSliderComponent,
     ImageLightboxComponent,
-    CommentComponent
+    CommentComponent,
+    MemberNavigationComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +35,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NgbCarousel,
     RouterModule,
     FontAwesomeModule,
-    NgImageSliderModule,
     FormsModule,
     ReactiveFormsModule,
     PipesModule
@@ -51,12 +45,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TripCardComponent,
     ConfirmDialogComponent,
     ErrorDialogComponent,
-    TripDetailsComponent,
     FormImgComponent,
-    FormImagesComponent,
-    ImageSliderComponent,
     ImageLightboxComponent,
-    CommentComponent
+    CommentComponent,
+    MemberNavigationComponent
   ]
 })
 export class ComponentsModule { }

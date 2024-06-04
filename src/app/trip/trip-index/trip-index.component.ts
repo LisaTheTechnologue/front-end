@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TripLevel } from 'src/app/_shared/models/enum.model';
 import { PublicService } from 'src/app/_shared/services/public.service';
 
 @Component({
@@ -16,11 +17,12 @@ export class TripIndexComponent {
   selectedCityId: number;
   // searchTripForm!: FormGroup;
   filteredData: any[] = [];
-  tripLevels: Set<string> = new Set<string>([
-    'Easy',
-    'Moderate',
-    'Intermediate',
-  ]);
+  tripLevels = TripLevel;
+  //  Set<string> = new Set<string>([
+  //   'Easy',
+  //   'Moderate',
+  //   'Intermediate',
+  // ]);
   selectedTripLevels: string[] = [];
   // startDate: any = "";
   // endDate: any = "";
@@ -62,7 +64,7 @@ export class TripIndexComponent {
         .includes(this.searchText.toLowerCase());
 
       let cityMatch = true;
-      if(this.selectedCityId !== undefined) {
+      if(this.selectedCityId !== undefined && this.selectedCityId != 999) {
         cityMatch = item.cityId == this.selectedCityId;
       }
           
@@ -104,10 +106,10 @@ export class TripIndexComponent {
     this.filterData();
   }
 
-  extractTripLevels() {
-    this.tripLevels.clear();
-    this.trips.forEach((item) => this.tripLevels.add(item.tripLevel));
-  }
+  // extractTripLevels() {
+    // this.tripLevels.clear();
+    // this.trips.forEach((item) => this.tripLevels.add(item.tripLevel));
+  // }
 
   onTripLevelChange(tripLevel: string, event: Event) {
     const isChecked = (<HTMLInputElement>event.target).checked;

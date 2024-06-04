@@ -43,10 +43,15 @@
             <mat-form-field appearance="outline">
               <mat-label>Select a Level</mat-label>
               <mat-select formControlName="tripLevel">
+                <mat-option *ngFor="let level of tripLevels | keyvalue" [value]="level">{{ level }}</mat-option>
+              </mat-select>
+              <!-- <option *ngFor="let level of tripLevels" [value]="level">
+                {{ level }}  </option>
+              <mat-select formControlName="tripLevel">
                 <mat-option value="Easy">Easy</mat-option>
                 <mat-option value="Moderate">Moderate</mat-option>
                 <mat-option value="Intermediate">Intermediate</mat-option>
-              </mat-select>
+              </mat-select> -->
               <mat-error *ngIf="tripForm.get('tripLevel')?.invalid">{{ getTripErrorMessage('tripLevel') }}</mat-error>
             </mat-form-field>
           </div>
@@ -63,7 +68,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Price</mat-label>
               <input matInput type="number" class="input-right-align" placeholder="0" formControlName="price"
-                id="priceFld" pattern="[0-9]*">
+                id="priceFld" thousandSeparator=",">
               <span matTextPrefix>VND &nbsp;&nbsp;&nbsp;</span>
               <mat-error *ngIf="tripForm.get('price')?.invalid">{{ getTripErrorMessage('price') }}</mat-error>
             </mat-form-field>
@@ -185,7 +190,7 @@
       <mat-card-content class="my-3">
         <div class="image-list ">
           <input type="file" multiple accept="image/png, image/jpeg" class="file-input" (change)="onSelectedImages($event)" #fileUpload>
-          <button mat-raised-button color="success" class="upload-btn" (click)="fileUpload.click()">
+          <button mat-raised-button class="btn btn-success" class="upload-btn" (click)="fileUpload.click()">
             Add Image
           </button> 
           <div>
@@ -208,7 +213,7 @@
       <mat-card-header>
         <mat-card-title>Itinerary *
           <span>
-            <button mat-raised-button color="success" (click)="addTripDay()">
+            <button mat-raised-button class="btn btn-success" (click)="addTripDay()">
               Add Day
             </button>
           </span>

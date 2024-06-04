@@ -9,6 +9,8 @@ import { ConfirmService } from '../_shared/services/confirm.service';
 import { AdminUserService } from '../_shared/services/admin-user.service';
 import { User } from '../_shared/models/user.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeStatusDialogComponent } from './change-status-dialog/change-status-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profile',
@@ -33,6 +35,7 @@ export class ProfileComponent {
     private publicService: PublicService,
     private route: ActivatedRoute,
     private router: Router,
+    private dialog: MatDialog,
     private confirmService: ConfirmService,
     private adminService: AdminUserService,    
     private fb: FormBuilder,
@@ -87,26 +90,37 @@ export class ProfileComponent {
     return this.selectedTrip === trip;
   }
 
-  changeStatus(): void {
-    this.userForm.setValue({ userId: this.user.id })
-    this.confirmService
-      .confirm('Are you sure you want to submit this?')
-      .subscribe((confirmed) => {
-        if (confirmed) {
-          this.adminService.updateStatus(this.leaderId, this.userForm).subscribe({
-            next: (res) => {              
-                this.onSuccess('Update User Status Successfully');              
-            },
-            // error: (error) => {
-            //   this.onFailed(error);
-            // },
-        })
-        } else {
-          // Handle cancellation
+  // changeStatus(): void {
+  //   this.userForm.setValue({ userId: this.user.id })
+  //   this.confirmService
+  //     .confirm('Are you sure you want to submit this?')
+  //     .subscribe((confirmed) => {
+  //       if (confirmed) {
+  //         this.adminService.updateStatus(this.leaderId, this.userForm).subscribe({
+  //           next: (res) => {              
+  //               this.onSuccess('Update User Status Successfully');              
+  //           },
+  //           // error: (error) => {
+  //           //   this.onFailed(error);
+  //           // },
+  //       })
+  //       } else {
+  //         // Handle cancellation
+  //       }
+  //     });
+  //   } 
+    openChangeStatusDialog(): void {
+      let dialogRef = this.dialog.open(ChangeStatusDialogComponent, {
+        width: '250px',
+        data: {
+          userId: this.user.id
         }
       });
-    } 
   
+      dialogRef.afterClosed().subscribe(result => {
+        
+      });
+    }
 
   private onSuccess(message: string) {
     this.snackBar.open(message, 'OK', { duration: 5000 });

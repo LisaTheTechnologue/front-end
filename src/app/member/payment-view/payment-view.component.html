@@ -1,43 +1,71 @@
 <div class="container my-5">
   <div *ngIf="trip">
-    <p class="h3">Payment</p>
+    <p class="h3">Thông tin thanh toán</p>
 
     <div class="row p-3">
       <div class="col-6 justify-content-center">
-        <p class="h5">Trip Info</p>
+        <p class="h5">Thông tin chuyến đi</p>
         <mat-card class="m-4" style="width:50%" [routerLink]="['/trips/view', payment.tripId]">
           <app-trip-card [trip]="trip"></app-trip-card>
         </mat-card>
 
       </div>
       <div class="col-6 justify-content-center">
-        <p class="h5">Payer Info</p>
-        <mat-card class="m-4" style="width:50%">
+        <p class="h5">Thông tin người chuyển tiền</p>
+        <div class="m-4">
           <app-profile-card [userId]="payment.payerId"></app-profile-card>
-        </mat-card>
+        </div>
 
       </div>
     </div>
-
-    <div class="p-3">
+<div class="row">
+  <div class="col-6 p-1">
+    <mat-card class="m-2 p-3">
       <div class="mb-3">
-        <div class="mb-3">
-          <div><strong>Evidence: </strong></div>
-          <img [src]="payment.imageURL" alt="Evidence" class="preview-image">
-        </div>
+        <div><strong>Số tiền chuyển: </strong></div>
+        <p>{{ payment.amount | currency: 'VND'}}</p>
       </div>
-      <div class="mb-3">
-        <div><strong>Amount: </strong></div>
-        <p>{{ payment.amount }}</p>
-      </div>
-      <div class="mb-3">
-        <div><strong>Notes: </strong></div>
+      <div class="mb-3" *ngIf="payment.notes != null">
+        <div><strong>Ghi chú: </strong></div>
         <p>{{ payment.notes }}</p>
       </div>
-      <div class="mb-3" *ngIf="payment.paymentStatus=='PENDING' && !selfPayment">
-        <button mat-raised-button color="primary" type="button" class="me-3" (click)="changeStatus('complete')">Complete</button>
-        <button mat-raised-button color="danger" type="button" class="me-3" (click)="changeStatus('reject')">Reject</button>
+        <div class="mb-3">
+          <div><strong>Hình chụp: </strong></div>
+          <img [src]="payment.imageURL" alt="Evidence" class="w-100">
+        </div>
+      </mat-card>
+  </div>
+  <div class="col-6 p-1">
+    <mat-card *ngIf="payment.orders" class="m-2 p-3">
+      <div class="fw-bold fs-5 mb-3">Danh sách thành viên: </div>
+      <table class="table mt-1">
+        <thead class="fw-bold">
+          <td>Họ và tên</td>
+          <td>Ngày sinh</td>
+          <td>Giới tính</td>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of payment.orders">
+            <td>{{ order.fullName }}</td>
+            <td>{{ order.dob }}            </td>
+            <td>{{ order.gender }}            </td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-card>
+    <mat-card class="border rounded m-2 p-3">
+      <div class="fw-bold fs-5 mb-3">Kết quả: </div>
+      <div><strong>Trạng thái: </strong>{{ payment.paymentStatus}}</div>
+      <div *ngIf="payment.paymentStatus == 'REJECTED'"><strong>Lý do: </strong> {{ payment.rejectReason}}</div>
+    </mat-card>
+  </div>
+</div>
+    
+      <div class="mb-3" *ngIf="payment.paymentStatus=='PENDING' && isLeader">
+        <button mat-raised-button color="primary" type="button" class="me-3" (click)="completePayment()">Complete</button>
+        <button mat-raised-button color="danger" type="button" class="me-3" (click)="openRejectDialog()">Reject</button>
       </div>
-    </div>
+   
+    
   </div>
 </div>

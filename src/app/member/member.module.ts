@@ -27,6 +27,7 @@ import { JoinRemoveComponent } from './join-remove/join-remove.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { RejectDialogComponent } from './reject-dialog/reject-dialog.component';
 import { PipesModule } from '../_shared/pipes/pipes.module';
+import { ReportListComponent } from './report-list/report-list.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { PipesModule } from '../_shared/pipes/pipes.module';
     PasswordEditComponent,
     PaymentHistoryListComponent,
     JoinRemoveComponent,
-    RejectDialogComponent
+    RejectDialogComponent,
+    ReportListComponent
   ],
   imports: [
     CommonModule,

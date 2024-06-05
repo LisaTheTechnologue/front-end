@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PublicService } from '../../services/public.service';
 import { User } from '../../models/user.model';
 
@@ -9,6 +9,7 @@ import { User } from '../../models/user.model';
 })
 export class ProfileCardComponent {
   @Input() userId: number;
+  @Output() outputUser = new EventEmitter<any>();
   user!: User;
   rating!:number;
   constructor(
@@ -20,10 +21,11 @@ export class ProfileCardComponent {
     this.publicService.getByUserId(this.userId).subscribe(
       (profile) => {
         this.user = profile;
-        if(profile.byteImg != null ) {
-          this.user.imageURL = 'data:image/jpeg;base64,' + profile.byteImg;
+        if(profile.imageByte != null ) {
+          this.user.imageByte = 'data:image/jpeg;base64,' + profile.imageByte;
         }
         this.rating = this.user.rating;
+        this.outputUser.emit(this.user);
       }
     );
   }

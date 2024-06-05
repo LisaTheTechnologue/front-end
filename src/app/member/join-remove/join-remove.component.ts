@@ -55,7 +55,7 @@ export class JoinRemoveComponent implements OnInit {
 
   remove() {
     this.confirmationService
-      .confirm('Are you sure you want to submit this?')
+      .confirm('Bạn chắc chắn muốn làm điều này?')
       .subscribe((confirmed) => {
         if (confirmed) {
           const userId = this.removeForm.get('member')?.value;

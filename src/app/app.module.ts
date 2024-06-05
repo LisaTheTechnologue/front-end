@@ -32,10 +32,12 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { MatDialogRef } from '@angular/material/dialog';
 import { PipesModule } from './_shared/pipes/pipes.module';
 import { ChangeStatusDialogComponent } from './profile/change-status-dialog/change-status-dialog.component';
+import { TopUserBoardComponent } from './top-user-board/top-user-board.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     HomeComponent,
     AboutComponent,
@@ -46,8 +48,9 @@ import { ChangeStatusDialogComponent } from './profile/change-status-dialog/chan
     ProfileComponent,
     TestComponent,
     ForgotPasswordComponent,
-    ChangeStatusDialogComponent
-  ],
+    ChangeStatusDialogComponent,
+      TopUserBoardComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -83,6 +86,7 @@ import { ChangeStatusDialogComponent } from './profile/change-status-dialog/chan
       provide: MatDialogRef,
       useValue: {}
     },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
   ],
   bootstrap: [AppComponent]
 })

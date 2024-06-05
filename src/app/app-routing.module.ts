@@ -9,11 +9,13 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ProfileComponent } from './profile/profile.component';
 import { TestComponent } from './test/test.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { TopUserBoardComponent } from './top-user-board/top-user-board.component';
 
 const routes: Routes = [
-      { path: '', component: HomeComponent }, // Level 1 child
+      { path: 'home', component: HomeComponent }, // Level 1 child
       { path: 'test', component: TestComponent }, // Level 1 child
       { path: 'about', component: AboutComponent },
+      { path: 'leaderboard', component: TopUserBoardComponent },
       { path: "login", component: LoginComponent},
       { path: 'forgot-password', component: ForgotPasswordComponent },
       { path: "register", component: SignupComponent},

@@ -1,27 +1,21 @@
-import { DatePipe } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { TripLevel } from 'src/app/_shared/models/enum.model';
 import { Trip } from 'src/app/_shared/models/trip.model';
-import { ConfirmService } from 'src/app/_shared/services/confirm.service';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 import { PublicService } from 'src/app/_shared/services/public.service';
-import { StorageService } from 'src/app/_shared/services/storage.service';
 
 @Component({
-  selector: 'app-trip-created-list',
-  templateUrl: './trip-created-list.component.html',
-  styleUrls: ['./trip-created-list.component.css'],
+  selector: 'app-report-list',
+  templateUrl: './report-list.component.html',
+  styleUrls: ['./report-list.component.css']
 })
-export class TripCreatedListComponent {
-  activeRoute = 'created-trips';
+export class ReportListComponent implements OnInit {
   allTrips: Trip[] = [];
-
+  activeRoute = 'reported-trips';
   searchText: string = '';
   startDate?: Date;
   endDate?: Date;
@@ -39,30 +33,22 @@ export class TripCreatedListComponent {
   priceMinValue: any;
   priceMaxValue: any;
   trips = new MatTableDataSource<Trip>([]);
-  displayedColumns: string[] = ['title', 'starttime', 'status','message', 'actions'];
+  displayedColumns: string[] = ['title', 'time', 'status', 'actions'];
 
   @ViewChild(MatPaginator) private paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   p: number = 1;
 
-  constructor(
-    private datePipe: DatePipe,
-    public memberTripService: MemberTripService,
-    private confirmationService: ConfirmService,
+  constructor(public memberTripService: MemberTripService,
     private snackBar: MatSnackBar,
-    private router: Router,
-    private publicService: PublicService) { }
+  private publicService: PublicService) {}
 
   ngOnInit(): void {
-    this.getAllCreatedTrips();
-    this.getAllCities();
-  }
-
-  private getAllCreatedTrips() {
-    this.memberTripService.getAllCreatedTrips().subscribe((res) => {
+    this.memberTripService.getAllTripsHasReports().subscribe((res) => {
       this.trips.data = res;
       this.allTrips = res;
     });
+    this.getAllCities();
   }
 
   getAllCities() {
@@ -85,11 +71,11 @@ export class TripCreatedListComponent {
         .toLowerCase()
         .includes(this.searchText.toLowerCase());
 
-      let cityMatch = true;
-      if(this.selectedCityId !== undefined && this.selectedCityId != 999) {
+        let cityMatch = true;
+        if(this.selectedCityId !== undefined && this.selectedCityId != 999) {
         cityMatch = item.cityId == this.selectedCityId;
       }
-
+          
       let tripLevelMatch = true; // Assume all categories are initially matched
 
       // Filter by checkboxes (if any are selected)
@@ -110,9 +96,9 @@ export class TripCreatedListComponent {
       // this.minPrice = value;
       const priceMatch = !this.maxPrice || item.price <= this.maxPrice;
 
-      return searchTextMatch
-        && cityMatch
-        && tripLevelMatch && dateMatch && priceMatch;
+      return searchTextMatch 
+      && cityMatch 
+      && tripLevelMatch && dateMatch && priceMatch;
     });
   }
   onstartDateChange(value: Date) {
@@ -143,40 +129,6 @@ export class TripCreatedListComponent {
     this.filterData();
   }
 
-  deleteTrip(tripId: any) {
-    this.confirmationService
-      .confirm('Bạn có chắc chắn muốn xóa?')
-      .subscribe((confirmed) => {
-        if (confirmed) {
-          this.memberTripService.deleteTrip(tripId).subscribe({
-            next: (res) => {
-              this.onSuccess(res);
-              this.getAllCreatedTrips();
-            },
-            // error: (error) => {
-            //   console.log(error);
-            //   this.error += error;
-            // }
-          });
-        } else {
-          // Handle cancellation
-        }
-      });
-  }
-
-  createTrip(){
-    this.publicService.getByUserId(StorageService.getUserId).subscribe({
-      next: (res) => {
-        this.router.navigateByUrl('/member/trips/create');
-      },
-      // error: (error) => {
-      //   this.onFailed(error.message);
-      // }
-    });
-  }
-  private onSuccess(message: string) {
-    this.snackBar.open(message, 'OK', { duration: 5000 });
-  }
   private onFailed(message: string) {
     this.snackBar.open(
       message,

@@ -2,12 +2,16 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.css";
 html, body { height: 100%; }
 body {
-  color: #0e2517;
-  background: #fdfbf1;
+  color: #000000;
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif !important;
+  font-family: "Lora", serif;
+  font-optical-sizing: auto;
 }
 
+h2,h3,h4,h5,h6 {
+  font-family: "Montserrat", sans-serif;
+  color: #073312;
+}
 /* Custom buttons */
 body {
   .mdc-button.mat-success,
@@ -52,6 +56,8 @@ body {
     color: #8b0a0a;
   }
 }
+
+.card { cursor: pointer; }
 
 .custom-rating {
   font-size: 20px; /* Adjust font size for stars */

@@ -48,8 +48,9 @@ export class ProfileEditComponent implements OnInit {
   ngOnInit() {
     this.memberUserService.getBanks()
       .subscribe(banks => this.banks = banks);
-    const phonePattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    const phonePattern = /^\(?([0-9]{3})\)?[. ]?([0-9]{3})[. ]?([0-9]{4})$/;
     this.profileForm = this.fb.group({
+      image: ['', Validators.required],
       username: [''], // Set to disabled as mentioned in HTML
       firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
@@ -69,12 +70,13 @@ export class ProfileEditComponent implements OnInit {
         if (selectedGender) {
           this.profileForm.controls['gender'].setValue(selectedGender);
         }
-        const selectedBank = this.banks.find(bank => bank.shortName === res.paymentAccBankShortName);
+        const selectedBank = this.banks.find(bank => bank.shortName.toLowerCase() == res.paymentAccBankShortName.toLowerCase());
         if (selectedBank) {
           this.profileForm.controls['paymentAccBank'].setValue(selectedBank);
         }
-        if(res.byteImg){
-          this.existingImage = 'data:image/jpeg;base64,' + res.byteImg;
+        if(res.imageByte){
+          this.existingImage = 'data:image/jpeg;base64,' + res.imageByte;
+          this.profileForm.get('image')?.setValue(this.existingImage);
         }
       },
       // error: (error) => {
@@ -99,19 +101,27 @@ export class ProfileEditComponent implements OnInit {
     this.profileForm.get('dob').setValue(event.value);
   }
 
-  onSelectedImage(event: File) {
+  onSelectedImage(event: File| null) {
     this.selectedImage = event;
     this.imageChanged = true;
+    this.profileForm.get('image')?.setValue(this.selectedImage);
   }
   bankShortName: any;
+  bankName: any;
   setSelectedBank(bank: Bank) {
     // Use the bank object here, access both name and shortName
     this.bankShortName = bank.shortName;
+    this.bankName = bank.name;
+  }
+  gender:any;
+  setSelectedGender(gender: Gender) {
+    // Use the bank object here, access both name and shortName
+    this.gender = gender.value;
   }
   submit(): void {
     // if (this.tripForm.valid) {
     this.confirmationService
-      .confirm('Are you sure you want to submit this?')
+      .confirm('Bạn chắc chắn muốn làm điều này?')
       .subscribe((confirmed) => {
         if (confirmed) {
           const formData = new FormData();
@@ -120,38 +130,38 @@ export class ProfileEditComponent implements OnInit {
           formData.append('lastName', this.profileForm.get('lastName').value);
           formData.append('dob', this.profileForm.get('dob').value);
           formData.append('phoneNo', this.profileForm.get('phoneNo').value);
-          formData.append('gender', this.profileForm.get('gender').value);
+          formData.append('gender', this.gender);
           formData.append('email', this.profileForm.get('email').value); 
           formData.append('paymentAccNo', this.profileForm.get('paymentAccNo').value);
           formData.append('paymentAccName', this.profileForm.get('paymentAccName').value);
-          formData.append('paymentAccBank', this.profileForm.get('paymentAccBank').value);
+          formData.append('paymentAccBank', this.bankName);
           formData.append('paymentAccBankShortName', this.bankShortName);
           if (this.selectedImage) {
-            formData.append('image', this.selectedImage);
+            formData.append('image', this.profileForm.get('image').value);
           } 
 
           this.memberUserService
-            .updateProfile(this.profileForm.value as User)
+            .updateProfile(formData)
             .subscribe({
               next: (res) => {
-                if (this.imageChanged) {
-                  const formData: FormData = new FormData();
-                  formData.append('file', this.selectedImage);
-                  // console.log(formData.get('file'));
-                  this.memberUserService
-                    .uploadImage(formData)
-                    .subscribe({
-                      next: (res) => {
+                // if (this.imageChanged) {
+                //   const formData: FormData = new FormData();
+                //   formData.append('file', this.selectedImage);
+                //   // console.log(formData.get('file'));
+                //   this.memberUserService
+                //     .uploadImage(formData)
+                //     .subscribe({
+                //       next: (res) => {
                         this.onSuccess('Updated Profile Successfully');
-                      },
+                      // },
                       // error: (error) => {
                       //   console.log(error);
                       //   this.error += error;
                       // },
-                    });
-                } else {
-                  this.onSuccess('Updated Profile Successfully');
-                }
+                    // });
+                // } else {
+                //   this.onSuccess('Updated Profile Successfully');
+                // }
               },
               // error: (error) => {
               //   this.onFailed(error);

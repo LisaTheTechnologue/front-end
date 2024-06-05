@@ -2,11 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Feedback } from 'src/app/_shared/models/feedback.model';
 import { FormUtilsService } from 'src/app/_shared/services/form-utils.service';
 import { MemberFeedbackService } from 'src/app/_shared/services/member-feedback.service';
 import { StorageService } from 'src/app/_shared/services/storage.service';
 import { Location } from '@angular/common';
+export interface FeedbackDTO {
+  id?: any;
+  tripId:number;
+  feedback: string;
+  tripRating: number;
+  leaderRating: number;
+}
+
 @Component({
   selector: 'app-feedback-form',
   templateUrl: './feedback-form.component.html',
@@ -53,14 +60,15 @@ export class FeedbackFormComponent implements OnInit {
   submit(): void {
     // if (this.tripForm.valid) {
     const userId = StorageService.getUserId();
+    let dto: FeedbackDTO = {
+      id: Number(userId),
+      tripId: this.feedbackForm.get('tripId')?.value,
+      leaderRating:this.feedbackForm.get('leaderRating').value,
+      tripRating: this.feedbackForm.get('tripRating')?.value,
+      feedback: this.feedbackForm.get('feedback')?.value,
+    }
 
-    const data = new Feedback('',
-      Number(userId),
-      this.tripId,
-      this.feedbackForm.get('leaderRating').value,
-      this.feedbackForm.get('tripRating').value,
-      this.feedbackForm.get('feedback').value);
-    this.memberFeedbackService.submit(data).subscribe({
+    this.memberFeedbackService.submit(dto).subscribe({
       next: (res) => {
         this.onSuccess();
       },

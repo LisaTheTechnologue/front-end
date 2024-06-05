@@ -12,30 +12,11 @@
       </div>
       <div class="col-6 justify-content-center">
         <p class="h5">Leader Info</p>
-        <mat-card class="m-4" style="width:50%">
-          <div *ngIf="user">
-            <mat-card-header>
-              <mat-card-title-group>
-                <mat-card-title>{{ user.fullName }} </mat-card-title>
-                <mat-card-subtitle>
-                  <ngb-rating [(rate)]="rating" [readonly]="true" [max]="5" class="custom-rating"></ngb-rating>
-                </mat-card-subtitle>
-                <div *ngIf="user.imageURL">
-                  <img mat-card-sm-image [src]="user.imageURL" alt="avatar">
-                </div>
-                <div *ngIf="!user.imageURL">
-                  <img mat-card-sm-image src="http://www.gravatar.com/avatar/?d=mp" alt="avatar">
-                </div>
-              </mat-card-title-group>
-            </mat-card-header>
-            <mat-card-actions>
-              <button mat-button [routerLink]="['/profile/', user.id]">View Profile</button>
-            </mat-card-actions>
-          </div>
-
-        </mat-card>
+        <div class="m-4" style="width:50%">
+        <app-profile-card  [userId]="trip.leaderId" (outputUser)="getUser($event)"></app-profile-card>
+      </div>
         <div *ngIf="user">
-          <mat-card class="m-4" style="width:50%">
+          <mat-card class="card mat-elevation-z2 m-4" style="width:50%" [routerLink]="['/trips/view', trip.id]">
             <mat-card-content>
               <div *ngIf="qrUrl">
                 <img [src]="qrUrl" alt="Payment QR Code" style="width: 100%;" />
@@ -53,8 +34,10 @@
       <p>After transfer money, please submit this below form. You should expect a response from leader via email in the
         next 3 days.</p>
     </div>
-
+   
     <form [formGroup]="paymentForm">
+      <div class="row p-3">
+        <div class="col-md-4">
       <mat-card class="mb-3">
         <mat-card-header>
           <mat-card-title>Payment
@@ -78,7 +61,8 @@
           </mat-form-field>
         </mat-card-content>
       </mat-card>
-      
+    </div>
+    <div class="col-md-8">
       <mat-card class="mb-3">
         <mat-card-header>
           <mat-card-title>Members *
@@ -133,7 +117,7 @@
           </div>
         </mat-card-content>
       </mat-card>
-      
+    </div></div>
       <div class="mb-3">
         <button mat-raised-button color="primary" type="submit" (click)="submit()" class="me-2" [disabled]="isLoading">
           <span *ngIf="!isLoading">Submit</span>

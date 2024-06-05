@@ -16,13 +16,13 @@ export interface Trip {
   groupSize: number;
   notes: string;
   price: number;
-  tripStatus: TripStatus;
+  tripStatus: string;
   img: any;
-  imageURL: string;
-  imageURLs: string[];
+  // imageURL: string;
+  // imageURLs: string[];
   imageNames: string[];
-  byteImgs: any[];
-  byteImg: any;
+  imageBytes: any[];
+  imageByte: any;
   tripDays?: TripDay[];
   joiners:TripMember[];
   rating: number;
@@ -34,11 +34,13 @@ export interface Trip {
 
 export interface Feedback {
   id?: any;
+  fullName:string;
   createdBy: string;
   feedback: string;
   tripRating: number;
   leaderRating: number;
   createdDate: Date;
+  imageByte: string;
 }
 
 // export interface TripDay {
@@ -63,4 +65,9 @@ export interface TripMember {
   id: any;
   userId: number;
   tripId:number;
+}
+export interface TripStatusPostDTO {
+  tripId: number;
+  status: string;
+  message:string;
 }

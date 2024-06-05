@@ -10,9 +10,9 @@ div {
   color: white;
 }
 .image-container {
-  display: flex;
-  flex-wrap: wrap; /* Allow images to wrap to next line */
-  gap: 10px; /* Add spacing between images */
+  display: flex; /* Make the container a flexbox */
+  justify-content: center;
+padding: 5px;
 }
 
 .image {

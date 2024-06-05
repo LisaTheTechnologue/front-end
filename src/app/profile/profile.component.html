@@ -1,17 +1,25 @@
 <div class="container my-5">
   <div *ngIf="error">{{ error }} </div>
   <div *ngIf="user">
-    <div *ngIf="user.imageURL">
-      <img mat-card-sm-image [src]="user.imageURL" alt="avatar" class="profile-picture img-fluid rounded-circle mx-auto img-float d-block img-md">
+    <div *ngIf="user.imageByte">
+      <img mat-card-sm-image [src]="user.imageByte" alt="avatar" class="profile-picture img-fluid rounded-circle mx-auto img-float d-block img-md">
     </div>
-    <div *ngIf="!user.imageURL" >
+    <div *ngIf="!user.imageByte" >
       <img mat-card-sm-image src="http://www.gravatar.com/avatar/?d=mp" alt="avatar" class="profile-picture img-fluid rounded-circle mx-auto img-float d-block img-md">
     </div>
     <!-- <img id="profile-picture" class="img-fluid rounded-circle mx-auto img-float d-block img-md"
       src="http://www.gravatar.com/avatar/?d=mp" /> -->
     <!-- src="{{ user?.profilepicurl }}" alt="noimage" /> -->
     <div class="d-flex justify-content-center">
-      <span class="heading h2">{{ user?.fullName }} </span> 
+      <div class="heading h2">{{ user?.fullName }} </div> 
+      <div>
+      <span *ngIf="user.isReported">
+        <span class="badge bg-warning text-dark">Bị báo cáo</span>
+      </span>
+      <span *ngIf="!user.isActive">
+        <span class="badge bg-danger">Không hoạt động</span>
+      </span>
+    </div>
     </div>
 
     <div class="row mt-4">
@@ -58,9 +66,17 @@
       </div>
     </div>
   </div>
-  <div *ngIf="isAdminLoggedIn && user">    
+  <div *ngIf="isAdminLoggedIn && user">
+    <button mat-flat-button color="success" (click)="changeStatus()" *ngIf="!user.isActive">
+      <mat-icon>check</mat-icon> Active User
+    </button>
+    <button mat-flat-button color="danger" (click)="changeStatus()" *ngIf="user.isActive">
+      <mat-icon>close</mat-icon> Inactive User
+    </button>
+  </div>
+  <!-- <div *ngIf="isAdminLoggedIn && user">    
     <button mat-flat-button class="btn btn-success" (click)="openChangeStatusDialog()" >
 Change Status
     </button>
-  </div>
+  </div> -->
 </div>

@@ -63,27 +63,34 @@ export class TripPaymentComponent {
     this.publicService.getByTripId(this.tripId).subscribe({
       next: (res) => {
         this.trip = res;
-        this.getProfile(this.trip.leaderId);
-        this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
+        // this.getProfile(this.trip.leaderId);
+        // this.trip.imageByte = 'data:image/jpeg;base64,' + res.imageByte;
       },
       // error: (error) => {
       //   this.onFailed(error);
       // },
     });
   }
-  getProfile(userId:number) {
-    this.publicService.getByUserId(userId)
-    .subscribe((res) => {      
-      this.user = res;
-      if(res.byteImg != null ) {
-        this.user.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
-      }
-      this.qrUrl = "https://img.vietqr.io/image/"+this.user.paymentAccBankShortName + "-" + 
-                        this.user.paymentAccName + "-compact2.jpg" //?amount=" + this.trip.price + "&addInfo=test";
-                        + "?addInfo='Chuyển khoản cho chuyến đi'"
-      this.rating = res.rating;
-    });
+  getUser(event:User) {
+    this.user = event;
+    this.qrUrl = "https://img.vietqr.io/image/"+this.user.paymentAccBankShortName + "-" + 
+                      this.user.paymentAccName + "-compact2.jpg" //?amount=" + this.trip.price + "&addInfo=test";
+                      + "?addInfo='Chuyển khoản cho chuyến đi'"
+
   }
+  // getProfile(userId:number) {
+  //   this.publicService.getByUserId(userId)
+  //   .subscribe((res) => {      
+  //     this.user = res;
+  //     if(res.imageByte != null ) {
+  //       this.user.imageByte = 'data:image/jpeg;base64,' + res.imageByte;
+  //     }
+  //     this.qrUrl = "https://img.vietqr.io/image/"+this.user.paymentAccBankShortName + "-" + 
+  //                       this.user.paymentAccName + "-compact2.jpg" //?amount=" + this.trip.price + "&addInfo=test";
+  //                       + "?addInfo='Chuyển khoản cho chuyến đi'"
+  //     this.rating = res.rating;
+  //   });
+  // }
 
   selectedImage(event: File) {
     this.selectedFile = event;
@@ -125,7 +132,7 @@ export class TripPaymentComponent {
     this.isLoading = true;
     if(this.selectedFile!=null) {
       this.confirmationService
-      .confirm('Are you sure you want to submit this?')
+      .confirm('Bạn chắc chắn muốn làm điều này?')
       .subscribe((confirmed) => {
         if (confirmed) {
             const formData: FormData = new FormData();

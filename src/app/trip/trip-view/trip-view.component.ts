@@ -4,27 +4,31 @@ import { StorageService } from 'src/app/_shared/services/storage.service';
 import { Component, OnInit } from '@angular/core';
 import { MemberJoinerService } from '../../_shared/services/member-joiner.service';
 import { PageNotFoundException } from 'src/app/_shared/exceptions/page-not-found.exception';
-import { Trip, TripMember } from 'src/app/_shared/models/trip.model';
+import { Trip, TripMember, TripStatusPostDTO } from 'src/app/_shared/models/trip.model';
 import { PublicService } from 'src/app/_shared/services/public.service';
 import { SharedDataService } from 'src/app/_shared/services/shared-data.service';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 import { TripStatus } from 'src/app/_shared/models/enum.model';
-
+import { MessageDialogComponent } from './message-dialog/message-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Location } from '@angular/common';
+import { ConfirmDialogComponent } from 'src/app/_shared/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmService } from 'src/app/_shared/services/confirm.service';
+import { AdminTripService } from 'src/app/_shared/services/admin-trip.service';
 @Component({
   selector: 'app-trip-view',
   templateUrl: './trip-view.component.html',
   styleUrls: ['./trip-view.component.css'],
 })
 export class TripViewComponent implements OnInit {
-  allTripStatuses: typeof  TripStatus = TripStatus;
+
   isJoined: boolean = false;
   isLeader: boolean = false;
-  isGroupChatOpened: boolean = false;
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   isMemberLoggedIn: boolean = StorageService.isMemberLoggedIn();
   isAdminLoggedIn: boolean = StorageService.isAdminLoggedIn();
   status: string;
-  error: any; 
+  error: any;
   image: any;
   // tripId: number = this.activatedRoute.snapshot.params['tripId'];
   userId: any;
@@ -33,28 +37,27 @@ export class TripViewComponent implements OnInit {
   feedbacks: any[];
   constructor(private publicService: PublicService,
     private activatedRoute: ActivatedRoute,
-    private memberJoinerService: MemberJoinerService,
+    private confirmationService: ConfirmService,
     private snackBar: MatSnackBar,
     private sharedData: SharedDataService,
     private router: Router,
-    private memberTripService: MemberTripService
+    private memberTripService: MemberTripService,
+    private dialog: MatDialog,
+    private adminService: AdminTripService,
   ) { }
   ngOnInit() {
-    this.router.events.subscribe(event => {
-      this.isMemberLoggedIn = StorageService.isMemberLoggedIn();
-      this.isAdminLoggedIn = StorageService.isAdminLoggedIn();
-    });
+    
     this.userId = StorageService.getUserId();
     this.getTrip();
     // this.getMembers();
   }
-  
+
   getTrip() {
     this.publicService.getByTripId(this.tripId).subscribe({
       next: (res) => {
         this.trip = res;
-        this.trip.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
-        this.trip.byteImgs = res.images.map(img => `data:image/jpeg;base64,${img.imageByte}`);
+        this.trip.imageByte = 'data:image/jpeg;base64,' + res.imageByte;
+        this.trip.imageBytes = res.images.map(img => `data:image/jpeg;base64,${img.imageByte}`);
         // this.trip.byteImgs = res.images;
         this.trip.tripDays = res.tripDays;
         if (this.trip.leaderId == this.userId) {
@@ -62,7 +65,7 @@ export class TripViewComponent implements OnInit {
         }
         // this.status.emit(this.trip.tripStatus);
         // this.returnedTrip.emit(this.trip);
-        if (this.trip.tripStatus === TripStatus.END) {
+        if (this.trip.tripStatus == 'END') {
           this.publicService
             .getFeedbacksByTripId(this.tripId)
             .subscribe((res) => (this.feedbacks = res));
@@ -88,41 +91,68 @@ export class TripViewComponent implements OnInit {
       },
     });
   }
-  // getIsEnded($event: boolean) {
-  //   this.isEnded = $event;
-  //   }
-  // getIsJoined($event: boolean) {
-  //   this.isJoined = $event;
-  // }
-  // getIsLeader($event: boolean) {
-  //   this.isLeader = $event;
-  // }
-  // getStatus($event: string) {
-  //   if ($event == 'APPROVED') {
-  //     this.isGroupChatOpened = true;
-  //   }
-  //   this.status = $event;
-  // }
-  // getTrip($event: Trip) {
-  //   this.trip = $event;
-  // }
   joinTrip() {
     this.router.navigateByUrl(`/member/payment/create/${this.tripId}`);
   }
   changeStatus(status: string) {
-    this.memberTripService.changeStatus(this.tripId, status).subscribe((res) => {
-      if (res.id != null) {
-        this.snackBar.open('Updated Trip Status Successful!', 'Close', {
-          duration: 5000,
-        });
-        this.router.navigateByUrl('/member');
-      } else {
-        this.snackBar.open(res.message, 'ERROR', {
-          duration: 5000,
-          panelClass: 'error-snackbar',
-        });
+    let dialogRef = this.dialog.open(MessageDialogComponent, {
+      width: '400px',
+      data: {
+        status: status,
+        tripId: this.tripId
       }
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) { // Check if the result is truthy (meaning user clicked OK)
+        window.location.reload();
+      }
+    });
+  }
+  memberChangeStatus(status: string) {
+    let dto: TripStatusPostDTO = {
+      tripId: this.tripId,
+      status: status,
+      message: ''
+    }
+    this.confirmationService
+      .confirm('Bạn chắc chắn muốn làm điều này?')
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          if(this.isAdminLoggedIn) {
+            this.adminService.changeStatus(dto).subscribe((res) => {
+              if (res.id != null) {
+                this.snackBar.open('Chuyển trạng thái thành công!', 'Close', {
+                  duration: 5000,
+                });
+                window.location.reload();
+              } else {
+                this.snackBar.open(res.message, 'ERROR', {
+                  duration: 5000,
+                  panelClass: 'error-snackbar',
+                });
+              }
+            });
+          } else {
+          this.memberTripService.changeStatus(dto).subscribe((res) => {
+            if (res.id != null) {
+              this.snackBar.open('Chuyển trạng thái thành công!', 'Close', {
+                duration: 5000,
+              });
+              window.location.reload();
+            } else {
+              this.snackBar.open(res.message, 'ERROR', {
+                duration: 5000,
+                panelClass: 'error-snackbar',
+              });
+            }
+          });
+        }
+        } else {
+          // Handle cancellation
+        }
+      }
+      );
   }
 
   copyData() {

@@ -46,7 +46,7 @@
 
       <!-- <div class="my-5"> -->
       <div class="item-container p-2" *ngIf="filteredData.length > 0">
-        <mat-card [routerLink]="['/trips/view', trip.id]" class="m-2" style="width: 30%;"
+        <mat-card [routerLink]="['/trips/view', trip.id]" class="card m-2" style="width: 30%;"
          *ngFor="let trip of filteredData | paginate: { itemsPerPage: 3, currentPage: p }">
           <app-trip-card [trip]="trip"></app-trip-card>
         </mat-card>

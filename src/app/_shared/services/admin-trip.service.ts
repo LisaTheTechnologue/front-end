@@ -4,6 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { AppSettings } from '../app-settings';
 import { StorageService } from './storage.service';
 import { PageNotFoundException } from '../exceptions/page-not-found.exception';
+import { TripStatusPostDTO } from '../models/trip.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,8 @@ export class AdminTripService {
       headers: this.createAuthorizationHeader(),
     })
   }
-  changeStatus(tripId:number,status: string): Observable<any>{
-    return this.http.put(this.API+`status/${tripId}`,status, {
+  changeStatus(form:TripStatusPostDTO): Observable<any> {
+    return this.http.put(this.API + '/change-status',form, {
       headers: this.createAuthorizationHeader(),
     })
   }

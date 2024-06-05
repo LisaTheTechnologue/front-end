@@ -57,6 +57,10 @@ export class PublicService {
       this.API + 'profile?userId=' + userid
     )
   }
+  public getTopUsersBoard(): Observable<any> {
+    return this.http.get(this.API + 'profile/top-board')
+    // .pipe(catchError(this.handleError));
+  }
 
   public getTripsByLeaderId(leaderId: any): Observable<any> {
     return this.http

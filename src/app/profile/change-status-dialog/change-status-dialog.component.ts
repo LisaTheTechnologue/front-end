@@ -51,7 +51,9 @@ export class ChangeStatusDialogComponent implements OnInit {
   }
 
   submit(): void {  
-    this.adminService.updateStatus(this.data.userId, this.statusSelected).subscribe(() => {
+    this.adminService.updateStatus(this.data.userId
+      // , this.statusSelected
+    ).subscribe(() => {
       // Handle success (optional: show success message)
       this.closeDialog();
       this.onSuccess("Chuyển trạng thái thành công")

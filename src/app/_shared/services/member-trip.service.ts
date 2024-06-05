@@ -4,7 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { AppSettings } from '../app-settings';
 import { StorageService } from './storage.service';
 import { PageNotFoundException } from '../exceptions/page-not-found.exception';
-import { Trip } from '../models/trip.model';
+import { Trip, TripStatusPostDTO } from '../models/trip.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +36,12 @@ export class MemberTripService {
       headers: this.createAuthorizationHeader(),
     })
   }
-
+  getAllTripsHasReports(): Observable<any> {
+    // const userId = StorageService.getUserId();
+    return this.http.get(this.API + `reports`, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
   getAllCreatedTrips(): Observable<any> {
     // const userId = StorageService.getUserId();
     return this.http.get(this.API + `leader`, {
@@ -51,8 +56,8 @@ export class MemberTripService {
   //   })
   // }
 
-  changeStatus(tripId: number, status: string): Observable<any> {
-    return this.http.put(this.API + `status/${tripId}`, status, {
+  changeStatus(form:TripStatusPostDTO): Observable<any> {
+    return this.http.put(this.API + '/change-status',form, {
       headers: this.createAuthorizationHeader(),
     })
   }

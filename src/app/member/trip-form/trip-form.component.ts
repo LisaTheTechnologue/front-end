@@ -13,7 +13,13 @@ import { Location } from '@angular/common';
 import { SharedDataService } from 'src/app/_shared/services/shared-data.service';
 import { UploadedImage } from 'src/app/_shared/models/image.model';
 import { UploadImageService } from 'src/app/_shared/services/upload-image.service';
-import { TripLevel } from 'src/app/_shared/models/enum.model';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import * as _moment from 'moment';
+const moment = _moment as any;
+interface TripLevel {
+  label: string,
+  value: string;
+}
 @Component({
   selector: 'app-trip-form',
   templateUrl: './trip-form.component.html',
@@ -23,14 +29,14 @@ export class TripFormComponent {
   tripId: number = this.activatedRoute.snapshot.params['tripId'];
   tripForm!: FormGroup;
   listOfCities: any = [];
-  tripLevels = TripLevel;
+  // tripLevels = TripLevel;
   limitFileSize: number;
   MAX_FILE_SIZE = 1024;
   // thumbnails
   selectedImage: File | null;
   existingImage: string | null = null;
   imagePreview: string | ArrayBuffer | null;
-
+  // tripLevels = Object.values(TripLevel) as string[];
   selectedImagesFileList!: FileList;
   selectedImagesFileArray: File[] = [];  
 
@@ -43,7 +49,11 @@ export class TripFormComponent {
   endDate: Date;
   isAddMode: boolean;
   error: any;
-
+  tripLevels: TripLevel[] = [
+    { label:"Dễ", value: 'EASY' },
+    { label:"Trung bình", value: 'MODERATE' },
+    { label:"Chuyên gia", value: 'MASTER' },
+  ];
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
@@ -90,7 +100,7 @@ export class TripFormComponent {
       cancelOneMonth: [null, [Validators.required]],
       cancelOneWeek: [null, [Validators.required]],
       cancelOneDay: [null, [Validators.required]],
-      img: [null, [Validators.required]],
+      image: [null, [Validators.required]],
       images: this.fb.array([]),
       tripDays: this.fb.array([])
     });
@@ -160,8 +170,17 @@ export class TripFormComponent {
         (day.get("activities") as FormArray).push(activity);
       });
     });
+    
     this.tripForm.patchValue(res);
-    this.existingImage = 'data:image/jpeg;base64,' + res.byteImg;
+    const selectedTripLevel = this.tripLevels.find(tripLevel => tripLevel.value === res.tripLevel);
+    if (selectedTripLevel) {
+      this.tripForm.controls['tripLevel'].setValue(selectedTripLevel);
+    }
+    let startDate = moment(res.startDate, "DD-MM-YYYY").format('YYYY-MM-DD');
+    let endDate = moment(res.endDate, "DD-MM-YYYY").format('YYYY-MM-DD');
+    this.tripForm.controls['startDate'].setValue(startDate);
+    this.tripForm.controls['endDate'].setValue(endDate);
+    this.existingImage = 'data:image/jpeg;base64,' + res.imageByte;
     this.existedImagesAnyArray = res.images.map(img => ({
       id: img.id,
       src: 'data:image/jpeg;base64,' + img.imageByte,  // Assuming your images are JPEGs and base64 encoded
@@ -177,10 +196,10 @@ export class TripFormComponent {
     });
   }
 
-  onSelectedImage(event: File) {
+  onSelectedImage(event: File| null) {
     this.selectedImage = event;
     this.existingImage = null;
-    this.tripForm.patchValue({ img: this.selectedImage });
+    this.tripForm.get('image')?.setValue(this.selectedImage);
   }
   
   urls = new Array<string>();
@@ -237,7 +256,7 @@ export class TripFormComponent {
       const formData: FormData = this.convertToFormData();
 
       this.confirmationService
-        .confirm('Are you sure you want to submit this?')
+        .confirm('Bạn chắc chắn muốn làm điều này?')
         .subscribe((confirmed) => {
           if (confirmed) {
             this.memberTripService
@@ -307,7 +326,7 @@ export class TripFormComponent {
       const formData: FormData = this.convertToFormData();
 
       this.confirmationService
-        .confirm('Are you sure you want to submit this?')
+        .confirm('Bạn chắc chắn muốn làm điều này?')
         .subscribe((confirmed) => {
           if (confirmed) {
             this.memberTripService

@@ -5,7 +5,7 @@ import { Observable, catchError, map, throwError } from 'rxjs';
 import { AppSettings } from '../app-settings';
 import { PageNotFoundException } from '../exceptions/page-not-found.exception';
 import { StorageService } from './storage.service';
-import { Bank } from '../models/user.model';
+import { Bank, User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,14 +31,17 @@ export class MemberUserService {
       );
   }
 
-  public updateProfile(profile: any): Observable<any> {
-    const userId = StorageService.getUserId();
-    return this.http.put<any>(this.API+'profile', profile, {
+  public updateProfile(profile: FormData): Observable<any> {
+    return this.http.put<User>(this.API+'profile', profile, {
       headers: this.createAuthorizationHeader(),
     })
     // .pipe(catchError(this.handleError));
   }
-
+  public validateCreation(userid: any): Observable<any> /* profile */ {
+    return this.http.get<any>(
+      this.API + 'validate-create'
+    )
+  }
   uploadImage(formData:any){
     const userId = StorageService.getUserId();
     return this.http.put<any>(this.API+`upload-image`, formData, {

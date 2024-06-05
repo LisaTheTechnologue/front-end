@@ -49,7 +49,7 @@ export class PaymentViewComponent {
       (res) => {
         // Handle successful response
         this.payment = res;
-        this.payment.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
+        this.payment.imageURL = 'data:image/jpeg;base64,' + res.imageByte;
         this.getTrip(res.tripId);
         // if(this.payment.payerId==userId){
         //   this.selfPayment = true;

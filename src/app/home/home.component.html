@@ -9,17 +9,18 @@
 <section class="my-5">
   <h2 class="text-center">Top 5 Tour Guide Recognition board</h2>
   <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="profiles.length > 0" class="row justify-content-center">
-    <mat-card [routerLink]="['/profile/', profile.id]" fxFlex="15%" class="trip-card mat-elevation-z2" *ngFor="let profile of profiles">
-
-        <div *ngIf="profile.imageURL">
-          <img mat-card-image [src]="profile.imageURL" alt="avatar" class="card-profile-image">
+    <mat-card [routerLink]="['/profile/', profile.id]" fxFlex="15%" style="text-align: center;" class="trip-card mat-elevation-z2" *ngFor="let profile of profiles">
+      <mat-card-content class="justify-content-center">
+        <div *ngIf="profile.imageByte">
+          <img mat-card-image [src]="profile.imageByte" alt="avatar" class="card-profile-image">
         </div>
-        <div *ngIf="!profile.imageURL">
+        <div *ngIf="!profile.imageByte">
           <img mat-card-image src="http://www.gravatar.com/avatar/?d=mp" alt="avatar" class="card-profile-image">
         </div>
-
-        <mat-card-content>
-          <mat-card-title>{{ profile.fullName }}</mat-card-title>
+        <div>{{ profile.username }} </div>
+        <div *ngIf="profile.noOfTrips">
+          <small>Trips Led: {{ profile.noOfTrips }}</small>
+        </div>
           <div ><ngb-rating [(rate)]="profile.rating" [readonly]="true" [max]="5"
               class="custom-rating"></ngb-rating></div>
 

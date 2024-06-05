@@ -25,7 +25,7 @@ export class ProfileComponent {
   // Person logged in email
   currentUserEmail = '';
   trips: Trip[] | undefined;
-  selfProfileCheck = false;
+  // selfProfileCheck = false;
   selectedTrip: Trip;
   feedbacks: Feedback[];
   error: any;
@@ -43,11 +43,11 @@ export class ProfileComponent {
   ) {
     this.getUser();
     this.isAdminLoggedIn = StorageService.isAdminLoggedIn();
-    this.userForm = this.fb.group({
-      id:[null, []],
-      status: [null, [Validators.required]],
-      userId:[null, []]
-    });
+    // this.userForm = this.fb.group({
+      // id:[null, []],
+      // status: [null, [Validators.required]],
+      // userId:[null, []]
+    // });
   }
   
   getFeedbacksByTripId(tripId: number) {
@@ -62,7 +62,7 @@ export class ProfileComponent {
         .subscribe({
           next: (res) => {
             this.user = res;
-            this.user.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
+            this.user.imageByte = 'data:image/jpeg;base64,' + res.imageByte;
             this.rating = res.rating;
           },
           // error: (error) => {
@@ -82,7 +82,6 @@ export class ProfileComponent {
 
   display(trip: Trip) {
     this.selectedTrip = trip;
-    this.selectedTrip.imageURL = 'data:image/jpeg;base64,' + trip.byteImg;
     this.getFeedbacksByTripId(this.selectedTrip.id);
   }
 
@@ -90,41 +89,41 @@ export class ProfileComponent {
     return this.selectedTrip === trip;
   }
 
-  // changeStatus(): void {
-  //   this.userForm.setValue({ userId: this.user.id })
-  //   this.confirmService
-  //     .confirm('Are you sure you want to submit this?')
-  //     .subscribe((confirmed) => {
-  //       if (confirmed) {
-  //         this.adminService.updateStatus(this.leaderId, this.userForm).subscribe({
-  //           next: (res) => {              
-  //               this.onSuccess('Update User Status Successfully');              
-  //           },
-  //           // error: (error) => {
-  //           //   this.onFailed(error);
-  //           // },
-  //       })
-  //       } else {
-  //         // Handle cancellation
-  //       }
-  //     });
-  //   } 
-    openChangeStatusDialog(): void {
-      let dialogRef = this.dialog.open(ChangeStatusDialogComponent, {
-        width: '250px',
-        data: {
-          userId: this.user.id
+  changeStatus(): void {
+    // this.userForm.setValue({ userId: this.user.id })
+    this.confirmService
+      .confirm('Bạn chắc chắn muốn làm điều này?')
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          this.adminService.updateStatus(this.leaderId).subscribe({
+            next: (res) => {              
+                this.onSuccess('Update User Status Successfully');              
+            },
+            // error: (error) => {
+            //   this.onFailed(error);
+            // },
+        })
+        } else {
+          // Handle cancellation
         }
       });
+    } 
+    // openChangeStatusDialog(): void {
+    //   let dialogRef = this.dialog.open(ChangeStatusDialogComponent, {
+    //     width: '600px',
+    //     data: {
+    //       userId: this.user.id
+    //     }
+    //   });
   
-      dialogRef.afterClosed().subscribe(result => {
+    //   dialogRef.afterClosed().subscribe(result => {
         
-      });
-    }
+    //   });
+    // }
 
   private onSuccess(message: string) {
     this.snackBar.open(message, 'OK', { duration: 5000 });
-    this.router.navigateByUrl('/admin');
+    window.location.reload();
   }
   private onFailed(message: string) {
     this.snackBar.open(message, 'ERROR', {

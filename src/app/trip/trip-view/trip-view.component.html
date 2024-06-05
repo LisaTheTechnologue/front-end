@@ -1,23 +1,36 @@
 <div *ngIf="!trip">{{ error }} </div>
 <div *ngIf="trip">
-  <div class="hero-image" [style.backgroundImage]="'url(' + trip.imageURL + ')'">
+  <div class="hero-image" [style.backgroundImage]="'url(' + trip.imageByte + ')'">
   </div>
   <div class="container my-5 lh-lg">
     <div class="h4">{{ trip.title }}</div>
     <section class="row">
-      <div class="col-md-8">
+      <div class="col-md-6">
         <p class="fw-bold fst-italic fs-6">{{trip.summary}}</p>
       </div>
-      <div class="col-md-4 text-center align-items-center">
+      <div class="col-md-6 ">
         <mat-card>
           <mat-card-content>
-            <div class="h4">Thông tin chuyến đi</div>
-            <p>{{ trip.startDate }} - {{ trip.endDate }}</p>
-            <p>Mức độ mạo hiểm: {{trip.tripLevel | tripLevel }}</p>
-            <p>Từ {{trip.minAge}} - {{trip.maxAge}} tuổi</p>
-            <p>{{trip.price | currency: 'VND'}}/pax</p>
-            <p *ngIf="trip.tripStatus !== allTripStatuses.END" class="fw-bold fst-italic">Chỉ còn {{ trip.vacantNumber }} chỗ trống!!!!
+            <div class="row">
+            <div class="col-md-6 align-items-left">
+            <div class="h4 text-center">Thông tin chuyến đi</div>
+            <p class="fw-medium">Thời gian: {{ trip.startDate }} - {{ trip.endDate }}</p>
+            <p class="fw-medium">Địa điểm: {{ trip.cityName }}</p>
+            <p class="fw-medium">Mức độ mạo hiểm: {{trip.tripLevel | tripLevel }}</p>
+            <p class="fw-medium">Từ {{trip.minAge}} - {{trip.maxAge}} tuổi</p>
+            <p class="fw-medium">{{trip.price | currency: 'VND'}}/pax</p>
+            <p *ngIf="trip.tripStatus !== 'END'" class="fw-bold fst-italic">Chỉ còn {{ trip.vacantNumber }} chỗ trống!!!!
             </p>
+            <p *ngIf="trip.tripStatus !== 'APPROVED'" class="fw-bold fst-italic">Trạng thái tour: {{ trip.tripStatus | tripStatus }}
+            </p>
+          </div>
+          <div class="col-md-6">
+            <div class="h4 text-center">Hướng dẫn viên</div>
+            <div class="m-4 d-flex justify-content-center">
+              <app-profile-card [userId]="trip.leaderId"></app-profile-card>
+            </div>
+          </div>
+        </div>
           </mat-card-content>
         </mat-card>
       </div>
@@ -45,15 +58,9 @@
     </section>
     <section>
       <div class="section-title">Hình ảnh</div>
-      <app-image-lightbox [slides]="trip.byteImgs"></app-image-lightbox>
+      <app-image-lightbox [slides]="trip.imageBytes"></app-image-lightbox>
     </section>
 
-    <section>
-      <div class="section-title">Hướng dẫn viên</div>
-      <div class="m-4 d-flex justify-content-between">
-        <app-profile-card [userId]="trip.leaderId"></app-profile-card>
-      </div>
-    </section>
     <section>
       <div class="section-title">Lưu ý</div>
       <p>{{ trip.notes }}</p>
@@ -66,26 +73,15 @@
         <li>Hủy trước ngày chuyến đi bắt đầu ít nhất 24 tiếng: <span>{{ trip.cancelOneDay | cancelPolicy }}</span></li>
       </ul>
     </section>
-
-    <section *ngIf="members?.length > 0">
-      <div class="section-title">Thành viên trong nhóm: </div>
-      <ng-template ngFor let-member [ngForOf]="members" class="d-flex justify-content-evenly">
-        <div class="m-4 d-inline-flex">
-          <app-profile-card [userId]="member.userId"></app-profile-card>
-        </div>
-      </ng-template>
-    </section>
-    <section *ngIf="members?.length === 0">
-      <p>Đừng bỏ lỡ! Hãy là người đầu tiên tham gia chuyến đi tuyệt vời này!</p>
-    </section>
+  
 
     <section *ngIf="feedbacks?.length > 0">
       <div class="section-title">Review and Feedback:</div>
+      <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="flex-start" class="align-items-stretch">
       <ng-template ngFor let-feedback [ngForOf]="feedbacks">
-        <mat-card style="width:40%; margin: 10px;">
-          <app-feedback-card [feedback]="feedback"></app-feedback-card>
-        </mat-card>
+          <app-feedback-card [feedback]="feedback" fxFlex="0 1 calc(50% - 10px)" class="my-1"></app-feedback-card>
       </ng-template>
+    </div>
     </section>
     <section *ngIf="feedbacks?.length === 0">
       <h2>Cảm ơn bạn đã tham gia chuyến đi!</h2>
@@ -93,58 +89,57 @@
         tôi cải thiện dịch vụ.</p>
       <span *ngIf="isMemberLoggedIn">
         <button mat-flat-button color="accent" [routerLink]="['/member/feedback/',tripId]"
-          *ngIf="isJoined && !isLeader && trip.tripStatus === allTripStatuses.END">
+          *ngIf="isJoined && !isLeader && trip.tripStatus === 'END'">
           <mat-icon> chat</mat-icon> Feedback
         </button>
       </span>
     </section>
 
   <div class="action-button-row">
-    <button mat-flat-button color="success" *ngIf="!isJoined && !isLeader && trip.tripStatus === allTripStatuses.APPROVED" class="me-2"
+    <button mat-flat-button color="success" *ngIf="!isJoined && !isLeader && !isAdminLoggedIn && trip.tripStatus ==='APPROVED'" class="me-2"
       (click)="joinTrip()">
       <mat-icon>check</mat-icon> Tham gia
     </button>
     <button mat-flat-button color="accent" [routerLink]="['/member/chat/',tripId]"
-      *ngIf="(isJoined || isLeader) && trip.tripStatus === allTripStatuses.APPROVED">
+      *ngIf="(isJoined || isLeader) && trip.tripStatus === 'APPROVED'">
       <mat-icon> chat</mat-icon> Nhóm chat
     </button>
     <span *ngIf="isMemberLoggedIn">
-      <button mat-flat-button color="danger" (click)="changeStatus('cancel')"
-        *ngIf="isLeader && trip.tripStatus !== allTripStatuses.END">
-        <mat-icon>cancel</mat-icon> Cancel
+      <button mat-flat-button color="danger" (click)="changeStatus('Hủy')"
+        *ngIf="isLeader && trip.tripStatus !== 'END'">
+        <mat-icon>cancel</mat-icon> Hủy
       </button>
-      <button mat-flat-button color="success" (click)="changeStatus('end')" *ngIf="isLeader && trip.tripStatus !== allTripStatuses.END">
-        <mat-icon>check</mat-icon> End
+      <button mat-flat-button color="success" (click)="memberChangeStatus('Kết thúc')" *ngIf="isLeader && trip.tripStatus !== 'END'">
+        <mat-icon>check</mat-icon> Kết thúc
       </button>
       <button mat-flat-button color="danger" [routerLink]="['/member/joiner/remove/',tripId]"
-        *ngIf="isLeader && trip.tripStatus !== allTripStatuses.END">
-        <mat-icon>cancel</mat-icon> Remove Participant
+        *ngIf="isLeader && trip.tripStatus !== 'END'">
+        <mat-icon>cancel</mat-icon> Loại một thành viên
       </button>
       <button mat-flat-button color="success" (click)="copyData()" *ngIf="isLeader">
         <mat-icon>check</mat-icon> Copy Data
       </button>
     </span>
     <span *ngIf="isAdminLoggedIn">
-      <button mat-flat-button color="success" (click)="changeStatus('end')" *ngIf="trip.tripStatus === allTripStatuses.APPROVED"
+      <button mat-flat-button color="danger" (click)="changeStatus('Hủy')" *ngIf="trip.tripStatus === 'APPROVED'"
         class="me-2">
-        <mat-icon>check</mat-icon> End
+        <mat-icon>cancel</mat-icon> Hủy
       </button>
-      <button mat-flat-button color="danger" (click)="changeStatus('cancel')" *ngIf="trip.tripStatus === allTripStatuses.APPROVED"
+      <button mat-flat-button color="success" (click)="memberChangeStatus('Duyệt')" *ngIf="trip.tripStatus === 'PENDING'"
         class="me-2">
-        <mat-icon>cancel</mat-icon> Cancel
+        <mat-icon>check</mat-icon> Duyệt
       </button>
-      <button mat-flat-button color="success" (click)="changeStatus('approve')" *ngIf="trip.tripStatus === allTripStatuses.PENDING"
+      <button mat-flat-button color="danger" (click)="changeStatus('Từ chối')" *ngIf="trip.tripStatus === 'PENDING'"
         class="me-2">
-        <mat-icon>check</mat-icon> Approve
-      </button>
-      <button mat-flat-button color="danger" (click)="changeStatus('reject')" *ngIf="trip.tripStatus === allTripStatuses.PENDING"
-        class="me-2">
-        <mat-icon>cancel</mat-icon> Reject
+        <mat-icon>cancel</mat-icon> Từ chối
       </button>
     </span>
   </div>
-  <span *ngIf="isMemberLoggedIn && trip.tripStatus !== allTripStatuses.PENDING">
+  <span *ngIf="isMemberLoggedIn && trip.tripStatus !== 'PENDING'">
+    <section>
+      <div class="section-title">Bình luận</div>
     <app-comment [tripId]="tripId"></app-comment>
+    </section>
   </span>
   
 </div>

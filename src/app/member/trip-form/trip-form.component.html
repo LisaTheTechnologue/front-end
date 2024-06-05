@@ -105,7 +105,7 @@
                 <input matStartDate placeholder="Start date" formControlName="startDate">
                 <input matEndDate placeholder="End date" formControlName="endDate">
               </mat-date-range-input>
-              <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+              <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
               <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-date-range-picker #picker></mat-date-range-picker>
               <mat-error *ngIf="tripForm.get('startDate')?.invalid || tripForm.get('endDate')?.invalid">{{

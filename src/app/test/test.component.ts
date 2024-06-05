@@ -190,8 +190,8 @@ export class TestComponent {
   //     });
   //   });
   //   this.tripForm.patchValue(res);
-  //   this.existingImage = 'data:image/jpeg;base64,' + res.byteImg;
-  //   res.byteImgs.forEach(element => {
+  //   this.existingImage = 'data:image/jpeg;base64,' + res.imageByte;
+  //   res.imageBytes.forEach(element => {
   //     this.existedImages.push(element);
   //   }
   //   )
@@ -266,7 +266,7 @@ export class TestComponent {
     // if (this.selectedFile != null) {
     console.log(this.tripForm.value);
     // this.confirmationService
-    //   .confirm('Are you sure you want to submit this?')
+    //   .confirm('Bạn chắc chắn muốn làm điều này?')
     //   .subscribe((confirmed) => {
     //     if (confirmed) {
       const formData: FormData = new FormData();
@@ -294,7 +294,7 @@ export class TestComponent {
 
   // update() {
   //   this.confirmationService
-  //     .confirm('Are you sure you want to submit this?')
+  //     .confirm('Bạn chắc chắn muốn làm điều này?')
   //     .subscribe((confirmed) => {
   //       if (confirmed) {
   //         this.memberTripService

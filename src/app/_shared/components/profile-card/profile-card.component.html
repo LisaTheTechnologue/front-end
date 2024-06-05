@@ -1,28 +1,29 @@
-
 <div *ngIf="user">
-  <mat-card [routerLink]="['/profile/', user.id]">
-  <mat-card-content class="justify-content-center">
-    <div *ngIf="user.imageURL">
-      <img mat-card-sm-image [src]="user.imageURL" alt="avatar">
-    </div>
-    <div *ngIf="!user.imageURL">
-      <img mat-card-sm-image src="http://www.gravatar.com/avatar/?d=mp" alt="avatar">
-    </div>
-    <div>{{ user.fullName }} </div>
-    <div><span *ngIf="user.status === 'VIP'">
-      <span class="badge bg-warning text-dark">{{ user.status }}</span>
-    </span>
-    <span *ngIf="user.status === 'WARNING'">
-      <span class="badge bg-warning text-dark">Thẻ vàng</span>
-    </span>
-    <span *ngIf="user.status === 'REPORTED'">
-      <span class="badge bg-danger">Ai đó đang báo cáo</span>
-    </span>  </div>
-    <ngb-rating [(rate)]="rating" [readonly]="true" [max]="5"
-          class="custom-rating"></ngb-rating>
-  </mat-card-content>
-  
-  <!-- <mat-card-actions>
+  <mat-card class="card" style="text-align: center;" [routerLink]="['/profile/', user.id]">
+    <mat-card-content class="justify-content-center">
+      <div *ngIf="user.imageByte">
+        <img mat-card-sm-image [src]="user.imageByte" alt="avatar">
+      </div>
+      <div *ngIf="!user.imageByte">
+        <img mat-card-sm-image src="http://www.gravatar.com/avatar/?d=mp" alt="avatar">
+      </div>
+      <div>{{ user.fullName }} </div>
+      <div>
+        <span *ngIf="user.isReported">
+          <span class="badge bg-warning text-dark">Bị báo cáo</span>
+        </span>
+        <span *ngIf="!user.isActive">
+          <span class="badge bg-danger">Không hoạt động</span>
+        </span>
+      </div>
+      <div *ngIf="user.noOfTrips">
+        <small>Trips Led: {{ user.noOfTrips }}</small>
+      </div>
+      <ngb-rating [(rate)]="rating" [readonly]="true" [max]="5" class="custom-rating">
+      </ngb-rating>
+    </mat-card-content>
+
+    <!-- <mat-card-actions>
     <button mat-button >View Profile</button>
   </mat-card-actions> -->
-</mat-card>
+  </mat-card>

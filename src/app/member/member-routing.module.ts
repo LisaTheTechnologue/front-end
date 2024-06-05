@@ -13,6 +13,7 @@ import { JoinRequestListComponent } from './join-request-list/join-request-list.
 import { PaymentHistoryListComponent } from './payment-history-list/payment-history-list.component';
 import { FeedbackFormComponent } from './feedback-form/feedback-form.component';
 import { JoinRemoveComponent } from './join-remove/join-remove.component';
+import { ReportListComponent } from './report-list/report-list.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
 { path: 'trips/edit/:tripId', component: TripFormComponent },
 { path: 'trips/create', component: TripFormComponent },
 { path: 'joined-trips', component: TripJoinedListComponent },
+{ path: 'reported-trips', component: ReportListComponent },
 { path: 'joined-requests', component: JoinRequestListComponent },
 { path: 'joiner/remove/:tripId', component: JoinRemoveComponent },
 { path: 'payment/list', component: PaymentHistoryListComponent },

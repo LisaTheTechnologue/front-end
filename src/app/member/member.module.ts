@@ -18,13 +18,16 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { TripJoinedListComponent } from './trip-joined-list/trip-joined-list.component';
 import { TripCreatedListComponent } from './trip-created-list/trip-created-list.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
-import { TripViewComponent } from './trip-view/trip-view.component';
 import { TripFormComponent } from './trip-form/trip-form.component';
 import { PasswordEditComponent } from './password-edit/password-edit.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaymentHistoryListComponent } from './payment-history-list/payment-history-list.component';
 import { FeedbackFormComponent } from './feedback-form/feedback-form.component';
 import { JoinRemoveComponent } from './join-remove/join-remove.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { RejectDialogComponent } from './reject-dialog/reject-dialog.component';
+import { PipesModule } from '../_shared/pipes/pipes.module';
+import { ReportListComponent } from './report-list/report-list.component';
 
 @NgModule({
   declarations: [
@@ -37,11 +40,12 @@ import { JoinRemoveComponent } from './join-remove/join-remove.component';
     TripJoinedListComponent,
     TripCreatedListComponent,
     ProfileEditComponent,
-    TripViewComponent,
     TripFormComponent,
     PasswordEditComponent,
     PaymentHistoryListComponent,
-    JoinRemoveComponent
+    JoinRemoveComponent,
+    RejectDialogComponent,
+    ReportListComponent
   ],
   imports: [
     CommonModule,
@@ -60,6 +64,8 @@ import { JoinRemoveComponent } from './join-remove/join-remove.component';
     MatSortModule,
     MatPaginatorModule,
     NgxPaginationModule,
+    MatDialogModule,
+    PipesModule
   ]
 })
 export class MemberModule { }

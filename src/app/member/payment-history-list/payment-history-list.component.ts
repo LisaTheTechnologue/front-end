@@ -12,7 +12,7 @@ import { MemberPaymentService } from 'src/app/_shared/services/member-payment.se
 })
 export class PaymentHistoryListComponent implements OnInit {
   error: any;
-
+  activeRoute = 'payment-list';
   public joins= new MatTableDataSource<any>([]);
   searchText: string = '';
   filteredData: any[] = [];
@@ -48,9 +48,9 @@ export class PaymentHistoryListComponent implements OnInit {
   private onFailed(message: string) {
     this.snackBar.open(
       message,
-      'ERROR',
+      'X',
       {
-        duration: 100000,
+        duration: 10000,
         panelClass: 'error-snackbar',
       }
     );

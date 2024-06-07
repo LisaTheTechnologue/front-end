@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../_shared/services/auth.service';
 import { StorageService } from '../_shared/services/storage.service';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SharedDataService } from '../_shared/services/shared-data.service';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,8 @@ export class LoginComponent {
     private snackBar: MatSnackBar,
     private authService: AuthService,
     public dialog: MatDialog,
+    private route: ActivatedRoute,
+    private sharedData: SharedDataService,
     private router: Router) {
 
   }
@@ -41,7 +44,8 @@ export class LoginComponent {
         if (StorageService.isAdminLoggedIn()) {
           this.router.navigateByUrl('admin');
         } else if (StorageService.isMemberLoggedIn()) {
-          this.router.navigateByUrl('member');
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/member';
+          this.router.navigate([returnUrl]);
         }
       },
       (error) => {
@@ -52,7 +56,7 @@ export class LoginComponent {
   }
   private onFailed(message: string) {
     this.snackBar.open(message, 'Close', {
-      duration: 100000,
+      duration: 10000,
       panelClass: 'error-snackbar',
     });
   }

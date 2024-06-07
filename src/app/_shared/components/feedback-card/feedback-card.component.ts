@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Feedback } from '../../models/trip.model';
 
 @Component({
   selector: 'app-feedback-card',
@@ -6,8 +7,11 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./feedback-card.component.css']
 })
 export class FeedbackCardComponent {
-  @Input() feedback: any
+  @Input() feedback: Feedback
   ngOnInit(): void {
-    this.feedback.imageURL = 'data:image/jpeg;base64,' + this.feedback.byteImg;
+    if(!this.feedback.imageByte.startsWith('data:image/jpeg;base64,')) {
+      this.feedback.imageByte = 'data:image/jpeg;base64,' + this.feedback.imageByte;
+    }
+    // this.feedback.imageByte = 'data:image/jpeg;base64,' + this.feedback.imageByte;
   }
 }

@@ -1,129 +1,133 @@
 <mat-drawer-container class="example-container">
   <mat-drawer mode="side" opened>
-    <div class="list-group list-group-flush">
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/joined-trips']">Your Joined
-        Trips
-      </a>
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/created-trips']">Your Created
-        Trips</a>
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/joined-requests']">Join
-        Requests</a>
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/member/payment/list']">Payment
-        History</a>
-      <a href="#" class="list-group-item list-group-item-action active" aria-current="true"
-        [routerLink]="['/member/profile']">Edit Profile</a>
-    </div>
+    <app-member-navigation [activeRoute]="activeRoute"></app-member-navigation>
   </mat-drawer>
   <mat-drawer-content>
     <div class="container my-5">
-      <div class="heading h3">Edit Profile</div>
+      <div class="heading h3">Chỉnh sửa hồ sơ</div>
       <form [formGroup]="profileForm">
         <mat-form-field>
           <input matInput placeholder="Username" [attr.disabled]="true" formControlName="username">
         </mat-form-field>
         <div class="mb-3">
-          <app-form-img (selectedImage)="selectedImage($event)" [limitFileSize]="50"
+          <app-form-img (selectedImage)="onSelectedImage($event)" [limitFileSize]="50"
             [existingImage]="existingImage"></app-form-img>
         </div>
         <mat-card class="mb-3">
           <mat-card-header>
-            <mat-card-title>User Information</mat-card-title>
+            <mat-card-title>Thông tin cá nhân</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-md-6"><mat-form-field>
+                  <mat-label>Họ</mat-label>
+                  <input matInput formControlName="lastName" required>
+                  <mat-error *ngIf="profileForm.get('lastName').hasError('required')">
+                    Vui lòng nhập họ.
+                  </mat-error>
+                  <mat-error *ngIf="profileForm.get('lastName').hasError('minlength')">
+                    Phải có ít nhất 1 ký tự.
+                  </mat-error>
+                  <mat-error *ngIf="profileForm.get('lastName').hasError('maxlength')">
+                    Độ dài tối đa 50 ký tự 
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field>
+                  <mat-label>Tên</mat-label>
+                  <input matInput formControlName="firstName" required>
+                  <mat-error *ngIf="profileForm.get('firstName').hasError('required')">
+                    Vui lòng nhập tên.
+                  </mat-error>
+                  <mat-error *ngIf="profileForm.get('firstName').hasError('minlength')">
+                    Phải có ít nhất 1 ký tự.
+                  </mat-error>
+                  <mat-error *ngIf="profileForm.get('firstName').hasError('maxlength')">
+                    Độ dài tối đa 50 ký tự 
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field>
+                  <mat-label>Ngày sinh</mat-label>
+                  <input matInput [matDatepicker]="picker" [max]="maxDob" formControlName="dob" readonly required >                  
+                  <mat-hint>DD/MM/YYYY </mat-hint>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field>
+                  <mat-label>Giới tính</mat-label>
+                  <mat-select formControlName="gender">
+                    <mat-option *ngFor="let gender of genders" [value]="gender">
+                      {{ gender.label }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field>
+                  <mat-label>Số điện thoại</mat-label>
+                  <input matInput formControlName="phoneNo" type="text" mask="0000 000 000">
+                  <mat-error *ngIf="profileForm.get('phoneNo').hasError('pattern')">
+                    Số điện thoại không hợp lệ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field>
+                  <mat-label>Email</mat-label>
+                  <input matInput formControlName="email" required type="email">
+                  <mat-error *ngIf="profileForm.get('email').hasError('required')">
+                    Vui lòng nhập email.
+                  </mat-error>
+                  <mat-error *ngIf="profileForm.get('email').hasError('email')">
+                    Email không hợp lệ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <mat-card class="mb-4">
+          <mat-card-header>
+            <mat-card-title>Mật khẩu</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <button mat-raised-button color="primary" [routerLink]="['/member/password-edit']">Thay đổi mật khẩu</button>
+          </mat-card-content>
+        </mat-card>
+        <mat-card class="mb-4">
+          <mat-card-header>
+            <mat-card-title>Thông tin thanh toán</mat-card-title>
           </mat-card-header>
           <mat-card-content>
             <mat-form-field>
-              <mat-label>First Name</mat-label>
-              <input matInput formControlName="firstName" required>
-              <mat-error *ngIf="profileForm.get('firstName').hasError('required')">
-                First Name is required.
-              </mat-error>
-              <mat-error *ngIf="profileForm.get('firstName').hasError('minlength')">
-                First Name must be at least 1 character.
-              </mat-error>
-              <mat-error *ngIf="profileForm.get('firstName').hasError('maxlength')">
-                First Name cannot be longer than 50 characters.
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field>
-              <mat-label>Last Name</mat-label>
-              <input matInput formControlName="lastName" required>
-              <mat-error *ngIf="profileForm.get('lastName').hasError('required')">
-                Last Name is required.
-              </mat-error>
-              <mat-error *ngIf="profileForm.get('lastName').hasError('minlength')">
-                Last Name must be at least 1 character.
-              </mat-error>
-              <mat-error *ngIf="profileForm.get('lastName').hasError('maxlength')">
-                Last Name cannot be longer than 50 characters.
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field>
-              <mat-label>Date of Birth</mat-label>
-              <input matInput [matDatepicker]="picker" [max]="maxDob" formControlName="dob" readonly required>
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field>
-              <mat-label>Phone Number</mat-label>
-              <input matInput formControlName="phoneNo" type="number">
-              <mat-error *ngIf="profileForm.get('phoneNo').hasError('pattern')">
-                Invalid phone number.
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field>
-              <mat-label>Gender</mat-label>
-              <mat-select formControlName="gender">
-                <mat-option value="Male">Male</mat-option>
-                <mat-option value="Female">Female</mat-option>
-                <mat-option value="Other">Other</mat-option>
+              <mat-label>Ngân hàng</mat-label>
+              <mat-select formControlName="paymentAccBank">
+                <mat-option *ngFor="let bank of banks" [value]="bank">
+                  {{ bank.name }}
+                </mat-option>
               </mat-select>
             </mat-form-field>
-
             <mat-form-field>
-              <mat-label>Email Address</mat-label>
-              <input matInput formControlName="email" required type="email">
-              <mat-error *ngIf="profileForm.get('email').hasError('required')">
-                Email Address is required.
-              </mat-error>
-              <mat-error *ngIf="profileForm.get('email').hasError('email')">
-                Invalid email format.
-              </mat-error>
-            </mat-form-field>
-          </mat-card-content>
-        </mat-card>
-        <mat-card class="mb-4">
-          <mat-card-header>
-            <mat-card-title>Password</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <button mat-raised-button color="primary" [routerLink]="['/member/password-edit']">Change
-              Password</button>
-          </mat-card-content>
-        </mat-card>
-        <mat-card class="mb-4">
-          <mat-card-header>
-            <mat-card-title>Payment Information</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <mat-form-field>
-              <mat-label>Account Number</mat-label>
+              <mat-label>Số tài khoản</mat-label>
               <input matInput formControlName="paymentAccNo" type="number">
             </mat-form-field>
+
             <mat-form-field>
-              <mat-label>Account Bank</mat-label>
-              <input matInput formControlName="paymentAccBank">
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Account Name</mat-label>
+              <mat-label>Tên tài khoản</mat-label>
               <input matInput formControlName="paymentAccName">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
-        <button mat-raised-button color="primary" type="submit" (click)="submit()" [disabled]="profileForm.invalid">Save
-          Profile</button>
+        <button mat-raised-button color="primary" type="submit" (click)="submit()" [disabled]="profileForm.invalid">Lưu</button>
       </form>
     </div>
 

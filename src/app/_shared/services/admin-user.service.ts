@@ -11,23 +11,25 @@ import { StorageService } from './storage.service';
 })
 export class AdminUserService {
 
-  private API = AppSettings.ADMIN_API_ENDPOINT+'users/';
+  private API = AppSettings.ADMIN_API_ENDPOINT+'users';
   constructor(private http: HttpClient) { }
   public updatePassword(passwordChange: any): Observable<any> {
     const userId = StorageService.getUserId();
-    return this.http.post<any>(this.API+'change-password' , passwordChange, {
+    return this.http.post<any>(this.API+'/change-password' , passwordChange, {
       headers: this.createAuthorizationHeader(),
     })
     // .pipe(catchError(this.handleError));
   }
-  updateStatus(id: any, data: any): Observable<any> {
-    return this.http.put(this.API+`${id}`,data, {
+  updateStatus(userId: any): Observable<any> {
+    return this.http.get(this.API+'?userId='+userId,
+    // +'&&?status='+status, 
+    {
       headers: this.createAuthorizationHeader(),
     })
     // .pipe(catchError(this.handleError));
   }
   searchUser(searchText: any): Observable<User[]> {
-    return this.http.get<User[]>(this.API+`search?searchText=${searchText}`, {
+    return this.http.get<User[]>(this.API+`/search?searchText=${searchText}`, {
       headers: this.createAuthorizationHeader(),
     })
     // .pipe(catchError(this.handleError));

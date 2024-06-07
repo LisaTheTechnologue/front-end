@@ -13,7 +13,7 @@ import { MemberPaymentService } from 'src/app/_shared/services/member-payment.se
 })
 export class JoinRequestListComponent implements OnInit, AfterViewInit{
   error: any;
-
+  activeRoute = 'joined-requests';
   public joins= new MatTableDataSource<any>([]);
   searchText: string = '';
   filteredData: any[] = [];
@@ -49,9 +49,9 @@ export class JoinRequestListComponent implements OnInit, AfterViewInit{
   private onFailed(message: string) {
     this.snackBar.open(
       message,
-      'ERROR',
+      'X',
       {
-        duration: 100000,
+        duration: 10000,
         panelClass: 'error-snackbar',
       }
     );

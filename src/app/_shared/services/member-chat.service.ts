@@ -14,12 +14,12 @@ import { StorageService } from './storage.service';
   providedIn: 'root',
 })
 export class MemberChatService {
-  private CHAT_ENDPOINT = AppSettings.MEMBER_API_ENDPOINT + 'chat/';
+  private CHAT_ENDPOINT = AppSettings.MEMBER_API_ENDPOINT + 'chat';
   constructor(public http: HttpClient, public router: Router) {}
 
   public get(tripId: any): Observable<any> {
     return this.http
-      .get<any>(this.CHAT_ENDPOINT + tripId, {
+      .get<any>(this.CHAT_ENDPOINT+'?tripId=' + tripId, {
         headers: this.createAuthorizationHeader(),
       })
       // .pipe(catchError(this.handleError));

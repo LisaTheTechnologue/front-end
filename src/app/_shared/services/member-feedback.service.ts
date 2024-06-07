@@ -15,7 +15,7 @@ export class MemberFeedbackService {
 
   public get(tripId: any): Observable<any> {
     return this.http
-      .get<any>(this.API+'get/' + tripId, {
+      .get<any>(this.API+'get?tripId=' + tripId, {
         headers: this.createAuthorizationHeader(),
       })
       // .pipe(catchError(this.handleError));

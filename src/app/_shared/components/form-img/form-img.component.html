@@ -1,7 +1,7 @@
 <input type="file" class="file-input" accept="image/png, image/jpeg"
        (change)="onFileSelected($event)" #fileUpload>
 
-<div class="file-upload">
+<div class="file-upload mx-auto">
     <button mat-mini-fab color="primary" class="upload-btn"
       (click)="fileUpload.click()">
         <mat-icon>attach_file</mat-icon>
@@ -14,5 +14,6 @@
 </div>
 
 <div *ngIf="existingImage && !selectedFile" class="image-preview">
-    <img [src]="existingImage" alt="Existing Image" class="preview-image">
+    <img [src]="'data:image/jpeg;base64,'+existingImage" alt="Existing Image" class="preview-image">
 </div>
+

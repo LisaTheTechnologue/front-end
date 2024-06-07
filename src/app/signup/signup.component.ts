@@ -44,7 +44,7 @@ export class SignupComponent {
     const confirmPassword = this.signupForm.get('confirmPassword')?.value;
 
     if(password !== confirmPassword){
-      this.snackBar.open('Passwords do not match.', 'Close', {duration: 5000, panelClass: 'error-snackbar'});
+      this.onFailed('Passwords do not match.');
       return;
     }
 
@@ -63,8 +63,8 @@ export class SignupComponent {
     this.router.navigateByUrl('/login');
   }
   private onFailed(message: string) {
-    this.snackBar.open(message, 'ERROR', {
-      duration: 100000,
+    this.snackBar.open(message, 'X', {
+      duration: 10000,
       panelClass: 'error-snackbar',
     });
   }

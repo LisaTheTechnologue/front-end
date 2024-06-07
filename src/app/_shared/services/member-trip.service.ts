@@ -4,7 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { AppSettings } from '../app-settings';
 import { StorageService } from './storage.service';
 import { PageNotFoundException } from '../exceptions/page-not-found.exception';
-import { Trip } from '../models/trip.model';
+import { Trip, TripStatusPostDTO } from '../models/trip.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,52 +14,57 @@ export class MemberTripService {
   private API = AppSettings.MEMBER_API_ENDPOINT + 'trips/';
   constructor(private http: HttpClient) { }
 
-  uploadImage(tripId:number, formData:any){
-    return this.http.put<any>(this.API+`upload-image/${tripId}`, formData, {
+  uploadImage(tripId: number, formData: any) {
+    return this.http.put<any>(this.API + `upload-image/${tripId}`, formData, {
       headers: this.createAuthorizationHeader(),
     })
   }
-  createTrip(record: Partial<Trip>) {    
-    return this.http.post<Trip>(this.API+'create', record, {
-      headers: this.createAuthorizationHeader(),
-    })
-  }
-
-  updateTrip (tripId:number,record: Partial<Trip>): Observable<any>{
-    return this.http.put<Trip>(this.API+`trip/${tripId}`, record, {
+  createTrip(record: FormData): Observable<any> {
+    return this.http.post<any>(this.API + 'create', record, {
       headers: this.createAuthorizationHeader(),
     })
   }
 
-  deleteTrip (tripId:number): Observable<any>{
-    return this.http.delete<Trip>(this.API+`trip/${tripId}`, {
+  updateTrip(tripId: number, record: FormData): Observable<any> {
+    return this.http.put<Trip>(this.API + `update/${tripId}`, record, {
       headers: this.createAuthorizationHeader(),
     })
   }
-  
-  getAllCreatedTrips(): Observable<any>{
+
+  deleteTrip(tripId: number): Observable<any> {
+    return this.http.delete<any>(this.API + `delete/${tripId}`, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
+  getAllTripsHasReports(): Observable<any> {
     // const userId = StorageService.getUserId();
-    return this.http.get(this.API+`leader`, {
+    return this.http.get(this.API + `reports`, {
       headers: this.createAuthorizationHeader(),
     })
   }
-
-  getTripById(tripId:number): Observable<any>{
+  getAllCreatedTrips(): Observable<any> {
     // const userId = StorageService.getUserId();
-    return this.http.get(this.API+`trip/${tripId}`, {
+    return this.http.get(this.API + `leader`, {
       headers: this.createAuthorizationHeader(),
     })
   }
 
-  changeStatus (tripId:number,status: string): Observable<any>{
-    return this.http.put(this.API+`status/${tripId}`, status, {
+  // getTripById(tripId: number): Observable<any> {
+  //   // const userId = StorageService.getUserId();
+  //   return this.http.get(this.API + `trip/${tripId}`, {
+  //     headers: this.createAuthorizationHeader(),
+  //   })
+  // }
+
+  changeStatus(form:TripStatusPostDTO): Observable<any> {
+    return this.http.put(this.API + '/change-status',form, {
       headers: this.createAuthorizationHeader(),
     })
   }
 
-  getAllJoinTrips(): Observable<any>{
+  getAllJoinTrips(): Observable<any> {
     // const userId = StorageService.getUserId();
-    return this.http.get(this.API+`joiner`, {
+    return this.http.get(this.API + `joiner`, {
       headers: this.createAuthorizationHeader(),
     });
   }
@@ -86,9 +91,9 @@ export class MemberTripService {
   //   return throwError(error);
   // }
 
-  private createAuthorizationHeader(): HttpHeaders{
+  private createAuthorizationHeader(): HttpHeaders {
     return new HttpHeaders({
-      'Authorization':'Bearer ' + StorageService.getToken()
+      'Authorization': 'Bearer ' + StorageService.getToken()
     });
   }
 }

@@ -8,6 +8,9 @@ import { StorageService } from '../_shared/services/storage.service';
 import { ConfirmService } from '../_shared/services/confirm.service';
 import { AdminUserService } from '../_shared/services/admin-user.service';
 import { User } from '../_shared/models/user.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeStatusDialogComponent } from './change-status-dialog/change-status-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profile',
@@ -22,24 +25,30 @@ export class ProfileComponent {
   // Person logged in email
   currentUserEmail = '';
   trips: Trip[] | undefined;
-  selfProfileCheck = false;
+  // selfProfileCheck = false;
   selectedTrip: Trip;
   feedbacks: Feedback[];
   error: any;
   isAdminLoggedIn: boolean = false;
+  userForm!: FormGroup;
   constructor(
     private publicService: PublicService,
     private route: ActivatedRoute,
     private router: Router,
+    private dialog: MatDialog,
     private confirmService: ConfirmService,
-    private adminService: AdminUserService,
+    private adminService: AdminUserService,    
+    private fb: FormBuilder,
     private snackBar: MatSnackBar
   ) {
     this.getUser();
     this.isAdminLoggedIn = StorageService.isAdminLoggedIn();
-
+    // this.userForm = this.fb.group({
+      // id:[null, []],
+      // status: [null, [Validators.required]],
+      // userId:[null, []]
+    // });
   }
-
   
   getFeedbacksByTripId(tripId: number) {
     this.publicService.getFeedbacksByTripId(tripId).subscribe((res) => (this.feedbacks = res));
@@ -53,7 +62,7 @@ export class ProfileComponent {
         .subscribe({
           next: (res) => {
             this.user = res;
-            this.user.imageURL = 'data:image/jpeg;base64,' + res.byteImg;
+            this.user.imageByte = 'data:image/jpeg;base64,' + res.imageByte;
             this.rating = res.rating;
           },
           // error: (error) => {
@@ -73,7 +82,6 @@ export class ProfileComponent {
 
   display(trip: Trip) {
     this.selectedTrip = trip;
-    this.selectedTrip.imageURL = 'data:image/jpeg;base64,' + trip.byteImg;
     this.getFeedbacksByTripId(this.selectedTrip.id);
   }
 
@@ -82,12 +90,12 @@ export class ProfileComponent {
   }
 
   changeStatus(): void {
-    
+    // this.userForm.setValue({ userId: this.user.id })
     this.confirmService
-      .confirm('Are you sure you want to submit this?')
+      .confirm('Bạn chắc chắn muốn làm điều này?')
       .subscribe((confirmed) => {
         if (confirmed) {
-          this.adminService.updateStatus(this.leaderId, !this.user.isActive).subscribe({
+          this.adminService.updateStatus(this.leaderId).subscribe({
             next: (res) => {              
                 this.onSuccess('Update User Status Successfully');              
             },
@@ -100,15 +108,26 @@ export class ProfileComponent {
         }
       });
     } 
+    // openChangeStatusDialog(): void {
+    //   let dialogRef = this.dialog.open(ChangeStatusDialogComponent, {
+    //     width: '600px',
+    //     data: {
+    //       userId: this.user.id
+    //     }
+    //   });
   
+    //   dialogRef.afterClosed().subscribe(result => {
+        
+    //   });
+    // }
 
   private onSuccess(message: string) {
     this.snackBar.open(message, 'OK', { duration: 5000 });
-    this.router.navigateByUrl('/admin');
+    window.location.reload();
   }
   private onFailed(message: string) {
-    this.snackBar.open(message, 'ERROR', {
-      duration: 100000,
+    this.snackBar.open(message, 'X', {
+      duration: 10000,
       panelClass: 'error-snackbar',
     });
   }

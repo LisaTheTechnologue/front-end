@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -5,9 +6,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { TripLevel } from 'src/app/_shared/models/enum.model';
+import { Trip } from 'src/app/_shared/models/trip.model';
 import { ConfirmService } from 'src/app/_shared/services/confirm.service';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 import { PublicService } from 'src/app/_shared/services/public.service';
+import { StorageService } from 'src/app/_shared/services/storage.service';
 
 @Component({
   selector: 'app-trip-created-list',
@@ -15,8 +19,8 @@ import { PublicService } from 'src/app/_shared/services/public.service';
   styleUrls: ['./trip-created-list.component.css'],
 })
 export class TripCreatedListComponent {
-
-  allTrips: any[] = [];
+  activeRoute = 'created-trips';
+  allTrips: Trip[] = [];
 
   searchText: string = '';
   startDate?: Date;
@@ -25,25 +29,28 @@ export class TripCreatedListComponent {
   maxPrice?: number;
   selectedCityId: number;
   error: any;
-  tripLevels: Set<string> = new Set<string>([
-    'Easy',
-    'Moderate',
-    'Intermediate',
-  ]);
+  tripLevels = TripLevel;
+  //  Set<string> = new Set<string>([
+  //   'Easy',
+  //   'Moderate',
+  //   'Intermediate',
+  // ]);
   selectedTripLevels: string[] = [];
   priceMinValue: any;
   priceMaxValue: any;
-  trips = new MatTableDataSource<any>([]);
-  displayedColumns: string[] = ['title', 'time', 'status', 'actions'];
+  trips = new MatTableDataSource<Trip>([]);
+  displayedColumns: string[] = ['title', 'starttime', 'status','message', 'actions'];
 
   @ViewChild(MatPaginator) private paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   p: number = 1;
 
   constructor(
+    private datePipe: DatePipe,
     public memberTripService: MemberTripService,
     private confirmationService: ConfirmService,
     private snackBar: MatSnackBar,
+    private router: Router,
     private publicService: PublicService) { }
 
   ngOnInit(): void {
@@ -79,7 +86,7 @@ export class TripCreatedListComponent {
         .includes(this.searchText.toLowerCase());
 
       let cityMatch = true;
-      if (this.selectedCityId !== undefined) {
+      if(this.selectedCityId !== undefined && this.selectedCityId != 999) {
         cityMatch = item.cityId == this.selectedCityId;
       }
 
@@ -118,10 +125,10 @@ export class TripCreatedListComponent {
     this.filterData();
   }
 
-  extractTripLevels() {
-    this.tripLevels.clear();
-    this.allTrips.forEach((item) => this.tripLevels.add(item.tripLevel));
-  }
+  // extractTripLevels() {
+  //   this.tripLevels.clear();
+  //   this.allTrips.forEach((item) => this.tripLevels.add(item.tripLevel));
+  // }
 
   onTripLevelChange(tripLevel: string, event: Event) {
     const isChecked = (<HTMLInputElement>event.target).checked;
@@ -138,7 +145,7 @@ export class TripCreatedListComponent {
 
   deleteTrip(tripId: any) {
     this.confirmationService
-      .confirm('Are you sure you want to delete this?')
+      .confirm('Bạn có chắc chắn muốn xóa?')
       .subscribe((confirmed) => {
         if (confirmed) {
           this.memberTripService.deleteTrip(tripId).subscribe({
@@ -156,15 +163,25 @@ export class TripCreatedListComponent {
         }
       });
   }
+
+  // createTrip(){
+    //   next: (res) => {
+        // this.router.navigateByUrl('/member/trips/create');
+    //   },
+      // error: (error) => {
+      //   this.onFailed(error.message);
+      // }
+    // });
+  // }
   private onSuccess(message: string) {
     this.snackBar.open(message, 'OK', { duration: 5000 });
   }
   private onFailed(message: string) {
     this.snackBar.open(
       message,
-      'ERROR',
+      'X',
       {
-        duration: 100000,
+        duration: 10000,
         panelClass: 'error-snackbar',
       }
     );

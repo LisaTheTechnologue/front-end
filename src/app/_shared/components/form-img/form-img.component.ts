@@ -13,7 +13,7 @@ export class FormImgComponent {
   imagePreview: string | ArrayBuffer | null;
   MAX_FILE_SIZE = 1024;
   // @Input() isAddMode:boolean;
-  @Input() existingImage:string;
+  @Input() existingImage:any;
   @Input() limitFileSize:number;
   @Output() selectedImage= new EventEmitter<any>();
   // @Output() imageChanged= new EventEmitter<boolean>();
@@ -43,7 +43,7 @@ export class FormImgComponent {
   }
   private onFailed(message: string) {
     this.snackBar.open(message, 'Close', {
-      duration: 100000,
+      duration: 10000,
       panelClass: 'error-snackbar',
     });
   }

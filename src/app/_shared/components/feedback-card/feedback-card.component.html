@@ -1,4 +1,4 @@
-
+<mat-card>
   <mat-card-header>
     <mat-card-title-group>
       <mat-card-title>{{ feedback.fullName }}</mat-card-title>
@@ -8,11 +8,11 @@
         <div>Leader Rating: <ngb-rating [(rate)]="feedback.leaderRating" [readonly]="true" [max]="5"
             class="custom-rating"></ngb-rating></div>
       </mat-card-subtitle>
-      <img mat-card-md-image [src]="feedback.imageURL" class="img-fluid rounded-start" alt="avatar">
+      <img mat-card-md-image [src]="feedback.imageByte" class="img-fluid rounded-start" alt="avatar">
     </mat-card-title-group>
   </mat-card-header>
   <mat-card-content>
     <div> {{ feedback.feedback }}</div>
   </mat-card-content>
 
-
+</mat-card>

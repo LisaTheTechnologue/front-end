@@ -1,7 +1,15 @@
-nav-item a {
-  color: black;
+.nav-item>a:hover {
+  color: black !important;
+  background-color: #C0C0C0;
 }
-
+/*code to change background color*/
+.active {
+  background-color: #C0C0C0;
+  color: black !important;
+}
+.active>.nav-link{
+  color:black!important;
+}
 .footer {
   height: 50px;
   text-align: center;

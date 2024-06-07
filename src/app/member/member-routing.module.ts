@@ -5,7 +5,6 @@ import { TripPaymentComponent } from './trip-payment/trip-payment.component';
 import { PaymentViewComponent } from './payment-view/payment-view.component';
 import { TripJoinedListComponent } from './trip-joined-list/trip-joined-list.component';
 import { TripCreatedListComponent } from './trip-created-list/trip-created-list.component';
-import { TripViewComponent } from './trip-view/trip-view.component';
 import { ChatComponent } from './chat/chat.component';
 import { TripFormComponent } from './trip-form/trip-form.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
@@ -14,6 +13,7 @@ import { JoinRequestListComponent } from './join-request-list/join-request-list.
 import { PaymentHistoryListComponent } from './payment-history-list/payment-history-list.component';
 import { FeedbackFormComponent } from './feedback-form/feedback-form.component';
 import { JoinRemoveComponent } from './join-remove/join-remove.component';
+import { ReportListComponent } from './report-list/report-list.component';
 
 
 const routes: Routes = [
@@ -22,8 +22,8 @@ const routes: Routes = [
 { path: 'created-trips', component: TripCreatedListComponent },
 { path: 'trips/edit/:tripId', component: TripFormComponent },
 { path: 'trips/create', component: TripFormComponent },
-{ path: 'trips/view/:tripId', component: TripViewComponent },
-{ path: 'joined-trips', component: TripJoinedListComponent },
+// { path: 'joined-trips', component: TripJoinedListComponent },
+{ path: 'reported-trips', component: ReportListComponent },
 { path: 'joined-requests', component: JoinRequestListComponent },
 { path: 'joiner/remove/:tripId', component: JoinRemoveComponent },
 { path: 'payment/list', component: PaymentHistoryListComponent },

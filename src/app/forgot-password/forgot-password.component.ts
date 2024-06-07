@@ -32,7 +32,7 @@ export class ForgotPasswordComponent {
         .subscribe(
           (response: { message: string }) => {
             this.snackBar.open(response.message, 'Close', {
-              duration: 100000,
+              duration: 10000,
               panelClass: 'error-snackbar',
             });
             this.isLoading = false; 

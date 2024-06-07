@@ -35,7 +35,7 @@ export class ContactViewComponent {
         });
         this.router.navigateByUrl('/admin');
       } else {
-        this.snackBar.open(res.message, 'ERROR', {
+        this.snackBar.open(res.message, 'X', {
           duration: 5000,
           panelClass: 'error-snackbar',
         });

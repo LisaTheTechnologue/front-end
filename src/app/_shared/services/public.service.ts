@@ -39,6 +39,10 @@ export class PublicService {
     return this.http.get(this.API + 'trip/details?tripId=' + tripId);
     // .pipe(catchError(this.errorHandler));
   }
+  public getComments(tripId: any): Observable<any> {
+    return this.http.get<any>(this.API+`comments?tripId=${tripId}`)
+    // .pipe(catchError(this.handleError));
+  }
   public getFeedbacksByTripId(tripId: number): Observable<any> {
     return this.http.get(this.API + 'feedbacks?tripId=' + tripId)
     // .pipe(catchError(this.handleError));
@@ -53,6 +57,10 @@ export class PublicService {
       this.API + 'profile?userId=' + userid
     )
   }
+  public getTopUsersBoard(): Observable<any> {
+    return this.http.get(this.API + 'profile/top-board')
+    // .pipe(catchError(this.handleError));
+  }
 
   public getTripsByLeaderId(leaderId: any): Observable<any> {
     return this.http
@@ -61,6 +69,10 @@ export class PublicService {
 
   public submitContact(contactForm:any): Observable<any>{
     return this.http.post<any>(this.API+'contact', contactForm);
+  }
+
+  public createTrip(record: FormData): Observable<any> {
+    return this.http.post<any>(this.API + 'trip-create', record)
   }
 
   sendTemporaryPassword(email: string) {

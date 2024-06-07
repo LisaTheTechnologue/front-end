@@ -10,23 +10,27 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { ComponentsModule } from '../_shared/components/components.module';
+import { PipesModule } from "../_shared/pipes/pipes.module";
+import { MessageDialogComponent } from './trip-view/message-dialog/message-dialog.component';
 
 @NgModule({
-  declarations: [
-    TripIndexComponent,
-    TripViewComponent,
-  ],
-  imports: [
-    CommonModule,
-    TripRoutingModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    FlexLayoutModule,
-    FormsModule,
-    NgxPaginationModule,
-    NgbRatingModule,
-    ComponentsModule
-  ]
+    declarations: [
+        TripIndexComponent,
+        TripViewComponent,
+        MessageDialogComponent
+    ],
+    imports: [
+        CommonModule,
+        TripRoutingModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        MaterialModule,
+        FlexLayoutModule,
+        FormsModule,
+        NgxPaginationModule,
+        NgbRatingModule,
+        ComponentsModule,
+        PipesModule
+    ]
 })
 export class TripModule { }

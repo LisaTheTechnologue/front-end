@@ -9,14 +9,14 @@
               <div class="message sent" *ngIf="message.isMe">
                 {{message.content}}
                 <span class="metadata">
-                  <span class="time">{{message.createdAt | date: 'y/MM/dd HH:mm aaa'}}</span>
+                  <span class="time">{{message.createdAt | date: 'dd/MM/yyyy HH:mm aaa'}}</span>
                 </span>
               </div>
               <div class="message received"  *ngIf="!message.isMe">
                 <strong>{{message.username}}</strong> <br>
                 {{message.content}}
                 <span class="metadata">
-                  <span class="time">{{message.createdAt | date: 'y/MM/dd HH:mm aaa'}}</span>
+                  <span class="time">{{message.createdAt | date: 'dd/MM/yyyy HH:mm aaa'}}</span>
                 </span>
               </div>
 
@@ -35,5 +35,16 @@
       </div>
     </mat-card-actions>
   </mat-card>
+
+  <section *ngIf="members?.length > 0">
+    <div class="section-title">Thành viên trong nhóm: </div>
+    <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="flex-start" class="align-items-stretch">
+    <ng-template ngFor let-member [ngForOf]="members" >
+        <app-profile-card [userId]="member.userId" fxFlex="0 1 calc(20% - 10px)" class="my-1"></app-profile-card>
+    </ng-template></div>
+  </section>
+  <section *ngIf="members?.length === 0">
+    <p>Đừng bỏ lỡ! Hãy là người đầu tiên tham gia chuyến đi tuyệt vời này!</p>
+  </section>
 </div>
 

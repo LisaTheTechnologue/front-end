@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { TripLevel } from 'src/app/_shared/models/enum.model';
 import { AdminTripService } from 'src/app/_shared/services/admin-trip.service';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 import { PublicService } from 'src/app/_shared/services/public.service';
@@ -22,11 +23,12 @@ export class TripListComponent {
   maxPrice?: number;
   selectedCityId: number;
   error: any;
-  tripLevels: Set<string> = new Set<string>([
-    'Easy',
-    'Moderate',
-    'Intermediate',
-  ]);
+  tripLevels = TripLevel;
+  //  Set<string> = new Set<string>([
+  //   'Easy',
+  //   'Moderate',
+  //   'Intermediate',
+  // ]);
   selectedTripLevels: string[] = [];
   priceMinValue: any;
   priceMaxValue: any;
@@ -69,8 +71,8 @@ export class TripListComponent {
         .toLowerCase()
         .includes(this.searchText.toLowerCase());
 
-      let cityMatch = true;
-      if(this.selectedCityId !== undefined) {
+        let cityMatch = true;
+        if(this.selectedCityId !== undefined && this.selectedCityId != 999) {
         cityMatch = item.cityId == this.selectedCityId;
       }
           
@@ -109,10 +111,10 @@ export class TripListComponent {
     this.filterData();
   }
 
-  extractTripLevels() {
-    this.tripLevels.clear();
-    this.allTrips.forEach((item) => this.tripLevels.add(item.tripLevel));
-  }
+  // extractTripLevels() {
+  //   this.tripLevels.clear();
+  //   this.allTrips.forEach((item) => this.tripLevels.add(item.tripLevel));
+  // }
 
   onTripLevelChange(tripLevel: string, event: Event) {
     const isChecked = (<HTMLInputElement>event.target).checked;
@@ -130,9 +132,9 @@ export class TripListComponent {
   private onFailed(message: string) {
     this.snackBar.open(
       message,
-      'ERROR',
+      'X',
       {
-        duration: 100000,
+        duration: 10000,
         panelClass: 'error-snackbar',
       }
     );

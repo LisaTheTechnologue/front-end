@@ -61,8 +61,8 @@ export class AdminProfileComponent {
     this.router.navigateByUrl('/member');
   }
   private onFailed(message: string) {
-    this.snackBar.open(message, 'ERROR', {
-      duration: 100000,
+    this.snackBar.open(message, 'X', {
+      duration: 10000,
       panelClass: 'error-snackbar',
     });
   }

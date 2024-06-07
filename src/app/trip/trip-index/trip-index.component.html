@@ -2,32 +2,33 @@
   <div class="row">
     <div class="col">
       <div class=" m-1 p-3 bg-white border border-secondary rounded-1">
-        <section *ngIf="tripLevels.size > 0">
-          <strong>Filter by Trip Level:</strong>
+        <section >
+          <strong>Mức độ mạo hiểm:</strong>
           <ul style="list-style-type: none;">
-            <li *ngFor="let tripLevel of tripLevels">
-              <input class="form-check-input me-1" type="checkbox" [ngModel]="selectedTripLevels.includes(tripLevel)"
-                (change)="onTripLevelChange(tripLevel,$event)">
-              {{ tripLevel }}
+            <li *ngFor="let tripLevel of tripLevels | keyvalue">
+              <input class="form-check-input me-1" type="checkbox" [ngModel]="selectedTripLevels.includes(tripLevel.key)"
+                (change)="onTripLevelChange(tripLevel.key,$event)">
+              {{ tripLevel.value }}
             </li>
           </ul>
         </section>
         <section>
-          <strong>City:</strong>
+          <strong>Thành phố:</strong>
           <select class="form-select" id="country" [(ngModel)]="selectedCityId" (change)="filterData()" >
-                    <option *ngFor="let c of cities" [value]="c.id">{{c.name}}      </option>
+            <option [value]="999">Tất cả</option>
+            <option *ngFor="let c of cities" [value]="c.id">{{c.name}}</option>
           </select> 
         </section>
         <section>
-          <strong>Start Date:</strong>
+          <strong>Ngày khởi hành:</strong>
           <input [(ngModel)]="startDate" (change)="filterData()" id="startDate" type="date" class="form-control">
         </section>
         <section>
-          <strong>End Date:</strong>
+          <strong>Ngày kết thúc:</strong>
           <input [(ngModel)]="endDate" (change)="filterData()" id="endDate" type="date" class="form-control">
         </section>
         <section>
-          <strong>Maximum Price:</strong>
+          <strong>Chi phí tối đa:</strong>
           <input type="number" class="form-control" [(ngModel)]="maxPrice" 
             (focusout)="filterData()">
         </section>
@@ -35,17 +36,17 @@
     </div>
     <div class="col-9">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="searchText" />
+        <input type="text" class="form-control" placeholder="Tìm kiếm" [(ngModel)]="searchText" />
         <div class="mx-2">
           <button mat-flat-button color="primary" (click)="filterData()">
-            <mat-icon>search</mat-icon><span> Search</span>
+            <mat-icon>search</mat-icon><span> Tìm kiếm</span>
           </button>
         </div>
       </div>
 
       <!-- <div class="my-5"> -->
       <div class="item-container p-2" *ngIf="filteredData.length > 0">
-        <mat-card [routerLink]="['/trips/view', trip.id]" class="m-2" style="width: 30%;"
+        <mat-card [routerLink]="['/trips/view', trip.id]" class="card m-2" style="width: 30%;"
          *ngFor="let trip of filteredData | paginate: { itemsPerPage: 3, currentPage: p }">
           <app-trip-card [trip]="trip"></app-trip-card>
         </mat-card>

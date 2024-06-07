@@ -55,7 +55,7 @@ export class JoinRemoveComponent implements OnInit {
 
   remove() {
     this.confirmationService
-      .confirm('Are you sure you want to submit this?')
+      .confirm('Bạn chắc chắn muốn làm điều này?')
       .subscribe((confirmed) => {
         if (confirmed) {
           const userId = this.removeForm.get('member')?.value;
@@ -94,7 +94,7 @@ export class JoinRemoveComponent implements OnInit {
   private onFailed(message: string) {
     this.snackBar.open(
       message,
-      'ERROR',
+      'X',
       {
         duration: 5000,
         panelClass: 'error-snackbar',

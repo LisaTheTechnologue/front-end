@@ -10,11 +10,15 @@ export class User {
   gender: string;
   isActive?: boolean;
   rating: number;  
-  img: any;
-  imageURL: string;
-  byteImg: any;
+  imageByte: any;
   noOfTrips:number;
   paymentAccNo: string;
   paymentAccBank: string;
   paymentAccName: string;
+  paymentAccBankShortName: string;
+  isReported: boolean;
+}
+export interface Bank {
+  name: string;
+  shortName: string;
 }

@@ -92,7 +92,7 @@ export class FeedbackFormComponent implements OnInit {
   private onFailed(message: string) {
     this.snackBar.open(
       message,
-      'ERROR',
+      'X',
       {
         duration: 5000,
         panelClass: 'error-snackbar',

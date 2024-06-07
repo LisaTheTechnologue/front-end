@@ -9,6 +9,9 @@ import { Feedback } from '../../models/trip.model';
 export class FeedbackCardComponent {
   @Input() feedback: Feedback
   ngOnInit(): void {
-    this.feedback.imageByte = 'data:image/jpeg;base64,' + this.feedback.imageByte;
+    if(!this.feedback.imageByte.startsWith('data:image/jpeg;base64,')) {
+      this.feedback.imageByte = 'data:image/jpeg;base64,' + this.feedback.imageByte;
+    }
+    // this.feedback.imageByte = 'data:image/jpeg;base64,' + this.feedback.imageByte;
   }
 }

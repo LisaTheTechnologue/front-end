@@ -14,6 +14,6 @@
 </div>
 
 <div *ngIf="existingImage && !selectedFile" class="image-preview">
-    <img [src]="existingImage" alt="Existing Image" class="preview-image">
+    <img [src]="'data:image/jpeg;base64,'+existingImage" alt="Existing Image" class="preview-image">
 </div>
 

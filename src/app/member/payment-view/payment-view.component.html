@@ -31,7 +31,7 @@
       </div>
         <div class="mb-3">
           <div><strong>Hình chụp: </strong></div>
-          <img [src]="payment.imageURL" alt="Evidence" class="w-100">
+          <img [src]="payment.imageByte" alt="Evidence" class="w-100">
         </div>
       </mat-card>
   </div>
@@ -42,20 +42,18 @@
         <thead class="fw-bold">
           <td>Họ và tên</td>
           <td>Ngày sinh</td>
-          <td>Giới tính</td>
         </thead>
         <tbody>
           <tr *ngFor="let order of payment.orders">
             <td>{{ order.fullName }}</td>
             <td>{{ order.dob }}            </td>
-            <td>{{ order.gender }}            </td>
           </tr>
         </tbody>
       </table>
     </mat-card>
     <mat-card class="border rounded m-2 p-3">
       <div class="fw-bold fs-5 mb-3">Kết quả: </div>
-      <div><strong>Trạng thái: </strong>{{ payment.paymentStatus}}</div>
+      <div><strong>Trạng thái: </strong>{{ payment.paymentStatus | paymentStatus }}</div>
       <div *ngIf="payment.paymentStatus == 'REJECTED'"><strong>Lý do: </strong> {{ payment.rejectReason}}</div>
     </mat-card>
   </div>

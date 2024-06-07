@@ -52,7 +52,7 @@ export class StorageService {
       return false;
     }
     const role: string =  this.getUserRole();
-    return role == 'ADMIN';
+    return role == 'ROLE_ADMIN';
   }
 
   static isMemberLoggedIn(): boolean {
@@ -61,7 +61,7 @@ export class StorageService {
       return false;
     }
     const role: string =  this.getUserRole();
-    return role == 'MEMBER';
+    return role == 'ROLE_MEMBER';
   }
 
   static signOut(): void {

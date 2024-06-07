@@ -22,7 +22,7 @@ const routes: Routes = [
 { path: 'created-trips', component: TripCreatedListComponent },
 { path: 'trips/edit/:tripId', component: TripFormComponent },
 { path: 'trips/create', component: TripFormComponent },
-{ path: 'joined-trips', component: TripJoinedListComponent },
+// { path: 'joined-trips', component: TripJoinedListComponent },
 { path: 'reported-trips', component: ReportListComponent },
 { path: 'joined-requests', component: JoinRequestListComponent },
 { path: 'joiner/remove/:tripId', component: JoinRemoveComponent },

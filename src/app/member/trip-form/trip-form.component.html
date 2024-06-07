@@ -12,6 +12,7 @@
     <mat-card-content class="mx-auto">
       <app-form-img (selectedImage)="onSelectedImage($event)" [existingImage]="existingImage"
         [limitFileSize]="300"></app-form-img>
+        <mat-error *ngIf="tripForm.get('image')?.invalid">{{ getTripErrorMessage('image') }}</mat-error>
     </mat-card-content>
   </mat-card>
 
@@ -43,7 +44,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Select a Level</mat-label>
               <mat-select formControlName="tripLevel">
-                <mat-option *ngFor="let level of tripLevels | keyvalue" [value]="level">{{ level }}</mat-option>
+                <mat-option *ngFor="let level of tripLevels" [value]="level">{{ level.label }}</mat-option>
               </mat-select>
               <!-- <option *ngFor="let level of tripLevels" [value]="level">
                 {{ level }}  </option>
@@ -99,15 +100,20 @@
           </div>
 
           <div class="col-md-6">
-            <mat-form-field appearance="outline">
+            <mat-form-field class="example-form-field" appearance="outline">
               <mat-label>Enter a date range</mat-label>
-              <mat-date-range-input [rangePicker]="picker" appearance="outline">
+              <mat-date-range-input [rangePicker]="rangePicker" [min]="minDate" >
                 <input matStartDate placeholder="Start date" formControlName="startDate">
                 <input matEndDate placeholder="End date" formControlName="endDate">
               </mat-date-range-input>
               <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
-              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-date-range-picker #picker></mat-date-range-picker>
+              <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
+              <mat-date-range-picker #rangePicker>
+                <!-- <mat-date-range-picker-actions>
+                  <button mat-button matDateRangePickerCancel>Cancel</button>
+                  <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+                </mat-date-range-picker-actions> -->
+              </mat-date-range-picker>
               <mat-error *ngIf="tripForm.get('startDate')?.invalid || tripForm.get('endDate')?.invalid">{{
                 getTripErrorMessage('startDate') }}</mat-error>
             </mat-form-field>
@@ -184,13 +190,13 @@
     <mat-card class="mb-3">
       <mat-card-header>
         <mat-card-title>
-          Images *
+          Images
         </mat-card-title>
       </mat-card-header>
       <mat-card-content class="my-3">
         <div class="image-list ">
           <input type="file" multiple accept="image/png, image/jpeg" class="file-input" (change)="onSelectedImages($event)" #fileUpload>
-          <button mat-raised-button class="btn btn-success" class="upload-btn" (click)="fileUpload.click()">
+          <button mat-raised-button color="success" class="upload-btn" (click)="fileUpload.click()">
             Add Image
           </button> 
           <div>
@@ -211,9 +217,9 @@
 
     <mat-card class="mb-3">
       <mat-card-header>
-        <mat-card-title>Itinerary *
+        <mat-card-title>Itinerary
           <span>
-            <button mat-raised-button class="btn btn-success" (click)="addTripDay()">
+            <button mat-raised-button color="success" (click)="addTripDay()">
               Add Day
             </button>
           </span>
@@ -235,7 +241,7 @@
                   <mat-form-field appearance="outline">
                     <mat-label>Day</mat-label>
                     <input matInput type="number" formControlName="dayNo" min="1" />
-                    <mat-error *ngIf="tripForm.get('dayNo')?.invalid">{{ getTripErrorMessage('dayNo') }}</mat-error>
+                    <!-- <mat-error *ngIf="tripForm.get('dayNo')?.invalid">{{ getDayErrorMessage('dayNo',dayIndex) }}</mat-error> -->
                   </mat-form-field>
                 </div>
                 <div class="col-md-1">
@@ -253,20 +259,20 @@
                             <mat-form-field appearance="outline">
                               <mat-label> Title</mat-label>
                               <input matInput type="text" formControlName="title" />
-                              <mat-error
+                              <!-- <mat-error
                                 *ngIf="activities(dayIndex).controls[activityIndex].get('title')?.hasError('required')">
-                                Field is required
-                              </mat-error>
+                                {{ getDayErrorMessage('title',dayIndex) }}
+                              </mat-error> -->
                             </mat-form-field>
                           </div>
                           <div class="col">
                             <mat-form-field appearance="outline">
                               <mat-label>Description</mat-label>
                               <textarea matInput type="text" formControlName="description"></textarea>
-                              <mat-error
+                              <!-- <mat-error
                                 *ngIf="activities(dayIndex).controls[activityIndex].get('description')?.hasError('required')">
                                 Field is required
-                              </mat-error>
+                              </mat-error> -->
                             </mat-form-field>
                           </div>
                           <div class="col-md-1">
@@ -290,7 +296,7 @@
     </mat-card>
 
     <div class="mb-2">
-      <button mat-raised-button color="primary" type="submit" (click)="submit()"
+      <button mat-raised-button color="primary" type="submit" (click)="submit()" [disabled]="tripForm.invalid"
         >Submit</button>
     </div>
   </form>

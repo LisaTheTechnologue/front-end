@@ -11,11 +11,11 @@ import { StorageService } from './storage.service';
 })
 export class AdminUserService {
 
-  private API = AppSettings.ADMIN_API_ENDPOINT+'users/';
+  private API = AppSettings.ADMIN_API_ENDPOINT+'users';
   constructor(private http: HttpClient) { }
   public updatePassword(passwordChange: any): Observable<any> {
     const userId = StorageService.getUserId();
-    return this.http.post<any>(this.API+'change-password' , passwordChange, {
+    return this.http.post<any>(this.API+'/change-password' , passwordChange, {
       headers: this.createAuthorizationHeader(),
     })
     // .pipe(catchError(this.handleError));
@@ -29,7 +29,7 @@ export class AdminUserService {
     // .pipe(catchError(this.handleError));
   }
   searchUser(searchText: any): Observable<User[]> {
-    return this.http.get<User[]>(this.API+`search?searchText=${searchText}`, {
+    return this.http.get<User[]>(this.API+`/search?searchText=${searchText}`, {
       headers: this.createAuthorizationHeader(),
     })
     // .pipe(catchError(this.handleError));

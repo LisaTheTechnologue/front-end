@@ -1,3 +1,6 @@
 .file-input {
   display: none;
 }
+.preview-image{
+  width: 50% !important;
+}

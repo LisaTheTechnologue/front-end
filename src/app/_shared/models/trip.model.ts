@@ -17,6 +17,7 @@ export interface Trip {
   notes: string;
   price: number;
   tripStatus: string;
+  statusUpdateMessage:string;
   img: any;
   // imageURL: string;
   // imageURLs: string[];

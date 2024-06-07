@@ -55,7 +55,7 @@ describe('Service: FormUtils', () => {
       );
 
       formControl.setErrors({ email: true });
-      expect(formUtils.getErrorMessageFromField(formControl)).toBe('Error');
+      expect(formUtils.getErrorMessageFromField(formControl)).toBe('X');
     }
   ));
 
@@ -83,7 +83,7 @@ describe('Service: FormUtils', () => {
       );
 
       formControl?.setErrors({ email: true });
-      expect(formUtils.getFieldErrorMessage(formGroup, fieldName)).toBe('Error');
+      expect(formUtils.getFieldErrorMessage(formGroup, fieldName)).toBe('X');
     }
   ));
 
@@ -115,7 +115,7 @@ describe('Service: FormUtils', () => {
 
       formControl?.setErrors({ email: true });
       expect(formUtils.getFieldFormArrayErrorMessage(form, arrayName, fieldName, 0)).toBe(
-        'Error'
+        'X'
       );
     }
   ));

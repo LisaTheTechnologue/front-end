@@ -31,8 +31,8 @@ export class MessageDialogComponent implements OnInit {
   ) { 
       this.form = this.fb.group({
         tripId: this.data.tripId,
-        status: this.data.staus,
-        reason: ['', Validators.required],
+        status: this.data.status,
+        reason: ['', [Validators.required, Validators.maxLength(50)]],
       });
       this.statusSelected = this.form.get('reason')?.value || '';
     
@@ -59,7 +59,7 @@ export class MessageDialogComponent implements OnInit {
           });
           window.location.reload();
         } else {
-          this.snackBar.open(res.message, 'ERROR', {
+          this.snackBar.open(res.message, 'X', {
             duration: 5000,
             panelClass: 'error-snackbar',
           });
@@ -73,7 +73,7 @@ export class MessageDialogComponent implements OnInit {
         });
         window.location.reload();
       } else {
-        this.snackBar.open(res.message, 'ERROR', {
+        this.snackBar.open(res.message, 'X', {
           duration: 5000,
           panelClass: 'error-snackbar',
         });

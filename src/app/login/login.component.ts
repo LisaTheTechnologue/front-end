@@ -56,7 +56,7 @@ export class LoginComponent {
   }
   private onFailed(message: string) {
     this.snackBar.open(message, 'Close', {
-      duration: 100000,
+      duration: 10000,
       panelClass: 'error-snackbar',
     });
   }

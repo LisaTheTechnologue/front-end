@@ -48,9 +48,9 @@ export class PaymentHistoryListComponent implements OnInit {
   private onFailed(message: string) {
     this.snackBar.open(
       message,
-      'ERROR',
+      'X',
       {
-        duration: 100000,
+        duration: 10000,
         panelClass: 'error-snackbar',
       }
     );

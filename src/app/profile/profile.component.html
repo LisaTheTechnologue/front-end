@@ -24,14 +24,14 @@
 
     <div class="row mt-4">
       <div class="col-4 example-sidenav">
-        <div class="heading h4">User Info</div>
+        <div class="heading h4">Thông tin cá nhân</div>
         <div class="card my-3">
           <div class="card-body">
             <div class="d-flex flex-column align-items-left">
               <div id="profile-view lh-lg" class="mt-3">
                 <p >Username: {{ user?.username }}</p>
-                <p >Giới tính: {{ user?.gender }}</p>
-                <p >Ngày sinh: {{ user?.dob | date:'dd/MM/yyyy'}}</p>
+                <p >Giới tính: {{ user?.gender | gender}}</p>
+                <p >Ngày sinh: {{ user?.dob }}</p>
                 <p >Số điện thoại: {{ user?.phoneNo }}</p>
                 <p >Email: {{ user?.email }}</p>
                 <ngb-rating [(rate)]="rating" [readonly]="true" [max]="5"
@@ -41,7 +41,7 @@
           </div>
         </div>
 
-        <div *ngIf="trips" class="heading h4">List of Trips</div>
+        <div *ngIf="trips" class="heading h3">Những chuyến hành trình đã qua</div>
         <mat-list dense *ngIf="trips">
           <ng-template ngFor let-trip [ngForOf]="trips">
             <mat-list-item class="list-with-border panel" (click)="display(trip)" [activated]="displaySelectedTrip(trip)">

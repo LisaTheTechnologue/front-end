@@ -9,7 +9,7 @@
         {{ item.value }}
       </mat-option>
     </mat-select>
-    <mat-error *ngIf="form.get('reason')?.invalid">Must select a reason</mat-error>
+    <mat-error *ngIf="form.get('reason')?.invalid">Xin chọn lý do</mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline" *ngIf="reasonSelected == 'Khác'">
     <mat-label>Chi tiết </mat-label>

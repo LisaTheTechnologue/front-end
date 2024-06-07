@@ -51,14 +51,15 @@ export class TripViewComponent implements OnInit {
     this.getTrip();
     // this.getMembers();
   }
-
+  lightboxImages: any;
   getTrip() {
     this.publicService.getByTripId(this.tripId).subscribe({
       next: (res) => {
         this.trip = res;
-        this.trip.imageByte = 'data:image/jpeg;base64,' + res.imageByte;
-        this.trip.imageBytes = res.images.map(img => `data:image/jpeg;base64,${img.imageByte}`);
-        // this.trip.byteImgs = res.images;
+
+        // this.trip.imageByte = res.imageByte;
+        this.lightboxImages = res.images.map(img => `data:image/jpeg;base64,${img.imageByte}`);
+        this.trip.imageBytes = res.images;
         this.trip.tripDays = res.tripDays;
         if (this.trip.leaderId == this.userId) {
           this.isLeader = true;
@@ -127,7 +128,7 @@ export class TripViewComponent implements OnInit {
                 });
                 window.location.reload();
               } else {
-                this.snackBar.open(res.message, 'ERROR', {
+                this.snackBar.open(res.message, 'X', {
                   duration: 5000,
                   panelClass: 'error-snackbar',
                 });
@@ -141,7 +142,7 @@ export class TripViewComponent implements OnInit {
               });
               window.location.reload();
             } else {
-              this.snackBar.open(res.message, 'ERROR', {
+              this.snackBar.open(res.message, 'X', {
                 duration: 5000,
                 panelClass: 'error-snackbar',
               });
@@ -164,8 +165,8 @@ export class TripViewComponent implements OnInit {
     this.router.navigateByUrl('/admin');
   }
   private onFailed(message: string) {
-    this.snackBar.open(message, 'ERROR', {
-      duration: 100000,
+    this.snackBar.open(message, 'X', {
+      duration: 10000,
       panelClass: 'error-snackbar',
     });
   }

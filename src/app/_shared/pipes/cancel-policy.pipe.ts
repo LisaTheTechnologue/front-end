@@ -13,9 +13,9 @@ export class CancelPolicyPipe implements PipeTransform {
     } else if (value === 'No') {
       return 'Không được hoàn tiền';
     } else if (value === 'Full') {
-      return 'Hoàn toàn bộ số tiền';
+      return 'Hoàn toàn bộ số tiền đã đóng';
     } else {
-      return value; // Return the original value if not matched
+      return 'Không được đề cập'; // Return the original value if not matched
     }
   }
 

@@ -63,7 +63,7 @@ export class RejectDialogComponent implements OnInit {
       tripId: this.data.tripId,
       payerId: this.data.payerId,
       paymentStatus: status,
-      rejectionReason: this.reasonSelected
+      rejectReason: this.reasonSelected
     }).subscribe(() => {
       // Handle success (optional: show success message)
       this.closeRejectDialog();

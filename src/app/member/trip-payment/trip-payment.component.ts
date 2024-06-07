@@ -102,13 +102,12 @@ export class TripPaymentComponent {
   }
 
   newMember(): FormGroup {
-    const phonePattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    // const phonePattern = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
     return this.fb.group({
       id: 0,
       fullName: [null, [Validators.required]],
       dob: [null, [Validators.required]],
-      phoneNo: ['',[Validators.pattern(phonePattern)]],
-      gender: [''],
+      // gender: [''],
     });
   }
 
@@ -116,7 +115,9 @@ export class TripPaymentComponent {
     // const tripDays = this.tripForm.get('tripDays') as UntypedFormArray;
     this.members().push(this.newMember());
   }
-
+  getErrorMessage(fieldName: string): string {
+    return this.formUtils.getFieldErrorMessage(this.paymentForm, fieldName);
+  }
   removeMember(memberIndex: number) {
     this.members().removeAt(memberIndex);
   }
@@ -141,7 +142,9 @@ export class TripPaymentComponent {
             formData.append('amount', this.paymentForm.get('amount').value);
             formData.append('notes', this.paymentForm.get('notes').value);
             const members = this.paymentForm.get('members').value;
-            formData.append('membersJson', JSON.stringify(members));
+            if (!Array.isArray(this.members) || !this.members.length) {
+              formData.append('membersJson', JSON.stringify(members));
+            }
             this.paymentService.create(formData).subscribe({
               next: (res) => {
                 // const formData: FormData = new FormData();
@@ -155,14 +158,22 @@ export class TripPaymentComponent {
                 // .subscribe({
                 //   next: (res) => {
                     this.isLoading = false;
-                    this.onSuccess("Payment sent successfully! Please wait for the leader's approval");
-                //   },
-                //   error: (error) => {
-                //     this.isLoading = false;
-                //     this.onFailed(error.message);
-                //   },
+                    this.onSuccess("Hướng dẫn viên đã nhận được đơn của bạn. Xin kiểm tra email.");
+                  },
+                  error: (error) => {
+                    this.isLoading = false;
+                    let errorMessage;
+                    if (error.error && error.error.body && error.error.body.detail) {
+                      errorMessage = error.error.body.detail;
+                    } else if (error.message) {
+                      errorMessage = error.message;
+                    } else {
+                      errorMessage = 'Lỗi. Xin liên hệ admin.';
+                    }
+                    this.onFailed(errorMessage);
+                  },
                 // })
-              },
+              // },
               
             });        
           } else {
@@ -188,7 +199,7 @@ export class TripPaymentComponent {
   private onFailed(message: string) {
     this.snackBar.open(
       message,
-      'ERROR',
+      'X',
       {
         duration: 5000,
         panelClass: 'error-snackbar',

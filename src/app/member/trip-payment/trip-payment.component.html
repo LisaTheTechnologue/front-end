@@ -1,17 +1,17 @@
 <div class="container my-5">
   <div *ngIf="trip">
-    <p class="h3">Payment</p>
+    <p class="h3">Thanh toán</p>
 
     <div class="row p-3">
       <div class="col-6 justify-content-center">
-        <p class="h5">Trip Info</p>
+        <p class="h5">Thông tin chuyến đi</p>
         <mat-card class="m-4" style="width:50%">
           <app-trip-card [trip]="trip"></app-trip-card>
         </mat-card>
 
       </div>
       <div class="col-6 justify-content-center">
-        <p class="h5">Leader Info</p>
+        <p class="h5">Thông tin người dùng</p>
         <div class="m-4" style="width:50%">
         <app-profile-card  [userId]="trip.leaderId" (outputUser)="getUser($event)"></app-profile-card>
       </div>
@@ -21,9 +21,9 @@
               <div *ngIf="qrUrl">
                 <img [src]="qrUrl" alt="Payment QR Code" style="width: 100%;" />
               </div>
-              <p>Bank: {{ user.paymentAccBank }}</p>
-              <p>Account No.: {{ user.paymentAccNo }}</p>
-              <p>Account Name: {{ user.paymentAccName }}</p>
+              <p>Ngân hàng: {{ user.paymentAccBank }}</p>
+              <p>Số tài khoản: {{ user.paymentAccNo }}</p>
+              <p>Tên tài khoản: {{ user.paymentAccName }}</p>
             </mat-card-content>
           </mat-card>
         </div>
@@ -31,8 +31,12 @@
     </div>
 
     <div class="row p-3">
-      <p>After transfer money, please submit this below form. You should expect a response from leader via email in the
-        next 3 days.</p>
+      <p class="h5">Hướng dẫn</p>
+      <ul>
+        <li>Sau khi chuyển khoản, vui lòng điền thông tin vào form dưới đây.</li>
+        <li>Bạn sẽ bắt đầu hành trình khi Hướng dẫn viên (HDV) chấp nhận đơn hàng của bạn. (Kiểm tra trạng thái tại mục Lịch sử chuyển khoản.)</li>
+        <li>Nếu không nhận được thông tin sau 3 ngày, vui lòng liên hệ với HDV.</li>
+      </ul>
     </div>
    
     <form [formGroup]="paymentForm">
@@ -40,7 +44,7 @@
         <div class="col-md-4">
       <mat-card class="mb-3">
         <mat-card-header>
-          <mat-card-title>Payment
+          <mat-card-title>Hình ảnh
           </mat-card-title>
         </mat-card-header>
         <mat-card-content class="mt-3">
@@ -49,14 +53,15 @@
           </div>
 
           <mat-form-field appearance="outline">
-            <mat-label>Amount</mat-label>
+            <mat-label>Số tiền đã chuyển</mat-label>
             <input matInput type="text" class="input-right-align" formControlName="amount"
               id="amountFld" mask="separator" thousandSeparator=",">
             <span matTextPrefix>VND &nbsp;&nbsp;&nbsp;</span>
-            <mat-error *ngIf="paymentForm.get('amount')?.invalid">Field is required.</mat-error>
+            <mat-error *ngIf="paymentForm.get('amount')?.invalid">{{
+                        getErrorMessage('amount') }}</mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline">
-            <mat-label>Notes</mat-label>
+            <mat-label>Ghi chú</mat-label>
             <textarea matInput type="text" formControlName="notes"></textarea>
           </mat-form-field>
         </mat-card-content>
@@ -65,10 +70,10 @@
     <div class="col-md-8">
       <mat-card class="mb-3">
         <mat-card-header>
-          <mat-card-title>Members *
+          <mat-card-title>Thành viên khác  *
             <span>
               <button mat-raised-button color="success" (click)="addMember()">
-                Add Member
+                Thêm thành viên
               </button>
             </span>
           </mat-card-title>
@@ -77,7 +82,7 @@
         <mat-card-content class="mt-3">
           <div formArrayName="members">
             <div *ngFor="let member of members().controls; let memberIndex=index">
-              <div [formGroupName]="memberIndex" class="member-box">
+              <div [formGroupName]="memberIndex" >
                 <div class="row">
                   <div class="col-md-1 mx-auto">
                     <button mat-mini-fab color="danger" (click)="removeMember(memberIndex)">
@@ -85,9 +90,9 @@
                       <input type="hidden" formControlName="id" />
                     </button>
                   </div>
-                  <div class="col-md-5">
+                  <div class="col">
                     <mat-form-field appearance="outline">
-                      <mat-label>Full Name</mat-label>
+                      <mat-label>Họ và tên</mat-label>
                       <input matInput type="text" formControlName="fullName" min="1" />
                       <mat-error *ngIf="paymentForm.get('fullName')?.invalid">{{
                         getMemberErrorMessage('fullName',memberIndex) }}</mat-error>
@@ -95,22 +100,14 @@
                   </div>
                   <div class="col-md-3">
                     <mat-form-field appearance="outline">
-                      <mat-label>Date of Birth</mat-label>
+                      <mat-label>Ngày sinh</mat-label>
                       <input matInput [matDatepicker]="picker" formControlName="dob" readonly required>
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
+                      <mat-error *ngIf="paymentForm.get('dob')?.invalid">{{
+                        getMemberErrorMessage('dob',memberIndex) }}</mat-error>
                     </mat-form-field>
-                  </div>
-                  <div class="col-md-3">
-                    <mat-form-field appearance="outline">
-                      <mat-label>Gender</mat-label>
-                      <mat-select formControlName="gender">
-                        <mat-option value="Male">Male</mat-option>
-                        <mat-option value="Female">Female</mat-option>
-                        <mat-option value="Other">Other</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
+                  </div>                  
                 </div>
               </div>
             </div>
@@ -119,7 +116,7 @@
       </mat-card>
     </div></div>
       <div class="mb-3">
-        <button mat-raised-button color="primary" type="submit" (click)="submit()" class="me-2" [disabled]="isLoading">
+        <button mat-raised-button color="primary" type="submit" (click)="submit()" class="me-2" [disabled]="paymentForm.invalid||isLoading">
           <span *ngIf="!isLoading">Submit</span>
           <span *ngIf="isLoading"><mat-spinner [diameter]="20"></mat-spinner></span></button>
         <button mat-raised-button color="danger" type="button" (click)="onCancel()" class="me-2">Cancel</button>

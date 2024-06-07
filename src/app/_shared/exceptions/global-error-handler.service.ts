@@ -34,7 +34,7 @@ export class GlobalErrorHandlerService implements ErrorHandler {
           } else if (error.message) {
             errorMessage = error.message;
           } else {
-            errorMessage = 'An unknown error occurred.';
+            errorMessage = 'Lỗi. Xin liên hệ admin.';
           }
           this.zone.run(() => {
             this.dialog.open(ErrorDialogComponent, { data: errorMessage });

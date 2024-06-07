@@ -26,7 +26,7 @@ export class AdminTripService {
     })
   }
   changeStatus(form:TripStatusPostDTO): Observable<any> {
-    return this.http.put(this.API + '/change-status',form, {
+    return this.http.put(this.API + 'change-status',form, {
       headers: this.createAuthorizationHeader(),
     })
   }

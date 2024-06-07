@@ -45,20 +45,28 @@ export class FormUtilsService {
 
   getErrorMessageFromField(field: UntypedFormControl): string {
     if (field?.hasError('required')) {
-      return 'Field is required.';
+      return 'Không được để trống';
     }
 
     if (field?.hasError('maxlength') && field.errors) {
       const requiredLength = field.errors['maxlength']['requiredLength'];
-      return `Field cannot be more than ${requiredLength} characters long.`;
+      return `Tối đa ${requiredLength} ký tự.`;
     }
 
     if (field?.hasError('minlength') && field.errors) {
       const requiredLength = field.errors['minlength']['requiredLength'];
-      return `Field cannot be less than ${requiredLength} characters long.`;
+      return `Tối thiểu ${requiredLength} ký tự.`;
     }
 
-    return field['errors'] ? 'Error' : '';
+    if (field?.hasError('min') && field.errors) {
+      const requiredLength = field.errors['min']['min'];
+      return `Phải có giá trị tối thiểu là ${requiredLength} .`;
+    }
+    if (field?.hasError('matDatepickerMin')) {
+      return `Ngày khởi hành phải cách hôm nay ít nhất 7 ngày.`;
+    }
+    
+    return field['errors'] ? 'Lỗi' : '';
   }
 
   isFormArrayRequired(formGroup: UntypedFormGroup, fieldName: string) {

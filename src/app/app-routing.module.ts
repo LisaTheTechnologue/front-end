@@ -12,6 +12,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { TopUserBoardComponent } from './top-user-board/top-user-board.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent }, // Level 1 child
       { path: 'home', component: HomeComponent }, // Level 1 child
       { path: 'test', component: TestComponent }, // Level 1 child
       { path: 'about', component: AboutComponent },

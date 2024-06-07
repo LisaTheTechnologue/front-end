@@ -116,8 +116,8 @@ export class CommentComponent implements OnInit {
     this.snackBar.open(message, 'OK', { duration: 5000 });
   }
   private onFailed(message: string) {
-    this.snackBar.open(message, 'ERROR', {
-      duration: 100000,
+    this.snackBar.open(message, 'X', {
+      duration: 10000,
       panelClass: 'error-snackbar',
     });
   }

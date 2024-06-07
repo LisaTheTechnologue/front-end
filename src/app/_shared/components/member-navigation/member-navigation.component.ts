@@ -14,7 +14,7 @@ export class MemberNavigationComponent implements OnInit {
   constructor(private router: Router) {} // Inject Router
 
   isActive(route: string): boolean {
-    return this.router.url.startsWith(`/member/${route}`);
+    return this.router.url === `/member${route}`;//.startsWith(`/member${route}`);
   }
   ngOnInit() {
   }

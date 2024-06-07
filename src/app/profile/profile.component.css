@@ -137,13 +137,17 @@ a.text-muted:focus {
 }
 
 .list-with-border {
-  border: 0.5px solid #fdf2cf;
+  border: 0.5px solid #094d00;
+  border-radius: 5px;
+  border-top: none;
   background-color: white;
 }
-
+.mdc-list-item {
+  cursor: pointer;
+}
 .mdc-list-item--activated {
   font-weight: bold !important;
-  background-color: #f9eabd;
+  background-color: #bafcb1;
 }
 .mdc-list-item--activated .mdc-list-item__primary-text{  
   color: black;

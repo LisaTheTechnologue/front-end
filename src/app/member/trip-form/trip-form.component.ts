@@ -15,7 +15,8 @@ import { UploadedImage } from 'src/app/_shared/models/image.model';
 import { UploadImageService } from 'src/app/_shared/services/upload-image.service';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as _moment from 'moment';
-const moment = _moment as any;
+import * as moment from 'moment';
+
 interface TripLevel {
   label: string,
   value: string;
@@ -38,22 +39,28 @@ export class TripFormComponent {
   imagePreview: string | ArrayBuffer | null;
   // tripLevels = Object.values(TripLevel) as string[];
   selectedImagesFileList!: FileList;
-  selectedImagesFileArray: File[] = [];  
+  selectedImagesFileArray: File[] = [];
 
   existedImagesFileList: FileList;
   existedImagesFileArray: File[] = [];
   existedImagesAnyArray: any[] = [];
 
-  minDate: Date;
+  minDate: Date = new Date();
   startDate: Date;
   endDate: Date;
   isAddMode: boolean;
   error: any;
   tripLevels: TripLevel[] = [
-    { label:"Dễ", value: 'EASY' },
-    { label:"Trung bình", value: 'MODERATE' },
-    { label:"Chuyên gia", value: 'MASTER' },
+    { label: "Dễ", value: 'EASY' },
+    { label: "Trung bình", value: 'MODERATE' },
+    { label: "Chuyên gia", value: 'MASTER' },
   ];
+  tripLevel: any;
+  setSelectedTripLevel(tripLevel: TripLevel) {
+    // Use the bank object here, access both name and shortName
+    this.tripLevel = tripLevel.value;
+  }
+
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
@@ -68,7 +75,8 @@ export class TripFormComponent {
     private sharedData: SharedDataService,
     public formUtils: FormUtilsService
   ) {
-    this.minDate = new Date();
+    const today = new Date();
+    this.minDate.setDate(today.getDate() + 7);
   }
   ngOnInit(): void {
     this.isAddMode = !this.tripId;
@@ -91,15 +99,18 @@ export class TripFormComponent {
       notes: ['', [Validators.required, Validators.min(1), Validators.max(500)]],
       startDate: [null, [Validators.required]],
       endDate: [null, [Validators.required]],
-      groupSize: [0, [Validators.required, Validators.min(0), Validators.max(50)]],
-      price: [0, [Validators.required, Validators.min(0), Validators.max(2147483647)]],
-      minAge: [15, [Validators.min(15), Validators.max(70)]],
-      maxAge: [70, [Validators.min(15), Validators.max(70)]],
+      // validation may working but logic for edit and copy is complicated
+      // startDate: [null, []],
+      // endDate: [null, []],
+      groupSize: [1, [Validators.required, Validators.min(1), Validators.max(50)]],
+      price: [0, [Validators.min(0), Validators.max(2147483647)]],
+      minAge: [15, [Validators.min(15), Validators.max(80)]],
+      maxAge: [70, [Validators.min(15), Validators.max(80)]],
       tripLevel: [null, [Validators.required]],
       cityId: [null, [Validators.required]],
-      cancelOneMonth: [null, [Validators.required]],
-      cancelOneWeek: [null, [Validators.required]],
-      cancelOneDay: [null, [Validators.required]],
+      cancelOneMonth: [null, []],
+      cancelOneWeek: [null, []],
+      cancelOneDay: [null, []],
       image: [null, [Validators.required]],
       images: this.fb.array([]),
       tripDays: this.fb.array([])
@@ -119,7 +130,6 @@ export class TripFormComponent {
   }
 
   addTripDay() {
-    // const tripDays = this.tripForm.get('tripDays') as UntypedFormArray;
     this.tripDays().push(this.newTripDay());
   }
 
@@ -150,12 +160,8 @@ export class TripFormComponent {
   }
 
   getTripById() {
-    // this.trip = new Trip();
-    // const userId = StorageService.getUserId();
     this.publicService.getByTripId(this.tripId).subscribe((res) => {
-      // create lines array first
       this.populateForm(res);
-      // console.log(res);
     });
   }
 
@@ -170,22 +176,35 @@ export class TripFormComponent {
         (day.get("activities") as FormArray).push(activity);
       });
     });
-    
+
     this.tripForm.patchValue(res);
     const selectedTripLevel = this.tripLevels.find(tripLevel => tripLevel.value === res.tripLevel);
     if (selectedTripLevel) {
       this.tripForm.controls['tripLevel'].setValue(selectedTripLevel);
     }
-    let startDate = moment(res.startDate, "DD-MM-YYYY").format('YYYY-MM-DD');
-    let endDate = moment(res.endDate, "DD-MM-YYYY").format('YYYY-MM-DD');
+    const [day1, month1, year1] = res.startDate.split('-');
+    let startDate: Date = new Date(+year1, +month1 - 1, +day1);
+    const [day, month, year] = res.endDate.split('-');
+    let endDate: Date = new Date(+year, +month - 1, +day);
     this.tripForm.controls['startDate'].setValue(startDate);
     this.tripForm.controls['endDate'].setValue(endDate);
-    this.existingImage = 'data:image/jpeg;base64,' + res.imageByte;
-    this.existedImagesAnyArray = res.images.map(img => ({
-      id: img.id,
-      src: 'data:image/jpeg;base64,' + img.imageByte,  // Assuming your images are JPEGs and base64 encoded
-      name: img.imageName
-    }));
+    this.existingImage = res.imageByte;
+    this.tripForm.controls['image'].setValue(this.existingImage);
+    // working for copyData and Edit
+    if (res.imageBytes) {
+      this.existedImagesAnyArray = res.imageBytes.map(img => ({
+        id: img.id,
+        src: 'data:image/jpeg;base64,' + img.imageByte,  // Assuming your images are JPEGs and base64 encoded 
+        name: img.imageName
+      }));
+    } else {
+      this.existedImagesAnyArray = res.images.map(img => ({
+        id: img.id,
+        src: 'data:image/jpeg;base64,' + img.imageByte,  // Assuming your images are JPEGs and base64 encoded 
+        name: img.imageName
+      }));
+    }
+
   }
 
   getAllCities() {
@@ -196,24 +215,24 @@ export class TripFormComponent {
     });
   }
 
-  onSelectedImage(event: File| null) {
+  onSelectedImage(event: File | null) {
     this.selectedImage = event;
     this.existingImage = null;
     this.tripForm.get('image')?.setValue(this.selectedImage);
   }
-  
+
   urls = new Array<string>();
   onSelectedImages(event) {
     this.urls = [];
     // let files = event.target.files;
     this.selectedImagesFileList = event.target.files;
     // if (files.length > 0) {
-      if (this.selectedImagesFileList.length > 0) {
+    if (this.selectedImagesFileList.length > 0) {
       for (let i = 0; i < this.selectedImagesFileList.length; i++) {
         const file = this.selectedImagesFileList[i];
         const fileSize = file.size;
         if (fileSize > (this.limitFileSize * this.MAX_FILE_SIZE)) { // 1 MB in bytes
-          this.onFailed('File size exceeds the maximum limit of ' + this.limitFileSize + ' KB.');
+          this.onFailed('Ảnh vượt quá kích thước ' + this.limitFileSize + ' KB.');
           this.selectedImagesFileList = null;
           break;
         }
@@ -243,7 +262,23 @@ export class TripFormComponent {
       index
     );
   }
+  getActivityErrorMessage(fieldName: string, index: number) {
+    return this.formUtils.getFieldFormArrayErrorMessage(
+      this.tripForm,
+      'activities',
+      fieldName,
+      index
+    );
+  }
   submit(): void {
+    if (this.selectedImage == null && this.existingImage == null) {
+      this.onFailed("Xin hãy chọn ảnh bìa");
+      return;
+    }
+    // if (this.existedImagesFileArray.length == 0 && this.selectedImagesFileArray.length == 0) {
+    //   this.onFailed("Xin hãy chọn ảnh");
+    //   return;
+    // }
     if (this.isAddMode) {
       this.create();
     } else {
@@ -252,46 +287,44 @@ export class TripFormComponent {
   }
 
   create() {
-    if (this.selectedImage != null && this.selectedImagesFileArray.length > 0) {
-      const formData: FormData = this.convertToFormData();
 
-      this.confirmationService
-        .confirm('Bạn chắc chắn muốn làm điều này?')
-        .subscribe((confirmed) => {
-          if (confirmed) {
-            this.memberTripService
-              .createTrip(formData)
-              .subscribe({
-                next: (res) => {
-                  this.onSuccess('Created Trip Successfully');
-                },
-                error: (error) => {
-                  this.onFailed(error);
-                },
-              });
-          } else {
-            // Handle cancellation
-          }
-        });
-    } else {
-      // this.formUtils.validateAllFormFields(this.tripForm);
-      this.onFailed("Image is required");
-    }
+    const formData: FormData = this.convertToFormData();
+    this.confirmationService
+      .confirm('Bạn chắc chắn muốn làm điều này?')
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          this.memberTripService
+            .createTrip(formData)
+            .subscribe({
+              next: (res) => {
+                this.onSuccess('Tạo chuyến đi thành công');
+              },
+              // error: (error) => {
+              //   this.onFailed(error);
+              // },
+            });
+        } else {
+          // Handle cancellation
+        }
+      });
   }
 
   private convertToFormData() {
     const formData: FormData = new FormData();
     formData.append('title', this.tripForm.get('title').value);
     formData.append('cityId', this.tripForm.get('cityId').value);
-    formData.append('tripLevel', this.tripForm.get('tripLevel').value);
+    formData.append('tripLevel', this.tripForm.get('tripLevel').value.value);
     formData.append('summary', this.tripForm.get('summary').value);
     formData.append('price', this.tripForm.get('price').value);
     formData.append('groupSize', this.tripForm.get('groupSize').value);
-    formData.append('minAge', this.tripForm.get('minAge').value); 
+    formData.append('minAge', this.tripForm.get('minAge').value);
     formData.append('maxAge', this.tripForm.get('maxAge').value);
-    var startDateStr = (new Date(this.tripForm.get('startDate').value)).toISOString();
+    var startDateStr = new Date(moment(this.tripForm.get('startDate').value).format('YYYY-MM-DD')).toISOString();
+    // var startDateStr = (new Date(this.tripForm.get('startDate').value)).toISOString();
     formData.append('startDate', startDateStr);
-    var endDateStr = (new Date(this.tripForm.get('endDate').value)).toISOString();
+    
+    var endDateStr = new Date(moment(this.tripForm.get('endDate').value).format('YYYY-MM-DD')).toISOString();
+    // var endDateStr = (new Date(this.tripForm.get('endDate').value)).toISOString();
     formData.append('endDate', endDateStr);
     formData.append('notes', this.tripForm.get('notes').value);
     formData.append('cancelOneMonth', this.tripForm.get('cancelOneMonth').value);
@@ -303,17 +336,22 @@ export class TripFormComponent {
       // Handle the case where no file was selected (optional)
       console.log('No file selected');
     }
-    
+
     // Loop through each item in the FormArray
     const tripDays = this.tripForm.get('tripDays').value;
-    formData.append('tripDaysJson', JSON.stringify(tripDays));
-
-    for (let i = 0; i < this.selectedImagesFileList.length; i++) {
-      formData.append('images', this.selectedImagesFileList.item(i));
+    if (!Array.isArray(this.tripDays) || !this.tripDays.length) {
+      formData.append('tripDaysJson', JSON.stringify(tripDays));
     }
-    this.existedImagesAnyArray.forEach(image => {
-      formData.append('existedImages', image.id); 
-    });   
+    if (this.selectedImagesFileList) {
+      for (let i = 0; i < this.selectedImagesFileList.length; i++) {
+        formData.append('images', this.selectedImagesFileList.item(i));
+      }
+    }
+    if (this.existedImagesAnyArray) {
+      this.existedImagesAnyArray.forEach(image => {
+        formData.append('existedImages', image.id);
+      });
+    }
     // formData.forEach((value, key) => {
     //   console.log(`Key: ${key}, Value: ${value}`);
     // });
@@ -321,40 +359,43 @@ export class TripFormComponent {
   }
 
   update() {
-    if ((this.selectedImage != null || this.existingImage != null) && 
-      (this.existedImagesAnyArray.length > 0 || this.selectedImagesFileList.length >0)) {
-      const formData: FormData = this.convertToFormData();
+    // if (this.selectedImage == null && this.existingImage == null) {
+    //   this.onFailed("Xin hãy chọn ảnh bìa");
+    //   return;
+    // }
+    // if (this.existedImagesFileArray.length == 0 && this.selectedImagesFileArray.length == 0) {
+    //   this.onFailed("Xin hãy chọn ảnh");
+    //   return;
+    // }
+    const formData: FormData = this.convertToFormData();
 
-      this.confirmationService
-        .confirm('Bạn chắc chắn muốn làm điều này?')
-        .subscribe((confirmed) => {
-          if (confirmed) {
-            this.memberTripService
-              .updateTrip(this.tripId,formData)
-              .subscribe({
-                next: (res) => {
-                  this.onSuccess('Created Trip Successfully');
-                },
-                error: (error) => {
-                  this.onFailed(error);
-                },
-              });
-          } else {
-            // Handle cancellation
-          }
-        });
-    } else {
-      // this.formUtils.validateAllFormFields(this.tripForm);
-      this.onFailed("Image is required");
-    }
+    this.confirmationService
+      .confirm('Bạn chắc chắn muốn làm điều này?')
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          this.memberTripService
+            .updateTrip(this.tripId, formData)
+            .subscribe({
+              next: (res) => {
+                this.onSuccess('Điều chỉnh chuyến đi thành công');
+              },
+              // error: (error) => {
+              //   this.onFailed(error);
+              // },
+            });
+        } else {
+          // Handle cancellation
+        }
+      });
+
   }
   private onSuccess(message: string) {
     this.snackBar.open(message, 'OK', { duration: 5000 });
-    // this.router.navigateByUrl('/member');
+    this.location.back();
   }
   private onFailed(message: string) {
-    this.snackBar.open(message, 'ERROR', {
-      duration: 100000,
+    this.snackBar.open(message, 'X', {
+      duration: 10000,
       panelClass: 'error-snackbar',
     });
   }

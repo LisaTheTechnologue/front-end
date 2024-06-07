@@ -8,7 +8,7 @@
         <div class="col">
           <div class=" m-1 p-3 bg-white border border-secondary rounded-1">
             <section >
-              <strong>Filter by Trip Level:</strong>
+              <strong>Lọc tìm kiếm by Trip Level:</strong>
               <ul style="list-style-type: none;">
                 <li *ngFor="let tripLevel of tripLevels | keyvalue">
                   <input class="form-check-input me-1" type="checkbox" [ngModel]="selectedTripLevels.includes(tripLevel.key)"
@@ -77,7 +77,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
                  <tr class="mat-row" *matNoDataRow>
-                  <td class="mat-cell" colspan="4">No data matching the filter </td>
+                  <td class="mat-cell" colspan="4">Không tìm thấy dữ liệu  </td>
                 </tr>
               </table>
 

@@ -8,6 +8,7 @@ div {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+  overflow: hidden;
 }
 .image-container {
   display: flex; /* Make the container a flexbox */
@@ -21,15 +22,35 @@ padding: 5px;
   object-fit: cover; /* Maintain aspect ratio and resize to fit */
 }
 .hero-image {
+  position:relative;
+  display: table;
+  width: 100%;
+  height: 70vh;
+  margin-bottom: 5rem;
+  text-align: center;
+  background-size: cover;
+  overflow: hidden;
+  
   /* Set a specific height */
-  height: 40vh;
-  opacity: 0.6;
+  /* height: 80vh; */
   /* Position and center the image to scale nicely on all screens */
-  background-position: center;
+  /* background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  position: relative;
+  position: relative; */
 
+}
+
+.content {
+  width: 85%;
+  margin: 0px auto;
+  background: #fff;
+  padding: 20px;
+  margin-top: -200px;
+  position: relative;
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 section{

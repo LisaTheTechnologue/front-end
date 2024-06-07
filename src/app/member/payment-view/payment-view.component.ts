@@ -49,7 +49,7 @@ export class PaymentViewComponent {
       (res) => {
         // Handle successful response
         this.payment = res;
-        this.payment.imageURL = 'data:image/jpeg;base64,' + res.imageByte;
+        this.payment.imageByte = 'data:image/jpeg;base64,' + res.imageByte;
         this.getTrip(res.tripId);
         // if(this.payment.payerId==userId){
         //   this.selfPayment = true;
@@ -80,7 +80,7 @@ export class PaymentViewComponent {
 
   openRejectDialog(): void {
     let dialogRef = this.dialog.open(RejectDialogComponent, {
-      width: '250px',
+      width: '400px',
       data: {
         id: this.payment.id,
         tripId: this.payment.tripId,

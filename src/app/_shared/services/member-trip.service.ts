@@ -32,7 +32,7 @@ export class MemberTripService {
   }
 
   deleteTrip(tripId: number): Observable<any> {
-    return this.http.delete<Trip>(this.API + `trip/${tripId}`, {
+    return this.http.delete<any>(this.API + `delete/${tripId}`, {
       headers: this.createAuthorizationHeader(),
     })
   }

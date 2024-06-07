@@ -22,7 +22,10 @@ export class ProfileCardComponent {
       (profile) => {
         this.user = profile;
         if(profile.imageByte != null ) {
-          this.user.imageByte = 'data:image/jpeg;base64,' + profile.imageByte;
+          if(!profile.imageByte.startsWith('data:image/jpeg;base64,')) {
+            this.user.imageByte = 'data:image/jpeg;base64,' + profile.imageByte;
+          }
+          // this.user.imageByte = 'data:image/jpeg;base64,' + profile.imageByte;
         }
         this.rating = this.user.rating;
         this.outputUser.emit(this.user);

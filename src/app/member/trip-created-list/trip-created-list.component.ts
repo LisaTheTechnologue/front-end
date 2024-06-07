@@ -164,25 +164,24 @@ export class TripCreatedListComponent {
       });
   }
 
-  createTrip(){
-    this.publicService.getByUserId(StorageService.getUserId).subscribe({
-      next: (res) => {
-        this.router.navigateByUrl('/member/trips/create');
-      },
+  // createTrip(){
+    //   next: (res) => {
+        // this.router.navigateByUrl('/member/trips/create');
+    //   },
       // error: (error) => {
       //   this.onFailed(error.message);
       // }
-    });
-  }
+    // });
+  // }
   private onSuccess(message: string) {
     this.snackBar.open(message, 'OK', { duration: 5000 });
   }
   private onFailed(message: string) {
     this.snackBar.open(
       message,
-      'ERROR',
+      'X',
       {
-        duration: 100000,
+        duration: 10000,
         panelClass: 'error-snackbar',
       }
     );

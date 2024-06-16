@@ -1,50 +1,67 @@
 <div class="container my-5">
-  <mat-toolbar color="primary">Group Chat</mat-toolbar>
-  <mat-card class="p-2 scrollable-content">
-    <mat-card-content>
-      <div *ngIf="messages">
-        <div class="chats">
-          <div class="chatbox">
-            <div *ngFor="let message of messages">
-              <div class="message sent" *ngIf="message.isMe">
-                {{message.content}}
-                <span class="metadata">
-                  <span class="time">{{message.createdAt | date: 'dd/MM/yyyy HH:mm aaa'}}</span>
+  <div class="row">
+    <div class="col-3">
+      <div *ngIf="members?.length > 0">
+        <mat-toolbar color="primary">Thành viên trong nhóm: </mat-toolbar>
+        <mat-card class="p-2 scrollable-content">          
+          <div class="members">
+            <div class="memberbox">
+          <mat-list *ngFor="let profile of members">
+            <mat-list-item>
+              <img matListItemAvatar  [src]="profile.imageByte" alt="avatar">
+              <div matListItemTitle>
+                {{ profile.fullName }}
+              </div>
+              <div matListItemLine>
+                {{ profile.username }}
+                <span *ngIf="profile.isReported">
+                  <span class="badge bg-warning text-dark">Bị báo cáo</span>
                 </span>
               </div>
-              <div class="message received"  *ngIf="!message.isMe">
-                <strong>{{message.username}}</strong> <br>
-                {{message.content}}
-                <span class="metadata">
-                  <span class="time">{{message.createdAt | date: 'dd/MM/yyyy HH:mm aaa'}}</span>
-                </span>
-              </div>
+            </mat-list-item>
+          </mat-list> 
+        </div></div>
+        </mat-card>
+      </div>
+    </div>
+    <div class="col">
+      <mat-toolbar color="primary">Nhóm chat</mat-toolbar>
+      <mat-card class="p-2 scrollable-content">
+        <mat-card-content>
+          <div *ngIf="messages">
+            <div class="chats">
+              <div class="chatbox">
+                <div *ngFor="let message of messages">
+                  <div class="message sent" *ngIf="message.isMe">
+                    {{message.content}}
+                    <span class="metadata">
+                      <span class="time">{{message.createdAt | date: 'dd/MM/yyyy HH:mm aaa'}}</span>
+                    </span>
+                  </div>
+                  <div class="message received" *ngIf="!message.isMe">
+                    <strong>{{message.username}}</strong> <br>
+                    {{message.content}}
+                    <span class="metadata">
+                      <span class="time">{{message.createdAt | date: 'dd/MM/yyyy HH:mm aaa'}}</span>
+                    </span>
+                  </div>
 
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div *ngIf="!messages">
-        Be the first one to send a message in group!
-      </div>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <div class="d-flex flex-row">
-        <input [(ngModel)]="content" type="text" class="form-control" placeholder="Enter message" style="margin-right: 10px">
-        <button [disabled]="!content || sending" (click)="postComment(content)" class="btn btn-primary"> {{sending ? 'Sending' : 'Send'}}</button>
-      </div>
-    </mat-card-actions>
-  </mat-card>
+          <div class="d-flex flex-row">
+            <input [(ngModel)]="content" type="text" class="form-control" placeholder="Nhập tin nhắn"
+              style="margin-right: 10px">
+            <button [disabled]="!content || sending" (click)="postComment(content)" class="btn btn-primary"> {{sending ?
+              'Đang gửi' : 'Gửi'}}</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
 
-  <section *ngIf="members?.length > 0">
-    <div class="section-title">Thành viên trong nhóm: </div>
-    <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="flex-start" class="align-items-stretch">
-    <ng-template ngFor let-member [ngForOf]="members" >
-        <app-profile-card [userId]="member.userId" fxFlex="0 1 calc(20% - 10px)" class="my-1"></app-profile-card>
-    </ng-template></div>
-  </section>
-  <section *ngIf="members?.length === 0">
-    <p>Đừng bỏ lỡ! Hãy là người đầu tiên tham gia chuyến đi tuyệt vời này!</p>
-  </section>
+
+
+
 </div>
-

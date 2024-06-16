@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import PasswordValidation from 'src/app/_shared/passsword-validations';
 import { AdminUserService } from 'src/app/_shared/services/admin-user.service';
+import { FormUtilsService } from 'src/app/_shared/services/form-utils.service';
 
 @Component({
   selector: 'app-admin-profile',
@@ -20,6 +21,7 @@ export class AdminProfileComponent {
     private fb: FormBuilder,
     private adminUserService: AdminUserService,
     private snackBar: MatSnackBar,
+    private formUtils:FormUtilsService,
     private router: Router
   ) {}
 
@@ -32,7 +34,9 @@ export class AdminProfileComponent {
       }
     );
   }
-
+  getErrorMessage(fieldName: string): string {
+    return this.formUtils.getFieldErrorMessage(this.passwordForm, fieldName);
+  }
   onSubmit() {
     const newPassword = this.passwordForm.get('newPassword')?.value;
     const confirmPassword = this.passwordForm.get('confirmPassword')?.value;
@@ -49,7 +53,7 @@ export class AdminProfileComponent {
 
     this.adminUserService.updatePassword(passwordChangeData).subscribe({
       next: (res) => {
-        this.onSuccess('Updated Password Successfully');
+        this.onSuccess('Đổi mật khẩu thành công');
       },
       // error: (error) => {
       //   this.onFailed(error);

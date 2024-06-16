@@ -19,11 +19,11 @@ export class PublicService {
   }
 
   public getLatestTrips(): Observable<any> {
-    return this.http.get(this.API + 'trips/latest')
+    return this.http.get(this.API + 'trips?limit=5')
     // .pipe(catchError(this.handleError));
   }
   public getTopUsers(): Observable<any> {
-    return this.http.get(this.API + 'profile/top')
+    return this.http.get(this.API + 'profile/top?limit=5')
     // .pipe(catchError(this.handleError));
   }
   public getTopFeedbacks(): Observable<any> {
@@ -58,7 +58,7 @@ export class PublicService {
     )
   }
   public getTopUsersBoard(): Observable<any> {
-    return this.http.get(this.API + 'profile/top-board')
+    return this.http.get(this.API + 'profile/top?limit=10')
     // .pipe(catchError(this.handleError));
   }
 

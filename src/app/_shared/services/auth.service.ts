@@ -37,12 +37,10 @@ export class AuthService {
           this.loggedIn.asObservable();
           return true;
         }),
-        catchError(this.handleError)
       );
   }
   register(signupRequest: any): Observable<any> {
     return this.http.post(this.AUTH_API + 'register', signupRequest)
-    .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

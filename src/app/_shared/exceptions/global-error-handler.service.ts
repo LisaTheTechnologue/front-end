@@ -5,18 +5,25 @@ import { catchError, throwError } from 'rxjs';
 import { PageNotFoundException } from './page-not-found.exception';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../components/error-dialog/error-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GlobalErrorHandlerService implements ErrorHandler {
-  constructor(public router: Router, private zone: NgZone, public dialog: MatDialog) { }
+  constructor(public router: Router, 
+    private zone: NgZone, 
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog) { }
   handleError(error: any) {
-    console.log(error);
     if (error.status == undefined) {
-      this.dialog.open(ErrorDialogComponent, {
-        data: error?.message
+      this.snackBar.open(error?.message, 'X', {
+        duration: 10000,
+        panelClass: 'error-snackbar',
       });
+      // this.dialog.open(ErrorDialogComponent, {
+      //   data: error?.message
+      // });
     } else {
       let errorMessage = '';
       switch (error.status) {
@@ -37,13 +44,23 @@ export class GlobalErrorHandlerService implements ErrorHandler {
             errorMessage = 'Lỗi. Xin liên hệ admin.';
           }
           this.zone.run(() => {
-            this.dialog.open(ErrorDialogComponent, { data: errorMessage });
+            this.snackBar.open(errorMessage, 'X', {
+              duration: 10000,
+              panelClass: 'error-snackbar',
+            });
+            // this.dialog.open(ErrorDialogComponent, { data: errorMessage });
           });
           break;
       }
       
     }
   }
+  // private onFailed(message: string) {
+  //   this.snackBar.open(message, 'X', {
+  //     duration: 10000,
+  //     panelClass: 'error-snackbar',
+  //   });
+  // }
   // handleError(error: HttpErrorResponse) {
   //   if (error.status === 404) {
   //     // Redirect to page not found component

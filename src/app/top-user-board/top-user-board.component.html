@@ -25,19 +25,19 @@
     </ng-container>
 
     <ng-container matColumnDef="noOfTrips">
-      <th mat-header-cell *matHeaderCellDef> Trips Led </th>
+      <th mat-header-cell *matHeaderCellDef> Chuyến đi </th>
       <td mat-cell *matCellDef="let row"> {{row.noOfTrips}} </td>
     </ng-container>
 
     <ng-container matColumnDef="rating">
       <th mat-header-cell *matHeaderCellDef> Rating </th>
-      <td mat-cell *matCellDef="let row"> {{row.rating}} </td>
+      <td mat-cell *matCellDef="let row"> {{row.rating | number : '1.2-2'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
-        <a mat-flat-button color="primary" [routerLink]="['/profile/', row.id]">View</a>
+        <a mat-flat-button color="primary" [routerLink]="['/profile/', row.id]">Hồ sơ</a>
       </td>
     </ng-container>
 

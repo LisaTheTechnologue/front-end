@@ -95,6 +95,7 @@ export class TripViewComponent implements OnInit {
   joinTrip() {
     this.router.navigateByUrl(`/member/payment/create/${this.tripId}`);
   }
+  
   changeStatus(status: string) {
     let dialogRef = this.dialog.open(MessageDialogComponent, {
       width: '400px',

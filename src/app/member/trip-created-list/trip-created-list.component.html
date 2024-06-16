@@ -8,7 +8,7 @@
         <div class="col">
           <div class=" m-1 p-3 bg-white border border-secondary rounded-1">
             <section >
-              <strong>Filter by Trip Level:</strong>
+              <strong>Mức độ mạo hiểm</strong>
               <ul style="list-style-type: none;">
                 <li *ngFor="let tripLevel of tripLevels | keyvalue">
                   <input class="form-check-input me-1" type="checkbox" [ngModel]="selectedTripLevels.includes(tripLevel.key)"
@@ -18,22 +18,22 @@
               </ul>
             </section>
             <section>
-              <strong>City:</strong>
+              <strong>Thành phố:</strong>
               <select class="form-select" id="country" [(ngModel)]="selectedCityId" (change)="filterData()" >
                 <option [value]="999">Tất cả</option>
                         <option *ngFor="let c of cities" [value]="c.id">{{c.name}}      </option>
               </select> 
             </section>
             <section>
-              <strong>Start Date:</strong>
+              <strong>Ngày khởi hành:</strong>
               <input [(ngModel)]="startDate" (change)="filterData()" id="startDate" type="date" class="form-control">
             </section>
             <section>
-              <strong>End Date:</strong>
+              <strong>Ngày kết thúc:</strong>
               <input [(ngModel)]="endDate" (change)="filterData()" id="endDate" type="date" class="form-control">
             </section>
             <section>
-              <strong>Maximum Price:</strong>
+              <strong>Chi phí tối đa</strong>
               <input type="number" class="form-control" [(ngModel)]="maxPrice" 
                 (focusout)="filterData()">
             </section>
@@ -41,13 +41,13 @@
         </div>
         <div class="col-9">
           <div class="input-group mb-3">
-            <input type="text" class="form-control me-2" placeholder="Search by title" [(ngModel)]="searchText" />
+            <input type="text" class="form-control me-2" [(ngModel)]="searchText" />
 
             <button mat-flat-button color="primary" (click)="filterData()" class="me-2">
-              <mat-icon>search</mat-icon><span> Search</span>
+              <mat-icon>search</mat-icon><span> Tim kiếm</span>
             </button>
-            <button mat-flat-button color="success" [routerLink]="['/member/trips/create']" class="me-2">
-              <mat-icon>create</mat-icon><span> Create</span>
+            <button mat-flat-button color="success" (click)="createTrip()" class="me-2">
+              <mat-icon>create</mat-icon><span> Tạo Mới</span>
             </button>
 
           </div>
@@ -79,7 +79,7 @@
                   <button mat-flat-button color="primary" *ngIf="row.tripStatus=='PENDING'"
                     [routerLink]="['/member/trips/edit/', row.id]" class="me-1">Sửa</button>
                   <button mat-flat-button color="accent"
-                    [routerLink]="['/trips/view/', row.id]" class="me-1">Xem</button>
+                    [routerLink]="['/trips/view/', row.id]" class="me-1">Chi tiết</button>
                   <button mat-flat-button color="danger" *ngIf="row.tripStatus=='PENDING'"
                     (click)="deleteTrip(row.id)" class="me-1">Xóa</button>
                 </td>

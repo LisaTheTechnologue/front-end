@@ -46,7 +46,7 @@
         <tbody>
           <tr *ngFor="let order of payment.orders">
             <td>{{ order.fullName }}</td>
-            <td>{{ order.dob }}            </td>
+            <td>{{ order.dob }}</td>
           </tr>
         </tbody>
       </table>
@@ -60,8 +60,8 @@
 </div>
     
       <div class="mb-3" *ngIf="payment.paymentStatus=='PENDING' && isLeader">
-        <button mat-raised-button color="primary" type="button" class="me-3" (click)="completePayment()">Complete</button>
-        <button mat-raised-button color="danger" type="button" class="me-3" (click)="openRejectDialog()">Reject</button>
+        <button mat-raised-button color="primary" type="button" class="me-3" (click)="completePayment()">Chấp nhận</button>
+        <button mat-raised-button color="danger" type="button" class="me-3" (click)="openRejectDialog()">Từ chối</button>
       </div>
    
     

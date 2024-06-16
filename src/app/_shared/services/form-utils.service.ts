@@ -65,6 +65,9 @@ export class FormUtilsService {
     if (field?.hasError('matDatepickerMin')) {
       return `Ngày khởi hành phải cách hôm nay ít nhất 7 ngày.`;
     }
+    if (field?.hasError('email')) {
+      return `Email không hợp lệ`;
+    }
     
     return field['errors'] ? 'Lỗi' : '';
   }

@@ -322,20 +322,29 @@ export class TripFormComponent {
     var startDateStr = new Date(moment(this.tripForm.get('startDate').value).format('YYYY-MM-DD')).toISOString();
     // var startDateStr = (new Date(this.tripForm.get('startDate').value)).toISOString();
     formData.append('startDate', startDateStr);
-    
+
     var endDateStr = new Date(moment(this.tripForm.get('endDate').value).format('YYYY-MM-DD')).toISOString();
     // var endDateStr = (new Date(this.tripForm.get('endDate').value)).toISOString();
     formData.append('endDate', endDateStr);
-    formData.append('notes', this.tripForm.get('notes').value);
+    var notes = this.tripForm.get('notes').value;
+    if (notes) {
+      formData.append('notes', this.tripForm.get('notes').value);
+    }
+    var cancelOneMonth = this.tripForm.get('cancelOneMonth').value;
+    if (cancelOneMonth) {
     formData.append('cancelOneMonth', this.tripForm.get('cancelOneMonth').value);
+    }
+    var cancelOneWeek = this.tripForm.get('cancelOneWeek').value;
+    if (cancelOneWeek) {
     formData.append('cancelOneWeek', this.tripForm.get('cancelOneWeek').value);
+    }
+    var cancelOneDay = this.tripForm.get('cancelOneDay').value;
+    if (cancelOneDay) {
     formData.append('cancelOneDay', this.tripForm.get('cancelOneDay').value);
+    }
     if (this.selectedImage) {
       formData.append('image', this.selectedImage);
-    } else {
-      // Handle the case where no file was selected (optional)
-      console.log('No file selected');
-    }
+    } 
 
     // Loop through each item in the FormArray
     const tripDays = this.tripForm.get('tripDays').value;

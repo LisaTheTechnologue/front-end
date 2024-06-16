@@ -9,6 +9,7 @@ import { Location } from '@angular/common';
 export interface FeedbackDTO {
   id?: any;
   tripId:number;
+  userId: number;
   feedback: string;
   tripRating: number;
   leaderRating: number;
@@ -62,7 +63,8 @@ export class FeedbackFormComponent implements OnInit {
     const userId = StorageService.getUserId();
     let dto: FeedbackDTO = {
       id: Number(userId),
-      tripId: this.feedbackForm.get('tripId')?.value,
+      tripId: this.tripId,
+      userId: Number(userId),
       leaderRating:this.feedbackForm.get('leaderRating').value,
       tripRating: this.feedbackForm.get('tripRating')?.value,
       feedback: this.feedbackForm.get('feedback')?.value,
@@ -86,7 +88,7 @@ export class FeedbackFormComponent implements OnInit {
     this.location.back();
   }
   private onSuccess() {
-    this.snackBar.open('Feedback saved successfully!', '', { duration: 5000 });
+    this.snackBar.open('Cảm ơn đánh giá của bạn!', '', { duration: 5000 });
     this.onCancel();
   }
   private onFailed(message: string) {

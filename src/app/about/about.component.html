@@ -1,9 +1,14 @@
-<div class="container my-5">
-  <div class="heading h3">About Us</div>
+<div class="container my-5 contact-container">
+  <section class="my-5">
+  <div class="heading h3">Thông tin trang web</div>
   <p>{{ aboutUsText }}</p>
-
-
+</section>
+<section >
   <div class="heading h3">Contact Us</div>
+  <p>Số điện thoại: {{phoneText}}</p>
+  <p>Email: {{emailText}}</p>
+</section>
+  <!-- <div class="heading h3">Contact Us</div>
   <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
@@ -41,5 +46,5 @@
         <span *ngIf="!isLoading">Send</span>
         <span *ngIf="isLoading"><mat-spinner [diameter]="20"></mat-spinner></span></button>
     </div>
-  </form>
+  </form> -->
 </div>

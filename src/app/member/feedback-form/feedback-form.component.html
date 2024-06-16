@@ -2,14 +2,14 @@
 
   <div class="heading h3">Đánh giá chuyến đi của bạn</div>
 
-  <div class="feedback-benefits">
+  <div class="mt-2">
     <h2>Phản hồi của bạn giúp chúng tôi:</h2>
     <ul>
       <li>Nâng cao chất lượng dịch vụ</li>
       <li>Cung cấp trải nghiệm tốt hơn cho khách hàng trong tương lai</li>
       <li>Chia sẻ những điểm mạnh và điểm cần cải thiện của chúng tôi</li>
     </ul>
-    <p>Chỉ mất vài phút để hoàn thành:</p>
+    <h2 class="mt-2">Một số gợi ý cho bạn:</h2>
     <ul class="feedback-steps">
       <li>Đánh giá tổng thể chuyến đi của bạn</li>
       <li>Chia sẻ suy nghĩ và góp ý của bạn về các khía cạnh khác nhau của chuyến đi, chẳng hạn như:</li>
@@ -24,18 +24,18 @@
     </ul>
   </div>
 
-  <form [formGroup]="feedbackForm" >
+  <form [formGroup]="feedbackForm" class="mt-4">
     <div class="row">
       <div class="col-md-6">
         <mat-form-field appearance="outline">
-          <mat-label>Leader Rating</mat-label>
+          <mat-label>Đội trưởng</mat-label>
           <input matInput formControlName="leaderRating" type="number" min="1" max="5">
           <mat-error *ngIf="feedbackForm.get('leaderRating')?.invalid">{{ getErrorMessage('leaderRating') }}</mat-error>
         </mat-form-field>
       </div>
       <div class="col-md-6">
         <mat-form-field appearance="outline">
-          <mat-label>Trip Rating</mat-label>
+          <mat-label>Chuyến đi</mat-label>
           <input matInput formControlName="tripRating" type="number" min="1" max="5">
           <mat-error *ngIf="feedbackForm.get('tripRating')?.invalid">{{ getErrorMessage('tripRating') }}</mat-error>
         </mat-form-field>    
@@ -43,7 +43,7 @@
     </div>
     
     <mat-form-field appearance="outline">
-      <mat-label>Feedback</mat-label>
+      <mat-label>Góp ý</mat-label>
       <textarea matInput type="text" formControlName="feedback"></textarea>
       <mat-error *ngIf="feedbackForm.get('feedback')?.invalid">{{ getErrorMessage('feedback') }}</mat-error>
     </mat-form-field>

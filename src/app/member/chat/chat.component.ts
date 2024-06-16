@@ -7,6 +7,8 @@ import { MemberChatService } from 'src/app/_shared/services/member-chat.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppService } from 'src/app/_shared/services/app.service';
 import { PublicService } from 'src/app/_shared/services/public.service';
+import { MemberJoinerService } from 'src/app/_shared/services/member-joiner.service';
+import { User } from 'src/app/_shared/models/user.model';
 
 @Component({
   selector: 'app-chat',
@@ -22,20 +24,24 @@ export class ChatComponent {
   content:string;
   messages: Message[] = [];
   userId = StorageService.getUserId();
-  members:any[];
+  members:User[]= [];
+  user!: User;
+  rating!:number;
   constructor(
     private activatedRoute: ActivatedRoute,
     private chatService: MemberChatService,
+    private joinerService: MemberJoinerService,
     private publicService: PublicService,
     private router: Router) {}
 
   ngOnInit(): void {
     this.getChat();
-    this.publicService.getByTripId(this.tripId).subscribe({
+    this.joinerService.getJoinersByTripId(this.tripId).subscribe({
       next: (res) => {
-        if (res.joiners.length > 0) {
-          this.members = res.joiners;          
-        }
+        res.forEach((element) => {
+          element.imageByte = 'data:image/jpeg;base64,' + element.imageByte;
+          this.members.push(element);
+        });
       },
   });
     
@@ -54,14 +60,6 @@ export class ChatComponent {
           });
 
           },
-        // error: (error) => {
-        //   if (error instanceof PageNotFoundException) {
-        //     this.router.navigate(['/page-not-found']);
-        //   } else {
-        //     // Handle other errors here
-        //     this.error = error.message;
-        //   }
-        // },
     });
     }
   }

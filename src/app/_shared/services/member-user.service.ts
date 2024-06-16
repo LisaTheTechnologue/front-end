@@ -22,7 +22,13 @@ export class MemberUserService {
       })
       // .pipe(catchError(this.handleError));
   }
-
+  public validateTripCreation(): Observable<any> {
+    return this.http
+      .get<any>(this.API+'validate-create', {
+        headers: this.createAuthorizationHeader(),
+      })
+      // .pipe(catchError(this.handleError));
+  }
   public getBanks(): Observable<Bank[]> {
     const url = 'https://api.vietqr.io/v2/banks';
     return this.http.get<any>(url) // Assuming the API response structure
@@ -37,11 +43,7 @@ export class MemberUserService {
     })
     // .pipe(catchError(this.handleError));
   }
-  public validateCreation(userid: any): Observable<any> /* profile */ {
-    return this.http.get<any>(
-      this.API + 'validate-create'
-    )
-  }
+
   uploadImage(formData:any){
     const userId = StorageService.getUserId();
     return this.http.put<any>(this.API+`upload-image`, formData, {
@@ -57,31 +59,6 @@ export class MemberUserService {
     })
     // .pipe(catchError(this.handleError));
   }
-
-  // public getPaymentProfileByUserId(userId: any): Observable<any> {
-  //   return this.http
-  //     .get<any>(this.API+'payment-profile/' + userId, {
-  //       headers: this.createAuthorizationHeader(),
-  //     })
-      // .pipe(catchError(this.handleError));
-  // }
-
-  // private handleError(error: HttpErrorResponse) {
-  //   if (error.status === 404) {
-  //     // Redirect to page not found component
-  //     return throwError(() => new PageNotFoundException());
-  //   }
-  //   let errorMessage = '';
-  //   // Handle other errors here
-  //   if (error.error instanceof ErrorEvent) {
-  //     // Client-side or network error occurred. Handle it accordingly.
-  //     errorMessage = `Error: ${error.error.message}`;
-  //   } else {
-  //     errorMessage = `Error: ${error.error}`;
-      
-  //   }
-  //   return throwError(errorMessage);
-  // }
 
   private createAuthorizationHeader(): HttpHeaders {
     return new HttpHeaders().set(

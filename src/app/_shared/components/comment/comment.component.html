@@ -1,7 +1,11 @@
 
 
   <mat-card>
-    <form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="m-3">
+    
+    <span *ngIf="!isMemberLoggedIn && !isAdminLoggedIn">
+      <div>Vui lòng <a [routerLink]="['/login']">đăng nhập</a> để bình luận</div>
+    </span>
+    <form  *ngIf="isMemberLoggedIn || isAdminLoggedIn" [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="m-3">
       <mat-checkbox formControlName="reportFlag"></mat-checkbox>
       Report Scam
       <div class="row justify-content-center align-self-center">

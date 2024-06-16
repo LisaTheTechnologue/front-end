@@ -10,8 +10,8 @@ const routes: Routes = [
   { path: '', component: TripListComponent },
   { path: 'trips', component: TripListComponent },
   { path: 'users', component: UserListComponent },
-  { path: 'contacts', component: ContactListComponent },
-  { path: 'contacts/:contactId', component: ContactViewComponent },
+  // { path: 'contacts', component: ContactListComponent },
+  // { path: 'contacts/:contactId', component: ContactViewComponent },
   { path: 'change-password', component: AdminProfileComponent },
   ];
 

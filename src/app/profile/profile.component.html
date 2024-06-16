@@ -41,16 +41,18 @@
           </div>
         </div>
 
-        <div *ngIf="trips" class="heading h3">Những chuyến hành trình đã qua</div>
-        <mat-list dense *ngIf="trips">
+        <div *ngIf="trips" class="heading h4">Chuyến đi đã tạo</div>
+
+        <mat-list dense *ngIf="trips" [style.overflow]="'auto'" [style.height.px]="'300'">
           <ng-template ngFor let-trip [ngForOf]="trips">
-            <mat-list-item class="list-with-border panel" (click)="display(trip)" [activated]="displaySelectedTrip(trip)">
+            <mat-list-item class="list-with-border panel" (click)="display(trip)" [activated]="displaySelectedTrip(trip)" style="cursor: pointer;">
               <span matListItemTitle>{{ trip.title }}</span>
-              <span matListItemLine>{{ trip.cityName }} | {{ trip.startDate }} - {{ trip.endDate }}</span>
-              <span matListItemLine><ngb-rating [(rate)]="trip.rating" [readonly]="true" [max]="5"></ngb-rating></span>
+              <span matListItemLine>{{ trip.cityName }} | {{ trip.startDate }} - {{ trip.endDate }} </span>
+              <span matListItemLine><ngb-rating [(rate)]="trip.rating" [readonly]="true" [max]="5"></ngb-rating> <span class="text-end"> {{trip.tripStatus | tripStatus}}</span></span>
             </mat-list-item>
           </ng-template>
         </mat-list>
+
       </div>
       <div class="col">
         <div *ngIf="selectedTrip">
@@ -68,10 +70,10 @@
   </div>
   <div *ngIf="isAdminLoggedIn && user">
     <button mat-flat-button color="success" (click)="changeStatus()" *ngIf="!user.isActive">
-      <mat-icon>check</mat-icon> Active User
+      <mat-icon>check</mat-icon> Mở khóa người dùng
     </button>
     <button mat-flat-button color="danger" (click)="changeStatus()" *ngIf="user.isActive">
-      <mat-icon>close</mat-icon> Inactive User
+      <mat-icon>close</mat-icon> Khóa người dùng
     </button>
   </div>
   <!-- <div *ngIf="isAdminLoggedIn && user">    

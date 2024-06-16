@@ -1,4 +1,4 @@
-<div class="container my-5">
+<div class="container my-5 main-content">
   <div class="row">
     <div class="col">
       <div class=" m-1 p-3 bg-white border border-secondary rounded-1">
@@ -55,7 +55,7 @@
       <div *ngIf="filteredData.length > 3" class="d-flex justify-content-center">
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </div>
-      <p *ngIf="filteredData.length === 0">No data matches the filter criteria.</p>
+      <p *ngIf="filteredData.length === 0">Không tìm thấy dữ liệu.</p>
 
     </div>
   </div>

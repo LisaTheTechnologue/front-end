@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Trip } from 'src/app/_shared/models/trip.model';
 import { User } from 'src/app/_shared/models/user.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/_shared/services/storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -16,6 +16,7 @@ import { PublicService } from 'src/app/_shared/services/public.service';
 import { ConfirmDialogComponent } from 'src/app/_shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmService } from 'src/app/_shared/services/confirm.service';
 import { FormUtilsService } from 'src/app/_shared/services/form-utils.service';
+import { MemberJoinerService } from 'src/app/_shared/services/member-joiner.service';
 @Component({
   selector: 'app-trip-payment',
   templateUrl: './trip-payment.component.html',
@@ -34,10 +35,12 @@ export class TripPaymentComponent {
   isLoading = false;
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private publicService: PublicService,
     private confirmationService: ConfirmService,
     private paymentService: MemberPaymentService,
     private userService: MemberUserService,
+    private joinerService: MemberJoinerService,
     private location: Location,
     private dialog: MatDialog,
     private fb: FormBuilder,
@@ -46,12 +49,22 @@ export class TripPaymentComponent {
   ) {}
   ngOnInit(): void {
     this.getTrip();
-    this.paymentForm = this.fb.group({
-      id:[null, []],
-      amount: [null, [Validators.required]],
-      members: this.fb.array([]),
-      notes: [null, []],
-    });
+    this.joinerService.checkJoiner(this.tripId)
+    .subscribe(
+      (res) => {
+        this.paymentForm = this.fb.group({
+          id:[null, []],
+          image: [null, [Validators.required]],
+          amount: [null, [Validators.required]],
+          members: this.fb.array([]),
+          notes: [null, []],
+        });
+        },
+        (error) => {
+          this.handleError(error);
+          this.router.navigateByUrl('/home');
+        }
+    );    
   }
   formatNumber(event: Event) {
     const data = (event.target as HTMLInputElement).value;
@@ -91,10 +104,10 @@ export class TripPaymentComponent {
   //     this.rating = res.rating;
   //   });
   // }
-
+  
   selectedImage(event: File) {
     this.selectedFile = event;
-    // this.imageChanged = true;
+    this.paymentForm.get('image')?.setValue(this.selectedImage);
   }
 
   members(): FormArray {
@@ -158,22 +171,9 @@ export class TripPaymentComponent {
                 // .subscribe({
                 //   next: (res) => {
                     this.isLoading = false;
-                    this.onSuccess("Hướng dẫn viên đã nhận được đơn của bạn. Xin kiểm tra email.");
+                    this.onSuccess("Leader đã nhận được đơn của bạn. Xin kiểm tra email.");
                   },
-                  error: (error) => {
-                    this.isLoading = false;
-                    let errorMessage;
-                    if (error.error && error.error.body && error.error.body.detail) {
-                      errorMessage = error.error.body.detail;
-                    } else if (error.message) {
-                      errorMessage = error.message;
-                    } else {
-                      errorMessage = 'Lỗi. Xin liên hệ admin.';
-                    }
-                    this.onFailed(errorMessage);
-                  },
-                // })
-              // },
+                  
               
             });        
           } else {
@@ -181,7 +181,7 @@ export class TripPaymentComponent {
           }}
         );
     } else {
-      this.onFailed("Image is required.");
+      this.onFailed("Ảnh không được để trống");
     }
   }
 
@@ -194,7 +194,7 @@ export class TripPaymentComponent {
       'OK',
       { duration: 5000 }
     );
-    this.onCancel();
+    this.router.navigateByUrl('/home');
   }
   private onFailed(message: string) {
     this.snackBar.open(
@@ -205,5 +205,45 @@ export class TripPaymentComponent {
         panelClass: 'error-snackbar',
       }
     );
+  }
+  handleError(error: any) {
+    if (error.status == undefined) {
+      this.snackBar.open(error?.message, 'X', {
+        duration: 10000,
+        panelClass: 'error-snackbar',
+      });
+      // this.dialog.open(ErrorDialogComponent, {
+      //   data: error?.message
+      // });
+    } else {
+      let errorMessage = '';
+      switch (error.status) {
+        case 401: //login
+          // errorMessage = 'Please login';
+          this.router.navigateByUrl('/login');
+          break;
+        case 404: //forbidden
+          // errorMessage = 'Page not found';
+          this.router.navigate(['/page-not-found']);
+          break;
+        default:
+          if (error.error && error.error.body && error.error.body.detail) {
+            errorMessage = error.error.body.detail;
+          } else if (error.message) {
+            errorMessage = error.message;
+          } else {
+            errorMessage = 'Lỗi. Xin liên hệ admin.';
+          }
+         
+            this.snackBar.open(errorMessage, 'X', {
+              duration: 10000,
+              panelClass: 'error-snackbar',
+            
+            // this.dialog.open(ErrorDialogComponent, { data: errorMessage });
+          });
+          break;
+      }
+      
+    }
   }
 }

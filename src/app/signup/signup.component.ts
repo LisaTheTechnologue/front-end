@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../_shared/services/auth.service';
+import { FormUtilsService } from '../_shared/services/form-utils.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,8 @@ export class SignupComponent {
   constructor( private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private authService: AuthService,
-    private router: Router){
+    private router: Router,
+  private formUtils: FormUtilsService){
 
     }
 
@@ -38,19 +40,21 @@ export class SignupComponent {
   toggleCPasswordVisibility(){
     this.hideCPassword = !this.hideCPassword;
   }
-
+  getErrorMessage(fieldName: string): string {
+    return this.formUtils.getFieldErrorMessage(this.signupForm, fieldName);
+  }
   onSubmit():void {
     const password = this.signupForm.get('password')?.value;
     const confirmPassword = this.signupForm.get('confirmPassword')?.value;
 
     if(password !== confirmPassword){
-      this.onFailed('Passwords do not match.');
+      this.onFailed('Mật khẩu không khớp.');
       return;
     }
 
     this.authService.register(this.signupForm.value).subscribe(
       (res) => {
-        this.onSuccess('Sign up successful!');
+        this.onSuccess('Đăng ký thành công!');
       },
       // (error) => {
       //   this.onFailed(error);

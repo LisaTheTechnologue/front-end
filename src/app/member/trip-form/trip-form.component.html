@@ -1,12 +1,12 @@
 <div class="container my-5">
 
-  <div class="heading h3" *ngIf="isAddMode">Add Trip</div>
-  <div class="heading h3" *ngIf="!isAddMode">Edit Trip</div>
+  <div class="heading h3" *ngIf="isAddMode">Tạo Chuyến đi</div>
+  <div class="heading h3" *ngIf="!isAddMode">Chỉnh sửa Chuyến đi</div>
 
   <mat-card class="mb-3">
     <mat-card-header>
       <mat-card-title>
-        Thumbnail *
+        Ảnh bìa *
       </mat-card-title>
     </mat-card-header>
     <mat-card-content class="mx-auto">
@@ -20,12 +20,12 @@
     <mat-card class="mb-3">
       <mat-card-header>
         <mat-card-title>
-          Trip Details
+          Thông tin chi tiết
         </mat-card-title>
       </mat-card-header>
       <mat-card-content class="my-3">
         <mat-form-field appearance="outline">
-          <mat-label>Title</mat-label>
+          <mat-label>Tiêu đề</mat-label>
           <input matInput type="text" formControlName="title">
           <mat-error *ngIf="tripForm.get('title')?.invalid">{{ getTripErrorMessage('title') }}</mat-error>
         </mat-form-field>
@@ -33,7 +33,7 @@
         <div class="row">
           <div class="col-md-6">
             <mat-form-field appearance="outline">
-              <mat-label>Select a City</mat-label>
+              <mat-label>Thành phố</mat-label>
               <mat-select formControlName="cityId">
                 <mat-option *ngFor="let city of listOfCities" [value]="city.id">{{city.name}}</mat-option>
               </mat-select>
@@ -42,7 +42,7 @@
           </div>
           <div class="col-md-6">
             <mat-form-field appearance="outline">
-              <mat-label>Select a Level</mat-label>
+              <mat-label>Mức độ mạo hiểm</mat-label>
               <mat-select formControlName="tripLevel">
                 <mat-option *ngFor="let level of tripLevels" [value]="level">{{ level.label }}</mat-option>
               </mat-select>
@@ -59,7 +59,7 @@
         </div>
 
         <mat-form-field appearance="outline">
-          <mat-label>Summary</mat-label>
+          <mat-label>Giới thiệu</mat-label>
           <input matInput type="text" formControlName="summary">
           <mat-error *ngIf="tripForm.get('summary')?.invalid">{{ getTripErrorMessage('summary') }}</mat-error>
         </mat-form-field>
@@ -67,7 +67,7 @@
         <div class="row">
           <div class="col-md-6">
             <mat-form-field appearance="outline">
-              <mat-label>Price</mat-label>
+              <mat-label>Chi phí</mat-label>
               <input matInput type="number" class="input-right-align" placeholder="0" formControlName="price"
                 id="priceFld" thousandSeparator=",">
               <span matTextPrefix>VND &nbsp;&nbsp;&nbsp;</span>
@@ -76,7 +76,7 @@
           </div>
           <div class="col-md-6">
             <mat-form-field appearance="outline">
-              <mat-label>Group Size</mat-label>
+              <mat-label>Số lượng thành viên</mat-label>
               <input matInput type="number" placeholder="0" formControlName="groupSize" id="priceFld">
               <mat-error *ngIf="tripForm.get('groupSize')?.invalid">{{ getTripErrorMessage('groupSize') }}</mat-error>
             </mat-form-field>
@@ -86,14 +86,14 @@
         <div class="row">
           <div class="col-md-3">
             <mat-form-field appearance="outline">
-              <mat-label>From Age</mat-label>
+              <mat-label>Độ tuổi nhỏ nhất</mat-label>
               <input value="20" matInput formControlName="minAge" type="number" min="10" max="80">
               <mat-error *ngIf="tripForm.get('minAge')?.invalid">{{ getTripErrorMessage('minAge') }}</mat-error>
             </mat-form-field>
           </div>
           <div class="col-md-3">
             <mat-form-field appearance="outline">
-              <mat-label>To Age</mat-label>
+              <mat-label>Độ tuổi lớn nhất</mat-label>
               <input value="60" matInput formControlName="maxAge" type="number" min="10" max="80">
               <mat-error *ngIf="tripForm.get('maxAge')?.invalid">{{ getTripErrorMessage('maxAge') }}</mat-error>
             </mat-form-field>
@@ -101,7 +101,7 @@
 
           <div class="col-md-6">
             <mat-form-field class="example-form-field" appearance="outline">
-              <mat-label>Enter a date range</mat-label>
+              <mat-label>Khởi hành - Kết thúc</mat-label>
               <mat-date-range-input [rangePicker]="rangePicker" [min]="minDate" >
                 <input matStartDate placeholder="Start date" formControlName="startDate">
                 <input matEndDate placeholder="End date" formControlName="endDate">
@@ -110,7 +110,7 @@
               <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
               <mat-date-range-picker #rangePicker>
                 <!-- <mat-date-range-picker-actions>
-                  <button mat-button matDateRangePickerCancel>Cancel</button>
+                  <button mat-button matDateRangePickerCancel>Hủy</button>
                   <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
                 </mat-date-range-picker-actions> -->
               </mat-date-range-picker>
@@ -121,7 +121,7 @@
         </div>
 
         <mat-form-field appearance="outline">
-          <mat-label>Notes</mat-label>
+          <mat-label>Lưu ý</mat-label>
           <textarea matInput type="text" formControlName="notes"></textarea>
           <mat-error *ngIf="tripForm.get('notes')?.invalid">{{ getTripErrorMessage('notes') }}</mat-error>
         </mat-form-field>
@@ -143,10 +143,10 @@
           <div class="col-md-6">
             <mat-form-field appearance="outline">          
               <mat-select formControlName="cancelOneMonth">
-                <mat-option value="No">No Refund</mat-option>
-                <mat-option value="50%">50% Refund</mat-option>
-                <mat-option value="75%">75% Refund</mat-option>
-                <mat-option value="Full">Full Refund</mat-option>
+                <mat-option value="No">Không hoàn</mat-option>
+                <mat-option value="50%">Hoàn 50%</mat-option>
+                <mat-option value="75%">Hoàn 75%</mat-option>
+                <mat-option value="Full">Hoàn toàn bộ số tiền</mat-option>
               </mat-select>
               <mat-error *ngIf="tripForm.get('cancelOneMonth')?.invalid">{{ getTripErrorMessage('cancelOneMonth') }}</mat-error>
             </mat-form-field>
@@ -159,10 +159,10 @@
           <div class="col-md-6">
             <mat-form-field appearance="outline">          
               <mat-select formControlName="cancelOneWeek">
-                <mat-option value="No">No Refund</mat-option>
-                <mat-option value="50%">50% Refund</mat-option>
-                <mat-option value="75%">75% Refund</mat-option>
-                <mat-option value="Full">Full Refund</mat-option>
+                <mat-option value="No">Không hoàn</mat-option>
+                <mat-option value="50%">Hoàn 50%</mat-option>
+                <mat-option value="75%">Hoàn 75%</mat-option>
+                <mat-option value="Full">Hoàn toàn bộ số tiền</mat-option>
               </mat-select>
               <mat-error *ngIf="tripForm.get('cancelOneWeek')?.invalid">{{ getTripErrorMessage('cancelOneWeek') }}</mat-error>
             </mat-form-field>
@@ -175,10 +175,10 @@
           <div class="col-md-6">
             <mat-form-field appearance="outline">          
               <mat-select formControlName="cancelOneDay">
-                <mat-option value="No">No Refund</mat-option>
-                <mat-option value="50%">50% Refund</mat-option>
-                <mat-option value="75%">75% Refund</mat-option>
-                <mat-option value="Full">Full Refund</mat-option>
+                <mat-option value="No">Không hoàn</mat-option>
+                <mat-option value="50%">Hoàn 50%</mat-option>
+                <mat-option value="75%">Hoàn 75%</mat-option>
+                <mat-option value="Full">Hoàn toàn bộ số tiền</mat-option>
               </mat-select>
               <mat-error *ngIf="tripForm.get('cancelOneDay')?.invalid">{{ getTripErrorMessage('cancelOneDay') }}</mat-error>
             </mat-form-field>
@@ -190,14 +190,14 @@
     <mat-card class="mb-3">
       <mat-card-header>
         <mat-card-title>
-          Images
+          Ảnh
         </mat-card-title>
       </mat-card-header>
       <mat-card-content class="my-3">
         <div class="image-list ">
           <input type="file" multiple accept="image/png, image/jpeg" class="file-input" (change)="onSelectedImages($event)" #fileUpload>
           <button mat-raised-button color="success" class="upload-btn" (click)="fileUpload.click()">
-            Add Image
+            Thêm
           </button> 
           <div>
             <img *ngFor="let url of urls" [src]="url" class="rounded mb-3" width="180">
@@ -217,10 +217,10 @@
 
     <mat-card class="mb-3">
       <mat-card-header>
-        <mat-card-title>Itinerary
+        <mat-card-title>Lịch trình
           <span>
             <button mat-raised-button color="success" (click)="addTripDay()">
-              Add Day
+              Thêm ngày
             </button>
           </span>
         </mat-card-title>
@@ -239,7 +239,7 @@
                 </div>
                 <div class="col-md-1">
                   <mat-form-field appearance="outline">
-                    <mat-label>Day</mat-label>
+                    <mat-label>Ngày</mat-label>
                     <input matInput type="number" formControlName="dayNo" min="1" />
                     <!-- <mat-error *ngIf="tripForm.get('dayNo')?.invalid">{{ getDayErrorMessage('dayNo',dayIndex) }}</mat-error> -->
                   </mat-form-field>
@@ -257,7 +257,7 @@
                         <div class="row">
                           <div class="col-md-4">
                             <mat-form-field appearance="outline">
-                              <mat-label> Title</mat-label>
+                              <mat-label> Tiêu đề</mat-label>
                               <input matInput type="text" formControlName="title" />
                               <!-- <mat-error
                                 *ngIf="activities(dayIndex).controls[activityIndex].get('title')?.hasError('required')">
@@ -267,7 +267,7 @@
                           </div>
                           <div class="col">
                             <mat-form-field appearance="outline">
-                              <mat-label>Description</mat-label>
+                              <mat-label>Chi tiết</mat-label>
                               <textarea matInput type="text" formControlName="description"></textarea>
                               <!-- <mat-error
                                 *ngIf="activities(dayIndex).controls[activityIndex].get('description')?.hasError('required')">

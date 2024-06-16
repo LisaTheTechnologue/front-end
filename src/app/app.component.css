@@ -10,6 +10,10 @@
 .active>.nav-link{
   color:black!important;
 }
+.main-content {
+  min-width: 88vh;
+}
+
 .footer {
   height: 50px;
   text-align: center;
@@ -20,3 +24,4 @@
 .preview-image {
   max-width: 60vw;
 }
+

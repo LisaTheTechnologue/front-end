@@ -2,11 +2,9 @@
   <mat-drawer mode="side" opened>
     <div class="list-group list-group-flush">
       <a href="#" class="list-group-item list-group-item-action active" aria-current="true"
-        [routerLink]="['/admin/trips']">Trips</a>
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/users']">Users</a>
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/contacts']">Contacts</a>
-      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/change-password']">Change
-        Password</a>
+        [routerLink]="['/admin/trips']">Tất cả chuyến đi</a>
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/users']">Danh sách người dùng</a>
+      <a href="#" class="list-group-item list-group-item-action" [routerLink]="['/admin/change-password']">Đổi mật khẩu</a>
     </div>
   </mat-drawer>
   <mat-drawer-content>
@@ -15,28 +13,28 @@
         <mat-card-content>
           <form [formGroup]="passwordForm" (ngSubmit)="onSubmit()">
             <mat-form-field appearance="outline">
-              <mat-label>Old Password</mat-label>
+              <mat-label>Mật khẩu cũ</mat-label>
               <input matInput [type]="hideOPassword ? 'password' : 'text'" formControlName="oldPassword" required>
               <button mat-icon-button matSuffix (click)="hideOPassword = !hideOPassword"
                 [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideOPassword">
                 <mat-icon>{{hideOPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
               <mat-error *ngIf="passwordForm.get('oldPassword')?.invalid && passwordForm.get('oldPassword')?.touched">
-                Old Password is required.</mat-error>
+                {{ getErrorMessage('oldPassword') }}</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-              <mat-label>New Password</mat-label>
+              <mat-label>Mật khẩu mới</mat-label>
               <input matInput type="{{ hideNPassword ? 'password' : 'text' }}" formControlName="newPassword" required>
               <button mat-icon-button matSuffix (click)="hideNPassword = !hideNPassword"
                 [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideNPassword">
                 <mat-icon>{{hideNPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
               <mat-error *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched">
-                Please enter a valid password. (8-120 char)</mat-error>
+                {{ getErrorMessage('newPassword') }}</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline">
-              <mat-label>Confirm Password</mat-label>
+              <mat-label>Nhập lại mật khẩu</mat-label>
               <input matInput type="{{ hideCPassword ? 'password' : 'text' }}" formControlName="confirmPassword"
                 required>
               <button mat-icon-button matSuffix (click)="hideCPassword = !hideCPassword"
@@ -45,11 +43,10 @@
               </button>
               <mat-error
                 *ngIf="passwordForm.get('confirmPassword')?.invalid && passwordForm.get('confirmPassword')?.touched">
-                Please enter a valid password.</mat-error>
+                {{ getErrorMessage('confirmPassword') }}</mat-error>
             </mat-form-field>
 
-            <button mat-raised-button color="primary" type="submit" [disabled]="passwordForm.invalid">Change
-              Password</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="passwordForm.invalid">Đổi mật khẩu</button>
           </form>
         </mat-card-content>
       </mat-card>

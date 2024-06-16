@@ -35,22 +35,16 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
-    this.isLoading = true;
     const username = this.loginForm.get('username')?.value;
     const password = this.loginForm.get('password')?.value;
     this.authService.login(username, password).subscribe(
       (res) => {
-        this.isLoading = false; 
         if (StorageService.isAdminLoggedIn()) {
           this.router.navigateByUrl('admin');
         } else if (StorageService.isMemberLoggedIn()) {
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/member';
           this.router.navigate([returnUrl]);
         }
-      },
-      (error) => {
-        this.onFailed(error);
-        this.isLoading = false; 
       }
     )
   }

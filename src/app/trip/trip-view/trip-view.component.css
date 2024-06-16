@@ -40,11 +40,17 @@ padding: 5px;
   position: relative; */
 
 }
-
+.feedback-container {
+  display: flex; /* Make the container a flexbox */
+  justify-content: center;
+overflow: auto;
+white-space: nowrap;
+padding: 5px;
+}
 .content {
   width: 85%;
   margin: 0px auto;
-  background: #fff;
+  background-color: #f7fdf8;
   padding: 20px;
   margin-top: -200px;
   position: relative;

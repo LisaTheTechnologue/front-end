@@ -2,7 +2,7 @@ export enum TripStatus {
     PENDING = 'Chờ duyệt',
     APPROVED = 'Đang nhận khách',
     REJECTED = 'Từ chối',
-    CANCEL = 'Cancel',
+    CANCEL = 'Hủy',
     END = 'Kết thúc'
 }
 function getKeyName(value: TripStatus) {

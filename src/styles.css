@@ -1,23 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap/dist/css/bootstrap.css";
-
-html, body { height: 100%; }
-* {
-  color: #000000;
+*:not(mat-icon) {
   margin: 0;
-  font-family: "Dosis", sans-serif !important;
-  font-optical-sizing: auto;
+  font-family: "Inter", sans-serif !important;
+  /* font-family: Roboto,Helvetica Neue Light,Helvetica Neue,
+               Helvetica,Arial,Lucida Grande,sans-serif; */
 }
 
 h2,h3,h4,h5,h6 {
-  font-family: "Dosis", sans-serif;
+  font-family: "Inter", sans-serif;
   color: #073312;
 }
 /* Custom buttons */
-body {
+body {  
   .mdc-button.mat-success,
   .mat-mdc-stroked-button.mat-success {
     color: #155724;
+    background-color: #f0fff3;
   }
   .mat-mdc-unelevated-button.mat-success:hover,
   .mat-mdc-raised-button.mat-success:hover {

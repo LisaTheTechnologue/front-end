@@ -3,3 +3,7 @@
   line-height: 20px; /* Adjust spacing for stars */
   width: 100px;
 }
+img {
+  object-fit: contain;
+  
+}

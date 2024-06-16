@@ -4,11 +4,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
 import { TripLevel } from 'src/app/_shared/models/enum.model';
 import { Trip } from 'src/app/_shared/models/trip.model';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
 import { PublicService } from 'src/app/_shared/services/public.service';
-
+const _moment = moment as any;
 @Component({
   selector: 'app-trip-joined-list',
   templateUrl: './trip-joined-list.component.html',
@@ -87,11 +88,14 @@ export class TripJoinedListComponent {
       }
 
       // Filter by date range (optional)
+      let startDate:Date = _moment(item.startDate,"DD-MM-YYYY").format("YYYY-MM-DD");
+      let endDate:Date = _moment(item.endDate,"DD-MM-YYYY").format("YYYY-MM-DD");
+      // Filter by date range (optional)
       const dateMatch =
         (!this.startDate && !this.endDate) ||
-        (!this.endDate && item.startDate >= this.startDate) ||
-        (!this.startDate && item.endDate <= this.endDate) ||
-        (item.startDate >= this.startDate && item.endDate <= this.endDate);
+        (!this.endDate && startDate >= this.startDate) ||
+        (!this.startDate && endDate <= this.endDate) ||
+        (startDate >= this.startDate && endDate <= this.endDate);
 
       // Filter by price (optional)
       // this.minPrice = value;

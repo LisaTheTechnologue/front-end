@@ -48,19 +48,19 @@ export class ReportListComponent implements OnInit {
       this.trips.data = res;
       this.allTrips = res;
     });
-    this.getAllCities();
+    // this.getAllCities();
   }
 
-  getAllCities() {
-    this.publicService.getAllCities().subscribe({
-      next: (res) => {
-        this.cities = res;
-      },
-      // error: (error) => {
-      //   this.onFailed(error);
-      // },
-    });
-  }
+  // getAllCities() {
+  //   this.publicService.getAllCities().subscribe({
+  //     next: (res) => {
+  //       this.cities = res;
+  //     },
+  //     // error: (error) => {
+  //     //   this.onFailed(error);
+  //     // },
+  //   });
+  // }
   ngAfterViewInit() {
     this.trips.paginator = this.paginator;
     this.trips.sort = this.sort;
@@ -71,63 +71,63 @@ export class ReportListComponent implements OnInit {
         .toLowerCase()
         .includes(this.searchText.toLowerCase());
 
-        let cityMatch = true;
-        if(this.selectedCityId !== undefined && this.selectedCityId != 999) {
-        cityMatch = item.cityId == this.selectedCityId;
-      }
+  //       let cityMatch = true;
+  //       if(this.selectedCityId !== undefined && this.selectedCityId != 999) {
+  //       cityMatch = item.cityId == this.selectedCityId;
+  //     }
           
-      let tripLevelMatch = true; // Assume all categories are initially matched
+  //     let tripLevelMatch = true; // Assume all categories are initially matched
 
-      // Filter by checkboxes (if any are selected)
-      if (this.selectedTripLevels.length > 0) {
-        tripLevelMatch = this.selectedTripLevels.some(
-          (tripLevel) => item.tripLevel === tripLevel
-        );
-      }
+  //     // Filter by checkboxes (if any are selected)
+  //     if (this.selectedTripLevels.length > 0) {
+  //       tripLevelMatch = this.selectedTripLevels.some(
+  //         (tripLevel) => item.tripLevel === tripLevel
+  //       );
+  //     }
 
-      // Filter by date range (optional)
-      const dateMatch =
-        (!this.startDate && !this.endDate) ||
-        (!this.endDate && item.startDate >= this.startDate) ||
-        (!this.startDate && item.endDate <= this.endDate) ||
-        (item.startDate >= this.startDate && item.endDate <= this.endDate);
+  //     // Filter by date range (optional)
+  //     const dateMatch =
+  //       (!this.startDate && !this.endDate) ||
+  //       (!this.endDate && item.startDate >= this.startDate) ||
+  //       (!this.startDate && item.endDate <= this.endDate) ||
+  //       (item.startDate >= this.startDate && item.endDate <= this.endDate);
 
-      // Filter by price (optional)
-      // this.minPrice = value;
-      const priceMatch = !this.maxPrice || item.price <= this.maxPrice;
+  //     // Filter by price (optional)
+  //     // this.minPrice = value;
+  //     const priceMatch = !this.maxPrice || item.price <= this.maxPrice;
 
       return searchTextMatch 
-      && cityMatch 
-      && tripLevelMatch && dateMatch && priceMatch;
+  //     && cityMatch 
+  //     && tripLevelMatch && dateMatch && priceMatch;
     });
   }
-  onstartDateChange(value: Date) {
-    this.startDate = value;
-    this.filterData();
-  }
-
-  onendDateChange(value: Date) {
-    this.endDate = value;
-    this.filterData();
-  }
-
-  // extractTripLevels() {
-  //   this.tripLevels.clear();
-  //   this.allTrips.forEach((item) => this.tripLevels.add(item.tripLevel));
+  // onstartDateChange(value: Date) {
+  //   this.startDate = value;
+  //   this.filterData();
   // }
 
-  onTripLevelChange(tripLevel: string, event: Event) {
-    const isChecked = (<HTMLInputElement>event.target).checked;
-    if (isChecked) {
-      this.selectedTripLevels.push(tripLevel);
-    } else {
-      const index = this.selectedTripLevels.indexOf(tripLevel);
-      if (index > -1) {
-        this.selectedTripLevels.splice(index, 1);
-      }
-    }
-    this.filterData();
-  }
+  // onendDateChange(value: Date) {
+  //   this.endDate = value;
+  //   this.filterData();
+  // }
+
+  // // extractTripLevels() {
+  // //   this.tripLevels.clear();
+  // //   this.allTrips.forEach((item) => this.tripLevels.add(item.tripLevel));
+  // // }
+
+  // onTripLevelChange(tripLevel: string, event: Event) {
+  //   const isChecked = (<HTMLInputElement>event.target).checked;
+  //   if (isChecked) {
+  //     this.selectedTripLevels.push(tripLevel);
+  //   } else {
+  //     const index = this.selectedTripLevels.indexOf(tripLevel);
+  //     if (index > -1) {
+  //       this.selectedTripLevels.splice(index, 1);
+  //     }
+  //   }
+  //   this.filterData();
+  // }
 
   private onFailed(message: string) {
     this.snackBar.open(

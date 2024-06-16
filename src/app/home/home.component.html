@@ -1,14 +1,14 @@
 <div class="hero-image">
   <div class="hero-text">
-    <h1>Explore New Places With Your Friends</h1>
-    <p>Join us or Create your own Journey</p>
+    <div class="h1">TTOS - Treking Trip Organizer System</div>
+    <p class="fw-medium text-light fs-6">Tham gia cùng chúng tôi hoặc Tạo ra hành trình của riêng bạn !</p>
     <!-- <button>Hire me</button> -->
   </div>
 </div>
 
 <section class="my-5">
-  <h2 class="text-center">Top 5 Tour Guide Recognition board</h2>
-  <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="profiles.length > 0" class="row justify-content-center">
+  <h2 class="text-center">Top 5 đội trưởng</h2>
+  <div fxLayout="row wrap" fxLayoutGap="25px" *ngIf="profiles.length > 0" class="row justify-content-center">
     <mat-card [routerLink]="['/profile/', profile.id]" fxFlex="15%" style="text-align: center;" class="trip-card mat-elevation-z2" *ngFor="let profile of profiles">
       <mat-card-content class="justify-content-center">
         <div *ngIf="profile.imageByte">
@@ -19,7 +19,7 @@
         </div>
         <div>{{ profile.username }} </div>
         <div *ngIf="profile.noOfTrips">
-          <small>Trips Led: {{ profile.noOfTrips }}</small>
+          <small>Dẫn {{ profile.noOfTrips }} chuyến đi</small>
         </div>
           <div ><ngb-rating [(rate)]="profile.rating" [readonly]="true" [max]="5"
               class="custom-rating"></ngb-rating></div>
@@ -30,7 +30,7 @@
 </section>
 
 <section class="py-5 bg-success bg-opacity-60">
-  <h2 class="text-center text-white">Our Popular Tours</h2>
+  <h2 class="text-center text-white">Chuyến đi hot nhất hôm nay</h2>
 
   <div fxLayout="row wrap" fxLayoutGap="10px" class="mx-auto" *ngIf="trips.length > 0"
     class="row justify-content-center">
@@ -43,8 +43,7 @@
 </section>
 
 <section class="my-5">
-  <h2 class="text-center">Feedback From Friends</h2>
-  <p class="text-center">Our Friends have left some reviews. Let's check it out!</p>
+  <h2 class="text-center">Feedback từ đồng đội</h2>
     <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf="feedbacks.length > 0" class="row justify-content-center">
     <mat-card fxFlex="15%" *ngFor="let feedback of feedbacks" style="padding-right:0;padding-left:0;">
       <app-feedback-card [feedback]="feedback"></app-feedback-card>

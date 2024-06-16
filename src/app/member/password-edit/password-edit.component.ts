@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import PasswordValidation from 'src/app/_shared/passsword-validations';
+import { FormUtilsService } from 'src/app/_shared/services/form-utils.service';
 import { MemberUserService } from 'src/app/_shared/services/member-user.service';
 
 @Component({
@@ -20,6 +21,7 @@ export class PasswordEditComponent implements OnInit {
     private fb: FormBuilder,
     private memberUserService: MemberUserService,
     private snackBar: MatSnackBar,
+    private formUtils:FormUtilsService,
     private router: Router
   ) {}
 
@@ -32,7 +34,9 @@ export class PasswordEditComponent implements OnInit {
       }
     );
   }
-
+  getErrorMessage(fieldName: string): string {
+    return this.formUtils.getFieldErrorMessage(this.passwordForm, fieldName);
+  }
   onSubmit() {
     const newPassword = this.passwordForm.get('newPassword')?.value;
     const confirmPassword = this.passwordForm.get('confirmPassword')?.value;

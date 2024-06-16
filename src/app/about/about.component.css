@@ -7,3 +7,8 @@
 .form-group {
   margin-bottom: 15px;
 }
+.contact-container {
+
+  height: 78vh; /* Chiều cao trừ đi top navigation và footer */
+
+}

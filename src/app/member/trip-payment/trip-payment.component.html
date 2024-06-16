@@ -1,5 +1,5 @@
 <div class="container my-5">
-  <div *ngIf="trip">
+  <div *ngIf="trip && paymentForm">
     <p class="h3">Thanh toán</p>
 
     <div class="row p-3">
@@ -50,6 +50,7 @@
         <mat-card-content class="mt-3">
           <div class="mb-3">
             <app-form-img (selectedImage)="selectedImage($event)" [limitFileSize]="300"></app-form-img>
+            <mat-error *ngIf="paymentForm.get('image')?.invalid">{{ getErrorMessage('image') }}</mat-error>
           </div>
 
           <mat-form-field appearance="outline">
@@ -119,7 +120,7 @@
         <button mat-raised-button color="primary" type="submit" (click)="submit()" class="me-2" [disabled]="paymentForm.invalid||isLoading">
           <span *ngIf="!isLoading">Submit</span>
           <span *ngIf="isLoading"><mat-spinner [diameter]="20"></mat-spinner></span></button>
-        <button mat-raised-button color="danger" type="button" (click)="onCancel()" class="me-2">Cancel</button>
+        <button mat-raised-button color="danger" type="button" (click)="onCancel()" class="me-2">Hủy</button>
       </div>
     </form>
   </div>

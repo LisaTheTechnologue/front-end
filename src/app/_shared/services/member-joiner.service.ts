@@ -21,15 +21,14 @@ export class MemberJoinerService {
   //   }).pipe(catchError(this.handleError));
   // }
 
-  checkJoiner(tripDto:any): Observable<any>{
-    const userId = StorageService.getUserId();
-    return this.http.post(this.API+'check',tripDto, {
+  checkJoiner(tripId:any): Observable<any>{
+    return this.http.get(this.API+`check?tripId=${tripId}`, {
       headers: this.createAuthorizationHeader(),
     })
     // .pipe(catchError(this.handleError));
   }
 
-  getAllByTripId(tripId:number): Observable<any>{
+  getJoinersByTripId(tripId:number): Observable<any>{
     // const userId = StorageService.getUserId();
     return this.http.get(this.API+`joiner-list?tripId=${tripId}`, {
       headers: this.createAuthorizationHeader(),
@@ -37,49 +36,49 @@ export class MemberJoinerService {
     // .pipe(catchError(this.handleError));
   }
 
-  getAllPendingByLeaderId(): Observable<any>{
-    const leaderId = StorageService.getUserId();
-    return this.http.get(this.API+`request-list`
-    // ?leaderId=${leaderId}`
-    , {
-      headers: this.createAuthorizationHeader(),
-    })
-    // .pipe(catchError(this.handleError));
-  }
+  // getAllPendingByLeaderId(): Observable<any>{
+  //   const leaderId = StorageService.getUserId();
+  //   return this.http.get(this.API+`request-list`
+  //   // ?leaderId=${leaderId}`
+  //   , {
+  //     headers: this.createAuthorizationHeader(),
+  //   })
+  //   // .pipe(catchError(this.handleError));
+  // }
 
-  reject (joinerId:number): Observable<any>{
-    return this.http.put(this.API+`update/${joinerId}`,'reject', {
-      headers: this.createAuthorizationHeader(),
-    })
-    // .pipe(catchError(this.handleError));
-  }
+  // reject (joinerId:number): Observable<any>{
+  //   return this.http.put(this.API+`update/${joinerId}`,'reject', {
+  //     headers: this.createAuthorizationHeader(),
+  //   })
+  //   // .pipe(catchError(this.handleError));
+  // }
 
-  approve (joinerId:number): Observable<any>{
-    return this.http.put(this.API+`update/${joinerId}`,'approve', {
-      headers: this.createAuthorizationHeader(),
-    })
-    // .pipe(catchError(this.handleError));
-  }
+  // approve (joinerId:number): Observable<any>{
+  //   return this.http.put(this.API+`update/${joinerId}`,'approve', {
+  //     headers: this.createAuthorizationHeader(),
+  //   })
+  //   // .pipe(catchError(this.handleError));
+  // }
 
-  cancel (joinerId:number): Observable<any>{
-    return this.http.delete(this.API+`cancel/${joinerId}`, {
-      headers: this.createAuthorizationHeader(),
-    })
-    // .pipe(catchError(this.handleError));
-  }
+  // cancel (joinerId:number): Observable<any>{
+  //   return this.http.delete(this.API+`cancel/${joinerId}`, {
+  //     headers: this.createAuthorizationHeader(),
+  //   })
+  //   // .pipe(catchError(this.handleError));
+  // }
   remove (joinerId:any): Observable<any>{
     return this.http.delete(this.API+`remove?joinerId=${joinerId}`, {
       headers: this.createAuthorizationHeader(),
     })
     // .pipe(catchError(this.handleError));
   }
-  getParticipantListByTripIdAndJoinerStatus(tripId:number): Observable<any>{
-    // const userId = StorageService.getUserId();
-    return this.http.get(this.API+`list?tripId=${tripId}`, {
-      headers: this.createAuthorizationHeader(),
-    })
-    // .pipe(catchError(this.handleError));
-  }
+  // getParticipantListByTripIdAndJoinerStatus(tripId:number): Observable<any>{
+  //   // const userId = StorageService.getUserId();
+  //   return this.http.get(this.API+`list?tripId=${tripId}`, {
+  //     headers: this.createAuthorizationHeader(),
+  //   })
+  //   // .pipe(catchError(this.handleError));
+  // }
 
   // private handleError(error: HttpErrorResponse) {
   //   if (error.status === 404) {

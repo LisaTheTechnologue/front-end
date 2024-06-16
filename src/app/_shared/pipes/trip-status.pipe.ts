@@ -13,7 +13,7 @@ export class TripStatusPipe implements PipeTransform {
     } else if (value === 'REJECTED') {
       return 'Từ chối';
     } else if (value === 'CANCEL') {
-      return 'Cancel';
+      return 'Hủy';
     } else if (value === 'END') {
       return 'Kết thúc';
     } else {

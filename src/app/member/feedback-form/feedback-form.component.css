@@ -6,3 +6,7 @@ div {
     text-align: left;
     padding: 20px;
   }
+
+  .container {
+    height: 78vh;
+  }

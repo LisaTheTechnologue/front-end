@@ -1,11 +1,11 @@
 <div *ngIf="user">
-  <mat-card class="card" style="text-align: center;" [routerLink]="['/profile/', user.id]">
+  <mat-card style="text-align: center;cursor: pointer;" [routerLink]="['/profile/', user.id]">
     <mat-card-content class="justify-content-center">
       <div *ngIf="user.imageByte">
-        <img mat-card-sm-image [src]="user.imageByte" alt="avatar">
+        <img mat-card-sm-image [src]="user.imageByte" alt="avatar" class="image-avatar">
       </div>
       <div *ngIf="!user.imageByte">
-        <img mat-card-sm-image src="http://www.gravatar.com/avatar/?d=mp" alt="avatar">
+        <img mat-card-sm-image src="http://www.gravatar.com/avatar/?d=mp" alt="avatar" class="image-avatar">
       </div>
       <div>{{ user.fullName }} </div>
       <div>
@@ -17,7 +17,7 @@
         </span>
       </div>
       <div *ngIf="user.noOfTrips">
-        <small>Trips Led: {{ user.noOfTrips }}</small>
+        <small>Kinh nghiệm: {{ user.noOfTrips }} chuyến</small>
       </div>
       <ngb-rating [(rate)]="rating" [readonly]="true" [max]="5" class="custom-rating">
       </ngb-rating>
@@ -27,3 +27,4 @@
     <button mat-button >View Profile</button>
   </mat-card-actions> -->
   </mat-card>
+  </div>

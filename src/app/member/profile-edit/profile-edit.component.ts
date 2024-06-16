@@ -27,24 +27,24 @@ export class ProfileEditComponent implements OnInit {
   imageChanged: boolean = false;
   profile: User;
   error: any;
-  maxDob:Date;
+  maxDob: Date;
   banks: Bank[] = [];
   selectedBank: Bank | null = null;
   genders: Gender[] = [
-    { label:"Nữ", value: 'FEMALE' },
-    { label:"Nam", value: 'MALE' },
-    { label:"Khác", value: 'OTHER' },
+    { label: "Nữ", value: 'FEMALE' },
+    { label: "Nam", value: 'MALE' },
+    { label: "Khác", value: 'OTHER' },
   ];
   constructor(private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private memberUserService: MemberUserService,
-  private confirmationService: ConfirmService) { 
+    private confirmationService: ConfirmService) {
     const today = new Date();
-  this.maxDob = new Date(
-    today.getFullYear() - 15,
-    today.getMonth(),
-    today.getDate()
-  );
+    this.maxDob = new Date(
+      today.getFullYear() - 15,
+      today.getMonth(),
+      today.getDate()
+    );
   }
 
   ngOnInit() {
@@ -52,12 +52,12 @@ export class ProfileEditComponent implements OnInit {
       .subscribe(banks => this.banks = banks);
     const phonePattern = /^\(?([0-9]{3})\)?[. ]?([0-9]{3})[. ]?([0-9]{4})$/;
     this.profileForm = this.fb.group({
-      image: ['', Validators.required],
+      image: [''],
       username: [''], // Set to disabled as mentioned in HTML
       firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
       dob: [null, [Validators.required]],
-      phoneNo: ['',[Validators.pattern(phonePattern)]],
+      phoneNo: ['', [Validators.pattern(phonePattern)]],
       gender: [''],
       email: ['', [Validators.required, Validators.email]],
       paymentAccNo: [''],
@@ -68,18 +68,22 @@ export class ProfileEditComponent implements OnInit {
       next: (res) => {
         this.profile = res;
         this.profileForm.patchValue(this.profile);
-        const [day, month, year] = res.dob.split('-');
-        let dob: Date = new Date(+year, +month - 1, +day);
-        this.profileForm.controls['dob'].setValue(dob);
+        if (res.dob) {
+          const [day, month, year] = res.dob.split('-');
+          let dob: Date = new Date(+year, +month - 1, +day);
+          this.profileForm.controls['dob'].setValue(dob);
+        }
         const selectedGender = this.genders.find(gender => gender.value === res.gender);
         if (selectedGender) {
           this.profileForm.controls['gender'].setValue(selectedGender);
         }
-        const selectedBank = this.banks.find(bank => bank.shortName.toLowerCase() == res.paymentAccBankShortName.toLowerCase());
-        if (selectedBank) {
-          this.profileForm.controls['paymentAccBank'].setValue(selectedBank);
+        if (res.paymentAccBankShortName) {
+          const selectedBank = this.banks.find(bank => bank.shortName.toLowerCase() == res.paymentAccBankShortName.toLowerCase());
+          if (selectedBank) {
+            this.profileForm.controls['paymentAccBank'].setValue(selectedBank);
+          }
         }
-        if(res.imageByte){
+        if (res.imageByte) {
           this.existingImage = res.imageByte;
           this.profileForm.get('image')?.setValue(this.existingImage);
         }
@@ -106,7 +110,7 @@ export class ProfileEditComponent implements OnInit {
     this.profileForm.get('dob').setValue(event.value);
   }
 
-  onSelectedImage(event: File| null) {
+  onSelectedImage(event: File | null) {
     this.selectedImage = event;
     this.imageChanged = true;
     this.profileForm.get('image')?.setValue(this.selectedImage);
@@ -131,16 +135,31 @@ export class ProfileEditComponent implements OnInit {
           formData.append('lastName', this.profileForm.get('lastName').value);
           var dobStr = new Date(moment(this.profileForm.get('dob').value).format('YYYY-MM-DD')).toISOString();
           formData.append('dob', dobStr);
-          formData.append('phoneNo', this.profileForm.get('phoneNo').value);
-          formData.append('gender', this.profileForm.get('gender').value.value);
-          formData.append('email', this.profileForm.get('email').value); 
-          formData.append('paymentAccNo', this.profileForm.get('paymentAccNo').value);
-          formData.append('paymentAccName', this.profileForm.get('paymentAccName').value);
-          formData.append('paymentAccBank', this.profileForm.get('paymentAccBank').value.name);
-          formData.append('paymentAccBankShortName', this.profileForm.get('paymentAccBank').value.shortName);
+          formData.append('email', this.profileForm.get('email').value);
+          const gender = this.profileForm.get('gender').value;
+          if (gender) {
+            formData.append('gender', gender.value);
+          }
+          const paymentAccNo = this.profileForm.get('paymentAccNo').value;
+          if (paymentAccNo) {
+            formData.append('paymentAccNo', paymentAccNo);
+          }
+          const paymentAccName = this.profileForm.get('paymentAccName').value;
+          if (paymentAccName) {
+            formData.append('paymentAccName', paymentAccName);
+          }
+          const phoneNo = this.profileForm.get('phoneNo').value;
+          if (phoneNo) {
+            formData.append('phoneNo', phoneNo);
+          }
+          const paymentAccBank = this.profileForm.get('paymentAccBank').value;
+          if (paymentAccBank) {
+            formData.append('paymentAccBank', paymentAccBank.name);
+            formData.append('paymentAccBankShortName', paymentAccBank.shortName);
+          }
           if (this.selectedImage) {
             formData.append('image', this.profileForm.get('image').value);
-          } 
+          }
 
           this.memberUserService
             .updateProfile(formData)
@@ -154,13 +173,13 @@ export class ProfileEditComponent implements OnInit {
                 //     .uploadImage(formData)
                 //     .subscribe({
                 //       next: (res) => {
-                        this.onSuccess('Cập nhật thông tin thành công!');
-                      // },
-                      // error: (error) => {
-                      //   console.log(error);
-                      //   this.error += error;
-                      // },
-                    // });
+                this.onSuccess('Cập nhật thông tin thành công!');
+                // },
+                // error: (error) => {
+                //   console.log(error);
+                //   this.error += error;
+                // },
+                // });
                 // } else {
                 //   this.onSuccess('Updated Profile Successfully');
                 // }

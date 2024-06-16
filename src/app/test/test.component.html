@@ -22,7 +22,7 @@
 
   <form [formGroup]="tripForm">
     <mat-form-field appearance="outline">
-      <mat-label>Title</mat-label>
+      <mat-label>Tiêu đề</mat-label>
       <input matInput type="text" formControlName="title">
       <mat-error *ngIf="tripForm.get('title')?.invalid">{{ getTripErrorMessage('title') }}</mat-error>
     </mat-form-field>
@@ -181,7 +181,7 @@
             <div formArrayName="activities">
               <div *ngFor="let acitivity of activities(empIndex).controls; let skillIndex=index">
                 <div [formGroupName]="skillIndex">
-                  {{skillIndex}} Title :
+                  {{skillIndex}} Tiêu đề :
                   <input type="text" formControlName="title" />
                   Exp:
                   <input type="text" formControlName="description" />

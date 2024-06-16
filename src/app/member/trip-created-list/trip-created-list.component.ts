@@ -6,13 +6,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { TripLevel } from 'src/app/_shared/models/enum.model';
 import { Trip } from 'src/app/_shared/models/trip.model';
 import { ConfirmService } from 'src/app/_shared/services/confirm.service';
 import { MemberTripService } from 'src/app/_shared/services/member-trip.service';
+import { MemberUserService } from 'src/app/_shared/services/member-user.service';
 import { PublicService } from 'src/app/_shared/services/public.service';
 import { StorageService } from 'src/app/_shared/services/storage.service';
-
+const _moment = moment as any;
 @Component({
   selector: 'app-trip-created-list',
   templateUrl: './trip-created-list.component.html',
@@ -48,6 +50,7 @@ export class TripCreatedListComponent {
   constructor(
     private datePipe: DatePipe,
     public memberTripService: MemberTripService,
+    public memberUserService: MemberUserService,
     private confirmationService: ConfirmService,
     private snackBar: MatSnackBar,
     private router: Router,
@@ -79,6 +82,19 @@ export class TripCreatedListComponent {
     this.trips.paginator = this.paginator;
     this.trips.sort = this.sort;
   }
+
+  createTrip(){
+    this.memberUserService.validateTripCreation().subscribe({
+      next: (res) => {
+        this.router.navigateByUrl("/member/trips/create" );
+      },
+      // error: (error) => {
+      //   this.onFailed(error);
+      // },
+    });
+
+  }
+
   filterData() {
     this.trips.data = this.allTrips.filter((item) => {
       const searchTextMatch = item.title
@@ -100,11 +116,14 @@ export class TripCreatedListComponent {
       }
 
       // Filter by date range (optional)
+      let startDate:Date = _moment(item.startDate,"DD-MM-YYYY").format("YYYY-MM-DD");
+      let endDate:Date = _moment(item.endDate,"DD-MM-YYYY").format("YYYY-MM-DD");
+      // Filter by date range (optional)
       const dateMatch =
         (!this.startDate && !this.endDate) ||
-        (!this.endDate && item.startDate >= this.startDate) ||
-        (!this.startDate && item.endDate <= this.endDate) ||
-        (item.startDate >= this.startDate && item.endDate <= this.endDate);
+        (!this.endDate && startDate >= this.startDate) ||
+        (!this.startDate && endDate <= this.endDate) ||
+        (startDate >= this.startDate && endDate <= this.endDate);
 
       // Filter by price (optional)
       // this.minPrice = value;

@@ -93,7 +93,7 @@ export class PaymentViewComponent {
     });
   }
   completePayment(): void {
-    const status = 'COMPLETED'; // Assuming your completed payment status
+    const status = 'COMPLETE'; // Assuming your completed payment status
     this.paymentService.update({
       id: this.payment.id,
       tripId: this.payment.tripId,

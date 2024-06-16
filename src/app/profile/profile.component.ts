@@ -97,7 +97,7 @@ export class ProfileComponent {
         if (confirmed) {
           this.adminService.updateStatus(this.leaderId).subscribe({
             next: (res) => {              
-                this.onSuccess('Update User Status Successfully');              
+                this.onSuccess('Thay đổi trạng thái thành công');              
             },
             // error: (error) => {
             //   this.onFailed(error);
@@ -108,18 +108,7 @@ export class ProfileComponent {
         }
       });
     } 
-    // openChangeStatusDialog(): void {
-    //   let dialogRef = this.dialog.open(ChangeStatusDialogComponent, {
-    //     width: '600px',
-    //     data: {
-    //       userId: this.user.id
-    //     }
-    //   });
   
-    //   dialogRef.afterClosed().subscribe(result => {
-        
-    //   });
-    // }
 
   private onSuccess(message: string) {
     this.snackBar.open(message, 'OK', { duration: 5000 });

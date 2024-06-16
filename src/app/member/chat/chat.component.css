@@ -1,3 +1,18 @@
+/*Members*/
+.members {
+  height: calc(100% - 12px);
+  position: relative;
+  z-index: 0;
+}
+
+.members .memberbox {
+  overflow-x: hidden;
+  padding: 0 5px;
+  margin-bottom: 5px;
+  overflow-y: auto;
+  height: 68vh;
+}
+
 /* Messages*/
 .chats {
   height: calc(100% - 12px);
@@ -105,3 +120,27 @@ color: rgba(0, 0, 0, .45);
 font-size: 11px;
 display: inline-block;
 }
+.example-card {
+  min-width: 100%;
+  margin: 40px;
+
+}
+.cards {
+  width: 400px;
+}
+
+.list-avatar {
+  width: 30px;
+  height: 30px;
+}
+/* .list-candidatos {
+  width: 93%;
+  margin: 20px auto;
+  margin-top: 60px;
+}
+
+.candidato-card {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+} */
